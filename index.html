@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+</head>
+<body>
+  <!-- Splash overlay — requires user gesture to start AudioContext -->
+  <div id="splash">
+    <div id="splash-content">
+      <h1>Music Visualizer</h1>
+      <p>Upload a track or use the sample, then press Play.</p>
+      <div id="splash-buttons">
+        <label id="upload-label" for="audio-upload">Upload Track</label>
+        <input type="file" id="audio-upload" accept="audio/*" />
+        <button id="use-sample-btn">Use Sample Track</button>
+      </div>
+      <span id="file-name"></span>
+      <button id="play-btn" disabled>Play</button>
+    </div>
+  </div>
+
+  <!-- Sidebar GUI -->
+  <aside id="sidebar">
+    <h2>Controls</h2>
+
+    <section>
+      <h3>Audio</h3>
+      <button id="pause-btn">Pause</button>
+      <button id="stop-btn">Stop</button>
+      <div class="slider-group">
+        <label>Master Volume</label>
+        <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.8" />
+      </div>
+    </section>
+
+    <section>
+      <h3>Sensitivity</h3>
+      <div class="slider-group">
+        <label>Bass (Drums)</label>
+        <input type="range" id="sens-bass" min="0" max="3" step="0.01" value="1.0" />
+      </div>
+      <div class="slider-group">
+        <label>Vocals (Melody)</label>
+        <input type="range" id="sens-mid" min="0" max="3" step="0.01" value="1.0" />
+      </div>
+      <div class="slider-group">
+        <label>Treble (Percussion)</label>
+        <input type="range" id="sens-treble" min="0" max="3" step="0.01" value="1.0" />
+      </div>
+    </section>
+
+    <section>
+      <h3>Warp</h3>
+      <div class="slider-group">
+        <label>Warp Intensity</label>
+        <input type="range" id="warp-intensity" min="0" max="2" step="0.01" value="1.0" />
+      </div>
+      <div class="slider-group">
+        <label>Rotation Speed</label>
+        <input type="range" id="rotation-speed" min="0" max="2" step="0.01" value="0.3" />
+      </div>
+      <div class="slider-group">
+        <label>Feedback (Trails)</label>
+        <input type="range" id="feedback" min="0" max="0.98" step="0.01" value="0.85" />
+      </div>
+    </section>
+
+    <section>
+      <h3>Image</h3>
+      <label id="img-upload-label" for="img-upload">Upload Image</label>
+      <input type="file" id="img-upload" accept="image/*" />
+      <span id="img-file-name">No image (using generated pattern)</span>
+    </section>
+
+    <section>
+      <button id="randomize-btn">Randomize</button>
+    </section>
+  </aside>
+
+  <!-- Toggle sidebar button -->
+  <button id="sidebar-toggle">&#9776;</button>
+
+  <!-- p5.js canvas goes here -->
+  <main id="canvas-container"></main>
+
+  <script src="sketch.js"></script>
+</body>
+</html>

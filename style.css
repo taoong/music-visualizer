@@ -1,0 +1,301 @@
+/* ── Reset & Base ─────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #e0e0e0;
+}
+
+/* ── Splash Screen ───────────────────────────────────────── */
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
+  transition: opacity 0.6s ease;
+}
+
+#splash.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#splash-content {
+  text-align: center;
+  max-width: 420px;
+}
+
+#splash-content h1 {
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.6rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#splash-content p {
+  font-size: 0.95rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+#splash-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#upload-label,
+#use-sample-btn {
+  padding: 0.55rem 1.2rem;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: transparent;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+#upload-label:hover,
+#use-sample-btn:hover {
+  background: #222;
+  border-color: #764ba2;
+}
+
+#audio-upload {
+  display: none;
+}
+
+#file-name {
+  display: block;
+  font-size: 0.8rem;
+  color: #667eea;
+  min-height: 1.2em;
+  margin-bottom: 1rem;
+}
+
+#play-btn {
+  padding: 0.7rem 3rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+#play-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+#play-btn:not(:disabled):hover {
+  transform: scale(1.04);
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  z-index: 500;
+  background: rgba(12, 12, 18, 0.92);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid #1e1e2e;
+  padding: 1rem 1rem 2rem;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+#sidebar.open {
+  transform: translateX(0);
+}
+
+#sidebar h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  color: #999;
+  text-transform: uppercase;
+}
+
+#sidebar section {
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #1e1e2e;
+}
+
+#sidebar section:last-child {
+  border-bottom: none;
+}
+
+#sidebar h3 {
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #667eea;
+  margin-bottom: 0.6rem;
+}
+
+.slider-group {
+  margin-bottom: 0.6rem;
+}
+
+.slider-group label {
+  display: block;
+  font-size: 0.75rem;
+  color: #888;
+  margin-bottom: 0.2rem;
+}
+
+.slider-group input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: #2a2a3a;
+  outline: none;
+}
+
+.slider-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #764ba2;
+  cursor: pointer;
+  border: 2px solid #0c0c12;
+}
+
+#pause-btn,
+#stop-btn {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background: transparent;
+  color: #bbb;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.4rem;
+  transition: background 0.2s;
+}
+
+#pause-btn:hover,
+#stop-btn:hover {
+  background: #1e1e2e;
+}
+
+#img-upload-label {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background: transparent;
+  color: #bbb;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 0.4rem;
+}
+
+#img-upload-label:hover {
+  background: #1e1e2e;
+}
+
+#img-upload {
+  display: none;
+}
+
+#img-file-name {
+  display: block;
+  font-size: 0.72rem;
+  color: #666;
+  margin-top: 0.3rem;
+}
+
+#randomize-btn {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: opacity 0.2s;
+}
+
+#randomize-btn:hover {
+  opacity: 0.85;
+}
+
+/* ── Sidebar Toggle ──────────────────────────────────────── */
+#sidebar-toggle {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 600;
+  background: rgba(12, 12, 18, 0.7);
+  border: 1px solid #2a2a3a;
+  border-radius: 6px;
+  color: #ccc;
+  font-size: 1.3rem;
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s;
+}
+
+#sidebar-toggle:hover {
+  background: rgba(30, 30, 46, 0.9);
+}
+
+/* ── Canvas Container ────────────────────────────────────── */
+#canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+#canvas-container canvas {
+  display: block;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+#sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+#sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 2px;
+}
