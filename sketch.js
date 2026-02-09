@@ -20,8 +20,12 @@ let gainNode = null;
 let lowFilter, midFilter, highFilter;
 let fftLow, fftMid, fftHigh;
 
+// Mobile detection
+const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)
+  || (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
+
 // Per-bin smoothed amplitudes for each frequency band
-const SPIKES_PER_BAND = 60;
+const SPIKES_PER_BAND = isMobile ? 30 : 60;
 let smoothedLow = new Float32Array(SPIKES_PER_BAND);
 let smoothedMid = new Float32Array(SPIKES_PER_BAND);
 let smoothedHigh = new Float32Array(SPIKES_PER_BAND);
@@ -42,6 +46,7 @@ function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('canvas-container');
   pixelDensity(1);
+  if (isMobile) frameRate(30);
   wireDOM();
 }
 
@@ -139,6 +144,15 @@ function drawSpikeCircle() {
 async function initAudio(fileUrl) {
   await Tone.start();
 
+  // Dispose previous audio nodes if re-initialising
+  if (player) {
+    try { player.stop(); } catch (_) {}
+    player.dispose();
+    gainNode.dispose();
+    lowFilter.dispose(); midFilter.dispose(); highFilter.dispose();
+    fftLow.dispose(); fftMid.dispose(); fftHigh.dispose();
+  }
+
   player = new Tone.Player({
     url: fileUrl,
     loop: true,
@@ -152,9 +166,10 @@ async function initAudio(fileUrl) {
   midFilter.Q.value = 1.2;
   highFilter = new Tone.Filter({ frequency: 5000, type: 'highpass', rolloff: -24 });
 
-  fftLow = new Tone.FFT(256);
-  fftMid = new Tone.FFT(256);
-  fftHigh = new Tone.FFT(256);
+  const fftSize = isMobile ? 128 : 256;
+  fftLow = new Tone.FFT(fftSize);
+  fftMid = new Tone.FFT(fftSize);
+  fftHigh = new Tone.FFT(fftSize);
 
   player.connect(gainNode);
   gainNode.toDestination();
@@ -261,7 +276,6 @@ function wireDOM() {
 
   playBtn.addEventListener('click', async () => {
     const splash = document.getElementById('splash');
-    splash.classList.add('hidden');
 
     let url;
     if (useSample) {
@@ -270,8 +284,17 @@ function wireDOM() {
       url = URL.createObjectURL(userFile);
     }
 
+    if (!url) {
+      fileNameEl.textContent = 'Please upload a track or use the sample first.';
+      return;
+    }
+
+    playBtn.disabled = true;
+    fileNameEl.textContent = 'Loading\u2026';
+
     try {
       await initAudio(url);
+      splash.classList.add('hidden');
       player.start();
       playStartedAt = Tone.now();
       startOffset = 0;
@@ -280,7 +303,7 @@ function wireDOM() {
     } catch (err) {
       console.error('Audio init error:', err);
       fileNameEl.textContent = 'Error loading audio. Try another file.';
-      splash.classList.remove('hidden');
+      playBtn.disabled = false;
     }
   });
 
