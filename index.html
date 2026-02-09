@@ -32,6 +32,12 @@
       <h3>Audio</h3>
       <button id="pause-btn">Pause</button>
       <button id="stop-btn">Stop</button>
+      <div id="track-switch-group">
+        <label id="change-track-label" for="sidebar-audio-upload">Change Track</label>
+        <input type="file" id="sidebar-audio-upload" accept="audio/*" />
+        <button id="sidebar-sample-btn">Use Sample</button>
+        <span id="track-name"></span>
+      </div>
       <div id="scrubber-group">
         <input type="range" id="scrubber" min="0" max="100" step="0.1" value="0" />
         <span id="time-display">0:00 / 0:00</span>

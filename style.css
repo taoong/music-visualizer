@@ -209,6 +209,45 @@ html, body {
   background: #1e1e2e;
 }
 
+/* ── Track Switching ────────────────────────────────────── */
+#track-switch-group {
+  margin-top: 0.6rem;
+}
+
+#sidebar-audio-upload {
+  display: none;
+}
+
+#change-track-label,
+#sidebar-sample-btn {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background: transparent;
+  color: #bbb;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.4rem;
+  transition: background 0.2s;
+}
+
+#change-track-label {
+  display: inline-block;
+}
+
+#change-track-label:hover,
+#sidebar-sample-btn:hover {
+  background: #1e1e2e;
+}
+
+#track-name {
+  display: block;
+  font-size: 0.72rem;
+  color: #888;
+  margin-top: 0.3rem;
+  font-variant-numeric: tabular-nums;
+}
+
 #img-upload-label {
   display: inline-block;
   padding: 0.35rem 0.9rem;

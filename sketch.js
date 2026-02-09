@@ -21,6 +21,8 @@ let gainNode = null;
 let lowFilter, midFilter, highFilter;
 let fftLow, fftMid, fftHigh;
 
+const sampleUrl = 'https://tonejs.github.io/audio/berklee/guit_harmonics_01.mp3';
+
 // Mobile detection
 const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)
   || (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
@@ -288,7 +290,7 @@ function wireDOM() {
 
     let url;
     if (useSample) {
-      url = 'https://tonejs.github.io/audio/berklee/guit_harmonics_01.mp3';
+      url = sampleUrl;
     } else if (userFile) {
       if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
       currentObjectUrl = URL.createObjectURL(userFile);
@@ -311,6 +313,8 @@ function wireDOM() {
       startOffset = 0;
       isPlaying = true;
       sidebar.classList.add('open');
+      document.getElementById('track-name').textContent =
+        useSample ? 'Sample track' : userFile.name;
     } catch (err) {
       console.error('Audio init error:', err);
       fileNameEl.textContent = 'Error loading audio. Try another file.';
@@ -339,6 +343,48 @@ function wireDOM() {
     isPlaying = false;
     startOffset = 0;
     document.getElementById('pause-btn').textContent = 'Resume';
+  });
+
+  // ── Sidebar track switching ──────────────────────────────
+  const trackNameEl = document.getElementById('track-name');
+
+  document.getElementById('sidebar-audio-upload').addEventListener('change', async (e) => {
+    if (!e.target.files.length) return;
+    userFile = e.target.files[0];
+    useSample = false;
+    if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
+    currentObjectUrl = URL.createObjectURL(userFile);
+    trackNameEl.textContent = 'Loading\u2026';
+    try {
+      await initAudio(currentObjectUrl);
+      player.start();
+      playStartedAt = Tone.now();
+      startOffset = 0;
+      isPlaying = true;
+      document.getElementById('pause-btn').textContent = 'Pause';
+      trackNameEl.textContent = userFile.name;
+    } catch (err) {
+      console.error('Track switch error:', err);
+      trackNameEl.textContent = 'Error loading audio.';
+    }
+  });
+
+  document.getElementById('sidebar-sample-btn').addEventListener('click', async () => {
+    useSample = true;
+    userFile = null;
+    trackNameEl.textContent = 'Loading\u2026';
+    try {
+      await initAudio(sampleUrl);
+      player.start();
+      playStartedAt = Tone.now();
+      startOffset = 0;
+      isPlaying = true;
+      document.getElementById('pause-btn').textContent = 'Pause';
+      trackNameEl.textContent = 'Sample track';
+    } catch (err) {
+      console.error('Track switch error:', err);
+      trackNameEl.textContent = 'Error loading audio.';
+    }
   });
 
   bindSlider('master-volume', (v) => {
