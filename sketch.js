@@ -25,12 +25,12 @@ let trebleEnergy = 0;
 
 // GUI values (defaults — overridden by sliders)
 const cfg = {
-  sensBass: 1.0,
-  sensMid: 1.0,
-  sensTreble: 1.0,
-  warpIntensity: 1.0,
-  rotationSpeed: 0.3,
-  feedback: 0.85,
+  sensBass: 1.5,
+  sensMid: 1.3,
+  sensTreble: 1.2,
+  warpIntensity: 1.2,
+  rotationSpeed: 0.5,
+  feedback: 0.55,
   masterVolume: 0.8,
 };
 
@@ -71,7 +71,6 @@ const fragSrc = `
     return vec2(c * p.x - s * p.y, s * p.x + c * p.y);
   }
 
-  // Simple 2D noise (hash‑based)
   float hash(vec2 p) {
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
   }
@@ -87,51 +86,82 @@ const fragSrc = `
     return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
   }
 
+  // HSV to RGB conversion
+  vec3 hsv2rgb(vec3 c) {
+    vec4 K = vec4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
+    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+  }
+
   void main() {
     vec2 uv = vUv;
     vec2 center = vec2(0.5);
 
-    // ── Bass → scale / expansion ────────────────────────────
-    float scale = 1.0 - uBass * 0.15 * uWarp;
+    // ── Bass → dramatic zoom pulse ──────────────────────────
+    float scale = 1.0 - uBass * 0.45 * uWarp;
     uv = center + (uv - center) * scale;
 
     // ── Rotation (bass‑modulated) ───────────────────────────
-    uv = center + rotate2d(uv - center, uRotation * uTime + uBass * 0.3 * uWarp);
+    float rotAngle = uRotation * uTime + uBass * 0.8 * uWarp;
+    uv = center + rotate2d(uv - center, rotAngle);
 
-    // ── Vocals → sine‑wave warp distortion ──────────────────
-    float wave = sin(uv.y * 12.0 + uTime * 2.5) * uMid * 0.04 * uWarp;
-    float wave2 = cos(uv.x * 10.0 + uTime * 1.8) * uMid * 0.03 * uWarp;
-    uv.x += wave;
-    uv.y += wave2;
+    // ── Vocals → sine‑wave warp distortion (much stronger) ─
+    float wave  = sin(uv.y * 10.0 + uTime * 3.0) * uMid * 0.15 * uWarp;
+    float wave2 = cos(uv.x * 8.0  + uTime * 2.2) * uMid * 0.12 * uWarp;
+    float wave3 = sin(uv.y * 20.0 + uv.x * 15.0 + uTime * 4.0) * uMid * 0.06 * uWarp;
+    uv.x += wave + wave3 * 0.5;
+    uv.y += wave2 + wave3 * 0.5;
 
-    // ── Treble → noise displacement ─────────────────────────
-    float n = noise(uv * 8.0 + uTime * 0.5) - 0.5;
-    uv += n * uTreble * 0.05 * uWarp;
+    // ── Treble → noise displacement (much stronger) ─────────
+    float n = noise(uv * 6.0 + uTime * 0.8) - 0.5;
+    float n2 = noise(uv * 14.0 - uTime * 1.2) - 0.5;
+    uv += (n * 0.14 + n2 * 0.06) * uTreble * uWarp;
 
-    // Clamp UVs for mirror‑repeat feel
-    uv = clamp(uv, 0.0, 1.0);
+    // Mirror‑repeat UVs
+    uv = abs(mod(uv, 2.0) - 1.0);
 
     // ── Sample texture ──────────────────────────────────────
     vec4 tex = texture2D(uTexture, uv);
 
-    // ── Treble → RGB split / chromatic aberration ───────────
-    float aberr = uTreble * 0.012 * uWarp;
-    float r = texture2D(uTexture, uv + vec2(aberr, 0.0)).r;
+    // ── Treble → heavy chromatic aberration ─────────────────
+    float aberr = uTreble * 0.05 * uWarp;
+    float r = texture2D(uTexture, uv + vec2(aberr, aberr * 0.5)).r;
     float g = tex.g;
-    float b = texture2D(uTexture, uv - vec2(aberr, 0.0)).b;
+    float b = texture2D(uTexture, uv - vec2(aberr, aberr * 0.5)).b;
     vec4 color = vec4(r, g, b, 1.0);
 
-    // ── Treble → scanline grain ─────────────────────────────
-    float grain = hash(uv * uResolution + uTime) * uTreble * 0.15;
-    color.rgb += grain;
+    // ── Bass → brightness pulse (flash on kicks) ────────────
+    float bassPulse = uBass * uBass * 0.8;
+    color.rgb += bassPulse;
+
+    // ── Mids → hue shift / color rotation ───────────────────
+    float hueShift = uMid * 0.4 + uTime * 0.05;
+    float cosH = cos(hueShift);
+    float sinH = sin(hueShift);
+    mat3 hueRotMat = mat3(
+      0.299 + 0.701*cosH + 0.168*sinH,  0.587 - 0.587*cosH + 0.330*sinH,  0.114 - 0.114*cosH - 0.497*sinH,
+      0.299 - 0.299*cosH - 0.328*sinH,  0.587 + 0.413*cosH + 0.035*sinH,  0.114 - 0.114*cosH + 0.292*sinH,
+      0.299 - 0.300*cosH + 1.250*sinH,  0.587 - 0.588*cosH - 1.050*sinH,  0.114 + 0.886*cosH - 0.203*sinH
+    );
+    color.rgb = hueRotMat * color.rgb;
+
+    // ── Treble → scanline grain + glitch lines ──────────────
+    float grain = hash(uv * uResolution + uTime) * uTreble * 0.25;
+    float scanline = step(0.98, hash(vec2(floor(vUv.y * uResolution.y * 0.5), uTime))) * uTreble * 0.6;
+    color.rgb += grain + scanline;
+
+    // ── Treble → saturation boost ───────────────────────────
+    float grey = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+    color.rgb = mix(vec3(grey), color.rgb, 1.0 + uTreble * 0.8);
 
     // ── Feedback blend (motion trails) ──────────────────────
     vec4 fb = texture2D(uFeedback, vUv);
     color = mix(color, fb, uFeedbackAmt);
 
-    // ── Subtle vignette ─────────────────────────────────────
+    // ── Vignette (bass‑reactive — opens up on kicks) ────────
     float d = distance(vUv, center);
-    color.rgb *= smoothstep(0.9, 0.35, d);
+    float vignetteEdge = 0.35 + uBass * 0.25;
+    color.rgb *= smoothstep(0.9, vignetteEdge, d);
 
     gl_FragColor = color;
   }
@@ -160,13 +190,24 @@ function draw() {
 
   // ── Analyse audio ─────────────────────────────────────────
   if (isPlaying && player && player.state === 'started') {
-    bassEnergy = lerp(bassEnergy, normaliseFFT(fftLow) * cfg.sensBass, 0.25);
-    midEnergy = lerp(midEnergy, normaliseFFT(fftMid) * cfg.sensMid, 0.2);
-    trebleEnergy = lerp(trebleEnergy, normaliseFFT(fftHigh) * cfg.sensTreble, 0.22);
+    const rawBass = normaliseFFT(fftLow) * cfg.sensBass;
+    const rawMid = normaliseFFT(fftMid) * cfg.sensMid;
+    const rawTreble = normaliseFFT(fftHigh) * cfg.sensTreble;
+
+    // Attack/release envelope: fast attack for punchy transients, slow release for smooth decay
+    bassEnergy = rawBass > bassEnergy
+      ? lerp(bassEnergy, rawBass, 0.7)    // fast attack
+      : lerp(bassEnergy, rawBass, 0.08);  // slow release
+    midEnergy = rawMid > midEnergy
+      ? lerp(midEnergy, rawMid, 0.65)
+      : lerp(midEnergy, rawMid, 0.10);
+    trebleEnergy = rawTreble > trebleEnergy
+      ? lerp(trebleEnergy, rawTreble, 0.75)  // treble fastest attack
+      : lerp(trebleEnergy, rawTreble, 0.12);
   } else {
-    bassEnergy *= 0.95;
-    midEnergy *= 0.95;
-    trebleEnergy *= 0.95;
+    bassEnergy *= 0.92;
+    midEnergy *= 0.92;
+    trebleEnergy *= 0.92;
   }
 
   // ── Determine source image ────────────────────────────────
@@ -230,15 +271,18 @@ async function initAudio(fileUrl) {
 function normaliseFFT(fft) {
   const vals = fft.getValue(); // Float32Array of dB values (-Infinity to 0)
   let sum = 0;
+  let peak = 0;
   for (let i = 0; i < vals.length; i++) {
-    // Convert dB to linear 0–1 range
     const db = vals[i];
     const lin = Math.pow(10, db / 20); // dB to amplitude
     sum += lin;
+    if (lin > peak) peak = lin;
   }
   const avg = sum / vals.length;
-  // Scale up; typical averages are small
-  return Math.min(avg * 4.0, 1.0);
+  // Blend average with peak for punch — peak detection catches transients
+  const blended = avg * 0.4 + peak * 0.6;
+  // Scale up aggressively so typical music reaches 0.6–1.0
+  return Math.min(blended * 6.0, 1.0);
 }
 
 // ── Shader rendering ────────────────────────────────────────────
@@ -263,7 +307,7 @@ function drawWarpedScene(img) {
   warpShader.setUniform('uMid', midEnergy);
   warpShader.setUniform('uTreble', trebleEnergy);
   warpShader.setUniform('uWarp', cfg.warpIntensity);
-  warpShader.setUniform('uRotation', cfg.rotationSpeed * 0.05);
+  warpShader.setUniform('uRotation', cfg.rotationSpeed * 0.15);
   warpShader.setUniform('uFeedbackAmt', cfg.feedback);
   warpShader.setUniform('uResolution', [width, height]);
 
@@ -419,7 +463,7 @@ function randomize() {
   setSlider('sens-treble', rand(0.5, 2.5));
   setSlider('warp-intensity', rand(0.3, 1.8));
   setSlider('rotation-speed', rand(0.0, 1.5));
-  setSlider('feedback', rand(0.5, 0.95));
+  setSlider('feedback', rand(0.3, 0.75));
 
   // Generate a fresh procedural image with random palette
   defaultImg = createRandomImage();
