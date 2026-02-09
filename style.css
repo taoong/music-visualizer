@@ -237,6 +237,40 @@ html, body {
   margin-top: 0.3rem;
 }
 
+/* ── Scrubber ────────────────────────────────────────────── */
+#scrubber-group {
+  margin: 0.6rem 0;
+}
+
+#scrubber-group input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: #2a2a3a;
+  outline: none;
+  cursor: pointer;
+}
+
+#scrubber-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #667eea;
+  cursor: pointer;
+  border: 2px solid #0c0c12;
+}
+
+#time-display {
+  display: block;
+  font-size: 0.72rem;
+  color: #888;
+  margin-top: 0.3rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
 #randomize-btn {
   width: 100%;
   padding: 0.5rem;
