@@ -9,6 +9,11 @@ let isPlaying = false;
 let useSample = false;
 let userFile = null;
 
+// Scrubber / seek state
+let playStartedAt = 0;  // Tone.now() when playback last started
+let startOffset = 0;    // offset into the song (seconds)
+let isSeeking = false;  // true while user drags scrubber
+
 // Tone.js nodes
 let player = null;
 let gainNode = null;
@@ -59,6 +64,9 @@ function draw() {
       smoothedHigh[i] *= 0.88;
     }
   }
+
+  // ── Update scrubber ───────────────────────────────────────
+  updateScrubber();
 
   drawSpikeCircle();
 }
@@ -196,6 +204,33 @@ function smoothBins(smoothed, raw, sensitivity, attack, release) {
   }
 }
 
+// ── Scrubber / playback position ─────────────────────────────────
+
+function getPlaybackPosition() {
+  if (!player || !player.buffer || !player.buffer.duration) return 0;
+  if (!isPlaying) return startOffset;
+  const elapsed = Tone.now() - playStartedAt;
+  const duration = player.buffer.duration;
+  return (startOffset + elapsed) % duration;
+}
+
+function updateScrubber() {
+  if (isSeeking || !player || !player.buffer || !player.buffer.duration) return;
+  const pos = getPlaybackPosition();
+  const dur = player.buffer.duration;
+  const scrubber = document.getElementById('scrubber');
+  scrubber.max = dur;
+  scrubber.value = pos;
+  document.getElementById('time-display').textContent =
+    formatTime(pos) + ' / ' + formatTime(dur);
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return m + ':' + String(s).padStart(2, '0');
+}
+
 // ── DOM wiring ──────────────────────────────────────────────────
 
 function wireDOM() {
@@ -238,6 +273,8 @@ function wireDOM() {
     try {
       await initAudio(url);
       player.start();
+      playStartedAt = Tone.now();
+      startOffset = 0;
       isPlaying = true;
       sidebar.classList.add('open');
     } catch (err) {
@@ -250,11 +287,13 @@ function wireDOM() {
   document.getElementById('pause-btn').addEventListener('click', () => {
     if (!player) return;
     if (isPlaying) {
+      startOffset = getPlaybackPosition();
       player.stop();
       isPlaying = false;
       document.getElementById('pause-btn').textContent = 'Resume';
     } else {
-      player.start();
+      player.start('+0', startOffset);
+      playStartedAt = Tone.now();
       isPlaying = true;
       document.getElementById('pause-btn').textContent = 'Pause';
     }
@@ -264,6 +303,7 @@ function wireDOM() {
     if (!player) return;
     player.stop();
     isPlaying = false;
+    startOffset = 0;
     document.getElementById('pause-btn').textContent = 'Resume';
   });
 
@@ -276,6 +316,28 @@ function wireDOM() {
   bindSlider('sens-treble', (v) => { cfg.sensTreble = v; });
   bindSlider('spike-scale', (v) => { cfg.spikeScale = v; });
   bindSlider('rotation-speed', (v) => { cfg.rotationSpeed = v; });
+
+  // Scrubber
+  const scrubber = document.getElementById('scrubber');
+  scrubber.addEventListener('input', () => {
+    isSeeking = true;
+    const pos = parseFloat(scrubber.value);
+    const dur = player && player.buffer ? player.buffer.duration : 0;
+    document.getElementById('time-display').textContent =
+      formatTime(pos) + ' / ' + formatTime(dur);
+  });
+  scrubber.addEventListener('change', () => {
+    const pos = parseFloat(scrubber.value);
+    if (player && player.buffer) {
+      startOffset = pos;
+      if (isPlaying) {
+        player.stop();
+        player.start('+0', pos);
+        playStartedAt = Tone.now();
+      }
+    }
+    isSeeking = false;
+  });
 
   document.getElementById('randomize-btn').addEventListener('click', randomize);
 }

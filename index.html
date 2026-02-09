@@ -32,6 +32,10 @@
       <h3>Audio</h3>
       <button id="pause-btn">Pause</button>
       <button id="stop-btn">Stop</button>
+      <div id="scrubber-group">
+        <input type="range" id="scrubber" min="0" max="100" step="0.1" value="0" />
+        <span id="time-display">0:00 / 0:00</span>
+      </div>
       <div class="slider-group">
         <label>Master Volume</label>
         <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.8" />
