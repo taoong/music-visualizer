@@ -8,6 +8,7 @@ let audioReady = false;
 let isPlaying = false;
 let useSample = false;
 let userFile = null;
+let currentObjectUrl = null;
 
 // Scrubber / seek state
 let playStartedAt = 0;  // Tone.now() when playback last started
@@ -142,16 +143,8 @@ function drawSpikeCircle() {
 // ── Audio initialisation ────────────────────────────────────────
 
 async function initAudio(fileUrl) {
+  disposeAudio();
   await Tone.start();
-
-  // Dispose previous audio nodes if re-initialising
-  if (player) {
-    try { player.stop(); } catch (_) {}
-    player.dispose();
-    gainNode.dispose();
-    lowFilter.dispose(); midFilter.dispose(); highFilter.dispose();
-    fftLow.dispose(); fftMid.dispose(); fftHigh.dispose();
-  }
 
   player = new Tone.Player({
     url: fileUrl,
@@ -185,6 +178,22 @@ async function initAudio(fileUrl) {
 
   await Tone.loaded();
   audioReady = true;
+}
+
+function disposeAudio() {
+  if (player) {
+    player.stop();
+    player.dispose();
+    player = null;
+  }
+  if (gainNode) { gainNode.dispose(); gainNode = null; }
+  if (lowFilter) { lowFilter.dispose(); lowFilter = null; }
+  if (midFilter) { midFilter.dispose(); midFilter = null; }
+  if (highFilter) { highFilter.dispose(); highFilter = null; }
+  if (fftLow) { fftLow.dispose(); fftLow = null; }
+  if (fftMid) { fftMid.dispose(); fftMid = null; }
+  if (fftHigh) { fftHigh.dispose(); fftHigh = null; }
+  audioReady = false;
 }
 
 // ── FFT helpers ──────────────────────────────────────────────────
@@ -281,7 +290,9 @@ function wireDOM() {
     if (useSample) {
       url = 'https://tonejs.github.io/audio/berklee/guit_harmonics_01.mp3';
     } else if (userFile) {
-      url = URL.createObjectURL(userFile);
+      if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
+      currentObjectUrl = URL.createObjectURL(userFile);
+      url = currentObjectUrl;
     }
 
     if (!url) {
@@ -324,7 +335,7 @@ function wireDOM() {
 
   document.getElementById('stop-btn').addEventListener('click', () => {
     if (!player) return;
-    player.stop();
+    disposeAudio();
     isPlaying = false;
     startOffset = 0;
     document.getElementById('pause-btn').textContent = 'Resume';
