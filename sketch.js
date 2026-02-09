@@ -9,6 +9,8 @@ let isPlaying = false;
 let useSample = false;
 let userFile = null;
 let userImage = null;
+let currentObjectUrl = null;
+let currentImageUrl = null;
 let defaultImg = null; // generated at setup
 let feedbackGraphics = null;
 
@@ -225,6 +227,7 @@ function windowResized() {
 // ── Audio initialisation ────────────────────────────────────────
 
 async function initAudio(fileUrl) {
+  disposeAudio();
   await Tone.start();
 
   // Player
@@ -266,6 +269,22 @@ async function initAudio(fileUrl) {
   // Wait for buffer to load
   await Tone.loaded();
   audioReady = true;
+}
+
+function disposeAudio() {
+  if (player) {
+    player.stop();
+    player.dispose();
+    player = null;
+  }
+  if (gainNode) { gainNode.dispose(); gainNode = null; }
+  if (lowFilter) { lowFilter.dispose(); lowFilter = null; }
+  if (midFilter) { midFilter.dispose(); midFilter = null; }
+  if (highFilter) { highFilter.dispose(); highFilter = null; }
+  if (fftLow) { fftLow.dispose(); fftLow = null; }
+  if (fftMid) { fftMid.dispose(); fftMid = null; }
+  if (fftHigh) { fftHigh.dispose(); fftHigh = null; }
+  audioReady = false;
 }
 
 function normaliseFFT(fft) {
@@ -383,7 +402,9 @@ function wireDOM() {
       // Use a royalty-free sample — the Tone.js example piano loop
       url = 'https://tonejs.github.io/audio/berklee/guit_harmonics_01.mp3';
     } else if (userFile) {
-      url = URL.createObjectURL(userFile);
+      if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
+      currentObjectUrl = URL.createObjectURL(userFile);
+      url = currentObjectUrl;
     }
 
     try {
@@ -415,7 +436,7 @@ function wireDOM() {
 
   document.getElementById('stop-btn').addEventListener('click', () => {
     if (!player) return;
-    player.stop();
+    disposeAudio();
     isPlaying = false;
     document.getElementById('pause-btn').textContent = 'Resume';
   });
@@ -437,8 +458,9 @@ function wireDOM() {
     if (e.target.files.length) {
       const file = e.target.files[0];
       document.getElementById('img-file-name').textContent = file.name;
-      const url = URL.createObjectURL(file);
-      loadImage(url, (img) => {
+      if (currentImageUrl) URL.revokeObjectURL(currentImageUrl);
+      currentImageUrl = URL.createObjectURL(file);
+      loadImage(currentImageUrl, (img) => {
         userImage = img;
       });
     }
