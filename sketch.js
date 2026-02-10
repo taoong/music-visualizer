@@ -9,6 +9,7 @@ let isPlaying = false;
 let useSample = false;
 let userFile = null;
 let currentObjectUrl = null;
+let currentSampleBlobUrl = null;
 
 // Scrubber / seek state
 let playStartedAt = 0;  // Tone.now() when playback last started
@@ -148,8 +149,23 @@ async function initAudio(fileUrl) {
   disposeAudio();
   await Tone.start();
 
+  // On mobile, fetching remote audio directly through Tone.Player can crash
+  // the tab. Pre-fetch and convert to a blob URL to keep decoding local.
+  let resolvedUrl = fileUrl;
+  if (fileUrl.startsWith('http')) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const resp = await fetch(fileUrl, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    if (!resp.ok) throw new Error('Failed to fetch audio: HTTP ' + resp.status);
+    const blob = await resp.blob();
+    if (currentSampleBlobUrl) URL.revokeObjectURL(currentSampleBlobUrl);
+    currentSampleBlobUrl = URL.createObjectURL(blob);
+    resolvedUrl = currentSampleBlobUrl;
+  }
+
   player = new Tone.Player({
-    url: fileUrl,
+    url: resolvedUrl,
     loop: true,
     autostart: false,
   });
@@ -195,6 +211,7 @@ function disposeAudio() {
   if (fftLow) { fftLow.dispose(); fftLow = null; }
   if (fftMid) { fftMid.dispose(); fftMid = null; }
   if (fftHigh) { fftHigh.dispose(); fftHigh = null; }
+  if (currentSampleBlobUrl) { URL.revokeObjectURL(currentSampleBlobUrl); currentSampleBlobUrl = null; }
   audioReady = false;
 }
 
