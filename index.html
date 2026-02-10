@@ -20,7 +20,19 @@
         <button id="use-sample-btn">Use Sample Track</button>
       </div>
       <span id="file-name"></span>
+      <div id="mode-selector">
+        <button id="mode-freq" class="mode-btn active">Frequency Bands</button>
+        <button id="mode-stems" class="mode-btn">Stem Separation <span class="badge">Experimental</span></button>
+      </div>
       <button id="play-btn" disabled>Play</button>
+    </div>
+  </div>
+
+  <!-- Processing overlay -->
+  <div id="processing" class="hidden">
+    <div id="processing-content">
+      <div class="spinner"></div>
+      <p id="processing-text">Separating stems…</p>
     </div>
   </div>
 
@@ -30,17 +42,43 @@
 
     <section>
       <h3>Sensitivity</h3>
-      <div class="slider-group">
-        <label>Bass (Drums)</label>
-        <input type="range" id="sens-bass" min="0" max="3" step="0.01" value="2.0" />
+      <!-- Frequency mode sliders (shown by default) -->
+      <div id="freq-sliders">
+        <div class="slider-group">
+          <label>Bass (Drums)</label>
+          <input type="range" id="sens-bass" min="0" max="3" step="0.01" value="2.0" />
+        </div>
+        <div class="slider-group">
+          <label>Vocals (Melody)</label>
+          <input type="range" id="sens-mid" min="0" max="3" step="0.01" value="2.0" />
+        </div>
+        <div class="slider-group">
+          <label>Treble (Percussion)</label>
+          <input type="range" id="sens-treble" min="0" max="3" step="0.01" value="2.0" />
+        </div>
       </div>
-      <div class="slider-group">
-        <label>Vocals (Melody)</label>
-        <input type="range" id="sens-mid" min="0" max="3" step="0.01" value="2.0" />
-      </div>
-      <div class="slider-group">
-        <label>Treble (Percussion)</label>
-        <input type="range" id="sens-treble" min="0" max="3" step="0.01" value="2.0" />
+      <!-- Stem mode sliders (hidden by default) -->
+      <div id="stem-sliders" class="hidden">
+        <div class="slider-group">
+          <label>Kick</label>
+          <input type="range" id="sens-kick" min="0" max="3" step="0.01" value="2.0" />
+        </div>
+        <div class="slider-group">
+          <label>Drums</label>
+          <input type="range" id="sens-drums" min="0" max="3" step="0.01" value="2.0" />
+        </div>
+        <div class="slider-group">
+          <label>Bass</label>
+          <input type="range" id="sens-bass-stem" min="0" max="3" step="0.01" value="2.0" />
+        </div>
+        <div class="slider-group">
+          <label>Vocals</label>
+          <input type="range" id="sens-vocals" min="0" max="3" step="0.01" value="2.0" />
+        </div>
+        <div class="slider-group">
+          <label>Other</label>
+          <input type="range" id="sens-other" min="0" max="3" step="0.01" value="2.0" />
+        </div>
       </div>
     </section>
 
