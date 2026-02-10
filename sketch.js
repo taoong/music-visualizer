@@ -345,12 +345,12 @@ function wireDOM() {
       startOffset = getPlaybackPosition();
       player.stop();
       isPlaying = false;
-      document.getElementById('pause-btn').textContent = '\u25B6';
+      document.getElementById('pause-btn').classList.remove('is-playing');
     } else {
       player.start('+0', startOffset);
       playStartedAt = Tone.now();
       isPlaying = true;
-      document.getElementById('pause-btn').textContent = '\u23F8';
+      document.getElementById('pause-btn').classList.add('is-playing');
     }
   });
 
@@ -370,7 +370,7 @@ function wireDOM() {
       playStartedAt = Tone.now();
       startOffset = 0;
       isPlaying = true;
-      document.getElementById('pause-btn').textContent = '\u23F8';
+      document.getElementById('pause-btn').classList.add('is-playing');
       trackNameEl.textContent = userFile.name;
     } catch (err) {
       console.error('Track switch error:', err);

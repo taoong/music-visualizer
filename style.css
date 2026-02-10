@@ -192,15 +192,13 @@ html, body {
 }
 
 #pause-btn {
+  position: relative;
   width: 32px;
   height: 32px;
   padding: 0;
   border: 1px solid #333;
   border-radius: 5px;
   background: transparent;
-  color: #bbb;
-  font-size: 1rem;
-  line-height: 1;
   cursor: pointer;
   flex-shrink: 0;
   transition: background 0.2s;
@@ -208,6 +206,43 @@ html, body {
 
 #pause-btn:hover {
   background: #1e1e2e;
+}
+
+/* Play triangle */
+#pause-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: none;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 0 6px 10px;
+  border-color: transparent transparent transparent #bbb;
+  transform: translate(-40%, -50%);
+}
+
+/* Pause bars */
+#pause-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  width: 10px;
+  height: 12px;
+  border-left: 3px solid #bbb;
+  border-right: 3px solid #bbb;
+}
+
+#pause-btn.is-playing::after {
+  display: block;
+}
+
+#pause-btn:not(.is-playing)::before {
+  display: block;
 }
 
 /* ── Track Switching ────────────────────────────────────── */
