@@ -317,12 +317,12 @@ html, body {
 
 #volume-popup {
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%) scaleY(0);
   transform-origin: bottom center;
   width: 36px;
-  height: 120px;
+  padding: 10px 0 8px;
   background: rgba(12, 12, 18, 0.95);
   backdrop-filter: blur(12px);
   border: 1px solid #1e1e2e;
@@ -330,7 +330,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 0;
+  height: 128px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s, transform 0.2s;
