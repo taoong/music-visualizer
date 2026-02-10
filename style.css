@@ -210,16 +210,11 @@ html, body {
 }
 
 /* ── Track Switching ────────────────────────────────────── */
-#track-switch-group {
-  margin-top: 0.6rem;
-}
-
 #sidebar-audio-upload {
   display: none;
 }
 
-#change-track-label,
-#sidebar-sample-btn {
+#change-track-label {
   padding: 0.35rem 0.9rem;
   border: 1px solid #333;
   border-radius: 5px;
@@ -227,25 +222,22 @@ html, body {
   color: #bbb;
   font-size: 0.8rem;
   cursor: pointer;
-  margin-right: 0.4rem;
   transition: background 0.2s;
-}
-
-#change-track-label {
   display: inline-block;
 }
 
-#change-track-label:hover,
-#sidebar-sample-btn:hover {
+#change-track-label:hover {
   background: #1e1e2e;
 }
 
 #track-name {
-  display: block;
   font-size: 0.72rem;
   color: #888;
-  margin-top: 0.3rem;
   font-variant-numeric: tabular-nums;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #img-upload-label {
@@ -276,9 +268,74 @@ html, body {
   margin-top: 0.3rem;
 }
 
+/* ── Playback Bar ────────────────────────────────────────── */
+#playback-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 56px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+  background: rgba(12, 12, 18, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid #1e1e2e;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+#playback-bar.visible {
+  transform: translateY(0);
+}
+
+#volume-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+#volume-group label {
+  font-size: 0.72rem;
+  color: #888;
+  flex-shrink: 0;
+}
+
+#volume-group input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: #2a2a3a;
+  outline: none;
+  cursor: pointer;
+}
+
+#volume-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #764ba2;
+  cursor: pointer;
+  border: 2px solid #0c0c12;
+}
+
+#track-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
 /* ── Scrubber ────────────────────────────────────────────── */
 #scrubber-group {
-  margin: 0.6rem 0;
+  flex: 1;
+  min-width: 0;
 }
 
 #scrubber-group input[type="range"] {

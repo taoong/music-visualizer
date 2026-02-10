@@ -22,7 +22,7 @@ let gainNode = null;
 let lowFilter, midFilter, highFilter;
 let fftLow, fftMid, fftHigh;
 
-const sampleUrl = 'https://tonejs.github.io/audio/berklee/guit_harmonics_01.mp3';
+const sampleUrl = 'sample.mp3';
 
 // Mobile detection
 const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)
@@ -325,11 +325,11 @@ function wireDOM() {
     try {
       await initAudio(url);
       splash.classList.add('hidden');
+      document.getElementById('playback-bar').classList.add('visible');
       player.start();
       playStartedAt = Tone.now();
       startOffset = 0;
       isPlaying = true;
-      sidebar.classList.add('open');
       document.getElementById('track-name').textContent =
         useSample ? 'Sample track' : userFile.name;
     } catch (err) {
@@ -362,7 +362,7 @@ function wireDOM() {
     document.getElementById('pause-btn').textContent = 'Resume';
   });
 
-  // ── Sidebar track switching ──────────────────────────────
+  // ── Track switching (playback bar) ──────────────────────
   const trackNameEl = document.getElementById('track-name');
 
   document.getElementById('sidebar-audio-upload').addEventListener('change', async (e) => {
@@ -380,24 +380,6 @@ function wireDOM() {
       isPlaying = true;
       document.getElementById('pause-btn').textContent = 'Pause';
       trackNameEl.textContent = userFile.name;
-    } catch (err) {
-      console.error('Track switch error:', err);
-      trackNameEl.textContent = 'Error loading audio.';
-    }
-  });
-
-  document.getElementById('sidebar-sample-btn').addEventListener('click', async () => {
-    useSample = true;
-    userFile = null;
-    trackNameEl.textContent = 'Loading\u2026';
-    try {
-      await initAudio(sampleUrl);
-      player.start();
-      playStartedAt = Tone.now();
-      startOffset = 0;
-      isPlaying = true;
-      document.getElementById('pause-btn').textContent = 'Pause';
-      trackNameEl.textContent = 'Sample track';
     } catch (err) {
       console.error('Track switch error:', err);
       trackNameEl.textContent = 'Error loading audio.';
