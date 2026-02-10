@@ -695,6 +695,42 @@ html, body {
   display: block;
 }
 
+/* ── Viz Toggle (sidebar) ────────────────────────────────── */
+.viz-toggle {
+  display: flex;
+  background: var(--bg-surface);
+  border-radius: var(--radius-full);
+  padding: 3px;
+}
+
+.viz-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.viz-btn:hover {
+  color: var(--text-secondary);
+}
+
+.viz-btn.active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.viz-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
 /* ── Scrollbar ───────────────────────────────────────────── */
 #sidebar::-webkit-scrollbar {
   width: 4px;

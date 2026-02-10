@@ -6,6 +6,7 @@
 
 // ── Mode state ──────────────────────────────────────────────────
 let mode = 'freq'; // 'freq' or 'stems'
+let vizMode = 'circle'; // 'circle' or 'spectrum'
 
 // ── State ────────────────────────────────────────────────────────
 let audioReady = false;
@@ -136,7 +137,11 @@ function draw() {
   }
 
   updateScrubber();
-  drawSpikeCircle();
+  if (vizMode === 'spectrum') {
+    drawSpectrum();
+  } else {
+    drawSpikeCircle();
+  }
 }
 
 function windowResized() {
@@ -213,6 +218,55 @@ function drawSpikeCircle() {
   ellipse(0, 0, baseRadius * 2, baseRadius * 2);
 
   pop();
+}
+
+// ── Spectrum visualization ─────────────────────────────────────────
+
+function drawSpectrum() {
+  const hPad = 40;
+  const bottomMargin = 60;
+  const maxBarHeight = height * 0.7;
+
+  let bandCount, totalBars;
+  if (mode === 'freq') {
+    bandCount = 3;
+  } else {
+    bandCount = 5;
+  }
+  totalBars = SPIKES_PER_BAND * bandCount;
+
+  const availWidth = width - hPad * 2;
+  const barWidth = Math.max((availWidth / totalBars) - 1, 1);
+  const gap = 1;
+
+  noStroke();
+  for (let b = 0; b < bandCount; b++) {
+    for (let i = 0; i < SPIKES_PER_BAND; i++) {
+      const idx = b * SPIKES_PER_BAND + i;
+
+      let amp = 0;
+      if (mode === 'freq') {
+        if (b === 0) amp = smoothedLow[i];
+        else if (b === 1) amp = smoothedMid[i];
+        else amp = smoothedHigh[i];
+      } else {
+        const stem = STEMS[b];
+        if (stemSmoothed[stem]) amp = stemSmoothed[stem][i];
+      }
+
+      amp *= cfg.spikeScale;
+
+      const barH = amp * maxBarHeight;
+      if (barH < 0.5) continue;
+
+      const x = hPad + idx * (barWidth + gap);
+      const y = height - bottomMargin - barH;
+
+      const brightness = 80 + Math.min(amp, 1.0) * 175;
+      fill(brightness);
+      rect(x, y, barWidth, barH);
+    }
+  }
 }
 
 // ── Audio initialisation (freq mode — unchanged) ─────────────────
@@ -715,6 +769,22 @@ function wireDOM() {
   bindSlider('sens-vocals', (v) => { cfg.sensVocals = v; });
   bindSlider('sens-other', (v) => { cfg.sensOther = v; });
 
+  // ── Viz mode toggle ────────────────────────────────────────
+  const vizCircleBtn = document.getElementById('viz-circle');
+  const vizSpectrumBtn = document.getElementById('viz-spectrum');
+
+  vizCircleBtn.addEventListener('click', () => {
+    vizMode = 'circle';
+    vizCircleBtn.classList.add('active');
+    vizSpectrumBtn.classList.remove('active');
+  });
+
+  vizSpectrumBtn.addEventListener('click', () => {
+    vizMode = 'spectrum';
+    vizSpectrumBtn.classList.add('active');
+    vizCircleBtn.classList.remove('active');
+  });
+
   // ── Display sliders ────────────────────────────────────────
   bindSlider('spike-scale', (v) => { cfg.spikeScale = v; });
   bindSlider('rotation-speed', (v) => { cfg.rotationSpeed = v; });
@@ -782,7 +852,9 @@ function randomize() {
     setSlider('sens-other', rand(1.0, 3.0));
   }
   setSlider('spike-scale', rand(0.5, 2.0));
-  setSlider('rotation-speed', rand(0.0, 1.5));
+  if (vizMode === 'circle') {
+    setSlider('rotation-speed', rand(0.0, 1.5));
+  }
 }
 
 function setSlider(id, value) {
