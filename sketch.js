@@ -345,21 +345,13 @@ function wireDOM() {
       startOffset = getPlaybackPosition();
       player.stop();
       isPlaying = false;
-      document.getElementById('pause-btn').textContent = 'Resume';
+      document.getElementById('pause-btn').textContent = '\u25B6';
     } else {
       player.start('+0', startOffset);
       playStartedAt = Tone.now();
       isPlaying = true;
-      document.getElementById('pause-btn').textContent = 'Pause';
+      document.getElementById('pause-btn').textContent = '\u23F8';
     }
-  });
-
-  document.getElementById('stop-btn').addEventListener('click', () => {
-    if (!player) return;
-    disposeAudio();
-    isPlaying = false;
-    startOffset = 0;
-    document.getElementById('pause-btn').textContent = 'Resume';
   });
 
   // ── Track switching (playback bar) ──────────────────────
@@ -378,7 +370,7 @@ function wireDOM() {
       playStartedAt = Tone.now();
       startOffset = 0;
       isPlaying = true;
-      document.getElementById('pause-btn').textContent = 'Pause';
+      document.getElementById('pause-btn').textContent = '\u23F8';
       trackNameEl.textContent = userFile.name;
     } catch (err) {
       console.error('Track switch error:', err);
