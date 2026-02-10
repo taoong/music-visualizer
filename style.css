@@ -416,20 +416,21 @@ html, body {
 /* ── Scrubber ────────────────────────────────────────────── */
 #scrubber-group {
   min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 #scrubber-group input[type="range"] {
   -webkit-appearance: none;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   height: 4px;
   border-radius: 2px;
   background: #2a2a3a;
   outline: none;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+#scrubber-group input[type="range"]:hover {
+  background: #3a3a4f;
 }
 
 #scrubber-group input[type="range"]::-webkit-slider-thumb {
@@ -440,15 +441,23 @@ html, body {
   background: #667eea;
   cursor: pointer;
   border: 2px solid #0c0c12;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+#scrubber-group input[type="range"]:hover::-webkit-slider-thumb {
+  background: #7b93ff;
+}
+
+#scrubber-group input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.5);
+  box-shadow: 0 0 6px rgba(102, 126, 234, 0.5);
 }
 
 #time-display {
   font-size: 0.68rem;
   color: #888;
-  text-align: right;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 #randomize-btn {
