@@ -68,22 +68,24 @@
   <main id="canvas-container"></main>
 
   <footer id="playback-bar">
-    <button id="pause-btn" class="is-playing"></button>
-    <div id="scrubber-wrapper">
-      <div id="track-info">
-        <span id="track-name"></span>
-        <label id="change-track-label" for="sidebar-audio-upload">Change Track</label>
-        <input type="file" id="sidebar-audio-upload" accept="audio/*" />
-      </div>
+    <div id="scrubber-row">
       <span id="time-display">0:00 / 0:00</span>
       <div id="scrubber-group">
         <input type="range" id="scrubber" min="0" max="100" step="0.1" value="0" />
       </div>
     </div>
-    <div id="volume-group">
-      <button id="volume-btn" type="button">&#128266;</button>
-      <div id="volume-popup">
-        <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.8" orient="vertical" />
+    <div id="controls-row">
+      <button id="pause-btn" class="is-playing"></button>
+      <div id="track-info">
+        <span id="track-name"></span>
+        <label id="change-track-label" for="sidebar-audio-upload" title="Change Track">&#128193;</label>
+        <input type="file" id="sidebar-audio-upload" accept="audio/*" />
+      </div>
+      <div id="volume-group">
+        <button id="volume-btn" type="button">&#128266;</button>
+        <div id="volume-popup">
+          <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.8" orient="vertical" />
+        </div>
       </div>
     </div>
   </footer>

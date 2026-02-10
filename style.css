@@ -251,19 +251,15 @@ html, body {
 }
 
 #change-track-label {
-  padding: 0.35rem 0.9rem;
-  border: 1px solid #333;
-  border-radius: 5px;
-  background: transparent;
-  color: #bbb;
-  font-size: 0.8rem;
   cursor: pointer;
-  transition: background 0.2s;
-  display: inline-block;
+  font-size: 0.85rem;
+  line-height: 1;
+  opacity: 0.5;
+  transition: opacity 0.2s;
 }
 
 #change-track-label:hover {
-  background: #1e1e2e;
+  opacity: 1;
 }
 
 #track-name {
@@ -310,12 +306,10 @@ html, body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 56px;
   z-index: 500;
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0 1rem;
+  flex-direction: column;
+  padding: 0.4rem 1rem 0.6rem;
   background: rgba(12, 12, 18, 0.95);
   backdrop-filter: blur(12px);
   border-top: 1px solid #1e1e2e;
@@ -402,19 +396,30 @@ html, body {
 #track-info {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
 }
 
-#scrubber-wrapper {
-  flex: 1;
-  min-width: 0;
+#scrubber-row {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 0.3rem;
+}
+
+#controls-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 /* ── Scrubber ────────────────────────────────────────────── */
 #scrubber-group {
+  flex: 1;
   min-width: 0;
 }
 
