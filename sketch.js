@@ -66,6 +66,36 @@ let smoothedLow = new Float32Array(SPIKES_PER_BAND);
 let smoothedMid = new Float32Array(SPIKES_PER_BAND);
 let smoothedHigh = new Float32Array(SPIKES_PER_BAND);
 
+// ── Delta (rate-of-change detection) ────────────────────────────
+const DELTA_ATTACK  = 0.70;
+const DELTA_RELEASE = 0.08;
+const DELTA_SPIKE_WIDTH_MIN = 0.08;  // narrowest spike (high delta = punchy)
+const DELTA_SPIKE_WIDTH_MAX = 0.35;  // widest spike (low delta = sustained)
+const DELTA_LENGTH_BOOST = 0.3;      // max spike length bonus from delta
+const DELTA_BRIGHTNESS_BOOST = 60;   // max additive brightness (spectrum mode)
+
+const deltaState = {
+  low:  { prevMean: 0, smoothed: 0 },
+  mid:  { prevMean: 0, smoothed: 0 },
+  high: { prevMean: 0, smoothed: 0 },
+};
+let deltaLow = 0, deltaMid = 0, deltaHigh = 0;
+const deltaStems = {};       // lazy-initialized per stem
+let deltaStemValues = {};
+
+// ── Spectral centroid ───────────────────────────────────────────
+const CENTROID_LOW_HZ  = 80;
+const CENTROID_HIGH_HZ = 8000;
+const CENTROID_LOG_LOW  = Math.log(CENTROID_LOW_HZ);
+const CENTROID_LOG_HIGH = Math.log(CENTROID_HIGH_HZ);
+const CENTROID_LOG_RANGE = CENTROID_LOG_HIGH - CENTROID_LOG_LOW;
+const CENTROID_SMOOTHING = 0.06;      // slow EMA to prevent jitter
+const CENTROID_Y_RANGE   = 0.15;      // max Y offset as fraction of height
+
+let fftFull = null;          // full-spectrum FFT (freq mode, no filter)
+let smoothedCentroid = 0.5;  // normalized [0,1], 0.5 = neutral
+let centroidYOffset = 0;     // pixel offset, updated each frame
+
 // ── Stem-mode variables ─────────────────────────────────────────
 const STEMS = ['kick', 'drums', 'bass', 'vocals', 'other'];
 let stemPlayers = {};
@@ -134,9 +164,15 @@ function draw() {
       transientMid = updateTransient(transientState.mid, rawMid);
       transientHigh = updateTransient(transientState.high, rawHigh);
 
+      deltaLow  = computeDelta(deltaState.low, rawLow);
+      deltaMid  = computeDelta(deltaState.mid, rawMid);
+      deltaHigh = computeDelta(deltaState.high, rawHigh);
+
       smoothBins(smoothedLow, rawLow, cfg.sensBass, 0.55, 0.10);
       smoothBins(smoothedMid, rawMid, cfg.sensMid, 0.78, 0.12);
       smoothBins(smoothedHigh, rawHigh, cfg.sensTreble, 0.88, 0.14);
+
+      if (fftFull) updateCentroid(computeSpectralCentroid(fftFull));
     } else {
       for (let i = 0; i < SPIKES_PER_BAND; i++) {
         smoothedLow[i] *= 0.88;
@@ -146,6 +182,9 @@ function draw() {
       transientLow = 1.0 + (transientLow - 1.0) * TRANSIENT_DECAY;
       transientMid = 1.0 + (transientMid - 1.0) * TRANSIENT_DECAY;
       transientHigh = 1.0 + (transientHigh - 1.0) * TRANSIENT_DECAY;
+      deltaLow  *= DELTA_RELEASE;
+      deltaMid  *= DELTA_RELEASE;
+      deltaHigh *= DELTA_RELEASE;
     }
   } else {
     // ── Stem mode: analyse each stem's FFT ──────────────────
@@ -161,12 +200,17 @@ function draw() {
         if (!transientStems[stem]) {
           transientStems[stem] = { avg: 0, multiplier: 1.0 };
         }
+        if (!deltaStems[stem]) {
+          deltaStems[stem] = { prevMean: 0, smoothed: 0 };
+        }
         const raw = applyAutoGain(getFFTAmplitudes(stemFfts[stem], SPIKES_PER_BAND, 10.0), autoGainStems[stem]);
         transientStemValues[stem] = updateTransient(transientStems[stem], raw);
+        deltaStemValues[stem] = computeDelta(deltaStems[stem], raw);
         const sensKey = STEM_SENS_KEYS[stem];
         const [attack, release] = STEM_SMOOTHING[stem];
         smoothBins(stemSmoothed[stem], raw, cfg[sensKey], attack, release);
       }
+      updateCentroid(computeStemCentroid());
     } else {
       for (const stem of STEMS) {
         if (!stemSmoothed[stem]) continue;
@@ -175,6 +219,9 @@ function draw() {
         }
         if (transientStemValues[stem] !== undefined) {
           transientStemValues[stem] = 1.0 + (transientStemValues[stem] - 1.0) * TRANSIENT_DECAY;
+        }
+        if (deltaStemValues[stem] !== undefined) {
+          deltaStemValues[stem] *= DELTA_RELEASE;
         }
       }
     }
@@ -214,7 +261,7 @@ function drawSpikeCircle() {
   const rotation = millis() / 1000.0 * cfg.rotationSpeed * 0.4;
 
   push();
-  translate(cx, cy);
+  translate(cx, cy + centroidYOffset);
 
   // Draw spikes as tapered triangles
   noStroke();
@@ -225,29 +272,32 @@ function drawSpikeCircle() {
 
     let amp = 0;
     let tMult = 1.0;
+    let delta = 0;
     if (mode === 'freq') {
-      if (band === 0) { amp = smoothedLow[bandIdx]; tMult = transientLow; }
-      else if (band === 1) { amp = smoothedMid[bandIdx]; tMult = transientMid; }
-      else { amp = smoothedHigh[bandIdx]; tMult = transientHigh; }
+      if (band === 0) { amp = smoothedLow[bandIdx]; tMult = transientLow; delta = deltaLow; }
+      else if (band === 1) { amp = smoothedMid[bandIdx]; tMult = transientMid; delta = deltaMid; }
+      else { amp = smoothedHigh[bandIdx]; tMult = transientHigh; delta = deltaHigh; }
     } else {
       const stem = STEMS[band];
       if (stemSmoothed[stem]) amp = stemSmoothed[stem][bandIdx];
       if (transientStemValues[stem]) tMult = transientStemValues[stem];
+      if (deltaStemValues[stem]) delta = deltaStemValues[stem];
     }
 
     amp *= cfg.spikeScale * tMult;
 
-    const spikeLen = amp * maxSpikeLen;
+    const spikeLen = amp * maxSpikeLen * (1.0 + delta * DELTA_LENGTH_BOOST);
     if (spikeLen < 0.5) continue;
 
-    // Spike base half-width (angular) — wider for louder spikes
-    const halfBase = angleStep * (0.25 + amp * 0.2);
+    // Spike base half-width — high delta = narrow/punchy, low delta = wide/sustained
+    const widthFactor = DELTA_SPIKE_WIDTH_MAX - delta * (DELTA_SPIKE_WIDTH_MAX - DELTA_SPIKE_WIDTH_MIN);
+    const halfBase = angleStep * (widthFactor + amp * 0.1);
 
     const innerR = baseRadius;
     const outerR = baseRadius + spikeLen;
 
-    // Brightness scales with amplitude
-    const brightness = 120 + Math.min(amp, 1.0) * 135;
+    // Brightness scales with amplitude + delta boost
+    const brightness = 120 + Math.min(amp, 1.0) * 135 + delta * 30;
     fill(brightness);
 
     beginShape();
@@ -270,7 +320,7 @@ function drawSpikeCircle() {
 
 function drawSpectrum() {
   const hPad = 40;
-  const bottomMargin = 60;
+  const bottomMargin = 60 - centroidYOffset;
   const maxBarHeight = height * 0.7;
 
   let bandCount, totalBars;
@@ -292,25 +342,27 @@ function drawSpectrum() {
 
       let amp = 0;
       let tMult = 1.0;
+      let delta = 0;
       if (mode === 'freq') {
-        if (b === 0) { amp = smoothedLow[i]; tMult = transientLow; }
-        else if (b === 1) { amp = smoothedMid[i]; tMult = transientMid; }
-        else { amp = smoothedHigh[i]; tMult = transientHigh; }
+        if (b === 0) { amp = smoothedLow[i]; tMult = transientLow; delta = deltaLow; }
+        else if (b === 1) { amp = smoothedMid[i]; tMult = transientMid; delta = deltaMid; }
+        else { amp = smoothedHigh[i]; tMult = transientHigh; delta = deltaHigh; }
       } else {
         const stem = STEMS[b];
         if (stemSmoothed[stem]) amp = stemSmoothed[stem][i];
         if (transientStemValues[stem]) tMult = transientStemValues[stem];
+        if (deltaStemValues[stem]) delta = deltaStemValues[stem];
       }
 
       amp *= cfg.spikeScale * tMult;
 
-      const barH = amp * maxBarHeight;
+      const barH = amp * maxBarHeight * (1.0 + delta * DELTA_LENGTH_BOOST);
       if (barH < 0.5) continue;
 
       const x = hPad + idx * (barWidth + gap);
       const y = height - bottomMargin - barH;
 
-      const brightness = 80 + Math.min(amp, 1.0) * 175;
+      const brightness = 80 + Math.min(amp, 1.0) * 175 + delta * DELTA_BRIGHTNESS_BOOST;
       fill(brightness);
       rect(x, y, barWidth, barH);
     }
@@ -368,6 +420,9 @@ async function initAudio(fileUrl) {
   player.connect(highFilter);
   highFilter.connect(fftHigh);
 
+  fftFull = new Tone.FFT(fftSize);
+  player.connect(fftFull);
+
   await Tone.loaded();
   audioReady = true;
 }
@@ -385,6 +440,7 @@ function disposeAudio() {
   if (fftLow) { fftLow.dispose(); fftLow = null; }
   if (fftMid) { fftMid.dispose(); fftMid = null; }
   if (fftHigh) { fftHigh.dispose(); fftHigh = null; }
+  if (fftFull) { fftFull.dispose(); fftFull = null; }
   if (currentSampleBlobUrl) { URL.revokeObjectURL(currentSampleBlobUrl); currentSampleBlobUrl = null; }
   resetAudioProcessingState();
   audioReady = false;
@@ -541,6 +597,72 @@ function updateTransient(state, rawBins) {
   return state.multiplier;
 }
 
+// ── Delta (rate-of-change detection) ──────────────────────────────
+
+function computeDelta(state, rawBins) {
+  let sum = 0;
+  for (let i = 0; i < rawBins.length; i++) sum += rawBins[i];
+  const currentMean = sum / rawBins.length;
+
+  const rawDelta = Math.max(0, currentMean - state.prevMean);
+  state.prevMean = currentMean;
+
+  const alpha = rawDelta > state.smoothed ? DELTA_ATTACK : DELTA_RELEASE;
+  state.smoothed += (rawDelta - state.smoothed) * alpha;
+
+  return Math.min(state.smoothed * 4, 1.0);
+}
+
+// ── Spectral centroid ─────────────────────────────────────────────
+
+function computeSpectralCentroid(fft) {
+  const vals = fft.getValue();
+  const sampleRate = Tone.context.sampleRate;
+  const binCount = vals.length;
+  const binWidth = sampleRate / (binCount * 2);
+
+  let weightedSum = 0;
+  let energySum = 0;
+
+  for (let i = 1; i < binCount; i++) {
+    const db = vals[i];
+    const energy = Math.pow(10, db / 20);
+    const freq = i * binWidth;
+    weightedSum += freq * energy;
+    energySum += energy;
+  }
+
+  if (energySum < 1e-10) return CENTROID_LOW_HZ;
+  return weightedSum / energySum;
+}
+
+function computeStemCentroid() {
+  let totalWeightedCentroid = 0;
+  let totalEnergy = 0;
+
+  for (const stem of STEMS) {
+    if (!stemFfts[stem]) continue;
+    const vals = stemFfts[stem].getValue();
+    let stemEnergy = 0;
+    for (let i = 1; i < vals.length; i++) {
+      stemEnergy += Math.pow(10, vals[i] / 20);
+    }
+    const centroid = computeSpectralCentroid(stemFfts[stem]);
+    totalWeightedCentroid += centroid * stemEnergy;
+    totalEnergy += stemEnergy;
+  }
+
+  if (totalEnergy < 1e-10) return CENTROID_LOW_HZ;
+  return totalWeightedCentroid / totalEnergy;
+}
+
+function updateCentroid(centroidHz) {
+  const clampedHz = Math.max(CENTROID_LOW_HZ, Math.min(centroidHz, CENTROID_HIGH_HZ));
+  const normalized = (Math.log(clampedHz) - CENTROID_LOG_LOW) / CENTROID_LOG_RANGE;
+  smoothedCentroid += (normalized - smoothedCentroid) * CENTROID_SMOOTHING;
+  centroidYOffset = -(smoothedCentroid - 0.5) * height * CENTROID_Y_RANGE;
+}
+
 // ── Reset audio processing state on track change ──────────────────
 
 function resetAudioProcessingState() {
@@ -561,6 +683,19 @@ function resetAudioProcessingState() {
   transientHigh = 1.0;
   for (const key in transientStems) delete transientStems[key];
   transientStemValues = {};
+
+  // Reset delta
+  for (const key of ['low', 'mid', 'high']) {
+    deltaState[key].prevMean = 0;
+    deltaState[key].smoothed = 0;
+  }
+  deltaLow = deltaMid = deltaHigh = 0;
+  for (const key in deltaStems) delete deltaStems[key];
+  deltaStemValues = {};
+
+  // Reset centroid
+  smoothedCentroid = 0.5;
+  centroidYOffset = 0;
 }
 
 // ── Scrubber / playback position ─────────────────────────────────
