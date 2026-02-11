@@ -1046,17 +1046,20 @@ function wireDOM() {
   // ── Viz mode toggle ────────────────────────────────────────
   const vizCircleBtn = document.getElementById('viz-circle');
   const vizSpectrumBtn = document.getElementById('viz-spectrum');
+  const rotationSpeedGroup = document.getElementById('rotation-speed-group');
 
   vizCircleBtn.addEventListener('click', () => {
     vizMode = 'circle';
     vizCircleBtn.classList.add('active');
     vizSpectrumBtn.classList.remove('active');
+    rotationSpeedGroup.classList.remove('hidden');
   });
 
   vizSpectrumBtn.addEventListener('click', () => {
     vizMode = 'spectrum';
     vizSpectrumBtn.classList.add('active');
     vizCircleBtn.classList.remove('active');
+    rotationSpeedGroup.classList.add('hidden');
   });
 
   // ── Display sliders ────────────────────────────────────────
