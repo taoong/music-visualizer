@@ -6,7 +6,7 @@
 
 // ── Mode state ──────────────────────────────────────────────────
 let mode = 'freq'; // 'freq' or 'stems'
-let vizMode = 'circle'; // 'circle' or 'spectrum'
+let vizMode = 'circle'; // 'circle', 'spectrum', or 'tunnel'
 
 // ── State ────────────────────────────────────────────────────────
 let audioReady = false;
@@ -46,6 +46,32 @@ const BANDS = [
 ];
 const BAND_COUNT = BANDS.length;
 
+// ── Octave-based tunnel constants ────────────────────────────────
+const OCTAVE_COUNT = 10;
+const OCTAVES = [
+  { loHz: 27.5,   hiHz: 55 },
+  { loHz: 55,     hiHz: 110 },
+  { loHz: 110,    hiHz: 220 },
+  { loHz: 220,    hiHz: 440 },
+  { loHz: 440,    hiHz: 880 },
+  { loHz: 880,    hiHz: 1760 },
+  { loHz: 1760,   hiHz: 3520 },
+  { loHz: 3520,   hiHz: 7040 },
+  { loHz: 7040,   hiHz: 14080 },
+  { loHz: 14080,  hiHz: 20000 },
+];
+// Per-octave boost factors — low octaves have fewer FFT bins so need more boost
+const OCTAVE_SCALES = [6.0, 5.0, 4.0, 3.5, 3.0, 3.0, 3.5, 4.0, 5.0, 6.0];
+// Tunnel rendering constants
+const TUNNEL_GLOW_PASSES = [
+  { widthMult: 6.0, alphaMult: 0.25 },  // outer glow
+  { widthMult: 3.0, alphaMult: 0.55 },  // body
+  { widthMult: 1.0, alphaMult: 1.0 },   // core
+];
+const TUNNEL_BASE_BRIGHTNESS = 40;
+const TUNNEL_PERSPECTIVE_POWER = 1.8;    // >1 compresses inner rings
+const TUNNEL_PULSE_SCALE = 0.15;         // max radius expansion from energy
+
 // ── Auto-gain: rolling peak normalization (~5s window) ───────────
 const AUTO_GAIN_FRAMES = 300;   // ~5s at 60fps
 const AUTO_GAIN_FLOOR = 0.01;   // prevents division by zero
@@ -79,6 +105,14 @@ const deltaBands = BANDS.map(() => ({ prevMean: 0, smoothed: 0 }));
 let deltaValues = new Float32Array(BAND_COUNT);
 const deltaStems = {};       // lazy-initialized per stem
 let deltaStemValues = {};
+
+// ── Octave-based state (tunnel mode) ────────────────────────────
+let smoothedOctaves = new Float32Array(OCTAVE_COUNT);
+const octaveTransients = Array.from({ length: OCTAVE_COUNT }, () => ({ avg: 0, multiplier: 1.0 }));
+let octaveTransientValues = new Float32Array(OCTAVE_COUNT).fill(1.0);
+const octaveDeltas = Array.from({ length: OCTAVE_COUNT }, () => ({ prevMean: 0, smoothed: 0 }));
+let octaveDeltaValues = new Float32Array(OCTAVE_COUNT);
+let autoGainOctaves = { peaks: new Float32Array(AUTO_GAIN_FRAMES).fill(AUTO_GAIN_FLOOR), idx: 0 };
 
 // ── Spectral centroid ───────────────────────────────────────────
 const CENTROID_LOW_HZ  = 80;
@@ -165,6 +199,14 @@ function draw() {
         smoothBins(smoothedBands[b], raw, cfg[BANDS[b].sens], BANDS[b].attack, BANDS[b].release);
       }
       if (fftFull) updateCentroid(computeSpectralCentroid(fftFull));
+      if (vizMode === 'tunnel' && fftFull) {
+        const rawOct = applyAutoGain(getOctaveAmplitudes(fftFull), autoGainOctaves);
+        for (let o = 0; o < OCTAVE_COUNT; o++) {
+          octaveTransientValues[o] = updateTransient(octaveTransients[o], new Float32Array([rawOct[o]]));
+          octaveDeltaValues[o] = computeDelta(octaveDeltas[o], new Float32Array([rawOct[o]]));
+          smoothedOctaves[o] += (rawOct[o] * cfg.spikeScale - smoothedOctaves[o]) * 0.55;
+        }
+      }
     } else {
       for (let b = 0; b < BAND_COUNT; b++) {
         for (let i = 0; i < SPIKES_PER_BAND; i++) {
@@ -172,6 +214,13 @@ function draw() {
         }
         transientValues[b] = 1.0 + (transientValues[b] - 1.0) * TRANSIENT_DECAY;
         deltaValues[b] *= DELTA_RELEASE;
+      }
+      if (vizMode === 'tunnel') {
+        for (let o = 0; o < OCTAVE_COUNT; o++) {
+          smoothedOctaves[o] *= 0.88;
+          octaveTransientValues[o] = 1.0 + (octaveTransientValues[o] - 1.0) * TRANSIENT_DECAY;
+          octaveDeltaValues[o] *= DELTA_RELEASE;
+        }
       }
     }
   } else {
@@ -199,6 +248,14 @@ function draw() {
         smoothBins(stemSmoothed[stem], raw, cfg[sensKey], attack, release);
       }
       updateCentroid(computeStemCentroid());
+      if (vizMode === 'tunnel') {
+        const rawOct = applyAutoGain(getOctaveAmplitudesFromStems(stemFfts), autoGainOctaves);
+        for (let o = 0; o < OCTAVE_COUNT; o++) {
+          octaveTransientValues[o] = updateTransient(octaveTransients[o], new Float32Array([rawOct[o]]));
+          octaveDeltaValues[o] = computeDelta(octaveDeltas[o], new Float32Array([rawOct[o]]));
+          smoothedOctaves[o] += (rawOct[o] * cfg.spikeScale - smoothedOctaves[o]) * 0.55;
+        }
+      }
     } else {
       for (const stem of STEMS) {
         if (!stemSmoothed[stem]) continue;
@@ -212,11 +269,20 @@ function draw() {
           deltaStemValues[stem] *= DELTA_RELEASE;
         }
       }
+      if (vizMode === 'tunnel') {
+        for (let o = 0; o < OCTAVE_COUNT; o++) {
+          smoothedOctaves[o] *= 0.88;
+          octaveTransientValues[o] = 1.0 + (octaveTransientValues[o] - 1.0) * TRANSIENT_DECAY;
+          octaveDeltaValues[o] *= DELTA_RELEASE;
+        }
+      }
     }
   }
 
   updateScrubber();
-  if (vizMode === 'spectrum') {
+  if (vizMode === 'tunnel') {
+    drawTunnel();
+  } else if (vizMode === 'spectrum') {
     drawSpectrum();
   } else {
     drawSpikeCircle();
@@ -355,6 +421,50 @@ function drawSpectrum() {
       rect(x, y, barWidth, barH);
     }
   }
+}
+
+// ── Tunnel visualization ────────────────────────────────────────
+
+function drawTunnel() {
+  const cx = width / 2;
+  const cy = height / 2;
+  const minDim = Math.min(width, height);
+  const maxRadius = minDim * 0.45;
+  const minRadius = minDim * 0.04;
+  const radiusRange = maxRadius - minRadius;
+
+  push();
+  translate(cx, cy);
+  noFill();
+
+  for (let o = 0; o < OCTAVE_COUNT; o++) {
+    // Octave 0 = outermost (bass), octave 9 = innermost (treble)
+    const t = o / (OCTAVE_COUNT - 1); // 0 = outer, 1 = inner
+    const perspT = Math.pow(t, TUNNEL_PERSPECTIVE_POWER);
+    const baseRadius = maxRadius - perspT * radiusRange;
+
+    const amp = smoothedOctaves[o];
+    const tMult = octaveTransientValues[o];
+    const delta = octaveDeltaValues[o];
+
+    const energy = amp * tMult;
+    const pulse = energy * TUNNEL_PULSE_SCALE * maxRadius * (1.0 + delta * DELTA_LENGTH_BOOST);
+    const r = baseRadius + pulse;
+
+    const brightness = TUNNEL_BASE_BRIGHTNESS + Math.min(energy, 1.0) * (255 - TUNNEL_BASE_BRIGHTNESS) + delta * DELTA_BRIGHTNESS_BOOST;
+    const clampedBright = Math.min(brightness, 255);
+
+    for (let p = 0; p < TUNNEL_GLOW_PASSES.length; p++) {
+      const pass = TUNNEL_GLOW_PASSES[p];
+      const sw = pass.widthMult * (1.5 + energy * 2.0);
+      const alpha = clampedBright * pass.alphaMult;
+      stroke(alpha);
+      strokeWeight(sw);
+      ellipse(0, 0, r * 2, r * 2);
+    }
+  }
+
+  pop();
 }
 
 // ── Audio initialisation (freq mode — unchanged) ─────────────────
@@ -563,6 +673,61 @@ function getLogBandAmplitudes(fft) {
   return results;
 }
 
+function getOctaveAmplitudes(fft) {
+  const vals = fft.getValue();
+  const sampleRate = Tone.context.sampleRate;
+  const fftSize = vals.length * 2;
+  const binHz = sampleRate / fftSize;
+  const result = new Float32Array(OCTAVE_COUNT);
+
+  for (let o = 0; o < OCTAVE_COUNT; o++) {
+    const oct = OCTAVES[o];
+    let loBin = Math.floor(oct.loHz / binHz);
+    let hiBin = Math.ceil(oct.hiHz / binHz);
+    loBin = Math.max(1, Math.min(loBin, vals.length - 1));
+    hiBin = Math.max(loBin, Math.min(hiBin, vals.length - 1));
+
+    const numBins = hiBin - loBin + 1;
+    if (numBins <= 1) {
+      // Sub-resolution octave — use nearest bin
+      const nearestBin = Math.max(1, Math.min(Math.round(oct.loHz / binHz), vals.length - 1));
+      const lin = Math.pow(10, vals[nearestBin] / 20);
+      result[o] = Math.min(lin * OCTAVE_SCALES[o], 1.0);
+    } else {
+      let sum = 0;
+      let peak = 0;
+      for (let j = loBin; j <= hiBin; j++) {
+        const lin = Math.pow(10, vals[j] / 20);
+        sum += lin;
+        if (lin > peak) peak = lin;
+      }
+      const avg = sum / numBins;
+      const blended = avg * 0.3 + peak * 0.7;
+      result[o] = Math.min(blended * OCTAVE_SCALES[o], 1.0);
+    }
+  }
+  return result;
+}
+
+function getOctaveAmplitudesFromStems(stemFftsObj) {
+  const combined = new Float32Array(OCTAVE_COUNT);
+  let count = 0;
+  for (const stem of STEMS) {
+    if (!stemFftsObj[stem]) continue;
+    const octAmps = getOctaveAmplitudes(stemFftsObj[stem]);
+    for (let o = 0; o < OCTAVE_COUNT; o++) {
+      combined[o] += octAmps[o];
+    }
+    count++;
+  }
+  if (count > 0) {
+    for (let o = 0; o < OCTAVE_COUNT; o++) {
+      combined[o] /= count;
+    }
+  }
+  return combined;
+}
+
 function smoothBins(smoothed, raw, sensitivity, attack, release) {
   for (let i = 0; i < smoothed.length; i++) {
     const target = raw[i] * sensitivity;
@@ -718,6 +883,19 @@ function resetAudioProcessingState() {
   // Reset centroid
   smoothedCentroid = 0.5;
   centroidYOffset = 0;
+
+  // Reset octave state
+  smoothedOctaves.fill(0);
+  for (let o = 0; o < OCTAVE_COUNT; o++) {
+    octaveTransients[o].avg = 0;
+    octaveTransients[o].multiplier = 1.0;
+    octaveDeltas[o].prevMean = 0;
+    octaveDeltas[o].smoothed = 0;
+  }
+  octaveTransientValues.fill(1.0);
+  octaveDeltaValues.fill(0);
+  autoGainOctaves.peaks.fill(AUTO_GAIN_FLOOR);
+  autoGainOctaves.idx = 0;
 }
 
 // ── Scrubber / playback position ─────────────────────────────────
@@ -1046,21 +1224,24 @@ function wireDOM() {
   // ── Viz mode toggle ────────────────────────────────────────
   const vizCircleBtn = document.getElementById('viz-circle');
   const vizSpectrumBtn = document.getElementById('viz-spectrum');
+  const vizTunnelBtn = document.getElementById('viz-tunnel');
   const rotationSpeedGroup = document.getElementById('rotation-speed-group');
+  const vizBtns = [vizCircleBtn, vizSpectrumBtn, vizTunnelBtn];
 
-  vizCircleBtn.addEventListener('click', () => {
-    vizMode = 'circle';
-    vizCircleBtn.classList.add('active');
-    vizSpectrumBtn.classList.remove('active');
-    rotationSpeedGroup.classList.remove('hidden');
-  });
+  function setVizMode(newMode) {
+    vizMode = newMode;
+    for (const btn of vizBtns) btn.classList.remove('active');
+    if (newMode === 'circle') vizCircleBtn.classList.add('active');
+    else if (newMode === 'spectrum') vizSpectrumBtn.classList.add('active');
+    else if (newMode === 'tunnel') vizTunnelBtn.classList.add('active');
+    // Rotation speed only applies to circle mode
+    if (newMode === 'circle') rotationSpeedGroup.classList.remove('hidden');
+    else rotationSpeedGroup.classList.add('hidden');
+  }
 
-  vizSpectrumBtn.addEventListener('click', () => {
-    vizMode = 'spectrum';
-    vizSpectrumBtn.classList.add('active');
-    vizCircleBtn.classList.remove('active');
-    rotationSpeedGroup.classList.add('hidden');
-  });
+  vizCircleBtn.addEventListener('click', () => setVizMode('circle'));
+  vizSpectrumBtn.addEventListener('click', () => setVizMode('spectrum'));
+  vizTunnelBtn.addEventListener('click', () => setVizMode('tunnel'));
 
   // ── Display sliders ────────────────────────────────────────
   bindSlider('spike-scale', (v) => { cfg.spikeScale = v; });
