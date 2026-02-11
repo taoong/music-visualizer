@@ -58,19 +58,35 @@
 
     <section>
       <h3>Sensitivity</h3>
-      <!-- Frequency mode sliders (shown by default) -->
+      <!-- Frequency mode sliders (7 bands, shown by default) -->
       <div id="freq-sliders">
         <div class="slider-group">
-          <label>Bass (Drums)</label>
+          <label>Sub (Feel)</label>
+          <input type="range" id="sens-sub" min="0" max="3" step="0.01" value="1.5" />
+        </div>
+        <div class="slider-group">
+          <label>Bass (Thump)</label>
           <input type="range" id="sens-bass" min="0" max="3" step="0.01" value="1.2" />
         </div>
         <div class="slider-group">
-          <label>Vocals (Melody)</label>
+          <label>Low-Mid (Body)</label>
+          <input type="range" id="sens-low-mid" min="0" max="3" step="0.01" value="1.8" />
+        </div>
+        <div class="slider-group">
+          <label>Mid (Melody)</label>
           <input type="range" id="sens-mid" min="0" max="3" step="0.01" value="2.0" />
         </div>
         <div class="slider-group">
-          <label>Treble (Percussion)</label>
-          <input type="range" id="sens-treble" min="0" max="3" step="0.01" value="2.0" />
+          <label>Upper-Mid (Presence)</label>
+          <input type="range" id="sens-upper-mid" min="0" max="3" step="0.01" value="2.0" />
+        </div>
+        <div class="slider-group">
+          <label>Presence (Clarity)</label>
+          <input type="range" id="sens-presence" min="0" max="3" step="0.01" value="2.0" />
+        </div>
+        <div class="slider-group">
+          <label>Brilliance (Air)</label>
+          <input type="range" id="sens-brilliance" min="0" max="3" step="0.01" value="2.0" />
         </div>
       </div>
       <!-- Stem mode sliders (hidden by default) -->

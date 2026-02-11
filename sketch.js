@@ -21,11 +21,9 @@ let playStartedAt = 0;  // Tone.now() when playback last started
 let startOffset = 0;    // offset into the song (seconds)
 let isSeeking = false;  // true while user drags scrubber
 
-// ── Freq-mode Tone.js nodes (existing) ──────────────────────────
+// ── Freq-mode Tone.js nodes ─────────────────────────────────────
 let player = null;
 let gainNode = null;
-let lowFilter, midFilter, highFilter;
-let fftLow, fftMid, fftHigh;
 
 const sampleUrl = 'sample.mp3';
 
@@ -36,16 +34,25 @@ const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)
 // Per-bin smoothed amplitudes for each frequency band
 const SPIKES_PER_BAND = isMobile ? 30 : 60;
 
-// Per-band FFT scale factors — bass naturally carries 10-20dB more energy
-const BAND_SCALE = { low: 4.0, mid: 8.0, high: 14.0 };
+// Per-band definitions — logarithmic frequency ranges matching human perception
+const BANDS = [
+  { name: 'sub',        loHz: 20,   hiHz: 60,    scale: 3.0,  sens: 'sensSub',        sliderId: 'sens-sub',        attack: 0.50, release: 0.08, defaultSens: 1.5 },
+  { name: 'bass',       loHz: 60,   hiHz: 250,   scale: 4.0,  sens: 'sensBass',       sliderId: 'sens-bass',       attack: 0.55, release: 0.09, defaultSens: 1.2 },
+  { name: 'lowMid',     loHz: 250,  hiHz: 500,   scale: 6.0,  sens: 'sensLowMid',     sliderId: 'sens-low-mid',    attack: 0.62, release: 0.10, defaultSens: 1.8 },
+  { name: 'mid',        loHz: 500,  hiHz: 2000,  scale: 8.0,  sens: 'sensMid',        sliderId: 'sens-mid',        attack: 0.70, release: 0.11, defaultSens: 2.0 },
+  { name: 'upperMid',   loHz: 2000, hiHz: 4000,  scale: 10.0, sens: 'sensUpperMid',   sliderId: 'sens-upper-mid',  attack: 0.78, release: 0.12, defaultSens: 2.0 },
+  { name: 'presence',   loHz: 4000, hiHz: 6000,  scale: 12.0, sens: 'sensPresence',   sliderId: 'sens-presence',   attack: 0.83, release: 0.13, defaultSens: 2.0 },
+  { name: 'brilliance', loHz: 6000, hiHz: 20000, scale: 14.0, sens: 'sensBrilliance', sliderId: 'sens-brilliance', attack: 0.88, release: 0.14, defaultSens: 2.0 },
+];
+const BAND_COUNT = BANDS.length;
 
 // ── Auto-gain: rolling peak normalization (~5s window) ───────────
 const AUTO_GAIN_FRAMES = 300;   // ~5s at 60fps
 const AUTO_GAIN_FLOOR = 0.01;   // prevents division by zero
 
-const autoGainLow  = { peaks: new Float32Array(AUTO_GAIN_FRAMES).fill(AUTO_GAIN_FLOOR), idx: 0 };
-const autoGainMid  = { peaks: new Float32Array(AUTO_GAIN_FRAMES).fill(AUTO_GAIN_FLOOR), idx: 0 };
-const autoGainHigh = { peaks: new Float32Array(AUTO_GAIN_FRAMES).fill(AUTO_GAIN_FLOOR), idx: 0 };
+const autoGainBands = BANDS.map(() => ({
+  peaks: new Float32Array(AUTO_GAIN_FRAMES).fill(AUTO_GAIN_FLOOR), idx: 0,
+}));
 const autoGainStems = {};  // lazy-initialized per stem
 
 // ── Transient detection ──────────────────────────────────────────
@@ -54,17 +61,11 @@ const TRANSIENT_DECAY = 0.85;      // multiplier decay per frame
 const TRANSIENT_BOOST = 1.5;       // max visual multiplier
 const TRANSIENT_AVG_ALPHA = 0.05;  // slow EMA for baseline
 
-const transientState = {
-  low:  { avg: 0, multiplier: 1.0 },
-  mid:  { avg: 0, multiplier: 1.0 },
-  high: { avg: 0, multiplier: 1.0 },
-};
+const transientBands = BANDS.map(() => ({ avg: 0, multiplier: 1.0 }));
 const transientStems = {};  // lazy-initialized
-let transientLow = 1.0, transientMid = 1.0, transientHigh = 1.0;
+let transientValues = new Float32Array(BAND_COUNT).fill(1.0);
 let transientStemValues = {};
-let smoothedLow = new Float32Array(SPIKES_PER_BAND);
-let smoothedMid = new Float32Array(SPIKES_PER_BAND);
-let smoothedHigh = new Float32Array(SPIKES_PER_BAND);
+let smoothedBands = BANDS.map(() => new Float32Array(SPIKES_PER_BAND));
 
 // ── Delta (rate-of-change detection) ────────────────────────────
 const DELTA_ATTACK  = 0.70;
@@ -74,12 +75,8 @@ const DELTA_SPIKE_WIDTH_MAX = 0.35;  // widest spike (low delta = sustained)
 const DELTA_LENGTH_BOOST = 0.3;      // max spike length bonus from delta
 const DELTA_BRIGHTNESS_BOOST = 60;   // max additive brightness (spectrum mode)
 
-const deltaState = {
-  low:  { prevMean: 0, smoothed: 0 },
-  mid:  { prevMean: 0, smoothed: 0 },
-  high: { prevMean: 0, smoothed: 0 },
-};
-let deltaLow = 0, deltaMid = 0, deltaHigh = 0;
+const deltaBands = BANDS.map(() => ({ prevMean: 0, smoothed: 0 }));
+let deltaValues = new Float32Array(BAND_COUNT);
 const deltaStems = {};       // lazy-initialized per stem
 let deltaStemValues = {};
 
@@ -115,10 +112,14 @@ const STEM_SMOOTHING = {
 
 // GUI values (defaults — overridden by sliders)
 const cfg = {
-  // Freq mode
+  // Freq mode (7 bands)
+  sensSub: 1.5,
   sensBass: 1.2,
+  sensLowMid: 1.8,
   sensMid: 2.0,
-  sensTreble: 2.0,
+  sensUpperMid: 2.0,
+  sensPresence: 2.0,
+  sensBrilliance: 2.0,
   // Stem mode
   sensKick: 2.0,
   sensDrums: 2.0,
@@ -154,37 +155,24 @@ function draw() {
   background(0);
 
   if (mode === 'freq') {
-    // ── Freq mode: analyse audio per-bin ────────────────────
+    // ── Freq mode: analyse audio via 7-band log FFT ────────
     if (isPlaying && player && player.state === 'started') {
-      const rawLow = applyAutoGain(getFFTAmplitudes(fftLow, SPIKES_PER_BAND, BAND_SCALE.low), autoGainLow);
-      const rawMid = applyAutoGain(getFFTAmplitudes(fftMid, SPIKES_PER_BAND, BAND_SCALE.mid), autoGainMid);
-      const rawHigh = applyAutoGain(getFFTAmplitudes(fftHigh, SPIKES_PER_BAND, BAND_SCALE.high), autoGainHigh);
-
-      transientLow = updateTransient(transientState.low, rawLow);
-      transientMid = updateTransient(transientState.mid, rawMid);
-      transientHigh = updateTransient(transientState.high, rawHigh);
-
-      deltaLow  = computeDelta(deltaState.low, rawLow);
-      deltaMid  = computeDelta(deltaState.mid, rawMid);
-      deltaHigh = computeDelta(deltaState.high, rawHigh);
-
-      smoothBins(smoothedLow, rawLow, cfg.sensBass, 0.55, 0.10);
-      smoothBins(smoothedMid, rawMid, cfg.sensMid, 0.78, 0.12);
-      smoothBins(smoothedHigh, rawHigh, cfg.sensTreble, 0.88, 0.14);
-
+      const rawBands = getLogBandAmplitudes(fftFull);
+      for (let b = 0; b < BAND_COUNT; b++) {
+        const raw = applyAutoGain(rawBands[b], autoGainBands[b]);
+        transientValues[b] = updateTransient(transientBands[b], raw);
+        deltaValues[b] = computeDelta(deltaBands[b], raw);
+        smoothBins(smoothedBands[b], raw, cfg[BANDS[b].sens], BANDS[b].attack, BANDS[b].release);
+      }
       if (fftFull) updateCentroid(computeSpectralCentroid(fftFull));
     } else {
-      for (let i = 0; i < SPIKES_PER_BAND; i++) {
-        smoothedLow[i] *= 0.88;
-        smoothedMid[i] *= 0.88;
-        smoothedHigh[i] *= 0.88;
+      for (let b = 0; b < BAND_COUNT; b++) {
+        for (let i = 0; i < SPIKES_PER_BAND; i++) {
+          smoothedBands[b][i] *= 0.88;
+        }
+        transientValues[b] = 1.0 + (transientValues[b] - 1.0) * TRANSIENT_DECAY;
+        deltaValues[b] *= DELTA_RELEASE;
       }
-      transientLow = 1.0 + (transientLow - 1.0) * TRANSIENT_DECAY;
-      transientMid = 1.0 + (transientMid - 1.0) * TRANSIENT_DECAY;
-      transientHigh = 1.0 + (transientHigh - 1.0) * TRANSIENT_DECAY;
-      deltaLow  *= DELTA_RELEASE;
-      deltaMid  *= DELTA_RELEASE;
-      deltaHigh *= DELTA_RELEASE;
     }
   } else {
     // ── Stem mode: analyse each stem's FFT ──────────────────
@@ -250,8 +238,8 @@ function drawSpikeCircle() {
 
   let totalSpikes, bandCount;
   if (mode === 'freq') {
-    bandCount = 3;
-    totalSpikes = SPIKES_PER_BAND * 3;
+    bandCount = BAND_COUNT;
+    totalSpikes = SPIKES_PER_BAND * BAND_COUNT;
   } else {
     bandCount = 5;
     totalSpikes = SPIKES_PER_BAND * 5;
@@ -274,9 +262,9 @@ function drawSpikeCircle() {
     let tMult = 1.0;
     let delta = 0;
     if (mode === 'freq') {
-      if (band === 0) { amp = smoothedLow[bandIdx]; tMult = transientLow; delta = deltaLow; }
-      else if (band === 1) { amp = smoothedMid[bandIdx]; tMult = transientMid; delta = deltaMid; }
-      else { amp = smoothedHigh[bandIdx]; tMult = transientHigh; delta = deltaHigh; }
+      amp = smoothedBands[band][bandIdx];
+      tMult = transientValues[band];
+      delta = deltaValues[band];
     } else {
       const stem = STEMS[band];
       if (stemSmoothed[stem]) amp = stemSmoothed[stem][bandIdx];
@@ -325,7 +313,7 @@ function drawSpectrum() {
 
   let bandCount, totalBars;
   if (mode === 'freq') {
-    bandCount = 3;
+    bandCount = BAND_COUNT;
   } else {
     bandCount = 5;
   }
@@ -344,9 +332,9 @@ function drawSpectrum() {
       let tMult = 1.0;
       let delta = 0;
       if (mode === 'freq') {
-        if (b === 0) { amp = smoothedLow[i]; tMult = transientLow; delta = deltaLow; }
-        else if (b === 1) { amp = smoothedMid[i]; tMult = transientMid; delta = deltaMid; }
-        else { amp = smoothedHigh[i]; tMult = transientHigh; delta = deltaHigh; }
+        amp = smoothedBands[b][i];
+        tMult = transientValues[b];
+        delta = deltaValues[b];
       } else {
         const stem = STEMS[b];
         if (stemSmoothed[stem]) amp = stemSmoothed[stem][i];
@@ -398,27 +386,10 @@ async function initAudio(fileUrl) {
 
   gainNode = new Tone.Gain(cfg.masterVolume);
 
-  lowFilter = new Tone.Filter({ frequency: 150, type: 'lowpass', rolloff: -24 });
-  midFilter = new Tone.Filter({ frequency: 400, type: 'bandpass', rolloff: -24 });
-  midFilter.Q.value = 1.2;
-  highFilter = new Tone.Filter({ frequency: 5000, type: 'highpass', rolloff: -24 });
-
   const fftSize = isMobile ? 128 : 256;
-  fftLow = new Tone.FFT(fftSize);
-  fftMid = new Tone.FFT(fftSize);
-  fftHigh = new Tone.FFT(fftSize);
 
   player.connect(gainNode);
   gainNode.toDestination();
-
-  player.connect(lowFilter);
-  lowFilter.connect(fftLow);
-
-  player.connect(midFilter);
-  midFilter.connect(fftMid);
-
-  player.connect(highFilter);
-  highFilter.connect(fftHigh);
 
   fftFull = new Tone.FFT(fftSize);
   player.connect(fftFull);
@@ -434,12 +405,6 @@ function disposeAudio() {
     player = null;
   }
   if (gainNode) { gainNode.dispose(); gainNode = null; }
-  if (lowFilter) { lowFilter.dispose(); lowFilter = null; }
-  if (midFilter) { midFilter.dispose(); midFilter = null; }
-  if (highFilter) { highFilter.dispose(); highFilter = null; }
-  if (fftLow) { fftLow.dispose(); fftLow = null; }
-  if (fftMid) { fftMid.dispose(); fftMid = null; }
-  if (fftHigh) { fftHigh.dispose(); fftHigh = null; }
   if (fftFull) { fftFull.dispose(); fftFull = null; }
   if (currentSampleBlobUrl) { URL.revokeObjectURL(currentSampleBlobUrl); currentSampleBlobUrl = null; }
   resetAudioProcessingState();
@@ -542,6 +507,60 @@ function getFFTAmplitudes(fft, count, scaleFactor) {
     result[i] = Math.min(blended * scaleFactor, 1.0);
   }
   return result;
+}
+
+function getLogBandAmplitudes(fft) {
+  const vals = fft.getValue();
+  const sampleRate = Tone.context.sampleRate;
+  const fftSize = vals.length * 2;
+  const binHz = sampleRate / fftSize;
+  const results = [];
+
+  for (let b = 0; b < BAND_COUNT; b++) {
+    const band = BANDS[b];
+    let loBin = Math.floor(band.loHz / binHz);
+    let hiBin = Math.ceil(band.hiHz / binHz);
+    loBin = Math.max(1, Math.min(loBin, vals.length - 1));
+    hiBin = Math.max(loBin, Math.min(hiBin, vals.length - 1));
+
+    const numBins = hiBin - loBin + 1;
+    const result = new Float32Array(SPIKES_PER_BAND);
+
+    if (numBins <= 0) {
+      // No bins in range — use nearest bin, fill uniformly
+      const nearestBin = Math.max(1, Math.min(Math.round(band.loHz / binHz), vals.length - 1));
+      const db = vals[nearestBin];
+      const lin = Math.pow(10, db / 20);
+      const scaled = Math.min(lin * band.scale, 1.0);
+      result.fill(scaled);
+    } else {
+      // Distribute bins into SPIKES_PER_BAND output slots
+      const binsPerSlot = numBins / SPIKES_PER_BAND;
+
+      for (let i = 0; i < SPIKES_PER_BAND; i++) {
+        const slotStart = loBin + Math.floor(i * binsPerSlot);
+        const slotEnd = Math.min(loBin + Math.floor((i + 1) * binsPerSlot), hiBin + 1);
+        const count = Math.max(1, slotEnd - slotStart);
+
+        let sum = 0;
+        let peak = 0;
+        for (let j = slotStart; j < slotStart + count; j++) {
+          const binIdx = Math.min(j, vals.length - 1);
+          const db = vals[binIdx];
+          const lin = Math.pow(10, db / 20);
+          sum += lin;
+          if (lin > peak) peak = lin;
+        }
+        const avg = sum / count;
+        const blended = avg * 0.3 + peak * 0.7;
+        result[i] = Math.min(blended * band.scale, 1.0);
+      }
+    }
+
+    results.push(result);
+  }
+
+  return results;
 }
 
 function smoothBins(smoothed, raw, sensitivity, attack, release) {
@@ -667,31 +686,34 @@ function updateCentroid(centroidHz) {
 
 function resetAudioProcessingState() {
   // Reset auto-gain trackers
-  for (const tracker of [autoGainLow, autoGainMid, autoGainHigh]) {
-    tracker.peaks.fill(AUTO_GAIN_FLOOR);
-    tracker.idx = 0;
+  for (let b = 0; b < BAND_COUNT; b++) {
+    autoGainBands[b].peaks.fill(AUTO_GAIN_FLOOR);
+    autoGainBands[b].idx = 0;
   }
   for (const key in autoGainStems) delete autoGainStems[key];
 
   // Reset transient state
-  for (const key of ['low', 'mid', 'high']) {
-    transientState[key].avg = 0;
-    transientState[key].multiplier = 1.0;
+  for (let b = 0; b < BAND_COUNT; b++) {
+    transientBands[b].avg = 0;
+    transientBands[b].multiplier = 1.0;
   }
-  transientLow = 1.0;
-  transientMid = 1.0;
-  transientHigh = 1.0;
+  transientValues.fill(1.0);
   for (const key in transientStems) delete transientStems[key];
   transientStemValues = {};
 
   // Reset delta
-  for (const key of ['low', 'mid', 'high']) {
-    deltaState[key].prevMean = 0;
-    deltaState[key].smoothed = 0;
+  for (let b = 0; b < BAND_COUNT; b++) {
+    deltaBands[b].prevMean = 0;
+    deltaBands[b].smoothed = 0;
   }
-  deltaLow = deltaMid = deltaHigh = 0;
+  deltaValues.fill(0);
   for (const key in deltaStems) delete deltaStems[key];
   deltaStemValues = {};
+
+  // Reset smoothed bands
+  for (let b = 0; b < BAND_COUNT; b++) {
+    smoothedBands[b].fill(0);
+  }
 
   // Reset centroid
   smoothedCentroid = 0.5;
@@ -1009,10 +1031,10 @@ function wireDOM() {
     }
   });
 
-  // ── Freq mode sliders ──────────────────────────────────────
-  bindSlider('sens-bass', (v) => { cfg.sensBass = v; });
-  bindSlider('sens-mid', (v) => { cfg.sensMid = v; });
-  bindSlider('sens-treble', (v) => { cfg.sensTreble = v; });
+  // ── Freq mode sliders (7 bands) ────────────────────────────
+  for (const band of BANDS) {
+    bindSlider(band.sliderId, (v) => { cfg[band.sens] = v; });
+  }
 
   // ── Stem mode sliders ──────────────────────────────────────
   bindSlider('sens-kick', (v) => { cfg.sensKick = v; });
@@ -1093,9 +1115,9 @@ function randomize() {
   const rand = (min, max) => Math.random() * (max - min) + min;
 
   if (mode === 'freq') {
-    setSlider('sens-bass', rand(1.0, 3.0));
-    setSlider('sens-mid', rand(1.0, 3.0));
-    setSlider('sens-treble', rand(1.0, 3.0));
+    for (const band of BANDS) {
+      setSlider(band.sliderId, rand(1.0, 3.0));
+    }
   } else {
     setSlider('sens-kick', rand(1.0, 3.0));
     setSlider('sens-drums', rand(1.0, 3.0));
