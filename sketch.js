@@ -679,7 +679,7 @@ function updateCentroid(centroidHz) {
   const clampedHz = Math.max(CENTROID_LOW_HZ, Math.min(centroidHz, CENTROID_HIGH_HZ));
   const normalized = (Math.log(clampedHz) - CENTROID_LOG_LOW) / CENTROID_LOG_RANGE;
   smoothedCentroid += (normalized - smoothedCentroid) * CENTROID_SMOOTHING;
-  centroidYOffset = -(smoothedCentroid - 0.5) * height * CENTROID_Y_RANGE;
+  centroidYOffset = 0;
 }
 
 // ── Reset audio processing state on track change ──────────────────
