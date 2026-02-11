@@ -255,8 +255,8 @@ function drawSpikeCircle() {
   noStroke();
   for (let i = 0; i < totalSpikes; i++) {
     const angle = i * angleStep + rotation;
-    const band = i % bandCount;
-    const bandIdx = Math.floor(i / bandCount);
+    const band = Math.floor(i / SPIKES_PER_BAND);
+    const bandIdx = i % SPIKES_PER_BAND;
 
     let amp = 0;
     let tMult = 1.0;
