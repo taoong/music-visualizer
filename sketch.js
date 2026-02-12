@@ -8,11 +8,6 @@
 let mode = 'freq'; // 'freq' or 'stems'
 let vizMode = 'circle'; // 'circle', 'spectrum', 'tunnel', or 'balls'
 
-// ── Balls mode state ────────────────────────────────────────────
-const BALL_COUNT = isMobile ? 15 : 30;
-let balls = [];
-let kickBoostMultiplier = 1.0;
-
 // ── State ────────────────────────────────────────────────────────
 let audioReady = false;
 let isPlaying = false;
@@ -38,6 +33,11 @@ const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)
 
 // Per-bin smoothed amplitudes for each frequency band
 const SPIKES_PER_BAND = isMobile ? 30 : 60;
+
+// ── Balls mode state ────────────────────────────────────────────
+const BALL_COUNT = isMobile ? 15 : 30;
+let balls = [];
+let kickBoostMultiplier = 1.0;
 
 // Per-band definitions — logarithmic frequency ranges matching human perception
 const BANDS = [
