@@ -429,8 +429,8 @@ function drawTunnel() {
   const cx = width / 2;
   const cy = height / 2;
   const minDim = Math.min(width, height);
-  const maxRadius = minDim * 0.45;
-  const minRadius = minDim * 0.04;
+  const maxRadius = minDim * 0.32;
+  const minRadius = minDim * 0.03;
   const radiusRange = maxRadius - minRadius;
 
   push();
