@@ -6,7 +6,12 @@
 
 // ── Mode state ──────────────────────────────────────────────────
 let mode = 'freq'; // 'freq' or 'stems'
-let vizMode = 'circle'; // 'circle', 'spectrum', or 'tunnel'
+let vizMode = 'circle'; // 'circle', 'spectrum', 'tunnel', or 'balls'
+
+// ── Balls mode state ────────────────────────────────────────────
+const BALL_COUNT = isMobile ? 15 : 30;
+let balls = [];
+let kickBoostMultiplier = 1.0;
 
 // ── State ────────────────────────────────────────────────────────
 let audioReady = false;
@@ -163,6 +168,7 @@ const cfg = {
   // Shared
   spikeScale: 1.2,
   rotationSpeed: 0.3,
+  ballsKickBoost: 3.0,
   masterVolume: 0.8,
 };
 
@@ -284,6 +290,8 @@ function draw() {
     drawTunnel();
   } else if (vizMode === 'spectrum') {
     drawSpectrum();
+  } else if (vizMode === 'balls') {
+    drawBalls();
   } else {
     drawSpikeCircle();
   }
@@ -291,6 +299,7 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  if (vizMode === 'balls') initBalls();
 }
 
 // ── Spike circle visualization ───────────────────────────────────
@@ -465,6 +474,103 @@ function drawTunnel() {
   }
 
   pop();
+}
+
+// ── Balls visualization ──────────────────────────────────────────
+
+function initBalls() {
+  balls = [];
+  const bandCount = mode === 'freq' ? BAND_COUNT : STEMS.length;
+  for (let i = 0; i < BALL_COUNT; i++) {
+    const speed = 1 + Math.random() * 2;
+    const angle = Math.random() * TWO_PI;
+    balls.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      baseRadius: 8 + Math.random() * 20,
+      band: i % bandCount,
+    });
+  }
+}
+
+function drawBalls() {
+  // Kick detection — read transient from sub band (freq) or kick stem (stems)
+  let kickTransient = 1.0;
+  if (mode === 'freq') {
+    kickTransient = transientValues[0];
+  } else if (transientStemValues['kick'] !== undefined) {
+    kickTransient = transientStemValues['kick'];
+  }
+
+  // Fast attack / slow decay for kick boost multiplier
+  const targetBoost = 1.0 + (kickTransient - 1.0) * cfg.ballsKickBoost;
+  if (targetBoost > kickBoostMultiplier) {
+    kickBoostMultiplier += (targetBoost - kickBoostMultiplier) * 0.5;
+  } else {
+    kickBoostMultiplier += (targetBoost - kickBoostMultiplier) * 0.08;
+  }
+
+  const bandCount = mode === 'freq' ? BAND_COUNT : STEMS.length;
+
+  noStroke();
+  for (let i = 0; i < balls.length; i++) {
+    const ball = balls[i];
+
+    // Per-ball audio: read assigned band's amplitude, transient, delta
+    let amp = 0;
+    let tMult = 1.0;
+    let delta = 0;
+    const b = ball.band % bandCount;
+    if (mode === 'freq') {
+      // Mean of smoothed bins for this band
+      const bins = smoothedBands[b];
+      if (bins) {
+        let sum = 0;
+        for (let j = 0; j < bins.length; j++) sum += bins[j];
+        amp = sum / bins.length;
+      }
+      tMult = transientValues[b];
+      delta = deltaValues[b];
+    } else {
+      const stem = STEMS[b];
+      if (stemSmoothed[stem]) {
+        let sum = 0;
+        for (let j = 0; j < stemSmoothed[stem].length; j++) sum += stemSmoothed[stem][j];
+        amp = sum / stemSmoothed[stem].length;
+      }
+      if (transientStemValues[stem]) tMult = transientStemValues[stem];
+      if (deltaStemValues[stem]) delta = deltaStemValues[stem];
+    }
+
+    // Physics: update position with kick boost and delta influence
+    const speedMult = kickBoostMultiplier * (1 + delta * 0.5);
+    ball.x += ball.vx * speedMult;
+    ball.y += ball.vy * speedMult;
+
+    // Bounce off walls
+    if (ball.x < 0) { ball.x = 0; ball.vx = Math.abs(ball.vx); }
+    else if (ball.x > width) { ball.x = width; ball.vx = -Math.abs(ball.vx); }
+    if (ball.y < 0) { ball.y = 0; ball.vy = Math.abs(ball.vy); }
+    else if (ball.y > height) { ball.y = height; ball.vy = -Math.abs(ball.vy); }
+
+    // Size pulses with amplitude
+    const scaledAmp = amp * cfg.spikeScale * tMult;
+    const r = ball.baseRadius * (1 + scaledAmp * 1.5);
+
+    // Brightness from amplitude + delta
+    const brightness = 60 + Math.min(scaledAmp, 1.0) * 160 + delta * DELTA_BRIGHTNESS_BOOST;
+    const clampedBright = Math.min(brightness, 255);
+
+    // Outer halo (glow)
+    fill(clampedBright * 0.25);
+    ellipse(ball.x, ball.y, r * 3, r * 3);
+
+    // Core circle
+    fill(clampedBright);
+    ellipse(ball.x, ball.y, r * 2, r * 2);
+  }
 }
 
 // ── Audio initialisation (freq mode — unchanged) ─────────────────
@@ -896,6 +1002,10 @@ function resetAudioProcessingState() {
   octaveDeltaValues.fill(0);
   autoGainOctaves.peaks.fill(AUTO_GAIN_FLOOR);
   autoGainOctaves.idx = 0;
+
+  // Reset balls state
+  balls = [];
+  kickBoostMultiplier = 1.0;
 }
 
 // ── Scrubber / playback position ─────────────────────────────────
@@ -982,6 +1092,7 @@ function wireDOM() {
     modeStemsBtn.classList.remove('active');
     freqSliders.classList.remove('hidden');
     stemSliders.classList.add('hidden');
+    if (vizMode === 'balls') initBalls();
   });
 
   modeStemsBtn.addEventListener('click', () => {
@@ -990,6 +1101,7 @@ function wireDOM() {
     modeFreqBtn.classList.remove('active');
     stemSliders.classList.remove('hidden');
     freqSliders.classList.add('hidden');
+    if (vizMode === 'balls') initBalls();
   });
 
   // ── Play button (mode-aware) ───────────────────────────────
@@ -1225,8 +1337,10 @@ function wireDOM() {
   const vizCircleBtn = document.getElementById('viz-circle');
   const vizSpectrumBtn = document.getElementById('viz-spectrum');
   const vizTunnelBtn = document.getElementById('viz-tunnel');
+  const vizBallsBtn = document.getElementById('viz-balls');
   const rotationSpeedGroup = document.getElementById('rotation-speed-group');
-  const vizBtns = [vizCircleBtn, vizSpectrumBtn, vizTunnelBtn];
+  const ballsKickBoostGroup = document.getElementById('balls-kick-boost-group');
+  const vizBtns = [vizCircleBtn, vizSpectrumBtn, vizTunnelBtn, vizBallsBtn];
 
   function setVizMode(newMode) {
     vizMode = newMode;
@@ -1234,18 +1348,26 @@ function wireDOM() {
     if (newMode === 'circle') vizCircleBtn.classList.add('active');
     else if (newMode === 'spectrum') vizSpectrumBtn.classList.add('active');
     else if (newMode === 'tunnel') vizTunnelBtn.classList.add('active');
+    else if (newMode === 'balls') vizBallsBtn.classList.add('active');
     // Rotation speed only applies to circle mode
     if (newMode === 'circle') rotationSpeedGroup.classList.remove('hidden');
     else rotationSpeedGroup.classList.add('hidden');
+    // Kick boost only applies to balls mode
+    if (newMode === 'balls') ballsKickBoostGroup.classList.remove('hidden');
+    else ballsKickBoostGroup.classList.add('hidden');
+    // Initialize balls when entering balls mode
+    if (newMode === 'balls') initBalls();
   }
 
   vizCircleBtn.addEventListener('click', () => setVizMode('circle'));
   vizSpectrumBtn.addEventListener('click', () => setVizMode('spectrum'));
   vizTunnelBtn.addEventListener('click', () => setVizMode('tunnel'));
+  vizBallsBtn.addEventListener('click', () => setVizMode('balls'));
 
   // ── Display sliders ────────────────────────────────────────
   bindSlider('spike-scale', (v) => { cfg.spikeScale = v; });
   bindSlider('rotation-speed', (v) => { cfg.rotationSpeed = v; });
+  bindSlider('balls-kick-boost', (v) => { cfg.ballsKickBoost = v; });
 
   // ── Scrubber (mode-aware) ──────────────────────────────────
   const scrubber = document.getElementById('scrubber');
@@ -1312,6 +1434,9 @@ function randomize() {
   setSlider('spike-scale', rand(0.5, 2.0));
   if (vizMode === 'circle') {
     setSlider('rotation-speed', rand(0.0, 1.5));
+  }
+  if (vizMode === 'balls') {
+    setSlider('balls-kick-boost', rand(1.0, 5.0));
   }
 }
 
