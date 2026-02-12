@@ -168,7 +168,7 @@ const cfg = {
   // Shared
   spikeScale: 1.2,
   rotationSpeed: 0.3,
-  ballsKickBoost: 3.0,
+  ballsKickBoost: 6.0,
   masterVolume: 0.8,
 };
 
@@ -1333,22 +1333,14 @@ function wireDOM() {
   bindSlider('sens-vocals', (v) => { cfg.sensVocals = v; });
   bindSlider('sens-other', (v) => { cfg.sensOther = v; });
 
-  // ── Viz mode toggle ────────────────────────────────────────
-  const vizCircleBtn = document.getElementById('viz-circle');
-  const vizSpectrumBtn = document.getElementById('viz-spectrum');
-  const vizTunnelBtn = document.getElementById('viz-tunnel');
-  const vizBallsBtn = document.getElementById('viz-balls');
+  // ── Viz mode dropdown ──────────────────────────────────────
+  const vizSelect = document.getElementById('viz-selector');
   const rotationSpeedGroup = document.getElementById('rotation-speed-group');
   const ballsKickBoostGroup = document.getElementById('balls-kick-boost-group');
-  const vizBtns = [vizCircleBtn, vizSpectrumBtn, vizTunnelBtn, vizBallsBtn];
 
   function setVizMode(newMode) {
     vizMode = newMode;
-    for (const btn of vizBtns) btn.classList.remove('active');
-    if (newMode === 'circle') vizCircleBtn.classList.add('active');
-    else if (newMode === 'spectrum') vizSpectrumBtn.classList.add('active');
-    else if (newMode === 'tunnel') vizTunnelBtn.classList.add('active');
-    else if (newMode === 'balls') vizBallsBtn.classList.add('active');
+    vizSelect.value = newMode;
     // Rotation speed only applies to circle mode
     if (newMode === 'circle') rotationSpeedGroup.classList.remove('hidden');
     else rotationSpeedGroup.classList.add('hidden');
@@ -1359,10 +1351,7 @@ function wireDOM() {
     if (newMode === 'balls') initBalls();
   }
 
-  vizCircleBtn.addEventListener('click', () => setVizMode('circle'));
-  vizSpectrumBtn.addEventListener('click', () => setVizMode('spectrum'));
-  vizTunnelBtn.addEventListener('click', () => setVizMode('tunnel'));
-  vizBallsBtn.addEventListener('click', () => setVizMode('balls'));
+  vizSelect.addEventListener('change', () => setVizMode(vizSelect.value));
 
   // ── Display sliders ────────────────────────────────────────
   bindSlider('spike-scale', (v) => { cfg.spikeScale = v; });
@@ -1436,7 +1425,7 @@ function randomize() {
     setSlider('rotation-speed', rand(0.0, 1.5));
   }
   if (vizMode === 'balls') {
-    setSlider('balls-kick-boost', rand(1.0, 5.0));
+    setSlider('balls-kick-boost', rand(2.0, 10.0));
   }
 }
 
