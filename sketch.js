@@ -35,7 +35,7 @@ const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)
 const SPIKES_PER_BAND = isMobile ? 30 : 60;
 
 // ── Balls mode state ────────────────────────────────────────────
-const BALL_COUNT = isMobile ? 10 : 30;
+const BALL_COUNT = isMobile ? 15 : 30;
 let balls = [];
 let kickBoostMultiplier = 1.0;
 
@@ -506,12 +506,13 @@ function drawBalls() {
     kickTransient = transientStemValues['kick'];
   }
 
-  // Fast attack / slow decay for kick boost multiplier
+  // Fast attack / slow decay for kick boost multiplier (frame-rate independent)
+  const dt = deltaTime / 16.667; // normalize to 60fps reference
   const targetBoost = 1.0 + (kickTransient - 1.0) * cfg.ballsKickBoost;
   if (targetBoost > kickBoostMultiplier) {
-    kickBoostMultiplier += (targetBoost - kickBoostMultiplier) * 0.5;
+    kickBoostMultiplier += (targetBoost - kickBoostMultiplier) * (1 - Math.pow(1 - 0.5, dt));
   } else {
-    kickBoostMultiplier += (targetBoost - kickBoostMultiplier) * 0.08;
+    kickBoostMultiplier += (targetBoost - kickBoostMultiplier) * (1 - Math.pow(1 - 0.08, dt));
   }
 
   const bandCount = mode === 'freq' ? BAND_COUNT : STEMS.length;
@@ -550,8 +551,8 @@ function drawBalls() {
     const tMult = bandTransients[b];
     const delta = bandDeltas[b];
 
-    // Physics: update position with kick boost and delta influence
-    const speedMult = kickBoostMultiplier * (1 + delta * 0.5);
+    // Physics: update position with kick boost and delta influence (frame-rate independent)
+    const speedMult = kickBoostMultiplier * (1 + delta * 0.5) * dt;
     ball.x += ball.vx * speedMult;
     ball.y += ball.vy * speedMult;
 
