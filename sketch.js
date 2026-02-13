@@ -484,8 +484,8 @@ function initBalls() {
   for (let i = 0; i < BALL_COUNT; i++) {
     const speed = 1 + Math.random() * 2;
     const angle = Math.random() * TWO_PI;
-    const minR = isMobile ? 5 : 8;
-    const rangeR = isMobile ? 12 : 20;
+    const minR = isMobile ? 2 : 8;
+    const rangeR = isMobile ? 4 : 20;
     balls.push({
       x: Math.random() * width,
       y: Math.random() * height,
