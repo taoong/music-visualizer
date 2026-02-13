@@ -78,7 +78,7 @@ const TUNNEL_PERSPECTIVE_POWER = 1.8;    // >1 compresses inner rings
 const TUNNEL_PULSE_SCALE = 0.15;         // max radius expansion from energy
 
 // ── Auto-gain: rolling peak normalization (~5s window) ───────────
-const AUTO_GAIN_FRAMES = 300;   // ~5s at 60fps
+const AUTO_GAIN_FRAMES = isMobile ? 150 : 300;   // ~5s at both frame rates
 const AUTO_GAIN_FLOOR = 0.01;   // prevents division by zero
 
 const autoGainBands = BANDS.map(() => ({
@@ -193,6 +193,7 @@ function setup() {
 
 function draw() {
   background(0);
+  const dt = deltaTime / 16.667; // normalize to 60fps reference
 
   if (mode === 'freq') {
     // ── Freq mode: analyse audio via 7-band log FFT ────────
@@ -200,32 +201,32 @@ function draw() {
       const rawBands = getLogBandAmplitudes(fftFull);
       for (let b = 0; b < BAND_COUNT; b++) {
         const raw = applyAutoGain(rawBands[b], autoGainBands[b]);
-        transientValues[b] = updateTransient(transientBands[b], raw);
-        deltaValues[b] = computeDelta(deltaBands[b], raw);
-        smoothBins(smoothedBands[b], raw, cfg[BANDS[b].sens], BANDS[b].attack, BANDS[b].release);
+        transientValues[b] = updateTransient(transientBands[b], raw, dt);
+        deltaValues[b] = computeDelta(deltaBands[b], raw, dt);
+        smoothBins(smoothedBands[b], raw, cfg[BANDS[b].sens], BANDS[b].attack, BANDS[b].release, dt);
       }
       if (fftFull) updateCentroid(computeSpectralCentroid(fftFull));
       if (vizMode === 'tunnel' && fftFull) {
         const rawOct = applyAutoGain(getOctaveAmplitudes(fftFull), autoGainOctaves);
         for (let o = 0; o < OCTAVE_COUNT; o++) {
-          octaveTransientValues[o] = updateTransient(octaveTransients[o], new Float32Array([rawOct[o]]));
-          octaveDeltaValues[o] = computeDelta(octaveDeltas[o], new Float32Array([rawOct[o]]));
-          smoothedOctaves[o] += (rawOct[o] * cfg.spikeScale - smoothedOctaves[o]) * 0.55;
+          octaveTransientValues[o] = updateTransient(octaveTransients[o], new Float32Array([rawOct[o]]), dt);
+          octaveDeltaValues[o] = computeDelta(octaveDeltas[o], new Float32Array([rawOct[o]]), dt);
+          smoothedOctaves[o] += (rawOct[o] * cfg.spikeScale - smoothedOctaves[o]) * (1 - Math.pow(1 - 0.55, dt));
         }
       }
     } else {
       for (let b = 0; b < BAND_COUNT; b++) {
         for (let i = 0; i < SPIKES_PER_BAND; i++) {
-          smoothedBands[b][i] *= 0.88;
+          smoothedBands[b][i] *= Math.pow(0.88, dt);
         }
-        transientValues[b] = 1.0 + (transientValues[b] - 1.0) * TRANSIENT_DECAY;
-        deltaValues[b] *= DELTA_RELEASE;
+        transientValues[b] = 1.0 + (transientValues[b] - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
+        deltaValues[b] *= Math.pow(DELTA_RELEASE, dt);
       }
       if (vizMode === 'tunnel') {
         for (let o = 0; o < OCTAVE_COUNT; o++) {
-          smoothedOctaves[o] *= 0.88;
-          octaveTransientValues[o] = 1.0 + (octaveTransientValues[o] - 1.0) * TRANSIENT_DECAY;
-          octaveDeltaValues[o] *= DELTA_RELEASE;
+          smoothedOctaves[o] *= Math.pow(0.88, dt);
+          octaveTransientValues[o] = 1.0 + (octaveTransientValues[o] - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
+          octaveDeltaValues[o] *= Math.pow(DELTA_RELEASE, dt);
         }
       }
     }
@@ -247,39 +248,39 @@ function draw() {
           deltaStems[stem] = { prevMean: 0, smoothed: 0 };
         }
         const raw = applyAutoGain(getFFTAmplitudes(stemFfts[stem], SPIKES_PER_BAND, 10.0), autoGainStems[stem]);
-        transientStemValues[stem] = updateTransient(transientStems[stem], raw);
-        deltaStemValues[stem] = computeDelta(deltaStems[stem], raw);
+        transientStemValues[stem] = updateTransient(transientStems[stem], raw, dt);
+        deltaStemValues[stem] = computeDelta(deltaStems[stem], raw, dt);
         const sensKey = STEM_SENS_KEYS[stem];
         const [attack, release] = STEM_SMOOTHING[stem];
-        smoothBins(stemSmoothed[stem], raw, cfg[sensKey], attack, release);
+        smoothBins(stemSmoothed[stem], raw, cfg[sensKey], attack, release, dt);
       }
       updateCentroid(computeStemCentroid());
       if (vizMode === 'tunnel') {
         const rawOct = applyAutoGain(getOctaveAmplitudesFromStems(stemFfts), autoGainOctaves);
         for (let o = 0; o < OCTAVE_COUNT; o++) {
-          octaveTransientValues[o] = updateTransient(octaveTransients[o], new Float32Array([rawOct[o]]));
-          octaveDeltaValues[o] = computeDelta(octaveDeltas[o], new Float32Array([rawOct[o]]));
-          smoothedOctaves[o] += (rawOct[o] * cfg.spikeScale - smoothedOctaves[o]) * 0.55;
+          octaveTransientValues[o] = updateTransient(octaveTransients[o], new Float32Array([rawOct[o]]), dt);
+          octaveDeltaValues[o] = computeDelta(octaveDeltas[o], new Float32Array([rawOct[o]]), dt);
+          smoothedOctaves[o] += (rawOct[o] * cfg.spikeScale - smoothedOctaves[o]) * (1 - Math.pow(1 - 0.55, dt));
         }
       }
     } else {
       for (const stem of STEMS) {
         if (!stemSmoothed[stem]) continue;
         for (let i = 0; i < SPIKES_PER_BAND; i++) {
-          stemSmoothed[stem][i] *= 0.88;
+          stemSmoothed[stem][i] *= Math.pow(0.88, dt);
         }
         if (transientStemValues[stem] !== undefined) {
-          transientStemValues[stem] = 1.0 + (transientStemValues[stem] - 1.0) * TRANSIENT_DECAY;
+          transientStemValues[stem] = 1.0 + (transientStemValues[stem] - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
         }
         if (deltaStemValues[stem] !== undefined) {
-          deltaStemValues[stem] *= DELTA_RELEASE;
+          deltaStemValues[stem] *= Math.pow(DELTA_RELEASE, dt);
         }
       }
       if (vizMode === 'tunnel') {
         for (let o = 0; o < OCTAVE_COUNT; o++) {
-          smoothedOctaves[o] *= 0.88;
-          octaveTransientValues[o] = 1.0 + (octaveTransientValues[o] - 1.0) * TRANSIENT_DECAY;
-          octaveDeltaValues[o] *= DELTA_RELEASE;
+          smoothedOctaves[o] *= Math.pow(0.88, dt);
+          octaveTransientValues[o] = 1.0 + (octaveTransientValues[o] - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
+          octaveDeltaValues[o] *= Math.pow(DELTA_RELEASE, dt);
         }
       }
     }
@@ -840,11 +841,12 @@ function getOctaveAmplitudesFromStems(stemFftsObj) {
   return combined;
 }
 
-function smoothBins(smoothed, raw, sensitivity, attack, release) {
+function smoothBins(smoothed, raw, sensitivity, attack, release, dt) {
   for (let i = 0; i < smoothed.length; i++) {
     const target = raw[i] * sensitivity;
     const rate = target > smoothed[i] ? attack : release;
-    smoothed[i] += (target - smoothed[i]) * rate;
+    const adjRate = 1 - Math.pow(1 - rate, dt);
+    smoothed[i] += (target - smoothed[i]) * adjRate;
   }
 }
 
@@ -876,18 +878,18 @@ function applyAutoGain(rawBins, tracker) {
 
 // ── Transient detection ───────────────────────────────────────────
 
-function updateTransient(state, rawBins) {
+function updateTransient(state, rawBins, dt) {
   let framePeak = 0;
   for (let i = 0; i < rawBins.length; i++) {
     if (rawBins[i] > framePeak) framePeak = rawBins[i];
   }
 
-  state.avg += (framePeak - state.avg) * TRANSIENT_AVG_ALPHA;
+  state.avg += (framePeak - state.avg) * (1 - Math.pow(1 - TRANSIENT_AVG_ALPHA, dt));
 
   if (state.avg > AUTO_GAIN_FLOOR && framePeak / state.avg > TRANSIENT_THRESHOLD) {
     state.multiplier = TRANSIENT_BOOST;
   } else {
-    state.multiplier = 1.0 + (state.multiplier - 1.0) * TRANSIENT_DECAY;
+    state.multiplier = 1.0 + (state.multiplier - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
   }
 
   return state.multiplier;
@@ -895,7 +897,7 @@ function updateTransient(state, rawBins) {
 
 // ── Delta (rate-of-change detection) ──────────────────────────────
 
-function computeDelta(state, rawBins) {
+function computeDelta(state, rawBins, dt) {
   let sum = 0;
   for (let i = 0; i < rawBins.length; i++) sum += rawBins[i];
   const currentMean = sum / rawBins.length;
@@ -904,7 +906,8 @@ function computeDelta(state, rawBins) {
   state.prevMean = currentMean;
 
   const alpha = rawDelta > state.smoothed ? DELTA_ATTACK : DELTA_RELEASE;
-  state.smoothed += (rawDelta - state.smoothed) * alpha;
+  const adjAlpha = 1 - Math.pow(1 - alpha, dt);
+  state.smoothed += (rawDelta - state.smoothed) * adjAlpha;
 
   return Math.min(state.smoothed * 4, 1.0);
 }
