@@ -1344,6 +1344,10 @@ function wireDOM() {
 
   // ── Viz mode dropdown ──────────────────────────────────────
   const vizSelect = document.getElementById('viz-selector');
+  if (isMobile) {
+    const ballsOption = vizSelect.querySelector('option[value="balls"]');
+    if (ballsOption) ballsOption.remove();
+  }
   const rotationSpeedGroup = document.getElementById('rotation-speed-group');
   const ballsKickBoostGroup = document.getElementById('balls-kick-boost-group');
 
