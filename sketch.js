@@ -39,6 +39,10 @@ const BALL_COUNT = isMobile ? 15 : 30;
 let balls = [];
 let kickBoostMultiplier = 1.0;
 
+// Beat-reactive circle outline color
+let circleOutlineHue = 0;
+let prevKickTransient = 1.0;
+
 // Per-band definitions — logarithmic frequency ranges matching human perception
 const BANDS = [
   { name: 'sub',        loHz: 20,   hiHz: 60,    scale: 3.0,  sens: 'sensSub',        sliderId: 'sens-sub',        attack: 0.50, release: 0.08, defaultSens: 1.5 },
@@ -306,6 +310,18 @@ function windowResized() {
 // ── Spike circle visualization ───────────────────────────────────
 
 function drawSpikeCircle() {
+  // Beat-reactive color: detect kick transient rising edge
+  let kickT = 1.0;
+  if (mode === 'freq') {
+    kickT = transientValues[0];
+  } else if (transientStemValues['kick'] !== undefined) {
+    kickT = transientStemValues['kick'];
+  }
+  if (kickT > 1.3 && prevKickTransient <= 1.3) {
+    circleOutlineHue = Math.random() * 360;
+  }
+  prevKickTransient = kickT;
+
   const cx = width / 2;
   const cy = height / 2;
   const minDim = Math.min(width, height);
@@ -371,11 +387,13 @@ function drawSpikeCircle() {
     endShape(CLOSE);
   }
 
-  // Draw base circle on top
+  // Draw base circle on top (beat-reactive color)
   noFill();
-  stroke(255);
+  colorMode(HSB, 360, 100, 100);
+  stroke(circleOutlineHue, 85, 100);
   strokeWeight(2);
   ellipse(0, 0, baseRadius * 2, baseRadius * 2);
+  colorMode(RGB, 255);
 
   pop();
 }
