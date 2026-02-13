@@ -35,7 +35,7 @@ const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)
 const SPIKES_PER_BAND = isMobile ? 30 : 60;
 
 // ── Balls mode state ────────────────────────────────────────────
-const BALL_COUNT = isMobile ? 15 : 30;
+const BALL_COUNT = isMobile ? 10 : 30;
 let balls = [];
 let kickBoostMultiplier = 1.0;
 
@@ -484,12 +484,14 @@ function initBalls() {
   for (let i = 0; i < BALL_COUNT; i++) {
     const speed = 1 + Math.random() * 2;
     const angle = Math.random() * TWO_PI;
+    const minR = isMobile ? 12 : 8;
+    const rangeR = isMobile ? 24 : 20;
     balls.push({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
-      baseRadius: 8 + Math.random() * 20,
+      baseRadius: minR + Math.random() * rangeR,
       band: i % bandCount,
     });
   }
@@ -514,35 +516,39 @@ function drawBalls() {
 
   const bandCount = mode === 'freq' ? BAND_COUNT : STEMS.length;
 
-  noStroke();
-  for (let i = 0; i < balls.length; i++) {
-    const ball = balls[i];
-
-    // Per-ball audio: read assigned band's amplitude, transient, delta
-    let amp = 0;
-    let tMult = 1.0;
-    let delta = 0;
-    const b = ball.band % bandCount;
+  // Pre-compute per-band averages (avoids redundant loops per ball)
+  const bandAmps = new Array(bandCount);
+  const bandTransients = new Array(bandCount);
+  const bandDeltas = new Array(bandCount);
+  for (let b = 0; b < bandCount; b++) {
     if (mode === 'freq') {
-      // Mean of smoothed bins for this band
       const bins = smoothedBands[b];
-      if (bins) {
-        let sum = 0;
-        for (let j = 0; j < bins.length; j++) sum += bins[j];
-        amp = sum / bins.length;
-      }
-      tMult = transientValues[b];
-      delta = deltaValues[b];
+      let sum = 0;
+      for (let j = 0; j < bins.length; j++) sum += bins[j];
+      bandAmps[b] = sum / bins.length;
+      bandTransients[b] = transientValues[b];
+      bandDeltas[b] = deltaValues[b];
     } else {
       const stem = STEMS[b];
+      bandAmps[b] = 0;
+      bandTransients[b] = 1.0;
+      bandDeltas[b] = 0;
       if (stemSmoothed[stem]) {
         let sum = 0;
         for (let j = 0; j < stemSmoothed[stem].length; j++) sum += stemSmoothed[stem][j];
-        amp = sum / stemSmoothed[stem].length;
+        bandAmps[b] = sum / stemSmoothed[stem].length;
       }
-      if (transientStemValues[stem]) tMult = transientStemValues[stem];
-      if (deltaStemValues[stem]) delta = deltaStemValues[stem];
+      if (transientStemValues[stem]) bandTransients[b] = transientStemValues[stem];
+      if (deltaStemValues[stem]) bandDeltas[b] = deltaStemValues[stem];
     }
+  }
+
+  for (let i = 0; i < balls.length; i++) {
+    const ball = balls[i];
+    const b = ball.band % bandCount;
+    const amp = bandAmps[b];
+    const tMult = bandTransients[b];
+    const delta = bandDeltas[b];
 
     // Physics: update position with kick boost and delta influence
     const speedMult = kickBoostMultiplier * (1 + delta * 0.5);
@@ -563,11 +569,10 @@ function drawBalls() {
     const brightness = 60 + Math.min(scaledAmp, 1.0) * 160 + delta * DELTA_BRIGHTNESS_BOOST;
     const clampedBright = Math.min(brightness, 255);
 
-    // Outer halo (glow)
-    fill(clampedBright * 0.25);
-    ellipse(ball.x, ball.y, r * 3, r * 3);
-
-    // Core circle
+    // Single ellipse with thick stroke for glow + solid fill for core
+    const glowWeight = r * 0.6;
+    stroke(clampedBright * 0.3);
+    strokeWeight(glowWeight);
     fill(clampedBright);
     ellipse(ball.x, ball.y, r * 2, r * 2);
   }
