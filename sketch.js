@@ -398,6 +398,8 @@ function drawSpectrum() {
   const availWidth = width - hPad * 2;
   const barWidth = Math.max((availWidth / totalBars) - 1, 1);
   const gap = 1;
+  const usedWidth = totalBars * (barWidth + gap) - gap;
+  const leftOffset = hPad + (availWidth - usedWidth) / 2;
 
   noStroke();
   for (let b = 0; b < bandCount; b++) {
@@ -423,7 +425,7 @@ function drawSpectrum() {
       const barH = amp * maxBarHeight * (1.0 + delta * DELTA_LENGTH_BOOST);
       if (barH < 0.5) continue;
 
-      const x = hPad + idx * (barWidth + gap);
+      const x = leftOffset + idx * (barWidth + gap);
       const y = height - bottomMargin - barH;
 
       const brightness = 80 + Math.min(amp, 1.0) * 175 + delta * DELTA_BRIGHTNESS_BOOST;
