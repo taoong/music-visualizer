@@ -383,7 +383,7 @@ function drawSpikeCircle() {
 // ── Spectrum visualization ─────────────────────────────────────────
 
 function drawSpectrum() {
-  const hPad = 40;
+  const hPad = isMobile ? 10 : 40;
   const bottomMargin = 60 - centroidYOffset;
   const maxBarHeight = height * 0.7;
 
@@ -396,8 +396,9 @@ function drawSpectrum() {
   totalBars = SPIKES_PER_BAND * bandCount;
 
   const availWidth = width - hPad * 2;
-  const barWidth = Math.max((availWidth / totalBars) - 1, 1);
-  const gap = 1;
+  const barStep = availWidth / totalBars;
+  const gap = Math.max(barStep * 0.15, 0.5);
+  const barWidth = Math.max(barStep - gap, 1);
   const usedWidth = totalBars * (barWidth + gap) - gap;
   const leftOffset = hPad + (availWidth - usedWidth) / 2;
 
