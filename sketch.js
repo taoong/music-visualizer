@@ -318,7 +318,7 @@ function drawSpikeCircle() {
     kickT = transientStemValues['kick'];
   }
   if (kickT > 1.3 && prevKickTransient <= 1.3) {
-    circleOutlineHue = Math.random() * 360;
+    circleOutlineHue = (circleOutlineHue + 90 + Math.random() * 180) % 360;
   }
   prevKickTransient = kickT;
 
