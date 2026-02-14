@@ -153,5 +153,32 @@ def separate():
         return jsonify({'error': str(e)}), 500
 
 
+# ── BPM detection endpoint ───────────────────────────────────
+@app.route('/api/detect-bpm', methods=['POST'])
+def detect_bpm():
+    import librosa
+    tmp_path = None
+    try:
+        if 'file' in request.files:
+            file = request.files['file']
+            tmp_path = os.path.join(tempfile.gettempdir(), f'bpm_{uuid.uuid4()}')
+            file.save(tmp_path)
+            audio_path = tmp_path
+        elif 'path' in request.form:
+            audio_path = os.path.join(PROJECT_ROOT, request.form['path'])
+        else:
+            return jsonify({'error': 'No file or path provided'}), 400
+
+        y, sr = librosa.load(audio_path, sr=None, mono=True)
+        tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
+        bpm = round(float(tempo[0]) if hasattr(tempo, '__len__') else float(tempo))
+        return jsonify({'bpm': bpm})
+    except Exception as e:
+        return jsonify({'error': str(e), 'bpm': 120}), 200
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

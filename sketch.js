@@ -45,86 +45,19 @@ let detectedBPM = 0;        // 0 = not yet detected
 let beatIntervalSec = 0;    // 60 / BPM
 let lastBeatIndex = -1;     // beat index we last triggered on
 
-// ── Offline BPM detection ────────────────────────────────────────
-function detectBPM(toneBuffer) {
+// ── Server-side BPM detection ────────────────────────────────────
+async function fetchBPM(source) {
   try {
-    const sr = toneBuffer.sampleRate;
-    const numChannels = toneBuffer.numberOfChannels;
-    const length = toneBuffer.length;
-
-    // 1. Mono mixdown
-    const mono = new Float32Array(length);
-    for (let ch = 0; ch < numChannels; ch++) {
-      const chan = toneBuffer.getChannelData(ch);
-      for (let i = 0; i < length; i++) mono[i] += chan[i];
+    const formData = new FormData();
+    if (source instanceof File) {
+      formData.append('file', source);
+    } else {
+      formData.append('path', source);
     }
-    if (numChannels > 1) {
-      const inv = 1 / numChannels;
-      for (let i = 0; i < length; i++) mono[i] *= inv;
-    }
-
-    // 2. Low-pass filter (~150 Hz cutoff, single-pole IIR)
-    const rc = 1 / (2 * Math.PI * 150);
-    const dt = 1 / sr;
-    const alpha = dt / (rc + dt);
-    let prev = 0;
-    for (let i = 0; i < length; i++) {
-      prev += alpha * (mono[i] - prev);
-      mono[i] = prev;
-    }
-
-    // 3. Energy envelope — squared amplitude in ~46ms windows, ~10ms hop
-    const winSamples = Math.round(sr * 0.046);
-    const hopSamples = Math.round(sr * 0.01);
-    const envLen = Math.floor((length - winSamples) / hopSamples);
-    if (envLen < 2) { console.log('BPM detection: audio too short, defaulting to 120'); return 120; }
-    const envelope = new Float32Array(envLen);
-    for (let i = 0; i < envLen; i++) {
-      let sum = 0;
-      const start = i * hopSamples;
-      for (let j = start; j < start + winSamples; j++) sum += mono[j] * mono[j];
-      envelope[i] = sum / winSamples;
-    }
-
-    // 4. Onset strength — half-wave rectified first-difference
-    const onset = new Float32Array(envLen - 1);
-    for (let i = 0; i < onset.length; i++) {
-      const diff = envelope[i + 1] - envelope[i];
-      onset[i] = diff > 0 ? diff : 0;
-    }
-
-    // 5. Autocorrelation over lag range 60–200 BPM
-    const hopRate = sr / hopSamples; // frames per second
-    const minLag = Math.round(hopRate * 60 / 200); // 200 BPM
-    const maxLag = Math.round(hopRate * 60 / 60);  // 60 BPM
-    let bestLag = minLag;
-    let bestScore = -Infinity;
-    const centerLag = hopRate * 60 / 120; // bias toward 120 BPM
-    const sigma = centerLag * 0.5;
-
-    for (let lag = minLag; lag <= Math.min(maxLag, onset.length - 1); lag++) {
-      let sum = 0;
-      const n = onset.length - lag;
-      for (let i = 0; i < n; i++) sum += onset[i] * onset[i + lag];
-      // Gaussian bias toward 120 BPM
-      const d = lag - centerLag;
-      const bias = Math.exp(-0.5 * (d * d) / (sigma * sigma));
-      const score = (sum / n) * bias;
-      if (score > bestScore) {
-        bestScore = score;
-        bestLag = lag;
-      }
-    }
-
-    let bpm = (hopRate * 60) / bestLag;
-
-    // 6. Octave correction
-    if (bpm > 160) bpm /= 2;
-    if (bpm < 75) bpm *= 2;
-
-    bpm = Math.round(bpm);
-    console.log('Detected BPM:', bpm);
-    return bpm;
+    const resp = await fetch('/api/detect-bpm', { method: 'POST', body: formData });
+    const data = await resp.json();
+    console.log('Detected BPM:', data.bpm);
+    return data.bpm || 120;
   } catch (e) {
     console.warn('BPM detection failed, defaulting to 120:', e);
     return 120;
@@ -1251,7 +1184,7 @@ function wireDOM() {
 
       try {
         await initAudio(url);
-        detectedBPM = detectBPM(player.buffer);
+        detectedBPM = await fetchBPM(useSample ? 'sample.mp3' : userFile);
         beatIntervalSec = 60 / detectedBPM;
         lastBeatIndex = -1;
         splash.classList.add('hidden');
@@ -1327,7 +1260,7 @@ function wireDOM() {
 
       try {
         await initStemAudio(stemUrls);
-        detectedBPM = detectBPM(stemPlayers.kick.buffer);
+        detectedBPM = await fetchBPM(useSample ? 'sample.mp3' : userFile);
         beatIntervalSec = 60 / detectedBPM;
         lastBeatIndex = -1;
         processing.classList.add('hidden');
@@ -1394,7 +1327,7 @@ function wireDOM() {
       trackNameEl.textContent = 'Loading\u2026';
       try {
         await initAudio(currentObjectUrl);
-        detectedBPM = detectBPM(player.buffer);
+        detectedBPM = await fetchBPM(userFile);
         beatIntervalSec = 60 / detectedBPM;
         lastBeatIndex = -1;
         player.start();
@@ -1426,7 +1359,7 @@ function wireDOM() {
         const data = await resp.json();
         document.getElementById('processing-text').textContent = 'Loading stems\u2026';
         await initStemAudio(data.stems);
-        detectedBPM = detectBPM(stemPlayers.kick.buffer);
+        detectedBPM = await fetchBPM(userFile);
         beatIntervalSec = 60 / detectedBPM;
         lastBeatIndex = -1;
         processing.classList.add('hidden');
