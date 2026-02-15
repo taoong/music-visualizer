@@ -17,6 +17,12 @@ import tempfile
 from flask import Flask, request, jsonify, send_from_directory
 from pydub import AudioSegment
 
+try:
+    from essentia.standard import MonoLoader, RhythmExtractor2013
+except ImportError:
+    MonoLoader = None
+    RhythmExtractor2013 = None
+
 # ── Paths ──────────────────────────────────────────────────────
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), 'output')
@@ -156,7 +162,6 @@ def separate():
 # ── BPM detection endpoint ───────────────────────────────────
 @app.route('/api/detect-bpm', methods=['POST'])
 def detect_bpm():
-    from essentia.standard import MonoLoader, RhythmExtractor2013
     tmp_path = None
     try:
         if 'file' in request.files:
@@ -171,11 +176,13 @@ def detect_bpm():
 
         audio = MonoLoader(filename=audio_path)()
         rhythm_extractor = RhythmExtractor2013()
-        bpm = rhythm_extractor(audio)[0]
-        bpm = round(float(bpm))
-        return jsonify({'bpm': bpm})
+        result = rhythm_extractor(audio)
+        bpm = round(float(result[0]))
+        ticks = result[1]
+        beat_offset = round(float(ticks[0]), 4) if len(ticks) > 0 else 0.0
+        return jsonify({'bpm': bpm, 'beatOffset': beat_offset})
     except Exception as e:
-        return jsonify({'error': str(e), 'bpm': 0}), 200
+        return jsonify({'error': str(e), 'bpm': 0, 'beatOffset': 0}), 200
     finally:
         if tmp_path and os.path.exists(tmp_path):
             os.remove(tmp_path)

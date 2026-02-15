@@ -44,6 +44,7 @@ let circleOutlineHue = 0;
 let detectedBPM = 0;        // 0 = not yet detected
 let beatIntervalSec = 0;    // 60 / BPM
 let lastBeatIndex = -1;     // beat index we last triggered on
+let beatOffset = 0;          // position of first beat in seconds
 
 // ── Server-side BPM detection ────────────────────────────────────
 async function fetchBPM(source) {
@@ -56,11 +57,11 @@ async function fetchBPM(source) {
     }
     const resp = await fetch('/api/detect-bpm', { method: 'POST', body: formData });
     const data = await resp.json();
-    console.log('Detected BPM:', data.bpm);
-    return data.bpm || 0;
+    console.log('Detected BPM:', data.bpm, 'Beat offset:', data.beatOffset);
+    return { bpm: data.bpm || 0, beatOffset: data.beatOffset || 0 };
   } catch (e) {
     console.warn('BPM detection failed:', e);
-    return 0;
+    return { bpm: 0, beatOffset: 0 };
   }
 }
 
@@ -331,11 +332,14 @@ function windowResized() {
 // ── Spike circle visualization ───────────────────────────────────
 
 function drawSpikeCircle() {
-  // Beat-reactive color: change hue on BPM grid
+  // Beat-reactive color: change hue on BPM grid (phase-aligned to first beat)
   if (detectedBPM > 0 && isPlaying) {
     const pos = getPlaybackPosition();
-    const currentBeatIndex = Math.floor(pos / beatIntervalSec);
-    if (currentBeatIndex !== lastBeatIndex) {
+    const adjusted = pos - beatOffset;
+    const currentBeatIndex = adjusted >= 0
+      ? Math.floor(adjusted / beatIntervalSec)
+      : -1;
+    if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
       circleOutlineHue = (circleOutlineHue + 90 + Math.random() * 180) % 360;
       lastBeatIndex = currentBeatIndex;
     }
@@ -1060,6 +1064,7 @@ function resetAudioProcessingState() {
   detectedBPM = 0;
   beatIntervalSec = 0;
   lastBeatIndex = -1;
+  beatOffset = 0;
 }
 
 // ── Scrubber / playback position ─────────────────────────────────
@@ -1184,8 +1189,10 @@ function wireDOM() {
 
       try {
         await initAudio(url);
-        detectedBPM = await fetchBPM(useSample ? 'sample.mp3' : userFile);
-        beatIntervalSec = 60 / detectedBPM;
+        const bpmData = await fetchBPM(useSample ? 'sample.mp3' : userFile);
+        detectedBPM = bpmData.bpm;
+        beatIntervalSec = detectedBPM > 0 ? 60 / detectedBPM : 0;
+        beatOffset = bpmData.beatOffset;
         lastBeatIndex = -1;
         splash.classList.add('hidden');
         document.getElementById('playback-bar').classList.add('visible');
@@ -1260,8 +1267,10 @@ function wireDOM() {
 
       try {
         await initStemAudio(stemUrls);
-        detectedBPM = await fetchBPM(useSample ? 'sample.mp3' : userFile);
-        beatIntervalSec = 60 / detectedBPM;
+        const bpmData2 = await fetchBPM(useSample ? 'sample.mp3' : userFile);
+        detectedBPM = bpmData2.bpm;
+        beatIntervalSec = detectedBPM > 0 ? 60 / detectedBPM : 0;
+        beatOffset = bpmData2.beatOffset;
         lastBeatIndex = -1;
         processing.classList.add('hidden');
         splash.classList.add('hidden');
@@ -1327,8 +1336,10 @@ function wireDOM() {
       trackNameEl.textContent = 'Loading\u2026';
       try {
         await initAudio(currentObjectUrl);
-        detectedBPM = await fetchBPM(userFile);
-        beatIntervalSec = 60 / detectedBPM;
+        const bpmData3 = await fetchBPM(userFile);
+        detectedBPM = bpmData3.bpm;
+        beatIntervalSec = detectedBPM > 0 ? 60 / detectedBPM : 0;
+        beatOffset = bpmData3.beatOffset;
         lastBeatIndex = -1;
         player.start();
         playStartedAt = Tone.now();
@@ -1359,8 +1370,10 @@ function wireDOM() {
         const data = await resp.json();
         document.getElementById('processing-text').textContent = 'Loading stems\u2026';
         await initStemAudio(data.stems);
-        detectedBPM = await fetchBPM(userFile);
-        beatIntervalSec = 60 / detectedBPM;
+        const bpmData4 = await fetchBPM(userFile);
+        detectedBPM = bpmData4.bpm;
+        beatIntervalSec = detectedBPM > 0 ? 60 / detectedBPM : 0;
+        beatOffset = bpmData4.beatOffset;
         lastBeatIndex = -1;
         processing.classList.add('hidden');
         startAllStems(0);

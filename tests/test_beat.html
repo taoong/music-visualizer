@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Beat Index Tests</title>
+<style>
+  body { font-family: monospace; margin: 2em; background: #111; color: #eee; }
+  .pass { color: #4f4; }
+  .fail { color: #f44; }
+  h1 { font-size: 1.4em; }
+  #results div { margin: 0.3em 0; }
+  #summary { margin-top: 1em; font-size: 1.2em; }
+</style>
+</head>
+<body>
+<h1>computeBeatIndex() Tests</h1>
+<div id="results"></div>
+<div id="summary"></div>
+
+<script>
+// ── Function under test (same logic as drawSpikeCircle) ──
+function computeBeatIndex(pos, beatOffset, beatIntervalSec) {
+  const adjusted = pos - beatOffset;
+  return adjusted >= 0 ? Math.floor(adjusted / beatIntervalSec) : -1;
+}
+
+// ── Tiny test runner ──
+let passed = 0;
+let failed = 0;
+const resultsEl = document.getElementById('results');
+
+function assert(condition, label) {
+  const div = document.createElement('div');
+  if (condition) {
+    passed++;
+    div.className = 'pass';
+    div.textContent = 'PASS: ' + label;
+  } else {
+    failed++;
+    div.className = 'fail';
+    div.textContent = 'FAIL: ' + label;
+  }
+  resultsEl.appendChild(div);
+}
+
+function assertEqual(actual, expected, label) {
+  assert(actual === expected, label + ' (got ' + actual + ', expected ' + expected + ')');
+}
+
+// ── Tests ──
+
+// Beat at exact offset position -> index 0
+assertEqual(
+  computeBeatIndex(0.4, 0.4, 0.5),
+  0,
+  'Exact offset position is beat 0'
+);
+
+// Before first beat -> index -1
+assertEqual(
+  computeBeatIndex(0.2, 0.4, 0.5),
+  -1,
+  'Before first beat returns -1'
+);
+
+// Successive beats increment correctly
+assertEqual(
+  computeBeatIndex(0.9, 0.4, 0.5),
+  1,
+  'Second beat (0.4 + 0.5 = 0.9) is index 1'
+);
+
+assertEqual(
+  computeBeatIndex(1.4, 0.4, 0.5),
+  2,
+  'Third beat (0.4 + 1.0) is index 2'
+);
+
+assertEqual(
+  computeBeatIndex(1.8, 0.4, 0.5),
+  2,
+  'Between third and fourth beat is still index 2'
+);
+
+// Zero offset = backward-compatible behavior (beat 0 at t=0)
+assertEqual(
+  computeBeatIndex(0.0, 0, 0.5),
+  0,
+  'Zero offset: t=0 is beat 0'
+);
+
+assertEqual(
+  computeBeatIndex(0.5, 0, 0.5),
+  1,
+  'Zero offset: t=0.5 is beat 1'
+);
+
+assertEqual(
+  computeBeatIndex(1.25, 0, 0.5),
+  2,
+  'Zero offset: t=1.25 is beat 2'
+);
+
+// Song loop (pos wraps below offset) -> -1
+assertEqual(
+  computeBeatIndex(0.1, 0.4, 0.5),
+  -1,
+  'After loop wrap (pos < offset) returns -1'
+);
+
+// Large offset with pos exactly at boundary
+assertEqual(
+  computeBeatIndex(2.0, 2.0, 0.4286),
+  0,
+  'Large offset: pos at exact offset is beat 0'
+);
+
+// Pos just barely past offset
+assertEqual(
+  computeBeatIndex(0.401, 0.4, 0.5),
+  0,
+  'Just past offset is still beat 0'
+);
+
+// ── Summary ──
+const summaryEl = document.getElementById('summary');
+summaryEl.className = failed === 0 ? 'pass' : 'fail';
+summaryEl.textContent = passed + ' passed, ' + failed + ' failed';
+</script>
+</body>
+</html>
