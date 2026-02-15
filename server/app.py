@@ -156,7 +156,7 @@ def separate():
 # ── BPM detection endpoint ───────────────────────────────────
 @app.route('/api/detect-bpm', methods=['POST'])
 def detect_bpm():
-    import librosa
+    from essentia.standard import MonoLoader, RhythmExtractor2013
     tmp_path = None
     try:
         if 'file' in request.files:
@@ -169,12 +169,13 @@ def detect_bpm():
         else:
             return jsonify({'error': 'No file or path provided'}), 400
 
-        y, sr = librosa.load(audio_path, sr=None, mono=True)
-        tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
-        bpm = round(float(tempo[0]) if hasattr(tempo, '__len__') else float(tempo))
+        audio = MonoLoader(filename=audio_path)()
+        rhythm_extractor = RhythmExtractor2013()
+        bpm = rhythm_extractor(audio)[0]
+        bpm = round(float(bpm))
         return jsonify({'bpm': bpm})
     except Exception as e:
-        return jsonify({'error': str(e), 'bpm': 120}), 200
+        return jsonify({'error': str(e), 'bpm': 0}), 200
     finally:
         if tmp_path and os.path.exists(tmp_path):
             os.remove(tmp_path)

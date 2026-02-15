@@ -57,10 +57,10 @@ async function fetchBPM(source) {
     const resp = await fetch('/api/detect-bpm', { method: 'POST', body: formData });
     const data = await resp.json();
     console.log('Detected BPM:', data.bpm);
-    return data.bpm || 120;
+    return data.bpm || 0;
   } catch (e) {
-    console.warn('BPM detection failed, defaulting to 120:', e);
-    return 120;
+    console.warn('BPM detection failed:', e);
+    return 0;
   }
 }
 

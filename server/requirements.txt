@@ -1,4 +1,4 @@
 flask
 demucs
 pydub
-librosa
+essentia
