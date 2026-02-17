@@ -1,0 +1,279 @@
+/**
+ * Keyboard shortcuts and accessibility features
+ */
+import { store } from '../state/store';
+import { audioEngine } from '../audio/engine';
+import type { VizMode } from '../types';
+
+// Keyboard shortcut map
+const SHORTCUTS: Record<string, { action: () => void; description: string }> = {};
+
+/**
+ * Initialize keyboard shortcuts
+ */
+export function initKeyboardShortcuts(): () => void {
+  // Define shortcuts
+  defineShortcut(' ', togglePlayPause, 'Play/Pause');
+  defineShortcut('ArrowLeft', () => seek(-5), 'Seek backward 5s');
+  defineShortcut('ArrowRight', () => seek(5), 'Seek forward 5s');
+  defineShortcut('ArrowUp', () => adjustVolume(0.05), 'Volume up');
+  defineShortcut('ArrowDown', () => adjustVolume(-0.05), 'Volume down');
+  defineShortcut('1', () => setVizMode('circle'), 'Circle visualization');
+  defineShortcut('2', () => setVizMode('spectrum'), 'Spectrum visualization');
+  defineShortcut('3', () => setVizMode('tunnel'), 'Tunnel visualization');
+  defineShortcut('4', () => setVizMode('balls'), 'Balls visualization');
+  defineShortcut('m', toggleMute, 'Mute/Unmute');
+  defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
+  defineShortcut('s', toggleSidebar, 'Toggle sidebar');
+  defineShortcut('r', randomizeSettings, 'Randomize settings');
+  defineShortcut('?', showShortcutsHelp, 'Show keyboard shortcuts');
+  defineShortcut('Escape', hideOverlays, 'Close overlays/Go back');
+  defineShortcut('h', goHome, 'Return to home screen');
+
+  // Event listener
+  const handler = (e: KeyboardEvent) => {
+    // Don't trigger shortcuts when typing in inputs
+    if (
+      e.target instanceof HTMLInputElement ||
+      e.target instanceof HTMLTextAreaElement ||
+      e.target instanceof HTMLSelectElement
+    ) {
+      return;
+    }
+
+    const shortcut = SHORTCUTS[e.key];
+    if (shortcut) {
+      e.preventDefault();
+      shortcut.action();
+    }
+  };
+
+  document.addEventListener('keydown', handler);
+
+  // Return cleanup function
+  return () => document.removeEventListener('keydown', handler);
+}
+
+/**
+ * Define a keyboard shortcut
+ */
+function defineShortcut(key: string, action: () => void, description: string): void {
+  SHORTCUTS[key] = { action, description };
+}
+
+/**
+ * Toggle play/pause
+ */
+function togglePlayPause(): void {
+  const pauseBtn = document.getElementById('pause-btn');
+  if (pauseBtn) {
+    pauseBtn.click();
+  }
+}
+
+/**
+ * Seek by offset seconds
+ */
+function seek(offset: number): void {
+  const currentPos = audioEngine.getPlaybackPosition();
+  const duration = audioEngine.getDuration();
+  const newPos = Math.max(0, Math.min(duration, currentPos + offset));
+  audioEngine.seek(newPos);
+
+  // Announce to screen readers
+  announceToScreenReader(`Seeked to ${formatTime(newPos)}`);
+}
+
+/**
+ * Adjust volume
+ */
+function adjustVolume(delta: number): void {
+  const newVolume = Math.max(0, Math.min(1, store.config.masterVolume + delta));
+  store.updateConfig('masterVolume', newVolume);
+  audioEngine.setVolume(newVolume);
+
+  // Update slider
+  const volumeSlider = document.getElementById('master-volume') as HTMLInputElement | null;
+  if (volumeSlider) {
+    volumeSlider.value = String(newVolume);
+  }
+
+  announceToScreenReader(`Volume ${Math.round(newVolume * 100)}%`);
+}
+
+/**
+ * Set visualization mode
+ */
+function setVizMode(mode: VizMode): void {
+  const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
+  if (vizSelect) {
+    vizSelect.value = mode;
+    vizSelect.dispatchEvent(new Event('change'));
+    announceToScreenReader(`Switched to ${mode} visualization`);
+  }
+}
+
+/**
+ * Toggle mute
+ */
+let previousVolume = 0.8;
+function toggleMute(): void {
+  if (store.config.masterVolume > 0) {
+    previousVolume = store.config.masterVolume;
+    store.updateConfig('masterVolume', 0);
+    audioEngine.setVolume(0);
+  } else {
+    store.updateConfig('masterVolume', previousVolume);
+    audioEngine.setVolume(previousVolume);
+  }
+
+  const volumeSlider = document.getElementById('master-volume') as HTMLInputElement | null;
+  if (volumeSlider) {
+    volumeSlider.value = String(store.config.masterVolume);
+  }
+
+  announceToScreenReader(store.config.masterVolume === 0 ? 'Muted' : 'Unmuted');
+}
+
+/**
+ * Toggle fullscreen
+ */
+function toggleFullscreen(): void {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(console.error);
+  } else {
+    document.exitFullscreen().catch(console.error);
+  }
+}
+
+/**
+ * Toggle sidebar
+ */
+function toggleSidebar(): void {
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('sidebar-toggle');
+  if (sidebar && toggleBtn) {
+    toggleBtn.click();
+    const isOpen = sidebar.classList.contains('open');
+    announceToScreenReader(isOpen ? 'Sidebar opened' : 'Sidebar closed');
+  }
+}
+
+/**
+ * Randomize settings
+ */
+function randomizeSettings(): void {
+  const randomizeBtn = document.getElementById('randomize-btn');
+  if (randomizeBtn) {
+    randomizeBtn.click();
+    announceToScreenReader('Settings randomized');
+  }
+}
+
+/**
+ * Show keyboard shortcuts help
+ */
+function showShortcutsHelp(): void {
+  const helpContent = Object.entries(SHORTCUTS)
+    .map(([key, { description }]) => `<kbd>${key}</kbd>: ${description}`)
+    .join('<br>');
+
+  const modal = document.createElement('div');
+  modal.className = 'shortcuts-modal';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-label', 'Keyboard Shortcuts');
+  modal.innerHTML = `
+    <div class="shortcuts-modal-content">
+      <h2>Keyboard Shortcuts</h2>
+      <div class="shortcuts-list">${helpContent}</div>
+      <button class="close-btn" onclick="this.closest('.shortcuts-modal').remove()">Close</button>
+    </div>
+  `;
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.remove();
+  });
+
+  document.body.appendChild(modal);
+  const closeBtn = modal.querySelector('.close-btn') as HTMLElement | null;
+  closeBtn?.focus();
+}
+
+/**
+ * Hide overlays and return to main view
+ */
+function hideOverlays(): void {
+  const modal = document.querySelector('.shortcuts-modal');
+  if (modal) {
+    modal.remove();
+    return;
+  }
+
+  // Close sidebar if open
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar?.classList.contains('open')) {
+    sidebar.classList.remove('open');
+    return;
+  }
+}
+
+/**
+ * Return to home screen
+ */
+function goHome(): void {
+  const splash = document.getElementById('splash');
+  if (splash?.classList.contains('hidden')) {
+    audioEngine.stop();
+    audioEngine.disposeAll();
+    splash.classList.remove('hidden');
+    document.getElementById('playback-bar')?.classList.remove('visible');
+  }
+}
+
+/**
+ * Format time for display
+ */
+function formatTime(seconds: number): string {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+/**
+ * Announce message to screen readers
+ */
+export function announceToScreenReader(message: string): void {
+  let announcer = document.getElementById('sr-announcer');
+  if (!announcer) {
+    announcer = document.createElement('div');
+    announcer.id = 'sr-announcer';
+    announcer.setAttribute('aria-live', 'polite');
+    announcer.setAttribute('aria-atomic', 'true');
+    announcer.className = 'sr-only';
+    announcer.style.cssText = `
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    `;
+    document.body.appendChild(announcer);
+  }
+  announcer.textContent = message;
+}
+
+/**
+ * Get all keyboard shortcuts for documentation
+ */
+export function getAllShortcuts(): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const [key, { description }] of Object.entries(SHORTCUTS)) {
+    result[key] = description;
+  }
+  return result;
+}

@@ -1,179 +1,499 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Music Visualizer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
-</head>
-<body>
-  <!-- Splash overlay — requires user gesture to start AudioContext -->
-  <div id="splash">
-    <div id="splash-content">
-      <header class="splash-header">
-        <h1>Music Visualizer</h1>
-        <p>created by Tao Ong with Claude Code</p>
-      </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive music visualizer with frequency analysis and AI-powered stem separation. Real-time audio-reactive graphics powered by p5.js and Tone.js."
+    />
+    <title>Music Visualizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!-- p5.js and Tone.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  </head>
+  <body>
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-      <div class="splash-steps">
-        <div class="splash-step">
-          <span class="step-label">Select source</span>
-          <div id="splash-buttons">
-            <label id="upload-label" for="audio-upload">Upload Track</label>
-            <input type="file" id="audio-upload" accept="audio/*" />
-            <button id="use-sample-btn">Use Sample Track</button>
+    <!-- Splash overlay — requires user gesture to start AudioContext -->
+    <div
+      id="splash"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Welcome to Music Visualizer"
+    >
+      <div id="splash-content">
+        <header class="splash-header">
+          <h1>Music Visualizer</h1>
+          <p>created by Tao Ong with Claude Code</p>
+        </header>
+
+        <div class="splash-steps">
+          <div class="splash-step">
+            <span class="step-label" id="select-source-label"
+              >Select source</span
+            >
+            <div
+              id="splash-buttons"
+              role="group"
+              aria-labelledby="select-source-label"
+            >
+              <label
+                id="upload-label"
+                for="audio-upload"
+                class="btn"
+                tabindex="0"
+                role="button"
+              >
+                Upload Track
+                <span class="sr-only"
+                  >Choose an audio file from your device</span
+                >
+              </label>
+              <input
+                type="file"
+                id="audio-upload"
+                accept="audio/*"
+                aria-label="Upload audio file"
+                aria-describedby="file-name"
+              />
+              <button id="use-sample-btn" class="btn" type="button">
+                Use Sample Track
+                <span class="sr-only">Use the built-in demo track</span>
+              </button>
+            </div>
+            <span id="file-name" aria-live="polite" aria-atomic="true"></span>
           </div>
-          <span id="file-name"></span>
+
+          <div class="splash-step">
+            <span class="step-label" id="choose-mode-label">Choose mode</span>
+            <div
+              id="mode-selector"
+              role="radiogroup"
+              aria-labelledby="choose-mode-label"
+            >
+              <button
+                id="mode-freq"
+                class="mode-btn active"
+                type="button"
+                role="radio"
+                aria-checked="true"
+                aria-describedby="mode-freq-desc"
+              >
+                Frequency Bands
+                <span id="mode-freq-desc" class="sr-only"
+                  >Analyze audio using 7 frequency bands</span
+                >
+              </button>
+              <button
+                id="mode-stems"
+                class="mode-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                aria-describedby="mode-stems-desc"
+              >
+                Stem Separation <span class="badge">Experimental</span>
+                <span id="mode-stems-desc" class="sr-only"
+                  >Use AI to separate audio into kick, drums, bass, vocals, and
+                  other stems</span
+                >
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div class="splash-step">
-          <span class="step-label">Choose mode</span>
-          <div id="mode-selector">
-            <button id="mode-freq" class="mode-btn active">Frequency Bands</button>
-            <button id="mode-stems" class="mode-btn">Stem Separation <span class="badge">Experimental</span></button>
+        <button
+          id="play-btn"
+          disabled
+          type="button"
+          aria-describedby="file-name"
+        >
+          Begin
+          <span class="sr-only">Start the music visualization</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Processing overlay -->
+    <div
+      id="processing"
+      class="hidden"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      aria-hidden="true"
+    >
+      <div id="processing-content">
+        <div
+          class="spinner"
+          role="progressbar"
+          aria-label="Processing audio"
+        ></div>
+        <p id="processing-text">Separating stems…</p>
+      </div>
+    </div>
+
+    <!-- Sidebar GUI -->
+    <aside
+      id="sidebar"
+      role="complementary"
+      aria-label="Visualization controls"
+    >
+      <h2>Controls</h2>
+
+      <section aria-labelledby="sensitivity-heading">
+        <h3 id="sensitivity-heading">Sensitivity</h3>
+        <!-- Frequency mode sliders (7 bands, shown by default) -->
+        <div
+          id="freq-sliders"
+          role="group"
+          aria-label="Frequency band sensitivity"
+        >
+          <div class="slider-group">
+            <label for="sens-sub">Sub (20–60 Hz)</label>
+            <input
+              type="range"
+              id="sens-sub"
+              min="0"
+              max="3"
+              step="0.01"
+              value="1.5"
+              aria-label="Sub bass sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-bass">Bass (60–250 Hz)</label>
+            <input
+              type="range"
+              id="sens-bass"
+              min="0"
+              max="3"
+              step="0.01"
+              value="1.2"
+              aria-label="Bass sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-low-mid">Low-Mid (250–500 Hz)</label>
+            <input
+              type="range"
+              id="sens-low-mid"
+              min="0"
+              max="3"
+              step="0.01"
+              value="1.8"
+              aria-label="Low-mid sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-mid">Mid (500 Hz–2 kHz)</label>
+            <input
+              type="range"
+              id="sens-mid"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Mid frequency sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-upper-mid">Upper-Mid (2–4 kHz)</label>
+            <input
+              type="range"
+              id="sens-upper-mid"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Upper-mid sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-presence">Presence (4–6 kHz)</label>
+            <input
+              type="range"
+              id="sens-presence"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Presence sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-brilliance">Brilliance (6–20 kHz)</label>
+            <input
+              type="range"
+              id="sens-brilliance"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Brilliance sensitivity"
+            />
+          </div>
+        </div>
+        <!-- Stem mode sliders (hidden by default) -->
+        <div
+          id="stem-sliders"
+          class="hidden"
+          role="group"
+          aria-label="Stem sensitivity"
+        >
+          <div class="slider-group">
+            <label for="sens-kick">Kick</label>
+            <input
+              type="range"
+              id="sens-kick"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Kick drum sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-drums">Drums</label>
+            <input
+              type="range"
+              id="sens-drums"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Drums sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-bass-stem">Bass</label>
+            <input
+              type="range"
+              id="sens-bass-stem"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Bass sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-vocals">Vocals</label>
+            <input
+              type="range"
+              id="sens-vocals"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Vocals sensitivity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="sens-other">Other</label>
+            <input
+              type="range"
+              id="sens-other"
+              min="0"
+              max="3"
+              step="0.01"
+              value="2.0"
+              aria-label="Other instruments sensitivity"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="visualization-heading">
+        <h3 id="visualization-heading">Visualization</h3>
+        <label for="viz-selector" class="sr-only"
+          >Select visualization mode</label
+        >
+        <select id="viz-selector" aria-label="Visualization mode">
+          <option value="circle" selected>Circle</option>
+          <option value="spectrum">Spectrum</option>
+          <option value="tunnel">Tunnel</option>
+          <option value="balls">Balls</option>
+        </select>
+      </section>
+
+      <section aria-labelledby="display-heading">
+        <h3 id="display-heading">Display</h3>
+        <div class="slider-group">
+          <label for="spike-scale">Scale</label>
+          <input
+            type="range"
+            id="spike-scale"
+            min="0"
+            max="2"
+            step="0.01"
+            value="1.2"
+            aria-label="Visualization scale"
+          />
+        </div>
+        <div class="slider-group" id="rotation-speed-group">
+          <label for="rotation-speed">Rotation Speed</label>
+          <input
+            type="range"
+            id="rotation-speed"
+            min="0"
+            max="2"
+            step="0.01"
+            value="0.3"
+            aria-label="Circle rotation speed"
+          />
+        </div>
+        <div class="slider-group hidden" id="balls-kick-boost-group">
+          <label for="balls-kick-boost">Kick Boost</label>
+          <input
+            type="range"
+            id="balls-kick-boost"
+            min="0"
+            max="12"
+            step="0.1"
+            value="6.0"
+            aria-label="Balls kick boost sensitivity"
+          />
+        </div>
+      </section>
+
+      <section>
+        <button
+          id="randomize-btn"
+          type="button"
+          aria-label="Randomize all settings"
+        >
+          Randomize
+        </button>
+        <button
+          id="keyboard-shortcuts-btn"
+          type="button"
+          aria-label="Show keyboard shortcuts"
+          class="secondary-btn"
+        >
+          Keyboard Shortcuts (?)
+        </button>
+      </section>
+    </aside>
+
+    <!-- Toggle sidebar button -->
+    <button
+      id="sidebar-toggle"
+      type="button"
+      aria-label="Toggle sidebar controls"
+      aria-expanded="false"
+      aria-controls="sidebar"
+    >
+      &#9776;
+    </button>
+
+    <!-- p5.js canvas goes here -->
+    <main
+      id="canvas-container"
+      role="main"
+      aria-label="Music visualization canvas"
+      tabindex="-1"
+    >
+      <span id="main-content" tabindex="-1"></span>
+    </main>
+
+    <footer id="playback-bar" role="contentinfo" aria-label="Playback controls">
+      <div id="scrubber-row">
+        <span id="time-display" aria-live="polite" aria-atomic="true"
+          >0:00 / 0:00</span
+        >
+        <div id="scrubber-group">
+          <label for="scrubber" class="sr-only">Seek position</label>
+          <input
+            type="range"
+            id="scrubber"
+            min="0"
+            max="100"
+            step="0.1"
+            value="0"
+            aria-label="Audio playback position"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          />
+        </div>
+      </div>
+      <div id="controls-row">
+        <button
+          id="pause-btn"
+          class="is-playing"
+          type="button"
+          aria-label="Play or pause"
+          aria-pressed="true"
+        >
+          <span class="sr-only">Toggle playback</span>
+        </button>
+        <div id="track-info">
+          <span id="track-name" aria-live="polite"></span>
+          <label
+            id="change-track-label"
+            for="sidebar-audio-upload"
+            title="Change Track"
+            tabindex="0"
+            role="button"
+            aria-label="Change audio track"
+          >
+            &#128193;
+            <span class="sr-only">Change track</span>
+          </label>
+          <input
+            type="file"
+            id="sidebar-audio-upload"
+            accept="audio/*"
+            aria-label="Upload new audio file"
+          />
+        </div>
+        <div id="volume-group">
+          <button
+            id="volume-btn"
+            type="button"
+            aria-label="Volume"
+            aria-expanded="false"
+            aria-controls="volume-popup"
+          >
+            &#128266;
+            <span class="sr-only">Toggle volume control</span>
+          </button>
+          <div id="volume-popup" role="group" aria-label="Volume control">
+            <label for="master-volume" class="sr-only">Master volume</label>
+            <input
+              type="range"
+              id="master-volume"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.8"
+              aria-label="Master volume level"
+              aria-orientation="vertical"
+            />
           </div>
         </div>
       </div>
+    </footer>
 
-      <button id="play-btn" disabled>Begin</button>
-    </div>
-  </div>
+    <!-- Screen reader announcements -->
+    <div
+      id="sr-announcer"
+      class="sr-only"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
-  <!-- Processing overlay -->
-  <div id="processing" class="hidden">
-    <div id="processing-content">
-      <div class="spinner"></div>
-      <p id="processing-text">Separating stems…</p>
-    </div>
-  </div>
-
-  <!-- Sidebar GUI -->
-  <aside id="sidebar">
-    <h2>Controls</h2>
-
-    <section>
-      <h3>Sensitivity</h3>
-      <!-- Frequency mode sliders (7 bands, shown by default) -->
-      <div id="freq-sliders">
-        <div class="slider-group">
-          <label>Sub (20–60 Hz)</label>
-          <input type="range" id="sens-sub" min="0" max="3" step="0.01" value="1.5" />
-        </div>
-        <div class="slider-group">
-          <label>Bass (60–250 Hz)</label>
-          <input type="range" id="sens-bass" min="0" max="3" step="0.01" value="1.2" />
-        </div>
-        <div class="slider-group">
-          <label>Low-Mid (250–500 Hz)</label>
-          <input type="range" id="sens-low-mid" min="0" max="3" step="0.01" value="1.8" />
-        </div>
-        <div class="slider-group">
-          <label>Mid (500 Hz–2 kHz)</label>
-          <input type="range" id="sens-mid" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-        <div class="slider-group">
-          <label>Upper-Mid (2–4 kHz)</label>
-          <input type="range" id="sens-upper-mid" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-        <div class="slider-group">
-          <label>Presence (4–6 kHz)</label>
-          <input type="range" id="sens-presence" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-        <div class="slider-group">
-          <label>Brilliance (6–20 kHz)</label>
-          <input type="range" id="sens-brilliance" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-      </div>
-      <!-- Stem mode sliders (hidden by default) -->
-      <div id="stem-sliders" class="hidden">
-        <div class="slider-group">
-          <label>Kick</label>
-          <input type="range" id="sens-kick" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-        <div class="slider-group">
-          <label>Drums</label>
-          <input type="range" id="sens-drums" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-        <div class="slider-group">
-          <label>Bass</label>
-          <input type="range" id="sens-bass-stem" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-        <div class="slider-group">
-          <label>Vocals</label>
-          <input type="range" id="sens-vocals" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-        <div class="slider-group">
-          <label>Other</label>
-          <input type="range" id="sens-other" min="0" max="3" step="0.01" value="2.0" />
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h3>Visualization</h3>
-      <select id="viz-selector">
-        <option value="circle" selected>Circle</option>
-        <option value="spectrum">Spectrum</option>
-        <option value="tunnel">Tunnel</option>
-        <option value="balls">Balls</option>
-      </select>
-    </section>
-
-    <section>
-      <h3>Display</h3>
-      <div class="slider-group">
-        <label>Scale</label>
-        <input type="range" id="spike-scale" min="0" max="2" step="0.01" value="1.2" />
-      </div>
-      <div class="slider-group" id="rotation-speed-group">
-        <label>Rotation Speed</label>
-        <input type="range" id="rotation-speed" min="0" max="2" step="0.01" value="0.3" />
-      </div>
-      <div class="slider-group hidden" id="balls-kick-boost-group">
-        <label>Kick Boost</label>
-        <input type="range" id="balls-kick-boost" min="0" max="12" step="0.1" value="6.0" />
-      </div>
-    </section>
-
-    <section>
-      <button id="randomize-btn">Randomize</button>
-    </section>
-  </aside>
-
-  <!-- Toggle sidebar button -->
-  <button id="sidebar-toggle">&#9776;</button>
-
-  <!-- p5.js canvas goes here -->
-  <main id="canvas-container"></main>
-
-  <footer id="playback-bar">
-    <div id="scrubber-row">
-      <span id="time-display">0:00 / 0:00</span>
-      <div id="scrubber-group">
-        <input type="range" id="scrubber" min="0" max="100" step="0.1" value="0" />
-      </div>
-    </div>
-    <div id="controls-row">
-      <button id="pause-btn" class="is-playing"></button>
-      <div id="track-info">
-        <span id="track-name"></span>
-        <label id="change-track-label" for="sidebar-audio-upload" title="Change Track">&#128193;</label>
-        <input type="file" id="sidebar-audio-upload" accept="audio/*" />
-      </div>
-      <div id="volume-group">
-        <button id="volume-btn" type="button">&#128266;</button>
-        <div id="volume-popup">
-          <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.8" orient="vertical" />
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="sketch.js?v=2"></script>
-</body>
+    <!-- Application script -->
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
