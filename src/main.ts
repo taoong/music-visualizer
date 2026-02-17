@@ -135,8 +135,9 @@ function processFreqMode(_p: P5Instance, dt: number): void {
     // Analyze frequency bands
     const rawBands = getLogBandAmplitudes(fft);
 
-    // Scale release by decay rate: at default (0.88) factor=1, lower=faster decay, higher=slower
-    const decayFactor = (1 - config.decayRate) / (1 - 0.88);
+    // Scale release by decay rate using squared ratio for dramatic effect:
+    // at default (0.88) factor=1, at 0.5 factor≈17 (instant snap), at 0.99 factor≈0.007 (spikes linger)
+    const decayFactor = ((1 - config.decayRate) / (1 - 0.88)) ** 2;
 
     for (let b = 0; b < BAND_COUNT; b++) {
       const band = BANDS[b];
@@ -202,8 +203,9 @@ function processStemMode(_p: P5Instance, dt: number): void {
   const anyPlaying = state.isPlaying && stemFfts.kick !== undefined;
 
   if (anyPlaying) {
-    // Scale release by decay rate: at default (0.88) factor=1, lower=faster decay, higher=slower
-    const decayFactor = (1 - config.decayRate) / (1 - 0.88);
+    // Scale release by decay rate using squared ratio for dramatic effect:
+    // at default (0.88) factor=1, at 0.5 factor≈17 (instant snap), at 0.99 factor≈0.007 (spikes linger)
+    const decayFactor = ((1 - config.decayRate) / (1 - 0.88)) ** 2;
 
     for (const stem of STEMS) {
       if (!stemFfts[stem] || !stemSmoothed?.[stem]) continue;
