@@ -1,7 +1,7 @@
 /**
  * Constants for the Music Visualizer
  */
-import type { FrequencyBand, Octave } from "../types";
+import type { FrequencyBand, Octave } from '../types';
 
 // Mobile detection
 export const isMobile =
@@ -15,78 +15,78 @@ export const BALL_COUNT = isMobile ? 15 : 30;
 // Frequency band definitions
 export const BANDS: FrequencyBand[] = [
   {
-    name: "sub",
+    name: 'sub',
     loHz: 20,
     hiHz: 60,
     scale: 3.0,
-    sens: "sensSub",
-    sliderId: "sens-sub",
+    sens: 'sensSub',
+    sliderId: 'sens-sub',
     attack: 0.5,
     release: 0.08,
     defaultSens: 1.5,
   },
   {
-    name: "bass",
+    name: 'bass',
     loHz: 60,
     hiHz: 250,
     scale: 4.0,
-    sens: "sensBass",
-    sliderId: "sens-bass",
+    sens: 'sensBass',
+    sliderId: 'sens-bass',
     attack: 0.55,
     release: 0.09,
     defaultSens: 1.2,
   },
   {
-    name: "lowMid",
+    name: 'lowMid',
     loHz: 250,
     hiHz: 500,
     scale: 6.0,
-    sens: "sensLowMid",
-    sliderId: "sens-low-mid",
+    sens: 'sensLowMid',
+    sliderId: 'sens-low-mid',
     attack: 0.62,
     release: 0.1,
     defaultSens: 1.8,
   },
   {
-    name: "mid",
+    name: 'mid',
     loHz: 500,
     hiHz: 2000,
     scale: 8.0,
-    sens: "sensMid",
-    sliderId: "sens-mid",
+    sens: 'sensMid',
+    sliderId: 'sens-mid',
     attack: 0.7,
     release: 0.11,
     defaultSens: 2.0,
   },
   {
-    name: "upperMid",
+    name: 'upperMid',
     loHz: 2000,
     hiHz: 4000,
     scale: 10.0,
-    sens: "sensUpperMid",
-    sliderId: "sens-upper-mid",
+    sens: 'sensUpperMid',
+    sliderId: 'sens-upper-mid',
     attack: 0.78,
     release: 0.12,
     defaultSens: 2.0,
   },
   {
-    name: "presence",
+    name: 'presence',
     loHz: 4000,
     hiHz: 6000,
     scale: 12.0,
-    sens: "sensPresence",
-    sliderId: "sens-presence",
+    sens: 'sensPresence',
+    sliderId: 'sens-presence',
     attack: 0.83,
     release: 0.13,
     defaultSens: 2.0,
   },
   {
-    name: "brilliance",
+    name: 'brilliance',
     loHz: 6000,
     hiHz: 20000,
     scale: 14.0,
-    sens: "sensBrilliance",
-    sliderId: "sens-brilliance",
+    sens: 'sensBrilliance',
+    sliderId: 'sens-brilliance',
     attack: 0.88,
     release: 0.14,
     defaultSens: 2.0,
@@ -148,7 +148,7 @@ export const CENTROID_SMOOTHING = 0.06;
 export const CENTROID_Y_RANGE = 0.15;
 
 // Stem types and smoothing
-export const STEMS = ["kick", "drums", "bass", "vocals", "other"] as const;
+export const STEMS = ['kick', 'drums', 'bass', 'vocals', 'other'] as const;
 export const STEM_SMOOTHING: Record<string, [number, number]> = {
   kick: [0.9, 0.06],
   drums: [0.85, 0.08],
@@ -180,5 +180,5 @@ export const DEFAULT_CONFIG = {
   masterVolume: 0.8,
 };
 
-// Sample URL
-export const SAMPLE_URL = "sample.mp3";
+// Sample URL - use root-relative path to ensure it resolves correctly from any route
+export const SAMPLE_URL = '/sample.mp3';
