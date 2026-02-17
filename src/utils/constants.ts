@@ -178,6 +178,7 @@ export const DEFAULT_CONFIG = {
   rotationSpeed: 0.3,
   ballsKickBoost: 6.0,
   masterVolume: 0.8,
+  decayRate: 0.88, // Default decay rate (0.0 = instant, 1.0 = no decay)
 };
 
 // Sample URL - use root-relative path to ensure it resolves correctly from any route
