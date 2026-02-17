@@ -52,7 +52,7 @@ const sketch = (p: P5Instance) => {
   window.p5Instance = p;
 
   p.setup = () => {
-    const canvas = p.createCanvas(p.width, p.height);
+    const canvas = p.createCanvas(window.innerWidth, window.innerHeight);
     canvas.parent('canvas-container');
     p.pixelDensity(1);
 
