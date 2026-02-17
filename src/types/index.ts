@@ -49,6 +49,7 @@ export interface Config {
   rotationSpeed: number;
   ballsKickBoost: number;
   masterVolume: number;
+  decayRate: number;
 }
 
 // Application state

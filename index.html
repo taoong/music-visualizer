@@ -24,12 +24,7 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Splash overlay — requires user gesture to start AudioContext -->
-    <div
-      id="splash"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Welcome to Music Visualizer"
-    >
+    <div id="splash" role="dialog" aria-modal="true" aria-label="Welcome to Music Visualizer">
       <div id="splash-content">
         <header class="splash-header">
           <h1>Music Visualizer</h1>
@@ -38,25 +33,11 @@
 
         <div class="splash-steps">
           <div class="splash-step">
-            <span class="step-label" id="select-source-label"
-              >Select source</span
-            >
-            <div
-              id="splash-buttons"
-              role="group"
-              aria-labelledby="select-source-label"
-            >
-              <label
-                id="upload-label"
-                for="audio-upload"
-                class="btn"
-                tabindex="0"
-                role="button"
-              >
+            <span class="step-label" id="select-source-label">Select source</span>
+            <div id="splash-buttons" role="group" aria-labelledby="select-source-label">
+              <label id="upload-label" for="audio-upload" class="btn" tabindex="0" role="button">
                 Upload Track
-                <span class="sr-only"
-                  >Choose an audio file from your device</span
-                >
+                <span class="sr-only">Choose an audio file from your device</span>
               </label>
               <input
                 type="file"
@@ -75,11 +56,7 @@
 
           <div class="splash-step">
             <span class="step-label" id="choose-mode-label">Choose mode</span>
-            <div
-              id="mode-selector"
-              role="radiogroup"
-              aria-labelledby="choose-mode-label"
-            >
+            <div id="mode-selector" role="radiogroup" aria-labelledby="choose-mode-label">
               <button
                 id="mode-freq"
                 class="mode-btn active"
@@ -103,20 +80,14 @@
               >
                 Stem Separation <span class="badge">Experimental</span>
                 <span id="mode-stems-desc" class="sr-only"
-                  >Use AI to separate audio into kick, drums, bass, vocals, and
-                  other stems</span
+                  >Use AI to separate audio into kick, drums, bass, vocals, and other stems</span
                 >
               </button>
             </div>
           </div>
         </div>
 
-        <button
-          id="play-btn"
-          disabled
-          type="button"
-          aria-describedby="file-name"
-        >
+        <button id="play-btn" disabled type="button" aria-describedby="file-name">
           Begin
           <span class="sr-only">Start the music visualization</span>
         </button>
@@ -133,31 +104,19 @@
       aria-hidden="true"
     >
       <div id="processing-content">
-        <div
-          class="spinner"
-          role="progressbar"
-          aria-label="Processing audio"
-        ></div>
+        <div class="spinner" role="progressbar" aria-label="Processing audio"></div>
         <p id="processing-text">Separating stems…</p>
       </div>
     </div>
 
     <!-- Sidebar GUI -->
-    <aside
-      id="sidebar"
-      role="complementary"
-      aria-label="Visualization controls"
-    >
+    <aside id="sidebar" role="complementary" aria-label="Visualization controls">
       <h2>Controls</h2>
 
       <section aria-labelledby="sensitivity-heading">
         <h3 id="sensitivity-heading">Sensitivity</h3>
         <!-- Frequency mode sliders (7 bands, shown by default) -->
-        <div
-          id="freq-sliders"
-          role="group"
-          aria-label="Frequency band sensitivity"
-        >
+        <div id="freq-sliders" role="group" aria-label="Frequency band sensitivity">
           <div class="slider-group">
             <label for="sens-sub">Sub (20–60 Hz)</label>
             <input
@@ -244,12 +203,7 @@
           </div>
         </div>
         <!-- Stem mode sliders (hidden by default) -->
-        <div
-          id="stem-sliders"
-          class="hidden"
-          role="group"
-          aria-label="Stem sensitivity"
-        >
+        <div id="stem-sliders" class="hidden" role="group" aria-label="Stem sensitivity">
           <div class="slider-group">
             <label for="sens-kick">Kick</label>
             <input
@@ -315,9 +269,7 @@
 
       <section aria-labelledby="visualization-heading">
         <h3 id="visualization-heading">Visualization</h3>
-        <label for="viz-selector" class="sr-only"
-          >Select visualization mode</label
-        >
+        <label for="viz-selector" class="sr-only">Select visualization mode</label>
         <select id="viz-selector" aria-label="Visualization mode">
           <option value="circle" selected>Circle</option>
           <option value="spectrum">Spectrum</option>
@@ -338,6 +290,18 @@
             step="0.01"
             value="1.2"
             aria-label="Visualization scale"
+          />
+        </div>
+        <div class="slider-group">
+          <label for="decay-rate">Decay Rate</label>
+          <input
+            type="range"
+            id="decay-rate"
+            min="0.5"
+            max="0.99"
+            step="0.01"
+            value="0.88"
+            aria-label="Decay rate - how quickly visualization falls after peaks"
           />
         </div>
         <div class="slider-group" id="rotation-speed-group">
@@ -367,11 +331,7 @@
       </section>
 
       <section>
-        <button
-          id="randomize-btn"
-          type="button"
-          aria-label="Randomize all settings"
-        >
+        <button id="randomize-btn" type="button" aria-label="Randomize all settings">
           Randomize
         </button>
         <button
@@ -397,20 +357,13 @@
     </button>
 
     <!-- p5.js canvas goes here -->
-    <main
-      id="canvas-container"
-      role="main"
-      aria-label="Music visualization canvas"
-      tabindex="-1"
-    >
+    <main id="canvas-container" role="main" aria-label="Music visualization canvas" tabindex="-1">
       <span id="main-content" tabindex="-1"></span>
     </main>
 
     <footer id="playback-bar" role="contentinfo" aria-label="Playback controls">
       <div id="scrubber-row">
-        <span id="time-display" aria-live="polite" aria-atomic="true"
-          >0:00 / 0:00</span
-        >
+        <span id="time-display" aria-live="polite" aria-atomic="true">0:00 / 0:00</span>
         <div id="scrubber-group">
           <label for="scrubber" class="sr-only">Seek position</label>
           <input
@@ -486,12 +439,7 @@
     </footer>
 
     <!-- Screen reader announcements -->
-    <div
-      id="sr-announcer"
-      class="sr-only"
-      aria-live="polite"
-      aria-atomic="true"
-    ></div>
+    <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Application script -->
     <script type="module" src="/src/main.ts"></script>

@@ -294,11 +294,11 @@ function updateCentroid(centroidHz: number): void {
  * Decay audio state when not playing (freq mode)
  */
 function decayAudioState(dt: number): void {
-  const { audioState } = store;
+  const { audioState, config } = store;
 
   for (let b = 0; b < BAND_COUNT; b++) {
     for (let i = 0; i < SPIKES_PER_BAND; i++) {
-      audioState.smoothedBands[b][i] *= Math.pow(0.88, dt);
+      audioState.smoothedBands[b][i] *= Math.pow(config.decayRate, dt);
     }
     audioState.transientValues[b] =
       1.0 + (audioState.transientValues[b] - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
@@ -307,7 +307,7 @@ function decayAudioState(dt: number): void {
 
   if (store.state.vizMode === 'tunnel') {
     for (let o = 0; o < OCTAVE_COUNT; o++) {
-      audioState.smoothedOctaves[o] *= Math.pow(0.88, dt);
+      audioState.smoothedOctaves[o] *= Math.pow(config.decayRate, dt);
       audioState.octaveTransientValues[o] =
         1.0 + (audioState.octaveTransientValues[o] - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
       audioState.octaveDeltaValues[o] *= Math.pow(DELTA_RELEASE, dt);
@@ -319,13 +319,13 @@ function decayAudioState(dt: number): void {
  * Decay stem audio state when not playing
  */
 function decayStemState(dt: number): void {
-  const { audioState } = store;
+  const { audioState, config } = store;
   const stemSmoothed = audioEngine.getStemSmoothed();
 
   if (stemSmoothed) {
     for (const stem of Object.keys(stemSmoothed)) {
       for (let i = 0; i < SPIKES_PER_BAND; i++) {
-        stemSmoothed[stem][i] *= Math.pow(0.88, dt);
+        stemSmoothed[stem][i] *= Math.pow(config.decayRate, dt);
       }
 
       if (audioState.transientStems[stem]) {
@@ -340,7 +340,7 @@ function decayStemState(dt: number): void {
 
   if (store.state.vizMode === 'tunnel') {
     for (let o = 0; o < OCTAVE_COUNT; o++) {
-      audioState.smoothedOctaves[o] *= Math.pow(0.88, dt);
+      audioState.smoothedOctaves[o] *= Math.pow(config.decayRate, dt);
       audioState.octaveTransientValues[o] =
         1.0 + (audioState.octaveTransientValues[o] - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
       audioState.octaveDeltaValues[o] *= Math.pow(DELTA_RELEASE, dt);

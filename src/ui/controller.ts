@@ -474,6 +474,7 @@ function bindDisplaySliders(): () => void {
 
   const configs = [
     { id: 'spike-scale', key: 'spikeScale' },
+    { id: 'decay-rate', key: 'decayRate' },
     { id: 'rotation-speed', key: 'rotationSpeed' },
     { id: 'balls-kick-boost', key: 'ballsKickBoost' },
   ] as const;
@@ -543,6 +544,7 @@ function bindRandomizeButton(): () => void {
     }
 
     setSlider('spike-scale', rand(0.5, 2.0));
+    setSlider('decay-rate', rand(0.7, 0.95));
 
     if (store.state.vizMode === 'circle') {
       setSlider('rotation-speed', rand(0.0, 1.5));
