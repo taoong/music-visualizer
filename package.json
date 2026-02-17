@@ -1,0 +1,46 @@
+{
+  "name": "music-visualizer",
+  "version": "1.0.0",
+  "description": "Interactive browser-based music visualizer with frequency analysis and AI-powered stem separation",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --ext ts,tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taoong/music-visualizer.git"
+  },
+  "keywords": [
+    "music",
+    "visualizer",
+    "audio",
+    "p5js",
+    "tonejs",
+    "typescript",
+    "web-audio"
+  ],
+  "author": "Tao Ong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taoong/music-visualizer/issues"
+  },
+  "homepage": "https://github.com/taoong/music-visualizer#readme",
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
+}

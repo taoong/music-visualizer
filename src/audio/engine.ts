@@ -1,0 +1,289 @@
+/**
+ * Audio engine for managing Tone.js instances and audio playback
+ */
+import type { StemUrls } from '../types';
+import { store } from '../state/store';
+
+export interface FreqModeAudio {
+  player: TonePlayer;
+  gainNode: ToneGain;
+  fft: ToneFFT;
+}
+
+export interface StemModeAudio {
+  players: Record<string, TonePlayer>;
+  gainNodes: Record<string, ToneGain>;
+  masterGain: ToneGain;
+  ffts: Record<string, ToneFFT>;
+  smoothed: Record<string, Float32Array>;
+}
+
+class AudioEngine {
+  private freqAudio: FreqModeAudio | null = null;
+  private stemAudio: StemModeAudio | null = null;
+  private blobUrls: string[] = [];
+
+  /**
+   * Initialize frequency mode audio
+   */
+  async initFreqMode(fileUrl: string): Promise<void> {
+    this.disposeAll();
+    await Tone.start();
+
+    // Pre-fetch remote audio for mobile
+    let resolvedUrl = fileUrl;
+    if (fileUrl.startsWith('http')) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+      try {
+        const resp = await fetch(fileUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (!resp.ok) {
+          throw new Error(`Failed to fetch audio: HTTP ${resp.status}`);
+        }
+
+        const blob = await resp.blob();
+        resolvedUrl = URL.createObjectURL(blob);
+        this.blobUrls.push(resolvedUrl);
+      } catch (err) {
+        clearTimeout(timeoutId);
+        throw new Error('Failed to load audio file. Please check your connection and try again.');
+      }
+    }
+
+    const fftSize =
+      /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) ||
+      (navigator.maxTouchPoints > 1 && window.innerWidth < 1024)
+        ? 128
+        : 256;
+
+    const player = new Tone.Player({
+      url: resolvedUrl,
+      loop: true,
+      autostart: false,
+    });
+
+    const gainNode = new Tone.Gain(store.config.masterVolume);
+    const fft = new Tone.FFT(fftSize);
+
+    player.connect(gainNode);
+    gainNode.toDestination();
+    player.connect(fft);
+
+    await Tone.loaded();
+
+    this.freqAudio = { player, gainNode, fft };
+    store.setAudioReady(true);
+  }
+
+  /**
+   * Initialize stem mode audio
+   */
+  async initStemMode(stemUrls: StemUrls): Promise<void> {
+    this.disposeAll();
+    await Tone.start();
+
+    const fftSize =
+      /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) ||
+      (navigator.maxTouchPoints > 1 && window.innerWidth < 1024)
+        ? 128
+        : 256;
+    const masterGain = new Tone.Gain(store.config.masterVolume);
+    masterGain.toDestination();
+
+    const players: Record<string, TonePlayer> = {};
+    const gainNodes: Record<string, ToneGain> = {};
+    const ffts: Record<string, ToneFFT> = {};
+    const smoothed: Record<string, Float32Array> = {};
+
+    const stems: string[] = ['kick', 'drums', 'bass', 'vocals', 'other'];
+    const spikesPerBand =
+      /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) ||
+      (navigator.maxTouchPoints > 1 && window.innerWidth < 1024)
+        ? 30
+        : 60;
+
+    for (const stem of stems) {
+      const url = stemUrls[stem as keyof StemUrls];
+      if (!url) continue;
+      players[stem] = new Tone.Player({
+        url,
+        loop: true,
+        autostart: false,
+      });
+
+      gainNodes[stem] = new Tone.Gain(1);
+      players[stem].connect(gainNodes[stem]);
+      gainNodes[stem].connect(masterGain);
+
+      ffts[stem] = new Tone.FFT(fftSize);
+      players[stem].connect(ffts[stem]);
+
+      smoothed[stem] = new Float32Array(spikesPerBand);
+    }
+
+    await Tone.loaded();
+
+    this.stemAudio = {
+      players,
+      gainNodes,
+      masterGain,
+      ffts,
+      smoothed,
+    };
+    store.setAudioReady(true);
+  }
+
+  /**
+   * Dispose all audio resources
+   */
+  disposeAll(): void {
+    // Dispose frequency mode
+    if (this.freqAudio) {
+      this.freqAudio.player.stop();
+      this.freqAudio.player.dispose();
+      this.freqAudio.gainNode.dispose();
+      this.freqAudio.fft.dispose();
+      this.freqAudio = null;
+    }
+
+    // Dispose stem mode
+    if (this.stemAudio) {
+      for (const stem of Object.keys(this.stemAudio.players)) {
+        this.stemAudio.players[stem].stop();
+        this.stemAudio.players[stem].dispose();
+        this.stemAudio.gainNodes[stem].dispose();
+        this.stemAudio.ffts[stem].dispose();
+      }
+      this.stemAudio.masterGain.dispose();
+      this.stemAudio = null;
+    }
+
+    // Clean up blob URLs
+    this.blobUrls.forEach(url => URL.revokeObjectURL(url));
+    this.blobUrls = [];
+
+    store.resetAudioState();
+    store.setAudioReady(false);
+  }
+
+  /**
+   * Start playback
+   */
+  start(offset: number = 0): void {
+    const time = '+0';
+    const isFreqMode = store.state.mode === 'freq';
+
+    if (isFreqMode && this.freqAudio) {
+      this.freqAudio.player.start(time, offset);
+    } else if (!isFreqMode && this.stemAudio) {
+      for (const stem of Object.keys(this.stemAudio.players)) {
+        this.stemAudio.players[stem].start(time, offset);
+      }
+    }
+
+    store.setPlaying(true);
+    store.state.playStartedAt = Tone.now();
+    store.state.startOffset = offset;
+  }
+
+  /**
+   * Stop playback
+   */
+  stop(): void {
+    const isFreqMode = store.state.mode === 'freq';
+
+    if (isFreqMode && this.freqAudio) {
+      this.freqAudio.player.stop();
+    } else if (!isFreqMode && this.stemAudio) {
+      for (const stem of Object.keys(this.stemAudio.players)) {
+        this.stemAudio.players[stem].stop();
+      }
+    }
+
+    store.setPlaying(false);
+    store.state.startOffset = this.getPlaybackPosition();
+  }
+
+  /**
+   * Get current playback position
+   */
+  getPlaybackPosition(): number {
+    if (!store.state.isPlaying) {
+      return store.state.startOffset;
+    }
+
+    const elapsed = Tone.now() - store.state.playStartedAt;
+    const duration = this.getDuration();
+
+    if (duration === 0) return 0;
+    return (store.state.startOffset + elapsed) % duration;
+  }
+
+  /**
+   * Get audio duration
+   */
+  getDuration(): number {
+    const isFreqMode = store.state.mode === 'freq';
+
+    if (isFreqMode && this.freqAudio?.player.buffer) {
+      return this.freqAudio.player.buffer.duration;
+    } else if (!isFreqMode && this.stemAudio?.players.kick?.buffer) {
+      return this.stemAudio.players.kick.buffer.duration;
+    }
+    return 0;
+  }
+
+  /**
+   * Seek to a position
+   */
+  seek(position: number): void {
+    store.state.startOffset = position;
+    store.state.lastBeatIndex = -1;
+
+    if (store.state.isPlaying) {
+      this.stop();
+      this.start(position);
+    }
+  }
+
+  /**
+   * Update master volume
+   */
+  setVolume(volume: number): void {
+    const isFreqMode = store.state.mode === 'freq';
+
+    if (isFreqMode && this.freqAudio) {
+      this.freqAudio.gainNode.gain.value = volume;
+    } else if (!isFreqMode && this.stemAudio) {
+      this.stemAudio.masterGain.gain.value = volume;
+    }
+  }
+
+  /**
+   * Get FFT for frequency mode
+   */
+  getFreqFFT(): ToneFFT | null {
+    return this.freqAudio?.fft || null;
+  }
+
+  /**
+   * Get FFTs for stem mode
+   */
+  getStemFFTs(): Record<string, ToneFFT> | null {
+    return this.stemAudio?.ffts || null;
+  }
+
+  /**
+   * Get stem smoothed data
+   */
+  getStemSmoothed(): Record<string, Float32Array> | null {
+    return this.stemAudio?.smoothed || null;
+  }
+}
+
+// Export singleton
+export const audioEngine = new AudioEngine();
+export default audioEngine;

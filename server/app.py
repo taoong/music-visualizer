@@ -15,7 +15,6 @@ import subprocess
 import tempfile
 
 from flask import Flask, request, jsonify, send_from_directory
-from pydub import AudioSegment
 
 try:
     from essentia.standard import MonoLoader, RhythmExtractor2013
@@ -79,6 +78,7 @@ def separate():
         stem_dir = os.path.join(model_dir, track_dirs[0])
 
         # ── 2. Kick isolation via DSP (low-pass on drums stem) ─
+        from pydub import AudioSegment
         drums_path = os.path.join(stem_dir, 'drums.mp3')
         drums = AudioSegment.from_mp3(drums_path)
 
@@ -189,4 +189,4 @@ def detect_bpm():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
