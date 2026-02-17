@@ -135,6 +135,9 @@ function processFreqMode(_p: P5Instance, dt: number): void {
     // Analyze frequency bands
     const rawBands = getLogBandAmplitudes(fft);
 
+    // Scale release by decay rate: at default (0.88) factor=1, lower=faster decay, higher=slower
+    const decayFactor = (1 - config.decayRate) / (1 - 0.88);
+
     for (let b = 0; b < BAND_COUNT; b++) {
       const band = BANDS[b];
       const raw = applyAutoGain(rawBands[b], audioState.autoGainBands[b]);
@@ -143,13 +146,14 @@ function processFreqMode(_p: P5Instance, dt: number): void {
       audioState.transientValues[b] = updateTransient(audioState.transientBands[b], raw, dt);
       audioState.deltaValues[b] = computeDelta(audioState.deltaBands[b], raw, dt);
 
-      // Smooth bins
+      // Smooth bins with decay-scaled release
+      const scaledRelease = Math.min(band.release * decayFactor, 0.95);
       smoothBins(
         audioState.smoothedBands[b],
         raw,
         config[band.sens as keyof typeof config] as number,
         band.attack,
-        band.release,
+        scaledRelease,
         dt
       );
     }
@@ -173,9 +177,10 @@ function processFreqMode(_p: P5Instance, dt: number): void {
           new Float32Array([rawOct[o]]),
           dt
         );
+        const scaledOctaveSmoothing = Math.min(0.55 * decayFactor, 0.95);
         audioState.smoothedOctaves[o] +=
           (rawOct[o] * config.spikeScale - audioState.smoothedOctaves[o]) *
-          (1 - Math.pow(1 - 0.55, dt));
+          (1 - Math.pow(1 - scaledOctaveSmoothing, dt));
       }
     }
   } else {
@@ -197,6 +202,9 @@ function processStemMode(_p: P5Instance, dt: number): void {
   const anyPlaying = state.isPlaying && stemFfts.kick !== undefined;
 
   if (anyPlaying) {
+    // Scale release by decay rate: at default (0.88) factor=1, lower=faster decay, higher=slower
+    const decayFactor = (1 - config.decayRate) / (1 - 0.88);
+
     for (const stem of STEMS) {
       if (!stemFfts[stem] || !stemSmoothed?.[stem]) continue;
 
@@ -242,8 +250,9 @@ function processStemMode(_p: P5Instance, dt: number): void {
       };
       const [attack, release] = smoothing[stem];
 
-      // Smooth bins
-      smoothBins(stemSmoothed[stem], raw, config[sensKey] as number, attack, release, dt);
+      // Smooth bins with decay-scaled release
+      const scaledRelease = Math.min(release * decayFactor, 0.95);
+      smoothBins(stemSmoothed[stem], raw, config[sensKey] as number, attack, scaledRelease, dt);
     }
 
     // Update spectral centroid from stems
@@ -268,9 +277,10 @@ function processStemMode(_p: P5Instance, dt: number): void {
           new Float32Array([rawOct[o]]),
           dt
         );
+        const scaledOctaveSmoothing = Math.min(0.55 * decayFactor, 0.95);
         audioState.smoothedOctaves[o] +=
           (rawOct[o] * config.spikeScale - audioState.smoothedOctaves[o]) *
-          (1 - Math.pow(1 - 0.55, dt));
+          (1 - Math.pow(1 - scaledOctaveSmoothing, dt));
       }
     }
   } else {
