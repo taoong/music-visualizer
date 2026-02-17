@@ -30,27 +30,25 @@ class AudioEngine {
     this.disposeAll();
     await Tone.start();
 
-    // Pre-fetch remote audio for mobile
+    // Always pre-fetch audio to ensure it loads properly
     let resolvedUrl = fileUrl;
-    if (fileUrl.startsWith('http')) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-      try {
-        const resp = await fetch(fileUrl, { signal: controller.signal });
-        clearTimeout(timeoutId);
+    try {
+      const resp = await fetch(fileUrl, { signal: controller.signal });
+      clearTimeout(timeoutId);
 
-        if (!resp.ok) {
-          throw new Error(`Failed to fetch audio: HTTP ${resp.status}`);
-        }
-
-        const blob = await resp.blob();
-        resolvedUrl = URL.createObjectURL(blob);
-        this.blobUrls.push(resolvedUrl);
-      } catch (err) {
-        clearTimeout(timeoutId);
-        throw new Error('Failed to load audio file. Please check your connection and try again.');
+      if (!resp.ok) {
+        throw new Error(`Failed to fetch audio: HTTP ${resp.status}`);
       }
+
+      const blob = await resp.blob();
+      resolvedUrl = URL.createObjectURL(blob);
+      this.blobUrls.push(resolvedUrl);
+    } catch (err) {
+      clearTimeout(timeoutId);
+      throw new Error('Failed to load audio file. Please check your connection and try again.');
     }
 
     const fftSize =
@@ -108,11 +106,23 @@ class AudioEngine {
     for (const stem of stems) {
       const url = stemUrls[stem as keyof StemUrls];
       if (!url) continue;
-      players[stem] = new Tone.Player({
-        url,
-        loop: true,
-        autostart: false,
-      });
+
+      // Pre-fetch stem audio
+      try {
+        const resp = await fetch(url);
+        if (!resp.ok) continue;
+        const blob = await resp.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        this.blobUrls.push(blobUrl);
+
+        players[stem] = new Tone.Player({
+          url: blobUrl,
+          loop: true,
+          autostart: false,
+        });
+      } catch {
+        continue;
+      }
 
       gainNodes[stem] = new Tone.Gain(1);
       players[stem].connect(gainNodes[stem]);
