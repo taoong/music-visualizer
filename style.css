@@ -924,6 +924,7 @@ button:focus-visible,
   width: 100%;
   padding: 0.5rem;
   margin-top: 0.5rem;
+  margin-bottom: 1rem;
   border: 1px solid var(--border-default);
   border-radius: 6px;
   background: transparent;

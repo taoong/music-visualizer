@@ -30,6 +30,10 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('Escape', hideOverlays, 'Close overlays/Go back');
   defineShortcut('h', goHome, 'Return to home screen');
 
+  // Bind shortcuts button click
+  const shortcutsBtn = document.getElementById('keyboard-shortcuts-btn');
+  shortcutsBtn?.addEventListener('click', showShortcutsHelp);
+
   // Event listener
   const handler = (e: KeyboardEvent) => {
     // Don't trigger shortcuts when typing in inputs
@@ -51,7 +55,10 @@ export function initKeyboardShortcuts(): () => void {
   document.addEventListener('keydown', handler);
 
   // Return cleanup function
-  return () => document.removeEventListener('keydown', handler);
+  return () => {
+    document.removeEventListener('keydown', handler);
+    shortcutsBtn?.removeEventListener('click', showShortcutsHelp);
+  };
 }
 
 /**
