@@ -547,7 +547,7 @@ function bindRandomizeButton(): () => void {
     setSlider('decay-rate', rand(0.7, 0.95));
 
     if (store.state.vizMode === 'circle') {
-      setSlider('rotation-speed', rand(0.0, 1.5));
+      setSlider('rotation-speed', rand(0.0, 15.0));
     }
 
     if (store.state.vizMode === 'balls') {
