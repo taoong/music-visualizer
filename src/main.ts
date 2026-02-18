@@ -135,9 +135,9 @@ function processFreqMode(_p: P5Instance, dt: number): void {
     // Analyze frequency bands
     const rawBands = getLogBandAmplitudes(fft);
 
-    // Scale release by decay rate using squared ratio for dramatic effect:
-    // at default (0.88) factor=1, at 0.5 factor≈17 (instant snap), at 0.99 factor≈0.007 (spikes linger)
-    const decayFactor = ((1 - config.decayRate) / (1 - 0.88)) ** 2;
+    // Scale release by decay rate using cubed ratio for dramatic effect:
+    // at default (0.88) factor=1, at 0.5 factor≈72 (instant snap), at 0.99 factor≈0.0005 (spikes linger)
+    const decayFactor = ((1 - config.decayRate) / (1 - 0.88)) ** 3;
 
     for (let b = 0; b < BAND_COUNT; b++) {
       const band = BANDS[b];
@@ -148,7 +148,7 @@ function processFreqMode(_p: P5Instance, dt: number): void {
       audioState.deltaValues[b] = computeDelta(audioState.deltaBands[b], raw, dt);
 
       // Smooth bins with decay-scaled release
-      const scaledRelease = Math.min(band.release * decayFactor, 0.95);
+      const scaledRelease = Math.min(band.release * decayFactor, 0.99);
       smoothBins(
         audioState.smoothedBands[b],
         raw,
@@ -178,7 +178,7 @@ function processFreqMode(_p: P5Instance, dt: number): void {
           new Float32Array([rawOct[o]]),
           dt
         );
-        const scaledOctaveSmoothing = Math.min(0.55 * decayFactor, 0.95);
+        const scaledOctaveSmoothing = Math.min(0.55 * decayFactor, 0.99);
         audioState.smoothedOctaves[o] +=
           (rawOct[o] * config.spikeScale - audioState.smoothedOctaves[o]) *
           (1 - Math.pow(1 - scaledOctaveSmoothing, dt));
@@ -203,9 +203,9 @@ function processStemMode(_p: P5Instance, dt: number): void {
   const anyPlaying = state.isPlaying && stemFfts.kick !== undefined;
 
   if (anyPlaying) {
-    // Scale release by decay rate using squared ratio for dramatic effect:
-    // at default (0.88) factor=1, at 0.5 factor≈17 (instant snap), at 0.99 factor≈0.007 (spikes linger)
-    const decayFactor = ((1 - config.decayRate) / (1 - 0.88)) ** 2;
+    // Scale release by decay rate using cubed ratio for dramatic effect:
+    // at default (0.88) factor=1, at 0.5 factor≈72 (instant snap), at 0.99 factor≈0.0005 (spikes linger)
+    const decayFactor = ((1 - config.decayRate) / (1 - 0.88)) ** 3;
 
     for (const stem of STEMS) {
       if (!stemFfts[stem] || !stemSmoothed?.[stem]) continue;
@@ -253,7 +253,7 @@ function processStemMode(_p: P5Instance, dt: number): void {
       const [attack, release] = smoothing[stem];
 
       // Smooth bins with decay-scaled release
-      const scaledRelease = Math.min(release * decayFactor, 0.95);
+      const scaledRelease = Math.min(release * decayFactor, 0.99);
       smoothBins(stemSmoothed[stem], raw, config[sensKey] as number, attack, scaledRelease, dt);
     }
 
@@ -279,7 +279,7 @@ function processStemMode(_p: P5Instance, dt: number): void {
           new Float32Array([rawOct[o]]),
           dt
         );
-        const scaledOctaveSmoothing = Math.min(0.55 * decayFactor, 0.95);
+        const scaledOctaveSmoothing = Math.min(0.55 * decayFactor, 0.99);
         audioState.smoothedOctaves[o] +=
           (rawOct[o] * config.spikeScale - audioState.smoothedOctaves[o]) *
           (1 - Math.pow(1 - scaledOctaveSmoothing, dt));
