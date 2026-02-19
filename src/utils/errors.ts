@@ -28,15 +28,6 @@ export function showError(
   if (!container) {
     container = document.createElement("div");
     container.id = "error-container";
-    container.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    `;
     document.body.appendChild(container);
   }
 
@@ -124,7 +115,7 @@ export function injectErrorStyles(): void {
   style.id = "error-styles";
   style.textContent = `
     .error-toast {
-      background: #ff4444;
+      background: var(--color-error);
       color: white;
       padding: 12px 20px;
       border-radius: 8px;
@@ -135,17 +126,17 @@ export function injectErrorStyles(): void {
       transform: translateX(100%);
       transition: all 0.3s ease;
     }
-    
+
     .error-toast--warning {
-      background: #ff9800;
+      background: var(--color-warning);
     }
-    
+
     .error-toast--info {
-      background: #2196f3;
+      background: var(--color-info);
     }
-    
+
     #file-name.error {
-      color: #ff4444;
+      color: var(--color-error);
     }
   `;
   document.head.appendChild(style);

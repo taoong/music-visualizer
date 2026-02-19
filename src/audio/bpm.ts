@@ -3,11 +3,15 @@
  */
 import type { BPMData } from "../types";
 import { BPMDetectionError } from "../types";
+import { showError } from "../utils/errors";
 
 /**
  * Fetch BPM from server
  */
 export async function fetchBPM(source: File | string): Promise<BPMData> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 30_000);
+
   try {
     const formData = new FormData();
     if (source instanceof File) {
@@ -19,7 +23,10 @@ export async function fetchBPM(source: File | string): Promise<BPMData> {
     const resp = await fetch("/api/detect-bpm", {
       method: "POST",
       body: formData,
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
 
     if (!resp.ok) {
       const errorData = await resp.json().catch(() => ({}));
@@ -37,6 +44,7 @@ export async function fetchBPM(source: File | string): Promise<BPMData> {
       beatOffset: data.beatOffset || 0,
     };
   } catch (err) {
+    clearTimeout(timeoutId);
     console.warn("BPM detection failed:", err);
     throw new BPMDetectionError(
       "Failed to detect BPM. Beat synchronization will be disabled.",
@@ -58,6 +66,9 @@ export async function separateStems(
   vocals: string;
   other: string;
 }> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 300_000); // 5 min
+
   try {
     onProgress?.("Separating stems…");
 
@@ -67,7 +78,10 @@ export async function separateStems(
     const resp = await fetch("/api/separate", {
       method: "POST",
       body: formData,
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
 
     if (!resp.ok) {
       const errData = await resp.json().catch(() => ({}));
@@ -82,6 +96,14 @@ export async function separateStems(
 
     return data.stems;
   } catch (err) {
+    clearTimeout(timeoutId);
+
+    if (err instanceof DOMException && err.name === "AbortError") {
+      const msg = "Stem separation timed out after 5 minutes.";
+      showError(msg);
+      throw new Error(msg);
+    }
+
     console.error("Stem separation error:", err);
     throw err instanceof Error ? err : new Error("Stem separation failed");
   }

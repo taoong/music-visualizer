@@ -2,8 +2,8 @@
  * Balls visualization with bouncing physics
  */
 import { store } from '../state/store';
-import { audioEngine } from '../audio/engine';
-import { BAND_COUNT, BALL_COUNT, STEMS, DELTA_BRIGHTNESS_BOOST } from '../utils/constants';
+import { BAND_COUNT, BALL_COUNT, STEMS, DELTA_BRIGHTNESS_BOOST, isMobile } from '../utils/constants';
+import { getBandAverages } from './helpers';
 
 export function initBalls(p: P5Instance): void {
   const { state } = store;
@@ -14,9 +14,6 @@ export function initBalls(p: P5Instance): void {
   for (let i = 0; i < BALL_COUNT; i++) {
     const speed = 1 + Math.random() * 2;
     const angle = Math.random() * Math.PI * 2;
-    const isMobile =
-      /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) ||
-      (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
     const minR = isMobile ? 2 : 8;
     const rangeR = isMobile ? 4 : 20;
 
@@ -33,6 +30,7 @@ export function initBalls(p: P5Instance): void {
 
 export function drawBalls(p: P5Instance, dt: number): void {
   const { state, config, audioState } = store;
+  if (state.balls.length === 0) return;
 
   // Kick detection — read transient from sub band (freq) or kick stem (stems)
   let kickTransient = 1.0;
@@ -54,36 +52,9 @@ export function drawBalls(p: P5Instance, dt: number): void {
   }
 
   const bandCount = isFreqMode ? BAND_COUNT : STEMS.length;
-  const stemSmoothed = audioEngine.getStemSmoothed();
 
   // Pre-compute per-band averages (avoids redundant loops per ball)
-  const bandAmps: number[] = new Array(bandCount);
-  const bandTransients: number[] = new Array(bandCount);
-  const bandDeltas: number[] = new Array(bandCount);
-
-  for (let b = 0; b < bandCount; b++) {
-    if (isFreqMode) {
-      const bins = audioState.smoothedBands[b];
-      let sum = 0;
-      for (let j = 0; j < bins.length; j++) sum += bins[j];
-      bandAmps[b] = sum / bins.length;
-      bandTransients[b] = audioState.transientValues[b];
-      bandDeltas[b] = audioState.deltaValues[b];
-    } else {
-      const stem = STEMS[b];
-      bandAmps[b] = 0;
-      bandTransients[b] = 1.0;
-      bandDeltas[b] = 0;
-      if (stemSmoothed?.[stem]) {
-        let sum = 0;
-        for (let j = 0; j < stemSmoothed[stem].length; j++) sum += stemSmoothed[stem][j];
-        bandAmps[b] = sum / stemSmoothed[stem].length;
-      }
-      if (audioState.transientStems[stem])
-        bandTransients[b] = audioState.transientStems[stem].multiplier;
-      if (audioState.deltaStems[stem]) bandDeltas[b] = audioState.deltaStems[stem].smoothed;
-    }
-  }
+  const { amps: bandAmps, transients: bandTransients, deltas: bandDeltas } = getBandAverages(bandCount);
 
   for (let i = 0; i < state.balls.length; i++) {
     const ball = state.balls[i];

@@ -3,6 +3,7 @@
  */
 import type { StemUrls } from '../types';
 import { store } from '../state/store';
+import { FFT_SIZE, SPIKES_PER_BAND } from '../utils/constants';
 
 export interface FreqModeAudio {
   player: TonePlayer;
@@ -51,12 +52,6 @@ class AudioEngine {
       throw new Error('Failed to load audio file. Please check your connection and try again.');
     }
 
-    const fftSize =
-      /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) ||
-      (navigator.maxTouchPoints > 1 && window.innerWidth < 1024)
-        ? 128
-        : 256;
-
     const player = new Tone.Player({
       url: resolvedUrl,
       loop: true,
@@ -64,7 +59,7 @@ class AudioEngine {
     });
 
     const gainNode = new Tone.Gain(store.config.masterVolume);
-    const fft = new Tone.FFT(fftSize);
+    const fft = new Tone.FFT(FFT_SIZE);
 
     player.connect(gainNode);
     gainNode.toDestination();
@@ -83,11 +78,6 @@ class AudioEngine {
     this.disposeAll();
     await Tone.start();
 
-    const fftSize =
-      /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) ||
-      (navigator.maxTouchPoints > 1 && window.innerWidth < 1024)
-        ? 128
-        : 256;
     const masterGain = new Tone.Gain(store.config.masterVolume);
     masterGain.toDestination();
 
@@ -97,11 +87,6 @@ class AudioEngine {
     const smoothed: Record<string, Float32Array> = {};
 
     const stems: string[] = ['kick', 'drums', 'bass', 'vocals', 'other'];
-    const spikesPerBand =
-      /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) ||
-      (navigator.maxTouchPoints > 1 && window.innerWidth < 1024)
-        ? 30
-        : 60;
 
     for (const stem of stems) {
       const url = stemUrls[stem as keyof StemUrls];
@@ -128,10 +113,10 @@ class AudioEngine {
       players[stem].connect(gainNodes[stem]);
       gainNodes[stem].connect(masterGain);
 
-      ffts[stem] = new Tone.FFT(fftSize);
+      ffts[stem] = new Tone.FFT(FFT_SIZE);
       players[stem].connect(ffts[stem]);
 
-      smoothed[stem] = new Float32Array(spikesPerBand);
+      smoothed[stem] = new Float32Array(SPIKES_PER_BAND);
     }
 
     await Tone.loaded();
@@ -175,6 +160,9 @@ class AudioEngine {
     this.blobUrls.forEach(url => URL.revokeObjectURL(url));
     this.blobUrls = [];
 
+    // Revoke user file object URL if present
+    store.setCurrentObjectUrl(null);
+
     store.resetAudioState();
     store.setAudioReady(false);
   }
@@ -195,8 +183,7 @@ class AudioEngine {
     }
 
     store.setPlaying(true);
-    store.state.playStartedAt = Tone.now();
-    store.state.startOffset = offset;
+    store.setPlaybackTiming(Tone.now(), offset);
   }
 
   /**
@@ -214,7 +201,7 @@ class AudioEngine {
     }
 
     store.setPlaying(false);
-    store.state.startOffset = this.getPlaybackPosition();
+    store.setStartOffset(this.getPlaybackPosition());
   }
 
   /**
@@ -250,7 +237,7 @@ class AudioEngine {
    * Seek to a position
    */
   seek(position: number): void {
-    store.state.startOffset = position;
+    store.setStartOffset(position);
     store.state.lastBeatIndex = -1;
 
     if (store.state.isPlaying) {

@@ -21,6 +21,13 @@
   --accent-dim: rgba(232, 228, 217, 0.12);
   --accent-hover: rgba(232, 228, 217, 0.08);
   --focus-ring: rgba(232, 228, 217, 0.3);
+  --text-subtle: #bbb;
+  --text-dimmer: #999;
+  --text-dim: #888;
+  --text-dimmest: #ccc;
+  --color-error: #ff4444;
+  --color-warning: #ff9800;
+  --color-info: #2196f3;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -197,7 +204,8 @@ body {
   color: var(--text-secondary);
 }
 
-.mode-btn.active {
+.mode-btn.active,
+.mode-btn[aria-checked="true"] {
   background: var(--bg-elevated);
   color: var(--text-primary);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -334,7 +342,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.08em;
   margin-bottom: 1rem;
-  color: #999;
+  color: var(--text-dimmer);
   text-transform: uppercase;
 }
 
@@ -364,7 +372,7 @@ body {
 .slider-group label {
   display: block;
   font-size: 0.75rem;
-  color: #888;
+  color: var(--text-dim);
   margin-bottom: 0.2rem;
 }
 
@@ -415,7 +423,7 @@ body {
   height: 0;
   border-style: solid;
   border-width: 6px 0 6px 10px;
-  border-color: transparent transparent transparent #bbb;
+  border-color: transparent transparent transparent var(--text-subtle);
   transform: translate(-40%, -50%);
 }
 
@@ -429,8 +437,8 @@ body {
   display: none;
   width: 10px;
   height: 12px;
-  border-left: 3px solid #bbb;
-  border-right: 3px solid #bbb;
+  border-left: 3px solid var(--text-subtle);
+  border-right: 3px solid var(--text-subtle);
 }
 
 #pause-btn.is-playing::after {
@@ -460,40 +468,12 @@ body {
 
 #track-name {
   font-size: 0.72rem;
-  color: #888;
+  color: var(--text-dim);
   font-variant-numeric: tabular-nums;
   max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-#img-upload-label {
-  display: inline-block;
-  padding: 0.35rem 0.9rem;
-  border: 1px solid var(--border-default);
-  border-radius: 5px;
-  background: transparent;
-  color: #bbb;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-bottom: 0.4rem;
-}
-
-#img-upload-label:hover {
-  background: var(--bg-surface);
-}
-
-#img-upload {
-  display: none;
-}
-
-#img-file-name {
-  display: block;
-  font-size: 0.72rem;
-  color: #666;
-  margin-top: 0.3rem;
 }
 
 /* ── Playback Bar ────────────────────────────────────────── */
@@ -529,7 +509,7 @@ body {
   border: 1px solid var(--border-default);
   border-radius: 5px;
   background: transparent;
-  color: #bbb;
+  color: var(--text-subtle);
   font-size: 1rem;
   line-height: 1;
   cursor: pointer;
@@ -660,7 +640,7 @@ body {
 
 #time-display {
   font-size: 0.68rem;
-  color: #888;
+  color: var(--text-dim);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -694,7 +674,7 @@ body {
   background: rgba(12, 12, 14, 0.7);
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
-  color: #ccc;
+  color: var(--text-dimmest);
   font-size: 1.3rem;
   padding: 0.3rem 0.55rem;
   cursor: pointer;
@@ -813,17 +793,6 @@ button:focus-visible,
   outline-offset: 2px;
 }
 
-/* Mode button radio role states */
-.mode-btn[aria-checked="true"] {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.mode-btn[aria-checked="false"]:hover {
-  color: var(--text-secondary);
-}
-
 /* Error state for file name */
 #error-container {
   position: fixed;
@@ -836,7 +805,7 @@ button:focus-visible,
 }
 
 .error-toast {
-  background: #ff4444;
+  background: var(--color-error);
   color: white;
   padding: 12px 20px;
   border-radius: 8px;
@@ -849,15 +818,15 @@ button:focus-visible,
 }
 
 .error-toast--warning {
-  background: #ff9800;
+  background: var(--color-warning);
 }
 
 .error-toast--info {
-  background: #2196f3;
+  background: var(--color-info);
 }
 
 #file-name.error {
-  color: #ff4444;
+  color: var(--color-error);
 }
 
 /* Keyboard shortcuts modal */

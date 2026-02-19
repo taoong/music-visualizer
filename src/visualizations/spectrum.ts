@@ -2,22 +2,18 @@
  * Spectrum bar visualization
  */
 import { store } from '../state/store';
-import { audioEngine } from '../audio/engine';
 import {
   SPIKES_PER_BAND,
   DELTA_LENGTH_BOOST,
   DELTA_BRIGHTNESS_BOOST,
-  STEMS,
+  isMobile,
 } from '../utils/constants';
+import { getBandData } from './helpers';
 
 export function drawSpectrum(p: P5Instance): void {
   const { state, config, audioState } = store;
 
-  const hPad =
-    /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) ||
-    (navigator.maxTouchPoints > 1 && window.innerWidth < 1024)
-      ? 10
-      : 40;
+  const hPad = isMobile ? 10 : 40;
   const bottomMargin = 60 - audioState.centroidYOffset;
   const maxBarHeight = p.height * 0.7;
 
@@ -37,26 +33,9 @@ export function drawSpectrum(p: P5Instance): void {
     for (let i = 0; i < SPIKES_PER_BAND; i++) {
       const idx = b * SPIKES_PER_BAND + i;
 
-      let amp = 0;
-      let tMult = 1.0;
-      let delta = 0;
+      const { amp: rawAmp, tMult, delta } = getBandData(b, i);
 
-      if (isFreqMode) {
-        amp = audioState.smoothedBands[b][i];
-        tMult = audioState.transientValues[b];
-        delta = audioState.deltaValues[b];
-      } else {
-        const stem = STEMS[b];
-        const stemSmoothed = audioEngine.getStemSmoothed();
-        const stemTransients = audioState.transientStems;
-        const stemDeltas = audioState.deltaStems;
-
-        if (stemSmoothed?.[stem]) amp = stemSmoothed[stem][i];
-        if (stemTransients[stem]) tMult = stemTransients[stem].multiplier;
-        if (stemDeltas[stem]) delta = stemDeltas[stem].smoothed;
-      }
-
-      amp *= config.spikeScale * tMult;
+      const amp = rawAmp * config.spikeScale * tMult;
 
       const barH = amp * maxBarHeight * (1.0 + delta * DELTA_LENGTH_BOOST);
       if (barH < 0.5) continue;

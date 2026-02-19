@@ -3,6 +3,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
+import { formatTime } from '../utils/format';
 import type { VizMode } from '../types';
 
 // Keyboard shortcut map
@@ -181,6 +182,9 @@ function randomizeSettings(): void {
  * Show keyboard shortcuts help
  */
 function showShortcutsHelp(): void {
+  // Remove existing modal to prevent stacking
+  document.querySelector('.shortcuts-modal')?.remove();
+
   const helpContent = Object.entries(SHORTCUTS)
     .map(([key, { description }]) => `<kbd>${key}</kbd>: ${description}`)
     .join('<br>');
@@ -194,17 +198,27 @@ function showShortcutsHelp(): void {
     <div class="shortcuts-modal-content">
       <h2>Keyboard Shortcuts</h2>
       <div class="shortcuts-list">${helpContent}</div>
-      <button class="close-btn" onclick="this.closest('.shortcuts-modal').remove()">Close</button>
+      <button class="close-btn">Close</button>
     </div>
   `;
+
+  const closeBtn = modal.querySelector('.close-btn') as HTMLElement;
+  closeBtn.addEventListener('click', () => modal.remove());
 
   modal.addEventListener('click', e => {
     if (e.target === modal) modal.remove();
   });
 
+  // Focus trap: keep Tab inside the modal
+  modal.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      closeBtn.focus();
+    }
+  });
+
   document.body.appendChild(modal);
-  const closeBtn = modal.querySelector('.close-btn') as HTMLElement | null;
-  closeBtn?.focus();
+  closeBtn.focus();
 }
 
 /**
@@ -239,15 +253,6 @@ function goHome(): void {
 }
 
 /**
- * Format time for display
- */
-function formatTime(seconds: number): string {
-  const m = Math.floor(seconds / 60);
-  const s = Math.floor(seconds % 60);
-  return `${m}:${String(s).padStart(2, '0')}`;
-}
-
-/**
  * Announce message to screen readers
  */
 export function announceToScreenReader(message: string): void {
@@ -258,17 +263,6 @@ export function announceToScreenReader(message: string): void {
     announcer.setAttribute('aria-live', 'polite');
     announcer.setAttribute('aria-atomic', 'true');
     announcer.className = 'sr-only';
-    announcer.style.cssText = `
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    `;
     document.body.appendChild(announcer);
   }
   announcer.textContent = message;

@@ -8,8 +8,8 @@ import {
   DELTA_SPIKE_WIDTH_MIN,
   DELTA_SPIKE_WIDTH_MAX,
   DELTA_LENGTH_BOOST,
-  STEMS,
 } from '../utils/constants';
+import { getBandData } from './helpers';
 
 export function drawSpikeCircle(p: P5Instance): void {
   const { state, config, audioState } = store;
@@ -48,26 +48,9 @@ export function drawSpikeCircle(p: P5Instance): void {
     const band = Math.floor(i / SPIKES_PER_BAND);
     const bandIdx = i % SPIKES_PER_BAND;
 
-    let amp = 0;
-    let tMult = 1.0;
-    let delta = 0;
+    const { amp: rawAmp, tMult, delta } = getBandData(band, bandIdx);
 
-    if (isFreqMode) {
-      amp = audioState.smoothedBands[band][bandIdx];
-      tMult = audioState.transientValues[band];
-      delta = audioState.deltaValues[band];
-    } else {
-      const stem = STEMS[band];
-      const stemSmoothed = audioEngine.getStemSmoothed();
-      const stemTransients = audioState.transientStems;
-      const stemDeltas = audioState.deltaStems;
-
-      if (stemSmoothed?.[stem]) amp = stemSmoothed[stem][bandIdx];
-      if (stemTransients[stem]) tMult = stemTransients[stem].multiplier;
-      if (stemDeltas[stem]) delta = stemDeltas[stem].smoothed;
-    }
-
-    amp *= config.spikeScale * tMult;
+    const amp = rawAmp * config.spikeScale * tMult;
 
     const spikeLen = amp * maxSpikeLen * (1.0 + delta * DELTA_LENGTH_BOOST);
     if (spikeLen < 0.5) continue;

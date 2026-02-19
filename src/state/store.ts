@@ -184,6 +184,29 @@ class StateStore {
     this.emit('stateChange', this.state);
   }
 
+  setPlaybackTiming(playStartedAt: number, startOffset: number): void {
+    this.state.playStartedAt = playStartedAt;
+    this.state.startOffset = startOffset;
+    this.emit('stateChange', this.state);
+  }
+
+  setStartOffset(offset: number): void {
+    this.state.startOffset = offset;
+    this.emit('stateChange', this.state);
+  }
+
+  setSeeking(isSeeking: boolean): void {
+    this.state.isSeeking = isSeeking;
+    this.emit('stateChange', this.state);
+  }
+
+  setCurrentObjectUrl(url: string | null): void {
+    if (this.state.currentObjectUrl) {
+      URL.revokeObjectURL(this.state.currentObjectUrl);
+    }
+    this.state.currentObjectUrl = url;
+  }
+
   // Update configuration
   updateConfig<K extends keyof Config>(key: K, value: Config[K]): void {
     this.config[key] = value;
