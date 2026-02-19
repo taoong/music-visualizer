@@ -105,8 +105,17 @@ function bindSampleButton(): () => void {
     if (playBtn) playBtn.disabled = false;
   };
 
+  const touchHandler = (e: Event) => {
+    e.preventDefault();
+    handler();
+  };
+
   btn.addEventListener('click', handler);
-  return () => btn.removeEventListener('click', handler);
+  btn.addEventListener('touchend', touchHandler);
+  return () => {
+    btn.removeEventListener('click', handler);
+    btn.removeEventListener('touchend', touchHandler);
+  };
 }
 
 function bindModeSelector(): () => void {
@@ -162,8 +171,17 @@ function bindPlayButton(): () => void {
     }
   };
 
+  const touchHandler = (e: Event) => {
+    e.preventDefault();
+    handler();
+  };
+
   playBtn.addEventListener('click', handler);
-  return () => playBtn.removeEventListener('click', handler);
+  playBtn.addEventListener('touchend', touchHandler);
+  return () => {
+    playBtn.removeEventListener('click', handler);
+    playBtn.removeEventListener('touchend', touchHandler);
+  };
 }
 
 async function handleFreqModePlay(): Promise<void> {

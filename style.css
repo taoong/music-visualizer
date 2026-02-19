@@ -132,6 +132,7 @@ body {
   font-size: 0.875rem;
   font-family: inherit;
   text-align: center;
+  touch-action: manipulation;
   transition:
     background 0.2s,
     border-color 0.2s,
@@ -234,6 +235,7 @@ body {
   font-family: inherit;
   letter-spacing: 0.02em;
   cursor: pointer;
+  touch-action: manipulation;
   transition:
     opacity 0.2s,
     transform 0.15s;
