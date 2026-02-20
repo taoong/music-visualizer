@@ -37,19 +37,28 @@ class AudioEngine {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-      const resp = await fetch(fileUrl, { signal: controller.signal });
+      console.log('[AudioEngine] Fetching audio from:', fileUrl);
+      const resp = await fetch(fileUrl, {
+        signal: controller.signal,
+        mode: 'cors',
+        credentials: 'same-origin',
+      });
       clearTimeout(timeoutId);
 
       if (!resp.ok) {
-        throw new Error(`Failed to fetch audio: HTTP ${resp.status}`);
+        throw new Error(`Failed to fetch audio: HTTP ${resp.status} ${resp.statusText}`);
       }
 
       const blob = await resp.blob();
+      console.log('[AudioEngine] Audio fetched successfully, blob size:', blob.size);
       resolvedUrl = URL.createObjectURL(blob);
       this.blobUrls.push(resolvedUrl);
     } catch (err) {
       clearTimeout(timeoutId);
-      throw new Error('Failed to load audio file. Please check your connection and try again.');
+      console.error('[AudioEngine] Failed to load audio:', err);
+      throw new Error(
+        `Failed to load audio file: ${err instanceof Error ? err.message : 'Unknown error'}`
+      );
     }
 
     const player = new Tone.Player({

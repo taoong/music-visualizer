@@ -186,5 +186,5 @@ export const FFT_SIZE = isMobile ? 128 : 256;
 export const DECAY_RATE_BASELINE = 0.88;
 export const DECAY_RATE_EXPONENT = 3;
 
-// Sample URL - use root-relative path to ensure it resolves correctly from any route
-export const SAMPLE_URL = '/sample.mp3';
+// Sample URL - construct full URL to work across different devices and origins
+export const SAMPLE_URL = `${window.location.origin}/sample.mp3`;
