@@ -38,6 +38,7 @@ import {
   resetCube,
   drawStickman,
   resetStickman,
+  loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
 import { initKeyboardShortcuts, announceToScreenReader } from './ui/keyboard';
@@ -89,6 +90,12 @@ const sketch = (p: P5Instance) => {
       cleanupKeyboard();
       audioEngine.disposeAll();
     });
+
+    // Load pending image if uploaded on splash before p5 was ready
+    if (window.__pendingImageFile) {
+      loadUserImage(p, window.__pendingImageFile);
+      delete window.__pendingImageFile;
+    }
 
     // Announce ready to screen readers
     announceToScreenReader(

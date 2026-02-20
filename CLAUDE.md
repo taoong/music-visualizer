@@ -27,18 +27,19 @@ src/
 ├── visualizations/
 │   ├── index.ts               # Barrel exports
 │   ├── helpers.ts             # getBandData(), getBandAverages() — shared audio state accessors
-│   ├── circle.ts              # Rotating spike circle (7 bands x 60 spikes)
+│   ├── userImage.ts           # User image state: load/clear/get/has, emits 'imageChange' event
+│   ├── circle.ts              # Rotating spike circle (7 bands x 60 spikes), optional center image
 │   ├── spectrum.ts            # Horizontal bar chart
-│   ├── tunnel.ts              # Octave-based concentric rings with glow
+│   ├── tunnel.ts              # Octave-based concentric rings with glow, optional center image
 │   ├── balls.ts               # Physics-based bouncing balls with kick boost
-│   ├── cube.ts                # 3D wireframe cube, beat-synced rotation
+│   ├── cube.ts                # 3D wireframe cube, beat-synced rotation, optional image on faces
 │   └── stickman.ts            # Animated stick figure, beat-synced poses, kick zoom, high-freq color
 ├── ui/
 │   ├── controller.ts          # Top-level UI orchestrator, sidebar toggle, viz selector, randomize
-│   ├── splash.ts              # Splash screen: file upload, sample button, mode selector, play button
-│   ├── playback.ts            # Pause/play, scrubber, time display, track switching, BPM trigger
+│   ├── splash.ts              # Splash screen: file upload, sample button, mode selector, image upload, play button
+│   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (1-6 viz modes, space, arrows, m/f/s/r/?/h/Esc)
+│   └── keyboard.ts            # Keyboard shortcuts (1-6 viz modes, space, arrows, m/f/s/r/i/?/h/Esc)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, AudioProcessingState, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)
@@ -69,7 +70,7 @@ src/
 - **`config: Config`** — sensitivities (7 freq + 5 stem), spikeScale, decayRate, rotationSpeed, masterVolume
 - **`audioState: AudioProcessingState`** — smoothedBands, transientValues, deltaValues, spectral centroid, octave data
 
-Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChange`, `vizModeChange`, `bpmDetected`, `error`.
+Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChange`, `vizModeChange`, `bpmDetected`, `imageChange`, `error`.
 
 ### Key audio concepts
 

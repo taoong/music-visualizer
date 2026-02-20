@@ -5,9 +5,9 @@ import { store } from '../state/store';
 import { injectErrorStyles } from '../utils/errors';
 import { initBalls } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
-import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton } from './splash';
+import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton, bindImageUpload } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
-import { bindPauseButton, bindScrubber, bindTrackSwitching, updateScrubberUI } from './playback';
+import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 
 export { updateScrubberUI };
 
@@ -26,11 +26,13 @@ export function initUI(): () => void {
   cleanupFns.push(bindFileUpload());
   cleanupFns.push(bindSampleButton());
   cleanupFns.push(bindModeSelector());
+  cleanupFns.push(bindImageUpload());
   cleanupFns.push(bindPlayButton());
 
   // Playback controls
   cleanupFns.push(bindPauseButton());
   cleanupFns.push(bindTrackSwitching());
+  cleanupFns.push(bindImageControls());
   cleanupFns.push(bindScrubber());
 
   // Sliders

@@ -21,6 +21,7 @@ type EventType =
   | 'modeChange'
   | 'vizModeChange'
   | 'bpmDetected'
+  | 'imageChange'
   | 'error';
 
 type EventListener = (data?: unknown) => void;

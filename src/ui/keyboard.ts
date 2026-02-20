@@ -4,6 +4,7 @@
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { formatTime } from '../utils/format';
+import { hasUserImage, clearUserImage } from '../visualizations/userImage';
 import type { VizMode } from '../types';
 
 // Keyboard shortcut map
@@ -29,6 +30,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
   defineShortcut('r', randomizeSettings, 'Randomize settings');
+  defineShortcut('i', toggleImage, 'Toggle image upload/remove');
   defineShortcut('?', showShortcutsHelp, 'Show keyboard shortcuts');
   defineShortcut('Escape', hideOverlays, 'Close overlays/Go back');
   defineShortcut('h', goHome, 'Return to home screen');
@@ -143,6 +145,21 @@ function toggleMute(): void {
   }
 
   announceToScreenReader(store.config.masterVolume === 0 ? 'Muted' : 'Unmuted');
+}
+
+/**
+ * Toggle image upload/remove
+ */
+function toggleImage(): void {
+  if (hasUserImage()) {
+    clearUserImage();
+    const imageInput = document.getElementById('playback-image-upload') as HTMLInputElement | null;
+    if (imageInput) imageInput.value = '';
+    announceToScreenReader('Image removed');
+  } else {
+    const imageInput = document.getElementById('playback-image-upload') as HTMLInputElement | null;
+    imageInput?.click();
+  }
 }
 
 /**

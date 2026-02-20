@@ -11,6 +11,7 @@ import {
   DELTA_LENGTH_BOOST,
   DELTA_BRIGHTNESS_BOOST,
 } from '../utils/constants';
+import { getUserImage } from './userImage';
 
 export function drawTunnel(p: P5Instance): void {
   const { audioState } = store;
@@ -54,6 +55,30 @@ export function drawTunnel(p: P5Instance): void {
       p.strokeWeight(sw);
       p.ellipse(0, 0, r * 2, r * 2);
     }
+  }
+
+  // Draw user image clipped to center
+  const userImg = getUserImage();
+  if (userImg) {
+    const centerRadius = minDim * 0.06;
+    const ctx = p.drawingContext;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(0, 0, centerRadius, 0, Math.PI * 2);
+    ctx.clip();
+
+    const imgEl = userImg.elt;
+    const imgAspect = imgEl.naturalWidth / imgEl.naturalHeight;
+    let drawW: number, drawH: number;
+    if (imgAspect > 1) {
+      drawH = centerRadius * 2;
+      drawW = drawH * imgAspect;
+    } else {
+      drawW = centerRadius * 2;
+      drawH = drawW / imgAspect;
+    }
+    ctx.drawImage(imgEl, -drawW / 2, -drawH / 2, drawW, drawH);
+    ctx.restore();
   }
 
   p.pop();

@@ -6,9 +6,16 @@ import { audioEngine } from '../audio/engine';
 import { separateStems, detectBPMWithFallback } from '../audio/bpm';
 import { setProcessingState, setFileStatus } from '../utils/errors';
 import { SAMPLE_URL } from '../utils/constants';
+import { loadUserImage, clearUserImage } from '../visualizations/userImage';
 import type { AnalysisMode } from '../types';
 
 let isSeparating = false;
+
+declare global {
+  interface Window {
+    __pendingImageFile?: File;
+  }
+}
 
 export function bindFileUpload(): () => void {
   const audioInput = document.getElementById('audio-upload') as HTMLInputElement | null;
@@ -115,6 +122,58 @@ export function bindPlayButton(): () => void {
   return () => {
     playBtn.removeEventListener('click', handler);
     playBtn.removeEventListener('touchend', touchHandler);
+  };
+}
+
+export function bindImageUpload(): () => void {
+  const imageInput = document.getElementById('image-upload') as HTMLInputElement | null;
+  const removeBtn = document.getElementById('image-remove-btn');
+  const previewGroup = document.getElementById('image-preview-group');
+  const previewThumb = document.getElementById('image-preview-thumb') as HTMLImageElement | null;
+  const fileNameEl = document.getElementById('image-file-name');
+
+  if (!imageInput) return () => {};
+
+  const changeHandler = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    if (!target.files?.length) return;
+
+    const file = target.files[0];
+
+    // Show preview
+    const previewUrl = URL.createObjectURL(file);
+    if (previewThumb) {
+      previewThumb.onload = () => URL.revokeObjectURL(previewUrl);
+      previewThumb.src = previewUrl;
+    }
+    if (fileNameEl) fileNameEl.textContent = file.name;
+    previewGroup?.classList.remove('hidden');
+    removeBtn?.classList.remove('hidden');
+
+    // Load into p5 if available, otherwise store for later
+    if (window.p5Instance) {
+      loadUserImage(window.p5Instance, file);
+    } else {
+      window.__pendingImageFile = file;
+    }
+  };
+
+  const removeHandler = () => {
+    clearUserImage();
+    if (previewThumb) previewThumb.src = '';
+    if (fileNameEl) fileNameEl.textContent = '';
+    previewGroup?.classList.add('hidden');
+    removeBtn?.classList.add('hidden');
+    imageInput.value = '';
+    delete window.__pendingImageFile;
+  };
+
+  imageInput.addEventListener('change', changeHandler);
+  removeBtn?.addEventListener('click', removeHandler);
+
+  return () => {
+    imageInput.removeEventListener('change', changeHandler);
+    removeBtn?.removeEventListener('click', removeHandler);
   };
 }
 

@@ -230,6 +230,105 @@ body {
   margin-left: 0.3rem;
 }
 
+/* ── Image Upload (Splash) ──────────────────────────────── */
+#image-upload {
+  display: none;
+}
+
+#image-upload-group {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+#image-upload-label {
+  padding: 10px 20px;
+  font-size: 0.8rem;
+}
+
+.image-remove-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.image-remove-btn:hover {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+#image-preview-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+#image-preview-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+}
+
+#image-file-name {
+  font-size: 0.75rem;
+  color: var(--accent);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Image Controls (Playback Bar) ─────────────────────── */
+#image-group {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-shrink: 0;
+}
+
+#playback-image-upload {
+  display: none;
+}
+
+#change-image-label {
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+#change-image-label:hover {
+  opacity: 1;
+}
+
+.playback-remove-image {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.playback-remove-image:hover {
+  color: var(--color-error);
+}
+
 /* ── Play / Begin Button ─────────────────────────────────── */
 #play-btn {
   align-self: flex-start;

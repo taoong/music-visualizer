@@ -85,6 +85,28 @@
               </button>
             </div>
           </div>
+          <div class="splash-step">
+            <span class="step-label" id="add-image-label">Add image (optional)</span>
+            <div id="image-upload-group" role="group" aria-labelledby="add-image-label">
+              <label id="image-upload-label" for="image-upload" class="btn" tabindex="0" role="button">
+                Choose Image
+                <span class="sr-only">Upload an image for visualizations</span>
+              </label>
+              <input
+                type="file"
+                id="image-upload"
+                accept="image/*"
+                aria-label="Upload image file"
+              />
+              <button id="image-remove-btn" class="image-remove-btn hidden" type="button" aria-label="Remove image">
+                Remove
+              </button>
+            </div>
+            <div id="image-preview-group" class="hidden">
+              <img id="image-preview-thumb" alt="Image preview" />
+              <span id="image-file-name"></span>
+            </div>
+          </div>
         </div>
 
         <button id="play-btn" disabled type="button" aria-describedby="file-name">
@@ -411,6 +433,34 @@
             accept="audio/*"
             aria-label="Upload new audio file"
           />
+        </div>
+        <div id="image-group">
+          <label
+            id="change-image-label"
+            for="playback-image-upload"
+            title="Add/Change Image"
+            tabindex="0"
+            role="button"
+            aria-label="Add or change visualization image"
+          >
+            &#128247;
+            <span class="sr-only">Add or change image</span>
+          </label>
+          <input
+            type="file"
+            id="playback-image-upload"
+            accept="image/*"
+            aria-label="Upload image for visualizations"
+          />
+          <button
+            id="playback-remove-image"
+            class="playback-remove-image hidden"
+            type="button"
+            aria-label="Remove image"
+            title="Remove image"
+          >
+            &times;
+          </button>
         </div>
         <div id="volume-group">
           <button

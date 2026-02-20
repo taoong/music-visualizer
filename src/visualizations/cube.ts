@@ -4,6 +4,7 @@
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { BAND_COUNT, SPIKES_PER_BAND, STEMS } from '../utils/constants';
+import { getUserImage } from './userImage';
 
 // Cube state
 let cubeRotationX = 0;
@@ -186,6 +187,7 @@ export function drawCube(p: P5Instance, dt: number): void {
 
   // Draw faces
   p.noStroke();
+  const userImg = getUserImage();
 
   facesWithDepth.forEach(({ face, index }) => {
     const projectedPoints = face.map(vertexIdx => {
@@ -213,6 +215,38 @@ export function drawCube(p: P5Instance, dt: number): void {
       p.vertex(point.x, point.y);
     });
     p.endShape(p['CLOSE']);
+
+    // Draw user image on face
+    if (userImg) {
+      const ctx = p.drawingContext;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(projectedPoints[0].x, projectedPoints[0].y);
+      for (let i = 1; i < projectedPoints.length; i++) {
+        ctx.lineTo(projectedPoints[i].x, projectedPoints[i].y);
+      }
+      ctx.closePath();
+      ctx.clip();
+
+      // Bounding box of projected quad
+      let minX = projectedPoints[0].x, maxX = projectedPoints[0].x;
+      let minY = projectedPoints[0].y, maxY = projectedPoints[0].y;
+      for (let i = 1; i < projectedPoints.length; i++) {
+        if (projectedPoints[i].x < minX) minX = projectedPoints[i].x;
+        if (projectedPoints[i].x > maxX) maxX = projectedPoints[i].x;
+        if (projectedPoints[i].y < minY) minY = projectedPoints[i].y;
+        if (projectedPoints[i].y > maxY) maxY = projectedPoints[i].y;
+      }
+      ctx.drawImage(userImg.elt, minX, minY, maxX - minX, maxY - minY);
+
+      // Color tint overlay
+      const h = hue;
+      const s = Math.round(saturation);
+      const b = Math.round(brightness);
+      ctx.fillStyle = `hsla(${h}, ${s}%, ${b}%, 0.35)`;
+      ctx.fillRect(minX, minY, maxX - minX, maxY - minY);
+      ctx.restore();
+    }
 
     // Draw wireframe edges
     p.stroke(255, 100);

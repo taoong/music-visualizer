@@ -6,6 +6,7 @@ import { audioEngine } from '../audio/engine';
 import { separateStems, detectBPMWithFallback } from '../audio/bpm';
 import { showError, setProcessingState } from '../utils/errors';
 import { formatTime } from '../utils/format';
+import { loadUserImage, clearUserImage } from '../visualizations/userImage';
 
 export function bindPauseButton(): () => void {
   const pauseBtn = document.getElementById('pause-btn');
@@ -131,4 +132,40 @@ export function bindTrackSwitching(): () => void {
 
   sidebarUpload.addEventListener('change', handler);
   return () => sidebarUpload.removeEventListener('change', handler);
+}
+
+export function bindImageControls(): () => void {
+  const imageInput = document.getElementById('playback-image-upload') as HTMLInputElement | null;
+  const removeBtn = document.getElementById('playback-remove-image');
+
+  if (!imageInput) return () => {};
+
+  const changeHandler = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    if (!target.files?.length) return;
+    loadUserImage(window.p5Instance, target.files[0]);
+  };
+
+  const removeHandler = () => {
+    clearUserImage();
+    imageInput.value = '';
+  };
+
+  const imageChangeHandler = (hasImage: unknown) => {
+    if (hasImage) {
+      removeBtn?.classList.remove('hidden');
+    } else {
+      removeBtn?.classList.add('hidden');
+    }
+  };
+
+  imageInput.addEventListener('change', changeHandler);
+  removeBtn?.addEventListener('click', removeHandler);
+  const unsubscribe = store.on('imageChange', imageChangeHandler);
+
+  return () => {
+    imageInput.removeEventListener('change', changeHandler);
+    removeBtn?.removeEventListener('click', removeHandler);
+    unsubscribe();
+  };
 }

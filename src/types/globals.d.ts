@@ -9,12 +9,19 @@ declare global {
     prototype: P5Instance;
   };
 
+  interface P5Image {
+    width: number;
+    height: number;
+    elt: HTMLImageElement;
+  }
+
   interface P5Instance {
     // Core properties
     width: number;
     height: number;
     deltaTime: number;
     millis(): number;
+    drawingContext: CanvasRenderingContext2D;
 
     // Constants (accessed via bracket notation)
     TWO_PI: number;
@@ -23,6 +30,7 @@ declare global {
     HSB: string;
     RGB: string;
     CLOSE: number;
+    CENTER: string;
 
     // Setup/Lifecycle
     createCanvas(w: number, h: number): { parent(id: string): void };
@@ -53,6 +61,13 @@ declare global {
     noStroke(): void;
     strokeWeight(weight: number): void;
     colorMode(mode: string | number, max1?: number, max2?: number, max3?: number): void;
+
+    // Images
+    loadImage(path: string, successCallback?: (img: P5Image) => void, failureCallback?: () => void): P5Image;
+    image(img: P5Image, x: number, y: number, w?: number, h?: number): void;
+    imageMode(mode: string): void;
+    tint(v1: number, v2?: number, v3?: number, alpha?: number): void;
+    noTint(): void;
 
     // Math
     cos(angle: number): number;

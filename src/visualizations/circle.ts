@@ -10,6 +10,7 @@ import {
   DELTA_LENGTH_BOOST,
 } from '../utils/constants';
 import { getBandData } from './helpers';
+import { getUserImage } from './userImage';
 
 export function drawSpikeCircle(p: P5Instance): void {
   const { state, config, audioState } = store;
@@ -83,6 +84,30 @@ export function drawSpikeCircle(p: P5Instance): void {
   p.ellipse(0, 0, baseRadius * 2, baseRadius * 2);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).colorMode(p['RGB'], 255);
+
+  // Draw user image clipped to center circle
+  const userImg = getUserImage();
+  if (userImg) {
+    const ctx = p.drawingContext;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(0, 0, baseRadius - 2, 0, Math.PI * 2);
+    ctx.clip();
+
+    const imgEl = userImg.elt;
+    const r = baseRadius - 2;
+    const imgAspect = imgEl.naturalWidth / imgEl.naturalHeight;
+    let drawW: number, drawH: number;
+    if (imgAspect > 1) {
+      drawH = r * 2;
+      drawW = drawH * imgAspect;
+    } else {
+      drawW = r * 2;
+      drawH = drawW / imgAspect;
+    }
+    ctx.drawImage(imgEl, -drawW / 2, -drawH / 2, drawW, drawH);
+    ctx.restore();
+  }
 
   p.pop();
 }

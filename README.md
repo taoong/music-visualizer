@@ -73,6 +73,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |
 | `R` | Randomize settings |
+| `I` | Toggle image upload / remove |
 | `H` | Return to home screen |
 | `?` | Show shortcuts help |
 | `Esc` | Close overlays |
