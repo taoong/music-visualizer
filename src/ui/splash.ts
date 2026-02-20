@@ -122,16 +122,15 @@ async function handleFreqModePlay(): Promise<void> {
   const splash = document.getElementById('splash');
   const playBtn = document.getElementById('play-btn') as HTMLButtonElement | null;
 
-  let url: string | null = null;
+  let source: string | File | null = null;
 
   if (store.state.useSample) {
-    url = SAMPLE_URL;
+    source = SAMPLE_URL;
   } else if (store.state.userFile) {
-    url = URL.createObjectURL(store.state.userFile);
-    store.setCurrentObjectUrl(url);
+    source = store.state.userFile;
   }
 
-  if (!url) {
+  if (!source) {
     setFileStatus('Please upload a track or use the sample first.', true);
     return;
   }
@@ -140,7 +139,7 @@ async function handleFreqModePlay(): Promise<void> {
   setFileStatus('Loading…');
 
   try {
-    await audioEngine.initFreqMode(url);
+    await audioEngine.initFreqMode(source);
 
     try {
       const bpmData = await fetchBPM(store.state.useSample ? 'sample.mp3' : store.state.userFile!);

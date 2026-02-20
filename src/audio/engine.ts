@@ -27,17 +27,47 @@ class AudioEngine {
   /**
    * Initialize frequency mode audio
    */
-  async initFreqMode(fileUrl: string): Promise<void> {
+  async initFreqMode(source: string | File): Promise<void> {
     this.disposeAll();
     await Tone.start();
 
-    console.log('[AudioEngine] Loading audio from:', fileUrl);
+    console.log('[AudioEngine] Loading audio:', source instanceof File ? source.name : source);
 
-    const player = new Tone.Player({
-      url: fileUrl,
-      loop: true,
-      autostart: false,
-    });
+    let player: TonePlayer;
+
+    if (source instanceof File) {
+      // For File objects, convert to ArrayBuffer first
+      try {
+        const arrayBuffer = await source.arrayBuffer();
+        // @ts-expect-error - decodeAudioData exists on BaseAudioContext
+        const audioBuffer = await Tone.context.decodeAudioData(arrayBuffer);
+        player = new Tone.Player(audioBuffer);
+        // @ts-expect-error - loop property exists
+        player.loop = true;
+      } catch (err) {
+        console.error('[AudioEngine] Failed to decode file:', err);
+        throw new Error(
+          `Failed to decode audio file: ${err instanceof Error ? err.message : 'Unknown error'}`
+        );
+      }
+    } else {
+      // For URLs (sample track), use Tone.js loading
+      player = new Tone.Player({
+        url: source,
+        loop: true,
+        autostart: false,
+      });
+
+      try {
+        await Tone.loaded();
+        console.log('[AudioEngine] Audio loaded successfully');
+      } catch (err) {
+        console.error('[AudioEngine] Failed to load audio:', err);
+        throw new Error(
+          `Failed to load audio: ${err instanceof Error ? err.message : 'Unknown error'}. URL: ${source}`
+        );
+      }
+    }
 
     const gainNode = new Tone.Gain(store.config.masterVolume);
     const fft = new Tone.FFT(FFT_SIZE);
@@ -45,16 +75,6 @@ class AudioEngine {
     player.connect(gainNode);
     gainNode.toDestination();
     player.connect(fft);
-
-    try {
-      await Tone.loaded();
-      console.log('[AudioEngine] Audio loaded successfully');
-    } catch (err) {
-      console.error('[AudioEngine] Failed to load audio:', err);
-      throw new Error(
-        `Failed to load audio: ${err instanceof Error ? err.message : 'Unknown error'}. URL: ${fileUrl}`
-      );
-    }
 
     this.freqAudio = { player, gainNode, fft };
     store.setAudioReady(true);

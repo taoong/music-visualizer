@@ -91,10 +91,7 @@ export function bindTrackSwitching(): () => void {
       if (trackNameEl) trackNameEl.textContent = 'Loading…';
 
       try {
-        const url = URL.createObjectURL(file);
-        store.setCurrentObjectUrl(url);
-
-        await audioEngine.initFreqMode(url);
+        await audioEngine.initFreqMode(file);
 
         try {
           const bpmData = await fetchBPM(file);
