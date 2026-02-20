@@ -123,6 +123,8 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `npm run lint` | Run ESLint |
 | `npm run lint:fix` | Fix ESLint errors |
 | `npm run format` | Format code with Prettier |
+| `npm run test` | Run Vitest tests |
+| `npm run test:watch` | Run Vitest in watch mode |
 | `npm run typecheck` | Type-check without emitting |
 
 ## License

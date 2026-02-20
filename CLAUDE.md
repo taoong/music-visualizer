@@ -7,6 +7,8 @@ Real-time audio-reactive visualizer built with TypeScript, p5.js, and Tone.js. O
 - `npm run dev` — start Vite dev server (port 3000, proxies `/api/*` and `/server/*` to `:5001`)
 - `npm run build` — `tsc && vite build` (output to `dist/`)
 - `npm run lint` / `npm run lint:fix` — ESLint
+- `npm run test` — run Vitest tests
+- `npm run test:watch` — run Vitest in watch mode
 - `npm run typecheck` — `tsc --noEmit`
 - `cd server && python app.py` — start Flask backend on port 5001
 
@@ -24,6 +26,13 @@ src/
 │   ├── processing.ts          # Auto-gain normalization, transient detection, delta (rate of change)
 │   ├── pipeline.ts            # Decay, octave processing, band smoothing with attack/release
 │   └── bpm.ts                 # BPM detection: server-side /api/detect-bpm + client-side fallback
+├── __tests__/
+│   ├── setup.ts               # Global test setup: browser global stubs for Node environment
+│   ├── mocks/
+│   │   ├── p5.ts              # Mock factories: createMockContext, createMockP5Image, createMockP5
+│   │   └── store.ts           # Mock factory: createMockStoreState
+│   └── helpers/
+│       └── callOrder.ts       # expectCallSequence — verifies mock call ordering
 ├── visualizations/
 │   ├── index.ts               # Barrel exports
 │   ├── helpers.ts             # getBandData(), getBandAverages() — shared audio state accessors
@@ -33,7 +42,8 @@ src/
 │   ├── tunnel.ts              # Octave-based concentric rings with glow, optional center image
 │   ├── balls.ts               # Physics-based bouncing balls with kick boost
 │   ├── cube.ts                # 3D wireframe cube, beat-synced rotation, optional image on faces
-│   └── stickman.ts            # Animated stick figure, beat-synced poses, kick zoom, high-freq color
+│   ├── stickman.ts            # Animated stick figure, beat-synced poses, kick zoom, high-freq color
+│   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── ui/
 │   ├── controller.ts          # Top-level UI orchestrator, sidebar toggle, viz selector, randomize
 │   ├── splash.ts              # Splash screen: file upload, sample button, mode selector, image upload, play button

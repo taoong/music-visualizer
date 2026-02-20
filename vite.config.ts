@@ -1,7 +1,14 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+    include: ['src/**/*.test.ts'],
+    setupFiles: ['src/__tests__/setup.ts'],
+  },
   root: '.',
   publicDir: 'public',
   build: {
