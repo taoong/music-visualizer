@@ -106,7 +106,7 @@ Frontend works without the server — stem mode won't be available and BPM detec
 
 ## Maintenance
 
-Keep this file up to date. After any change that adds/removes/renames files, adds new visualization modes, changes the data flow, modifies the build pipeline, or alters architectural patterns, update the relevant sections of this document in the same commit.
+Keep both this file and `README.md` up to date. After any change that adds/removes/renames files, adds new visualization modes, changes keyboard shortcuts, changes the data flow, modifies the build pipeline, or alters architectural patterns, update the relevant sections of both documents in the same commit.
 
 ## Conventions
 
