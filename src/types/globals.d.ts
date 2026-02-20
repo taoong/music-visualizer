@@ -12,7 +12,7 @@ declare global {
   interface P5Image {
     width: number;
     height: number;
-    elt: HTMLImageElement;
+    canvas: HTMLCanvasElement;
   }
 
   interface P5Instance {

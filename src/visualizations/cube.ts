@@ -237,7 +237,7 @@ export function drawCube(p: P5Instance, dt: number): void {
         if (projectedPoints[i].y < minY) minY = projectedPoints[i].y;
         if (projectedPoints[i].y > maxY) maxY = projectedPoints[i].y;
       }
-      ctx.drawImage(userImg.elt, minX, minY, maxX - minX, maxY - minY);
+      ctx.drawImage(userImg.canvas, minX, minY, maxX - minX, maxY - minY);
 
       // Color tint overlay
       const h = hue;

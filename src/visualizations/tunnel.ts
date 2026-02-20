@@ -67,8 +67,7 @@ export function drawTunnel(p: P5Instance): void {
     ctx.arc(0, 0, centerRadius, 0, Math.PI * 2);
     ctx.clip();
 
-    const imgEl = userImg.elt;
-    const imgAspect = imgEl.naturalWidth / imgEl.naturalHeight;
+    const imgAspect = userImg.width / userImg.height;
     let drawW: number, drawH: number;
     if (imgAspect > 1) {
       drawH = centerRadius * 2;
@@ -77,7 +76,7 @@ export function drawTunnel(p: P5Instance): void {
       drawW = centerRadius * 2;
       drawH = drawW / imgAspect;
     }
-    ctx.drawImage(imgEl, -drawW / 2, -drawH / 2, drawW, drawH);
+    ctx.drawImage(userImg.canvas, -drawW / 2, -drawH / 2, drawW, drawH);
     ctx.restore();
   }
 

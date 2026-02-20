@@ -94,9 +94,8 @@ export function drawSpikeCircle(p: P5Instance): void {
     ctx.arc(0, 0, baseRadius - 2, 0, Math.PI * 2);
     ctx.clip();
 
-    const imgEl = userImg.elt;
     const r = baseRadius - 2;
-    const imgAspect = imgEl.naturalWidth / imgEl.naturalHeight;
+    const imgAspect = userImg.width / userImg.height;
     let drawW: number, drawH: number;
     if (imgAspect > 1) {
       drawH = r * 2;
@@ -105,7 +104,7 @@ export function drawSpikeCircle(p: P5Instance): void {
       drawW = r * 2;
       drawH = drawW / imgAspect;
     }
-    ctx.drawImage(imgEl, -drawW / 2, -drawH / 2, drawW, drawH);
+    ctx.drawImage(userImg.canvas, -drawW / 2, -drawH / 2, drawW, drawH);
     ctx.restore();
   }
 
