@@ -104,6 +104,10 @@ Flask app at `server/app.py` (port 5001):
 
 Frontend works without the server — stem mode won't be available and BPM detection falls back to client-side.
 
+## Maintenance
+
+Keep this file up to date. After any change that adds/removes/renames files, adds new visualization modes, changes the data flow, modifies the build pipeline, or alters architectural patterns, update the relevant sections of this document in the same commit.
+
 ## Conventions
 
 - Visualizations use module-scoped state (no classes), following the pattern in `cube.ts`.
