@@ -162,7 +162,8 @@ async function handleFreqModePlay(): Promise<void> {
     }
   } catch (err) {
     console.error('Audio init error:', err);
-    setFileStatus('Error loading audio. Try another file.', true);
+    const errorMsg = err instanceof Error ? err.message : 'Unknown error';
+    setFileStatus(`Error: ${errorMsg}`, true);
     if (playBtn) playBtn.disabled = false;
   }
 }
