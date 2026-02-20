@@ -74,7 +74,7 @@ function bindVizSelector(): () => void {
   }
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman';
     store.setVizMode(mode);
 
     // Show/hide relevant controls

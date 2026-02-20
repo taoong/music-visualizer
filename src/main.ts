@@ -36,6 +36,8 @@ import {
   initBalls,
   drawCube,
   resetCube,
+  drawStickman,
+  resetStickman,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
 import { initKeyboardShortcuts, announceToScreenReader } from './ui/keyboard';
@@ -123,6 +125,9 @@ const sketch = (p: P5Instance) => {
       case 'cube':
         drawCube(p, dt);
         break;
+      case 'stickman':
+        drawStickman(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -136,6 +141,8 @@ const sketch = (p: P5Instance) => {
       initBalls(p);
     } else if (store.state.vizMode === 'cube') {
       resetCube();
+    } else if (store.state.vizMode === 'stickman') {
+      resetStickman();
     }
   };
 };
