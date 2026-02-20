@@ -24,6 +24,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('3', () => setVizMode('tunnel'), 'Tunnel visualization');
   defineShortcut('4', () => setVizMode('balls'), 'Balls visualization');
   defineShortcut('5', () => setVizMode('cube'), '3D Cube visualization');
+  defineShortcut('6', () => setVizMode('stickman'), 'Stickman visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
