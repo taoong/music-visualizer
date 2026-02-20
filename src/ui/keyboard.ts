@@ -23,6 +23,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('2', () => setVizMode('spectrum'), 'Spectrum visualization');
   defineShortcut('3', () => setVizMode('tunnel'), 'Tunnel visualization');
   defineShortcut('4', () => setVizMode('balls'), 'Balls visualization');
+  defineShortcut('5', () => setVizMode('cube'), '3D Cube visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

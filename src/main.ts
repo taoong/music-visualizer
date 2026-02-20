@@ -28,7 +28,15 @@ import {
   decayStemBands,
   smoothBandBins,
 } from './audio/pipeline';
-import { drawSpikeCircle, drawSpectrum, drawTunnel, drawBalls, initBalls } from './visualizations';
+import {
+  drawSpikeCircle,
+  drawSpectrum,
+  drawTunnel,
+  drawBalls,
+  initBalls,
+  drawCube,
+  resetCube,
+} from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
 import { initKeyboardShortcuts, announceToScreenReader } from './ui/keyboard';
 import { showError } from './utils/errors';
@@ -112,6 +120,9 @@ const sketch = (p: P5Instance) => {
       case 'balls':
         drawBalls(p, dt);
         break;
+      case 'cube':
+        drawCube(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -123,6 +134,8 @@ const sketch = (p: P5Instance) => {
     p.resizeCanvas(window.innerWidth, window.innerHeight);
     if (store.state.vizMode === 'balls') {
       initBalls(p);
+    } else if (store.state.vizMode === 'cube') {
+      resetCube();
     }
   };
 };
@@ -219,7 +232,15 @@ function processStemMode(dt: number): void {
       const sensKey = `sens${stem.charAt(0).toUpperCase() + stem.slice(1)}` as keyof typeof config;
       const [attack, release] = STEM_SMOOTHING[stem];
 
-      smoothBandBins(stemSmoothed[stem], raw, config[sensKey] as number, attack, release, decayFactor, dt);
+      smoothBandBins(
+        stemSmoothed[stem],
+        raw,
+        config[sensKey] as number,
+        attack,
+        release,
+        decayFactor,
+        dt
+      );
     }
 
     updateCentroid(computeStemCentroid(stemFfts, STEMS));
