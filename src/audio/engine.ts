@@ -31,38 +31,10 @@ class AudioEngine {
     this.disposeAll();
     await Tone.start();
 
-    // Always pre-fetch audio to ensure it loads properly
-    let resolvedUrl = fileUrl;
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-    try {
-      console.log('[AudioEngine] Fetching audio from:', fileUrl);
-      const resp = await fetch(fileUrl, {
-        signal: controller.signal,
-        mode: 'cors',
-        credentials: 'same-origin',
-      });
-      clearTimeout(timeoutId);
-
-      if (!resp.ok) {
-        throw new Error(`Failed to fetch audio: HTTP ${resp.status} ${resp.statusText}`);
-      }
-
-      const blob = await resp.blob();
-      console.log('[AudioEngine] Audio fetched successfully, blob size:', blob.size);
-      resolvedUrl = URL.createObjectURL(blob);
-      this.blobUrls.push(resolvedUrl);
-    } catch (err) {
-      clearTimeout(timeoutId);
-      console.error('[AudioEngine] Failed to load audio:', err);
-      throw new Error(
-        `Failed to load audio file: ${err instanceof Error ? err.message : 'Unknown error'}`
-      );
-    }
+    console.log('[AudioEngine] Loading audio from:', fileUrl);
 
     const player = new Tone.Player({
-      url: resolvedUrl,
+      url: fileUrl,
       loop: true,
       autostart: false,
     });
@@ -74,7 +46,15 @@ class AudioEngine {
     gainNode.toDestination();
     player.connect(fft);
 
-    await Tone.loaded();
+    try {
+      await Tone.loaded();
+      console.log('[AudioEngine] Audio loaded successfully');
+    } catch (err) {
+      console.error('[AudioEngine] Failed to load audio:', err);
+      throw new Error(
+        `Failed to load audio: ${err instanceof Error ? err.message : 'Unknown error'}. URL: ${fileUrl}`
+      );
+    }
 
     this.freqAudio = { player, gainNode, fft };
     store.setAudioReady(true);
