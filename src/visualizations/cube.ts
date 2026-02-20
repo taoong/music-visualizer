@@ -6,8 +6,10 @@ import { audioEngine } from '../audio/engine';
 import { BAND_COUNT, SPIKES_PER_BAND, STEMS } from '../utils/constants';
 
 // Cube state
-let cubeRotation = 0;
-let targetRotation = 0;
+let cubeRotationX = 0;
+let cubeRotationY = 0;
+let targetRotationX = 0;
+let targetRotationY = 0;
 let lastBeatIndex = -1;
 let cubeSize = 150;
 
@@ -125,27 +127,29 @@ export function drawCube(p: P5Instance, dt: number): void {
     const currentBeatIndex = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
 
     if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
-      // Rotate 90 degrees (π/2) on each beat
-      targetRotation += Math.PI / 2;
+      // Rotate 90 degrees (π/2) in a random direction on each beat
+      const direction = Math.floor(Math.random() * 4);
+      switch (direction) {
+        case 0: targetRotationY += Math.PI / 2; break; // left
+        case 1: targetRotationY -= Math.PI / 2; break; // right
+        case 2: targetRotationX -= Math.PI / 2; break; // up
+        case 3: targetRotationX += Math.PI / 2; break; // down
+      }
       lastBeatIndex = currentBeatIndex;
     }
   }
 
-  // Smooth rotation interpolation
-  const rotationSpeed = 0.15; // How fast it snaps to the next face
-  const diff = targetRotation - cubeRotation;
-  cubeRotation += diff * rotationSpeed * dt;
-
-  // Base rotation for visual interest
-  const baseRotation = p.millis() * 0.0002;
+  // Smooth rotation interpolation — fast snap so the cube settles between beats
+  const rotationSpeed = 0.35;
+  const diffX = targetRotationX - cubeRotationX;
+  const diffY = targetRotationY - cubeRotationY;
+  cubeRotationX += diffX * rotationSpeed * dt;
+  cubeRotationY += diffY * rotationSpeed * dt;
 
   // Transform vertices
   const transformedVertices = vertices.map(v => {
-    // Apply beat rotation (Y axis)
-    let rotated = rotateY(v.x, v.y, v.z, cubeRotation);
-    // Add subtle continuous rotation
-    rotated = rotateX(rotated.x, rotated.y, rotated.z, baseRotation * 0.5);
-    rotated = rotateY(rotated.x, rotated.y, rotated.z, baseRotation * 0.3);
+    let rotated = rotateY(v.x, v.y, v.z, cubeRotationY);
+    rotated = rotateX(rotated.x, rotated.y, rotated.z, cubeRotationX);
     return rotated;
   });
 
@@ -204,7 +208,9 @@ export function drawCube(p: P5Instance, dt: number): void {
 }
 
 export function resetCube(): void {
-  cubeRotation = 0;
-  targetRotation = 0;
+  cubeRotationX = 0;
+  cubeRotationY = 0;
+  targetRotationX = 0;
+  targetRotationY = 0;
   lastBeatIndex = -1;
 }
