@@ -188,3 +188,4 @@ export const DECAY_RATE_EXPONENT = 3;
 
 // Sample URL - use simple relative path for maximum compatibility
 export const SAMPLE_URL = 'sample.mp3';
+export const SAMPLE_BPM = 140;

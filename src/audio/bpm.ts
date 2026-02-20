@@ -4,6 +4,7 @@
 import type { BPMData } from "../types";
 import { BPMDetectionError } from "../types";
 import { showError } from "../utils/errors";
+import { SAMPLE_URL, SAMPLE_BPM } from "../utils/constants";
 
 /**
  * Fetch BPM from server
@@ -133,6 +134,12 @@ export async function detectBPMWithFallback(
   source: File | string,
   audioBuffer: AudioBuffer | null,
 ): Promise<BPMData | null> {
+  // Known BPM for the sample track — skip detection entirely
+  if (source === SAMPLE_URL || source === 'sample.mp3') {
+    console.log(`[BPM] Using known sample BPM: ${SAMPLE_BPM}`);
+    return { bpm: SAMPLE_BPM, beatOffset: 0 };
+  }
+
   try {
     return await fetchBPM(source);
   } catch {
