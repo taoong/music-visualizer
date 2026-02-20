@@ -23,6 +23,7 @@ class AudioEngine {
   private freqAudio: FreqModeAudio | null = null;
   private stemAudio: StemModeAudio | null = null;
   private blobUrls: string[] = [];
+  private rawAudioBuffer: AudioBuffer | null = null;
 
   /**
    * Initialize frequency mode audio
@@ -41,6 +42,7 @@ class AudioEngine {
         const arrayBuffer = await source.arrayBuffer();
         // @ts-expect-error - decodeAudioData exists on BaseAudioContext
         const audioBuffer = await Tone.context.decodeAudioData(arrayBuffer);
+        this.rawAudioBuffer = audioBuffer;
         player = new Tone.Player(audioBuffer);
         // @ts-expect-error - loop property exists
         player.loop = true;
@@ -60,6 +62,10 @@ class AudioEngine {
 
       try {
         await Tone.loaded();
+        // Cache the decoded AudioBuffer for client-side BPM detection
+        if (player.buffer?.get) {
+          this.rawAudioBuffer = player.buffer.get();
+        }
         console.log('[AudioEngine] Audio loaded successfully');
       } catch (err) {
         console.error('[AudioEngine] Failed to load audio:', err);
@@ -152,6 +158,8 @@ class AudioEngine {
       this.freqAudio.fft.dispose();
       this.freqAudio = null;
     }
+
+    this.rawAudioBuffer = null;
 
     // Dispose stem mode
     if (this.stemAudio) {
@@ -287,6 +295,23 @@ class AudioEngine {
    */
   getStemSmoothed(): Record<string, Float32Array> | null {
     return this.stemAudio?.smoothed || null;
+  }
+
+  /**
+   * Get cached AudioBuffer for client-side BPM detection
+   */
+  getAudioBuffer(): AudioBuffer | null {
+    if (this.rawAudioBuffer) return this.rawAudioBuffer;
+
+    // Fallback: try to get buffer from stem players
+    if (this.stemAudio) {
+      for (const stem of Object.keys(this.stemAudio.players)) {
+        const buf = this.stemAudio.players[stem].buffer?.get?.();
+        if (buf) return buf;
+      }
+    }
+
+    return null;
   }
 }
 

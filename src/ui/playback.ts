@@ -3,7 +3,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { fetchBPM, separateStems } from '../audio/bpm';
+import { separateStems, detectBPMWithFallback } from '../audio/bpm';
 import { showError, setProcessingState } from '../utils/errors';
 import { formatTime } from '../utils/format';
 
@@ -93,12 +93,8 @@ export function bindTrackSwitching(): () => void {
       try {
         await audioEngine.initFreqMode(file);
 
-        try {
-          const bpmData = await fetchBPM(file);
-          store.setBPM(bpmData);
-        } catch {
-          // Non-critical
-        }
+        const bpmData = await detectBPMWithFallback(file, audioEngine.getAudioBuffer());
+        if (bpmData) store.setBPM(bpmData);
 
         audioEngine.start();
         document.getElementById('pause-btn')?.classList.add('is-playing');
@@ -117,12 +113,8 @@ export function bindTrackSwitching(): () => void {
 
         await audioEngine.initStemMode(stemUrls);
 
-        try {
-          const bpmData = await fetchBPM(file);
-          store.setBPM(bpmData);
-        } catch {
-          // Non-critical
-        }
+        const bpmData = await detectBPMWithFallback(file, audioEngine.getAudioBuffer());
+        if (bpmData) store.setBPM(bpmData);
 
         setProcessingState(false);
         audioEngine.start();

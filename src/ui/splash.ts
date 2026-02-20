@@ -3,7 +3,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { fetchBPM, separateStems } from '../audio/bpm';
+import { separateStems, detectBPMWithFallback } from '../audio/bpm';
 import { setProcessingState, setFileStatus } from '../utils/errors';
 import { SAMPLE_URL } from '../utils/constants';
 import type { AnalysisMode } from '../types';
@@ -141,12 +141,11 @@ async function handleFreqModePlay(): Promise<void> {
   try {
     await audioEngine.initFreqMode(source);
 
-    try {
-      const bpmData = await fetchBPM(store.state.useSample ? 'sample.mp3' : store.state.userFile!);
-      store.setBPM(bpmData);
-    } catch {
-      // Non-critical error - BPM detection failed
-    }
+    const bpmData = await detectBPMWithFallback(
+      store.state.useSample ? 'sample.mp3' : store.state.userFile!,
+      audioEngine.getAudioBuffer(),
+    );
+    if (bpmData) store.setBPM(bpmData);
 
     splash?.classList.add('hidden');
     document.getElementById('playback-bar')?.classList.add('visible');
@@ -220,12 +219,11 @@ async function handleStemModePlay(): Promise<void> {
   try {
     await audioEngine.initStemMode(stemUrls);
 
-    try {
-      const bpmData = await fetchBPM(store.state.useSample ? 'sample.mp3' : store.state.userFile!);
-      store.setBPM(bpmData);
-    } catch {
-      // Non-critical error
-    }
+    const bpmData = await detectBPMWithFallback(
+      store.state.useSample ? 'sample.mp3' : store.state.userFile!,
+      audioEngine.getAudioBuffer(),
+    );
+    if (bpmData) store.setBPM(bpmData);
 
     setProcessingState(false);
     splash?.classList.add('hidden');

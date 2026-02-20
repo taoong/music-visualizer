@@ -77,7 +77,8 @@ declare global {
     loaded(): Promise<void>;
 
     // Classes
-    Player: new (options: { url: string; loop?: boolean; autostart?: boolean }) => TonePlayer;
+    Player: (new (options: { url: string; loop?: boolean; autostart?: boolean }) => TonePlayer) &
+      (new (buffer: AudioBuffer) => TonePlayer);
 
     Gain: new (value?: number) => ToneGain;
     FFT: new (size?: number) => ToneFFT;
@@ -85,7 +86,7 @@ declare global {
 
   interface TonePlayer {
     state: string;
-    buffer: { duration: number } | null;
+    buffer: { duration: number; get?(): AudioBuffer } | null;
     start(time?: string, offset?: number): void;
     stop(): void;
     dispose(): void;
