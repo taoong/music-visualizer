@@ -38,6 +38,8 @@ import {
   resetCube,
   drawStickman,
   resetStickman,
+  drawLasers,
+  resetLasers,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -135,6 +137,9 @@ const sketch = (p: P5Instance) => {
       case 'stickman':
         drawStickman(p, dt);
         break;
+      case 'lasers':
+        drawLasers(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -150,6 +155,8 @@ const sketch = (p: P5Instance) => {
       resetCube();
     } else if (store.state.vizMode === 'stickman') {
       resetStickman();
+    } else if (store.state.vizMode === 'lasers') {
+      resetLasers();
     }
   };
 };
