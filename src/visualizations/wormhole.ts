@@ -77,7 +77,7 @@ export function analyzeWormholeEvents(buffer: AudioBuffer): void {
         wormholeEvents.push({
           time: hopTime,
           band: b,
-          magnitude: Math.min(ratio / 3, 1),
+          magnitude: Math.min((ratio - 1.8) / 4, 1),
         });
       }
     }
@@ -221,8 +221,9 @@ export function drawWormhole(p: P5Instance, dt: number): void {
 
   // --- Spawn new objects (only while playing) ---
   // spawnThreshold filters to only the strongest amplitude peaks.
-  // intensity=0 → threshold=1.0 (nothing); intensity=1.0 → 0.775; intensity=2.0 → 0.55 (most events)
-  const spawnThreshold = 1.0 - (config.intensity / 2) * 0.45;
+  // Ceiling is 1.2 so intensity=0 truly spawns nothing (magnitude max is 1.0).
+  // intensity=0 → 1.2 (nothing); intensity=1.0 → 0.85; intensity=2.0 → 0.5 (most events)
+  const spawnThreshold = 1.2 - (config.intensity / 2) * 0.7;
 
   if (state.isPlaying) {
     while (
