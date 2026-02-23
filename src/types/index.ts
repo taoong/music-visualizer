@@ -184,3 +184,10 @@ export interface BPMData {
   bpm: number;
   beatOffset: number;
 }
+
+// MIDI mapping types
+export interface MidiMapping {
+  channel: number; // 1–16
+  cc: number;      // 0–127
+}
+export type MidiMappings = Partial<Record<keyof Config, MidiMapping>>;

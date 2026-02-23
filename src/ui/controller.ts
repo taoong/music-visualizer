@@ -8,6 +8,7 @@ import { BANDS, isMobile } from '../utils/constants';
 import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton, bindImageUpload } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
+import { initMidiUI } from '../midi/ui';
 
 export { updateScrubberUI };
 
@@ -45,6 +46,9 @@ export function initUI(): () => void {
 
   // Randomize button
   cleanupFns.push(bindRandomizeButton());
+
+  // MIDI mapping UI
+  initMidiUI();
 
   // Return combined cleanup function
   return () => cleanupFns.forEach(fn => fn());
