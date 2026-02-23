@@ -52,6 +52,7 @@ src/
 │   ├── controller.ts          # Top-level UI orchestrator, sidebar toggle, viz selector, randomize, MIDI init
 │   ├── splash.ts              # Splash screen: file upload, sample button, mode selector, image upload, play button
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
+│   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
 │   └── keyboard.ts            # Keyboard shortcuts (1-8 viz modes, space, arrows, m/f/s/r/i/?/h/Esc)
 ├── types/

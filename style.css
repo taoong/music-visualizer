@@ -607,6 +607,64 @@ body {
   transform: translateY(0);
 }
 
+/* ── BPM Controls ─────────────────────────────────────────── */
+#bpm-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+#bpm-input {
+  width: 56px;
+  text-align: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+  padding: 4px 2px;
+  height: 28px;
+  box-sizing: border-box;
+}
+
+#bpm-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+#tap-tempo-btn,
+#beat-sync-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  color: var(--text-subtle);
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 500;
+  padding: 4px 7px;
+  height: 28px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+#tap-tempo-btn:hover,
+#beat-sync-btn:hover {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+@keyframes tap-flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.tap-flash {
+  animation: tap-flash 0.15s ease;
+}
+
 #volume-group {
   position: relative;
   flex-shrink: 0;

@@ -10,7 +10,7 @@ Created by Tao Ong with Claude Code.
 - **Two audio analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
-- **Beat synchronization** — BPM detection with beat-reactive animations
+- **Beat synchronization** — BPM detection with beat-reactive animations; BPM input, TAP tempo, and BEAT phase sync in the playback bar
 - **Real-time audio processing** — Transient detection, auto-gain normalization, spectral centroid tracking
 - **Full keyboard controls** — Switch visualizations, seek, volume, fullscreen, and more
 - **MIDI mapping** — Map physical controller knobs to any slider via Web MIDI API; mappings persist via localStorage

@@ -9,6 +9,7 @@ import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton, bin
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
+import { bindBPMControls } from './bpm';
 
 export { updateScrubberUI };
 
@@ -46,6 +47,9 @@ export function initUI(): () => void {
 
   // Randomize button
   cleanupFns.push(bindRandomizeButton());
+
+  // BPM controls
+  cleanupFns.push(bindBPMControls());
 
   // MIDI mapping UI
   initMidiUI();
