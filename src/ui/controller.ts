@@ -136,8 +136,9 @@ function bindVizSelector(): () => void {
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup);
         break;
       case 'wormhole':
+        show(intensityGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
     }
   };

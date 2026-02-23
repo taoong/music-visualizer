@@ -200,7 +200,7 @@ function drawShape(p: P5Instance, shape: string, radius: number): void {
 }
 
 export function drawWormhole(p: P5Instance, dt: number): void {
-  const { state } = store;
+  const { state, config } = store;
   const cx = p.width / 2;
   const cy = p.height / 2;
   const minDim = Math.min(p.width, p.height);
@@ -220,14 +220,18 @@ export function drawWormhole(p: P5Instance, dt: number): void {
   lastPlaybackPos = pos;
 
   // --- Spawn new objects (only while playing) ---
+  // spawnThreshold filters to only the strongest amplitude peaks.
+  // intensity=0 → threshold=1.0 (nothing); intensity=1.0 → 0.775; intensity=2.0 → 0.55 (most events)
+  const spawnThreshold = 1.0 - (config.intensity / 2) * 0.45;
+
   if (state.isPlaying) {
     while (
       timelineIdx < wormholeEvents.length &&
       wormholeEvents[timelineIdx].time <= pos + LOOKAHEAD_SEC
     ) {
       const ev = wormholeEvents[timelineIdx];
-      // Only spawn events that haven't passed yet
-      if (ev.time >= pos) {
+      // Only spawn events that haven't passed yet and clear the magnitude threshold
+      if (ev.time >= pos && ev.magnitude >= spawnThreshold) {
         const timeUntilHit = ev.time - pos;
         // Place at z proportional to time-until-hit for correct initial position
         const zInitial = Math.max(HIT_Z + 1, (timeUntilHit / LOOKAHEAD_SEC) * Z_SPAWN);
@@ -253,7 +257,10 @@ export function drawWormhole(p: P5Instance, dt: number): void {
       obj.z -= STEP_PER_DT * dt;
       if (obj.z <= HIT_Z && obj.hitFlash === 0) {
         obj.hitFlash = obj.magnitude;
-        screenFlash = Math.min(1, screenFlash + obj.magnitude * 0.4);
+        // Screen flash only for sub-bass (band 0) and bass (band 1) hits
+        if (obj.band <= 1) {
+          screenFlash = Math.min(1, screenFlash + obj.magnitude * 0.4);
+        }
       }
       obj.hitFlash *= Math.pow(0.88, dt);
       if (obj.z < -50 && obj.hitFlash < 0.01) {
