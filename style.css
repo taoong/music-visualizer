@@ -758,7 +758,7 @@ body {
 #randomize-btn {
   width: 100%;
   padding: 0.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 0.5rem;
   border: none;
   border-radius: 6px;
   background: var(--accent);
@@ -998,6 +998,11 @@ button:focus-visible,
 
 .shortcuts-modal .close-btn:hover {
   opacity: 0.85;
+}
+
+/* MIDI button — last in sidebar section, needs scroll clearance */
+#midi-btn {
+  margin-bottom: 3rem;
 }
 
 /* Secondary button style */

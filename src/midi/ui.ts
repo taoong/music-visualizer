@@ -259,21 +259,6 @@ function injectStyles(): void {
       color: #f44336;
       border-color: #f44336;
     }
-    #midi-btn {
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1px solid #555;
-      cursor: pointer;
-      background: #2a2a3e;
-      color: #aaa;
-      margin-top: 6px;
-      width: 100%;
-    }
-    #midi-btn:hover {
-      background: #3a3a5e;
-      color: #fff;
-    }
   `;
   document.head.appendChild(style);
 }
