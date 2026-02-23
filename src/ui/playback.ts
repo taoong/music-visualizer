@@ -18,7 +18,7 @@ export function bindPauseButton(): () => void {
       audioEngine.stop();
       pauseBtn.classList.remove('is-playing');
     } else {
-      audioEngine.start();
+      audioEngine.start(store.state.startOffset);
       pauseBtn.classList.add('is-playing');
     }
   };
