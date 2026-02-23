@@ -8,7 +8,7 @@ import { audioEngine } from '../audio/engine';
 let lastBeatIndex = -1;
 let beatFlash = 0;
 let sweepT = 0;
-let userText = 'MUSIC';
+let userText = 'TEXT';
 let currentPatternIdx = -1;
 
 interface PatternConfig {
@@ -356,5 +356,5 @@ export function resetText(): void {
 }
 
 export function setVisualizerText(str: string): void {
-  userText = str.toUpperCase() || 'MUSIC';
+  userText = str.toUpperCase() || 'TEXT';
 }
