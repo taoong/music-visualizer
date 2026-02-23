@@ -45,14 +45,17 @@ src/
 │   ├── stickman.ts            # Animated stick figure, beat-synced poses, kick zoom, high-freq color
 │   ├── text.ts                # Beat-synced text patterns (7 modes: zoom, diagonal, quad-mirror, crown, echo, reflect, kaleidoscope)
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
+├── midi/
+│   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
+│   └── ui.ts                  # MIDI overlay panel: Map/Clear buttons per slider, status badge, ESC close
 ├── ui/
-│   ├── controller.ts          # Top-level UI orchestrator, sidebar toggle, viz selector, randomize
+│   ├── controller.ts          # Top-level UI orchestrator, sidebar toggle, viz selector, randomize, MIDI init
 │   ├── splash.ts              # Splash screen: file upload, sample button, mode selector, image upload, play button
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
 │   └── keyboard.ts            # Keyboard shortcuts (1-8 viz modes, space, arrows, m/f/s/r/i/?/h/Esc)
 ├── types/
-│   ├── index.ts               # Core interfaces: AppState, Config, VizMode, AudioProcessingState, etc.
+│   ├── index.ts               # Core interfaces: AppState, Config, VizMode, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)
 └── utils/
     ├── constants.ts           # Frequency bands, octaves, FFT size, default config, mobile detection
@@ -89,6 +92,16 @@ Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChang
 - **Delta** — Smoothed rate of change of amplitude. Distinguishes sustained tones from punchy hits.
 - **Auto-gain** — Rolling window of peak values to normalize amplitudes to [0, 1] regardless of track loudness.
 - **Bands** — 7 frequency bands: Sub (20-60Hz), Bass (60-250Hz), Low-Mid (250-500Hz), Mid (500-2kHz), Upper-Mid (2-4kHz), Presence (4-6kHz), Brilliance (6-20kHz).
+
+### MIDI mapping
+
+`src/midi/manager.ts` owns all Web MIDI state (module-scoped, no classes):
+- `initMidi()` — calls `navigator.requestMIDIAccess()`, attaches `onmidimessage` to all inputs, re-attaches on `onstatechange` (device plug/unplug), loads saved mappings from localStorage.
+- CC messages (`0xB0`): if `startMappingMode(configKey)` is active, the next CC resolves the promise and saves the mapping; otherwise the CC value is mapped `0–127 → [slider.min, slider.max]` and dispatched as an `input` event on the slider DOM element.
+- Mappings persisted under `localStorage` key `visualizer-midi-mappings`.
+- `CONFIG_TO_SLIDER` table maps every `keyof Config` to its slider DOM id (19 entries).
+
+`src/midi/ui.ts` renders the overlay panel and is initialized by `initUI()` in `controller.ts`. The overlay is injected into `<body>` on first call (not present in static HTML). Styles are injected as a `<style>` tag.
 
 ### Adding a new visualization
 

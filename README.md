@@ -13,6 +13,7 @@ Created by Tao Ong with Claude Code.
 - **Beat synchronization** — BPM detection with beat-reactive animations
 - **Real-time audio processing** — Transient detection, auto-gain normalization, spectral centroid tracking
 - **Full keyboard controls** — Switch visualizations, seek, volume, fullscreen, and more
+- **MIDI mapping** — Map physical controller knobs to any slider via Web MIDI API; mappings persist via localStorage
 - **Responsive design** — Works on desktop and mobile
 - **Accessible** — ARIA labels, screen reader announcements, keyboard navigation
 
@@ -104,6 +105,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 │   ├── state/store.ts      # Centralized state (EventEmitter singleton)
 │   ├── audio/              # Engine, FFT, processing, BPM detection
 │   ├── visualizations/     # One file per viz mode + shared helpers
+│   ├── midi/               # MIDI manager (Web MIDI API, CC routing) + overlay UI
 │   ├── ui/                 # Controller, splash, playback, sliders, keyboard
 │   ├── types/              # TypeScript interfaces + global type stubs
 │   └── utils/              # Constants, errors, formatting
