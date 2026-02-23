@@ -74,51 +74,82 @@ body {
 #splash-content {
   display: flex;
   flex-direction: column;
-  max-width: 440px;
+  max-width: 500px;
   width: 100%;
-  padding: 0 var(--space-lg);
+  padding: 0 2.5rem;
 }
 
 /* ── Splash Header ───────────────────────────────────────── */
 .splash-header {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: 2.5rem;
+  animation: splashFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.splash-eyebrow {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #2a2a30;
+  margin-bottom: 0.7rem;
+  line-height: 1;
 }
 
 #splash-content h1 {
-  font-size: 2.75rem;
-  font-weight: 300;
-  letter-spacing: -0.02em;
+  font-family: 'Syne', 'Inter', sans-serif;
+  font-size: clamp(3.5rem, 12vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
   color: var(--text-primary);
-  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  margin-bottom: 0;
 }
 
-#splash-content p {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  line-height: 1.5;
+.splash-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #1c1c22 20%, #1c1c22 80%, transparent);
+  margin: 0 0 2.75rem;
+  animation: splashFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
 }
 
 /* ── Steps ───────────────────────────────────────────────── */
 .splash-steps {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
-  margin-bottom: var(--space-2xl);
+  gap: 2.75rem;
+  margin-bottom: 3.5rem;
+  counter-reset: splash-step;
 }
 
 .splash-step {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  counter-increment: splash-step;
 }
 
+.splash-step:nth-child(1) { animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+.splash-step:nth-child(2) { animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both; }
+.splash-step:nth-child(3) { animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both; }
+
 .step-label {
-  font-size: 0.7rem;
+  font-size: 0.58rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-faint);
+  letter-spacing: 0.18em;
+  color: #353538;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+
+.step-label::before {
+  content: '0' counter(splash-step);
+  font-variant-numeric: tabular-nums;
+  color: #222226;
+  letter-spacing: 0.08em;
+  font-weight: 400;
 }
 
 /* ── Source Buttons ───────────────────────────────────────── */
@@ -130,14 +161,15 @@ body {
 #upload-label,
 #use-sample-btn {
   flex: 1;
-  padding: 16px 24px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  border: 1px solid #1e1e26;
+  border-radius: 3px;
   background: transparent;
-  color: var(--text-secondary);
+  color: #4a4a54;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 0.78rem;
   font-family: inherit;
+  letter-spacing: 0.04em;
   text-align: center;
   touch-action: manipulation;
   transition:
@@ -148,9 +180,9 @@ body {
 
 #upload-label:hover,
 #use-sample-btn:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent);
-  color: var(--text-primary);
+  background: rgba(232, 228, 217, 0.04);
+  border-color: #383844;
+  color: #888898;
 }
 
 #upload-label:focus-visible,
@@ -165,50 +197,52 @@ body {
 
 #file-name {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--accent);
   min-height: 1.2em;
   opacity: 0;
+  letter-spacing: 0.04em;
   transition: opacity 0.3s ease;
 }
 
 #file-name:not(:empty) {
-  opacity: 1;
+  opacity: 0.65;
 }
 
 /* ── Mode Selector ──────────────────────────────────────── */
 #mode-selector {
   display: flex;
-  background: var(--bg-surface);
-  border-radius: var(--radius-full);
+  background: #0e0e12;
+  border-radius: 3px;
   padding: 3px;
+  border: 1px solid #1a1a22;
 }
 
 .mode-btn {
   flex: 1;
   padding: 10px 16px;
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: 2px;
   background: transparent;
-  color: var(--text-muted);
+  color: #36363e;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-family: inherit;
+  letter-spacing: 0.03em;
   transition:
     background 0.2s,
-    color 0.2s,
-    box-shadow 0.2s;
+    color 0.2s;
 }
 
 .mode-btn:hover {
-  color: var(--text-secondary);
+  color: #606070;
 }
 
 .mode-btn.active,
 .mode-btn[aria-checked="true"] {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: #1c1c24;
+  color: var(--text-secondary);
+  box-shadow: none;
 }
 
 .mode-btn:focus-visible {
@@ -331,35 +365,57 @@ body {
 
 /* ── Play / Begin Button ─────────────────────────────────── */
 #play-btn {
-  align-self: flex-start;
-  padding: 14px 40px;
-  border: none;
-  border-radius: var(--radius-full);
-  background: var(--accent);
-  color: var(--bg-primary);
-  font-size: 1rem;
-  font-weight: 500;
+  align-self: stretch;
+  padding: 20px 40px;
+  border: 1px solid rgba(232, 228, 217, 0.12);
+  border-radius: 2px;
+  background: transparent;
+  color: rgba(240, 240, 240, 0.2);
+  font-size: 0.66rem;
+  font-weight: 600;
   font-family: inherit;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
   cursor: pointer;
   touch-action: manipulation;
   transition:
-    opacity 0.2s,
-    transform 0.15s;
+    border-color 0.3s,
+    color 0.3s,
+    background 0.3s;
+  animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
 }
 
 #play-btn:disabled {
-  opacity: 0.35;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
+#play-btn:not(:disabled) {
+  border-color: rgba(232, 228, 217, 0.22);
+  color: rgba(240, 240, 240, 0.45);
+}
+
 #play-btn:not(:disabled):hover {
-  transform: scale(1.03);
+  background: rgba(232, 228, 217, 0.05);
+  border-color: rgba(232, 228, 217, 0.5);
+  color: var(--accent);
 }
 
 #play-btn:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+/* ── Splash Entrance Animation ───────────────────────────── */
+@keyframes splashFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── Processing Overlay ─────────────────────────────────── */
@@ -1090,14 +1146,15 @@ button:focus-visible,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 24px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  border: 1px solid #1e1e26;
+  border-radius: 3px;
   background: transparent;
-  color: var(--text-secondary);
+  color: #4a4a54;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 0.78rem;
   font-family: inherit;
+  letter-spacing: 0.04em;
   text-align: center;
   transition:
     background 0.2s,
@@ -1106,9 +1163,9 @@ button:focus-visible,
 }
 
 .btn:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent);
-  color: var(--text-primary);
+  background: rgba(232, 228, 217, 0.04);
+  border-color: #383844;
+  color: #888898;
 }
 
 .btn:focus-visible {
