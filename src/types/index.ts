@@ -50,6 +50,8 @@ export interface Config {
   ballsKickBoost: number;
   masterVolume: number;
   decayRate: number;
+  intensity: number;
+  beatDivision: number;
 }
 
 // Application state

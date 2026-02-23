@@ -64,8 +64,12 @@ function bindSidebarToggle(): () => void {
 
 function bindVizSelector(): () => void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
+  const scaleGroup = document.getElementById('scale-group');
+  const decayRateGroup = document.getElementById('decay-rate-group');
   const rotationSpeedGroup = document.getElementById('rotation-speed-group');
   const ballsKickBoostGroup = document.getElementById('balls-kick-boost-group');
+  const intensityGroup = document.getElementById('intensity-group');
+  const beatDivisionGroup = document.getElementById('beat-division-group');
   const textInputGroup = document.getElementById('text-input-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
@@ -77,28 +81,52 @@ function bindVizSelector(): () => void {
     ballsOption?.remove();
   }
 
+  function show(el: HTMLElement | null): void { el?.classList.remove('hidden'); }
+  function hide(el: HTMLElement | null): void { el?.classList.add('hidden'); }
+
   const handler = () => {
     const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text';
     store.setVizMode(mode);
 
-    // Show/hide relevant controls
-    if (mode === 'circle') {
-      rotationSpeedGroup?.classList.remove('hidden');
-      ballsKickBoostGroup?.classList.add('hidden');
-      textInputGroup?.classList.add('hidden');
-    } else if (mode === 'balls') {
-      rotationSpeedGroup?.classList.add('hidden');
-      ballsKickBoostGroup?.classList.remove('hidden');
-      textInputGroup?.classList.add('hidden');
-      initBalls(window.p5Instance);
-    } else if (mode === 'text') {
-      rotationSpeedGroup?.classList.add('hidden');
-      ballsKickBoostGroup?.classList.add('hidden');
-      textInputGroup?.classList.remove('hidden');
-    } else {
-      rotationSpeedGroup?.classList.add('hidden');
-      ballsKickBoostGroup?.classList.add('hidden');
-      textInputGroup?.classList.add('hidden');
+    // Per-mode control visibility
+    // | Mode     | scale | decay | rotation | kickBoost | intensity | beatDiv | textInput |
+    // |----------|:-----:|:-----:|:--------:|:---------:|:---------:|:-------:|:---------:|
+    // | circle   |  show |  show |     show |      hide |      hide |    hide |      hide |
+    // | spectrum |  show |  show |     hide |      hide |      hide |    hide |      hide |
+    // | tunnel   |  hide |  show |     hide |      hide |      hide |    hide |      hide |
+    // | balls    |  show |  show |     hide |      show |      hide |    hide |      hide |
+    // | cube     |  show |  show |     hide |      hide |      hide |    hide |      hide |
+    // | stickman |  hide |  show |     hide |      hide |      hide |    hide |      hide |
+    // | lasers   |  hide |  hide |     hide |      hide |      show |    show |      hide |
+    // | text     |  hide |  hide |     hide |      hide |      show |    show |      show |
+    switch (mode) {
+      case 'circle':
+        show(scaleGroup); show(decayRateGroup); show(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
+        break;
+      case 'spectrum':
+      case 'cube':
+        show(scaleGroup); show(decayRateGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
+        break;
+      case 'tunnel':
+      case 'stickman':
+        hide(scaleGroup); show(decayRateGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
+        break;
+      case 'balls':
+        show(scaleGroup); show(decayRateGroup); show(ballsKickBoostGroup);
+        hide(rotationSpeedGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
+        initBalls(window.p5Instance);
+        break;
+      case 'lasers':
+        show(intensityGroup); show(beatDivisionGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup);
+        break;
+      case 'text':
+        show(intensityGroup); show(beatDivisionGroup); show(textInputGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup);
+        break;
     }
   };
 
@@ -121,6 +149,7 @@ function bindRandomizeButton(): () => void {
 
   const handler = () => {
     const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+    const vizMode = store.state.vizMode;
 
     if (store.isFreqMode) {
       for (const band of BANDS) {
@@ -134,15 +163,22 @@ function bindRandomizeButton(): () => void {
       setSlider('sens-other', rand(1.0, 3.0));
     }
 
-    setSlider('spike-scale', rand(0.5, 2.0));
-    setSlider('decay-rate', rand(0.7, 0.95));
+    const useScale = vizMode === 'circle' || vizMode === 'spectrum' || vizMode === 'balls' || vizMode === 'cube';
+    const useDecay = vizMode !== 'lasers' && vizMode !== 'text';
 
-    if (store.state.vizMode === 'circle') {
+    if (useScale) setSlider('spike-scale', rand(0.5, 2.0));
+    if (useDecay) setSlider('decay-rate', rand(0.7, 0.95));
+
+    if (vizMode === 'circle') {
       setSlider('rotation-speed', rand(0.0, 15.0));
     }
 
-    if (store.state.vizMode === 'balls') {
+    if (vizMode === 'balls') {
       setSlider('balls-kick-boost', rand(2.0, 10.0));
+    }
+
+    if (vizMode === 'lasers' || vizMode === 'text') {
+      setSlider('viz-intensity', rand(0.5, 2.0));
     }
   };
 

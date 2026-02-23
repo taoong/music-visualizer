@@ -6,6 +6,7 @@ import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 
 let lastBeatIndex = -1;
+let lastBeatGroupIndex = -1;
 let beatFlash = 0;
 let sweepT = 0;
 let userText = 'TEXT';
@@ -267,7 +268,7 @@ function generateNextPattern(): void {
 export function drawText(p: P5Instance, dt: number): void {
   const w = p.width;
   const h = p.height;
-  const { state, audioState } = store;
+  const { state, audioState, config } = store;
 
   // Dark trail
   p.push();
@@ -291,8 +292,14 @@ export function drawText(p: P5Instance, dt: number): void {
 
     if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
       beatFlash = 1.0;
-      generateNextPattern();
       lastBeatIndex = currentBeatIndex;
+
+      const beatsPerChange = Math.pow(2, config.beatDivision - 1);
+      const currentGroup = Math.floor(currentBeatIndex / beatsPerChange);
+      if (currentGroup !== lastBeatGroupIndex) {
+        generateNextPattern();
+        lastBeatGroupIndex = currentGroup;
+      }
     }
   }
 
@@ -313,7 +320,7 @@ export function drawText(p: P5Instance, dt: number): void {
   const { hue, saturation } = patternConfig;
 
   // Apply glow
-  p.drawingContext.shadowBlur = 15 + beatFlash * 20 + bassAmp * 15;
+  p.drawingContext.shadowBlur = (15 + beatFlash * 20 + bassAmp * 15) * config.intensity;
   p.drawingContext.shadowColor = `hsl(${hue}, 100%, 60%)`;
 
   // Dispatch to pattern renderer
@@ -350,6 +357,7 @@ export function drawText(p: P5Instance, dt: number): void {
 
 export function resetText(): void {
   lastBeatIndex = -1;
+  lastBeatGroupIndex = -1;
   beatFlash = 0;
   sweepT = 0;
   currentPatternIdx = -1;

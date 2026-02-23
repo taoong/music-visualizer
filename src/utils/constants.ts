@@ -179,6 +179,8 @@ export const DEFAULT_CONFIG = {
   ballsKickBoost: 6.0,
   masterVolume: 0.8,
   decayRate: 0.88, // Default decay rate (0.0 = instant, 1.0 = no decay)
+  intensity: 1.0,
+  beatDivision: 1,
 };
 
 // FFT and decay constants

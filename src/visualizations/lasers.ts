@@ -15,6 +15,7 @@ interface LaserBeam {
 }
 
 let lastBeatIndex = -1;
+let lastBeatGroupIndex = -1;
 let beatFlash = 0;
 let sweepT = 0;
 let currentBeams: LaserBeam[] = [];
@@ -294,8 +295,14 @@ export function drawLasers(p: P5Instance, dt: number): void {
 
     if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
       beatFlash = 1.0;
-      currentBeams = generatePattern(w, h);
       lastBeatIndex = currentBeatIndex;
+
+      const beatsPerChange = Math.pow(2, config.beatDivision - 1);
+      const currentGroup = Math.floor(currentBeatIndex / beatsPerChange);
+      if (currentGroup !== lastBeatGroupIndex) {
+        currentBeams = generatePattern(w, h);
+        lastBeatGroupIndex = currentGroup;
+      }
     }
   }
 
@@ -313,7 +320,7 @@ export function drawLasers(p: P5Instance, dt: number): void {
   for (const beam of currentBeams) {
     const swept = beam.angle + beam.sweepAmp * Math.sin(sweepT * beam.sweepSpeed);
     const [ex, ey] = traceToEdge(beam.srcX, beam.srcY, swept, w, h);
-    const rawIntensity = Math.max(0.1, bassAmp * config.spikeScale) * (1 + beatFlash) * (1 + transient * 0.4);
+    const rawIntensity = Math.max(0.1, bassAmp * config.intensity) * (1 + beatFlash) * (1 + transient * 0.4);
     const intensity = Math.min(rawIntensity, 1.0);
     drawBeam(p, beam.srcX, beam.srcY, ex, ey, beam.hue, intensity);
   }
@@ -324,6 +331,7 @@ export function drawLasers(p: P5Instance, dt: number): void {
 
 export function resetLasers(): void {
   lastBeatIndex = -1;
+  lastBeatGroupIndex = -1;
   beatFlash = 0;
   sweepT = 0;
   currentBeams = [];
