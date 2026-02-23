@@ -60,7 +60,12 @@ declare global {
     stroke(color: number | string, s?: number, b?: number): void;
     noStroke(): void;
     strokeWeight(weight: number): void;
-    colorMode(mode: string | number, max1?: number, max2?: number, max3?: number): void;
+    colorMode(mode: string | number, max1?: number, max2?: number, max3?: number, maxA?: number): void;
+    text(str: string, x: number, y: number): void;
+    textSize(size: number): void;
+    textAlign(h: string | number, v?: string | number): void;
+    textStyle(style: string): void;
+    textWidth(str: string): number;
 
     // Images
     loadImage(path: string, successCallback?: (img: P5Image) => void, failureCallback?: () => void): P5Image;

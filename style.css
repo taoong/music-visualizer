@@ -494,6 +494,17 @@ body {
   border: 2px solid var(--bg-primary);
 }
 
+#sidebar input[type="text"] {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
 #pause-btn {
   position: relative;
   width: 32px;

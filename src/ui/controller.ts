@@ -3,7 +3,7 @@
  */
 import { store } from '../state/store';
 import { injectErrorStyles } from '../utils/errors';
-import { initBalls } from '../visualizations';
+import { initBalls, setVisualizerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
 import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton, bindImageUpload } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
@@ -66,6 +66,8 @@ function bindVizSelector(): () => void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
   const rotationSpeedGroup = document.getElementById('rotation-speed-group');
   const ballsKickBoostGroup = document.getElementById('balls-kick-boost-group');
+  const textInputGroup = document.getElementById('text-input-group');
+  const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
 
@@ -76,25 +78,40 @@ function bindVizSelector(): () => void {
   }
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text';
     store.setVizMode(mode);
 
     // Show/hide relevant controls
     if (mode === 'circle') {
       rotationSpeedGroup?.classList.remove('hidden');
       ballsKickBoostGroup?.classList.add('hidden');
+      textInputGroup?.classList.add('hidden');
     } else if (mode === 'balls') {
       rotationSpeedGroup?.classList.add('hidden');
       ballsKickBoostGroup?.classList.remove('hidden');
+      textInputGroup?.classList.add('hidden');
       initBalls(window.p5Instance);
+    } else if (mode === 'text') {
+      rotationSpeedGroup?.classList.add('hidden');
+      ballsKickBoostGroup?.classList.add('hidden');
+      textInputGroup?.classList.remove('hidden');
     } else {
       rotationSpeedGroup?.classList.add('hidden');
       ballsKickBoostGroup?.classList.add('hidden');
+      textInputGroup?.classList.add('hidden');
     }
   };
 
+  const textHandler = () => {
+    if (textInput) setVisualizerText(textInput.value);
+  };
+
   vizSelect.addEventListener('change', handler);
-  return () => vizSelect.removeEventListener('change', handler);
+  textInput?.addEventListener('input', textHandler);
+  return () => {
+    vizSelect.removeEventListener('change', handler);
+    textInput?.removeEventListener('input', textHandler);
+  };
 }
 
 function bindRandomizeButton(): () => void {

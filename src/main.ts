@@ -40,6 +40,8 @@ import {
   resetStickman,
   drawLasers,
   resetLasers,
+  drawText,
+  resetText,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -140,6 +142,9 @@ const sketch = (p: P5Instance) => {
       case 'lasers':
         drawLasers(p, dt);
         break;
+      case 'text':
+        drawText(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -157,6 +162,8 @@ const sketch = (p: P5Instance) => {
       resetStickman();
     } else if (store.state.vizMode === 'lasers') {
       resetLasers();
+    } else if (store.state.vizMode === 'text') {
+      resetText();
     }
   };
 };
