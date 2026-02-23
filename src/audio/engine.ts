@@ -208,6 +208,7 @@ class AudioEngine {
    */
   stop(): void {
     const isFreqMode = store.state.mode === 'freq';
+    const currentPosition = this.getPlaybackPosition();
 
     if (isFreqMode && this.freqAudio) {
       this.freqAudio.player.stop();
@@ -218,7 +219,7 @@ class AudioEngine {
     }
 
     store.setPlaying(false);
-    store.setStartOffset(this.getPlaybackPosition());
+    store.setStartOffset(currentPosition);
   }
 
   /**
