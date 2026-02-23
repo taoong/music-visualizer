@@ -44,6 +44,7 @@ src/
 │   ├── cube.ts                # 3D wireframe cube, beat-synced rotation, optional image on faces
 │   ├── stickman.ts            # Animated stick figure, beat-synced poses, kick zoom, high-freq color
 │   ├── text.ts                # Beat-synced text patterns (7 modes: zoom, diagonal, quad-mirror, crown, echo, reflect, kaleidoscope)
+│   ├── wormhole.ts            # Guitar Hero-style objects flying toward viewer; events pre-computed from audio buffer
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -54,9 +55,9 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (1-8 viz modes, space, arrows, m/f/s/r/i/?/h/Esc)
+│   └── keyboard.ts            # Keyboard shortcuts (1-9 viz modes, space, arrows, m/f/s/r/i/?/h/Esc)
 ├── types/
-│   ├── index.ts               # Core interfaces: AppState, Config, VizMode, AudioProcessingState, MidiMapping, etc.
+│   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)
 └── utils/
     ├── constants.ts           # Frequency bands, octaves, FFT size, default config, mobile detection
@@ -68,8 +69,9 @@ src/
 
 1. **Audio input** — User uploads a file or selects sample track. Optionally run stem separation via `/api/separate` (Demucs).
 2. **BPM detection** — Server-side Essentia via `/api/detect-bpm`, with client-side onset/autocorrelation fallback.
-3. **Playback** — `audioEngine` creates Tone.js Player(s) + FFT node(s). Freq mode: 1 player. Stem mode: 5 parallel players (kick, drums, bass, vocals, other).
-4. **Render loop** (`main.ts` `p.draw`) runs at 60fps:
+3. **Wormhole pre-processing** — On `audioReady`, `analyzeWormholeEvents(buffer)` scans the raw PCM in 10 ms hops via IIR bandpass filtering to build a sorted event timeline (`WormholeEvent[]`). Used by the wormhole visualization for lookahead object spawning.
+4. **Playback** — `audioEngine` creates Tone.js Player(s) + FFT node(s). Freq mode: 1 player. Stem mode: 5 parallel players (kick, drums, bass, vocals, other).
+5. **Render loop** (`main.ts` `p.draw`) runs at 60fps:
    - Get raw FFT → log-band amplitudes (7 bands) or per-stem amplitudes (5 stems)
    - Apply auto-gain normalization, transient detection, delta computation
    - Smooth with attack/release per band, frame-rate independent via `dt`

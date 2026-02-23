@@ -42,6 +42,9 @@ import {
   resetLasers,
   drawText,
   resetText,
+  drawWormhole,
+  resetWormhole,
+  analyzeWormholeEvents,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -88,8 +91,18 @@ const sketch = (p: P5Instance) => {
     const cleanupUI = initUI();
     const cleanupKeyboard = initKeyboardShortcuts();
 
+    // Pre-compute wormhole events when audio becomes ready
+    const unsubAudioReady = store.on('audioReady', () => {
+      const buf = audioEngine.getAudioBuffer();
+      if (buf) {
+        analyzeWormholeEvents(buf);
+        resetWormhole();
+      }
+    });
+
     // Cleanup on page unload
     window.addEventListener('beforeunload', () => {
+      unsubAudioReady();
       cleanupUI();
       cleanupKeyboard();
       audioEngine.disposeAll();
@@ -145,6 +158,9 @@ const sketch = (p: P5Instance) => {
       case 'text':
         drawText(p, dt);
         break;
+      case 'wormhole':
+        drawWormhole(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -164,6 +180,8 @@ const sketch = (p: P5Instance) => {
       resetLasers();
     } else if (store.state.vizMode === 'text') {
       resetText();
+    } else if (store.state.vizMode === 'wormhole') {
+      resetWormhole();
     }
   };
 };

@@ -9,4 +9,5 @@ export { drawCube, resetCube } from './cube';
 export { drawStickman, resetStickman } from './stickman';
 export { drawLasers, resetLasers } from './lasers';
 export { drawText, resetText, setVisualizerText } from './text';
+export { drawWormhole, resetWormhole, analyzeWormholeEvents } from './wormhole';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage } from './userImage';

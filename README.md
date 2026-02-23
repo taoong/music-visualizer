@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **8 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Stickman, Lasers, Text
+- **9 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Stickman, Lasers, Text, Wormhole
 - **Two audio analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
@@ -63,6 +63,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `6` | Stickman | Dancing stick figure with kick zoom and high-freq color |
 | `7` | Lasers | Concert laser light show with beat-synced beams |
 | `8` | Text | Beat-synced text in 7 cycling visual patterns |
+| `9` | Wormhole | Guitar Hero-style geometric objects flying toward the viewer, timed to song events |
 
 ## Keyboard Shortcuts
 
@@ -71,7 +72,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `Space` | Play / Pause |
 | `Left` / `Right` | Seek -5s / +5s |
 | `Up` / `Down` | Volume up / down |
-| `1`-`8` | Switch visualization mode |
+| `1`-`9` | Switch visualization mode |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

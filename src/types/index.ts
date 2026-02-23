@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text' | 'wormhole';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -80,6 +80,24 @@ export interface AppState {
   // Balls visualization
   balls: Ball[];
   kickBoostMultiplier: number;
+}
+
+// Wormhole visualization types
+export interface WormholeEvent {
+  time: number;
+  band: number;
+  magnitude: number;
+}
+
+export interface ActiveObject {
+  band: number;
+  hitTime: number;
+  z: number;
+  worldX: number;
+  worldY: number;
+  magnitude: number;
+  hitFlash: number;
+  expired: boolean;
 }
 
 // Ball object for balls visualization
