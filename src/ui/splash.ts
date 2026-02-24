@@ -241,48 +241,50 @@ async function handleStemModePlay(): Promise<void> {
   const splash = document.getElementById('splash');
   const playBtn = document.getElementById('play-btn') as HTMLButtonElement | null;
 
-  let stemUrls: {
-    kick: string | undefined;
-    drums: string | undefined;
-    bass: string | undefined;
-    vocals: string | undefined;
-    other: string | undefined;
-  } | null = null;
+  if (isSeparating) return;
+
+  // Resolve audio file source (sample or uploaded file)
+  let audioFile: File | null = null;
 
   if (store.state.useSample) {
-    stemUrls = {
-      kick: 'stems/sample/kick.mp3',
-      drums: 'stems/sample/drums.mp3',
-      bass: 'stems/sample/bass.mp3',
-      vocals: 'stems/sample/vocals.mp3',
-      other: 'stems/sample/other.mp3',
-    };
-  } else if (store.state.userFile) {
-    if (isSeparating) return;
-    isSeparating = true;
-    splash?.classList.add('hidden');
-    setProcessingState(true, 'Separating stems…');
-
     try {
-      stemUrls = await separateStems(store.state.userFile, text => {
-        setProcessingState(true, text);
-      });
+      const resp = await fetch(SAMPLE_URL);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const blob = await resp.blob();
+      audioFile = new File([blob], 'sample.mp3', { type: blob.type || 'audio/mpeg' });
     } catch (err) {
-      console.error('Stem separation error:', err);
-      setProcessingState(false);
-      splash?.classList.remove('hidden');
-      setFileStatus('Stem separation failed. Try frequency mode or another file.', true);
-      if (playBtn) playBtn.disabled = false;
-      isSeparating = false;
+      setFileStatus('Failed to load sample track.', true);
       return;
     }
-    isSeparating = false;
+  } else if (store.state.userFile) {
+    audioFile = store.state.userFile;
   }
 
-  if (!stemUrls) {
+  if (!audioFile) {
     setFileStatus('Please upload a track or use the sample first.', true);
     return;
   }
+
+  // Stem separation (server-side, same path for both sample and user file)
+  isSeparating = true;
+  splash?.classList.add('hidden');
+  setProcessingState(true, 'Separating stems…');
+
+  let stemUrls: { kick: string; drums: string; bass: string; vocals: string; other: string };
+  try {
+    stemUrls = await separateStems(audioFile, text => {
+      setProcessingState(true, text);
+    });
+  } catch (err) {
+    console.error('Stem separation error:', err);
+    setProcessingState(false);
+    splash?.classList.remove('hidden');
+    setFileStatus('Stem separation failed. Try frequency mode or another file.', true);
+    if (playBtn) playBtn.disabled = false;
+    isSeparating = false;
+    return;
+  }
+  isSeparating = false;
 
   if (playBtn) playBtn.disabled = true;
   setProcessingState(true, 'Loading stems…');

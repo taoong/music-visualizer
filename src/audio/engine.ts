@@ -134,6 +134,10 @@ class AudioEngine {
       smoothed[stem] = new Float32Array(SPIKES_PER_BAND);
     }
 
+    if (Object.keys(players).length === 0) {
+      throw new Error('No stems could be loaded. Check that the Flask server is running.');
+    }
+
     await Tone.loaded();
 
     this.stemAudio = {
