@@ -250,42 +250,46 @@ body {
 /* ── Mode Selector ──────────────────────────────────────── */
 #mode-selector {
   display: flex;
-  background: #0e0e12;
-  border-radius: 3px;
-  padding: 3px;
-  border: 1px solid #1a1a22;
+  gap: var(--space-sm);
 }
 
 .mode-btn {
   flex: 1;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 2px;
+  padding: 14px 20px;
+  border: 1px solid #303042;
+  border-radius: 3px;
   background: transparent;
-  color: #565670;
+  color: #72728a;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-family: inherit;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+  text-align: center;
+  touch-action: manipulation;
   transition:
     background 0.2s,
-    color 0.2s;
+    border-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
 }
 
 .mode-btn:hover {
-  color: #8080a0;
+  background: rgba(232, 228, 217, 0.06);
+  border-color: #50506a;
+  color: #9898b0;
+  box-shadow: 0 0 12px rgba(100, 100, 160, 0.12);
 }
 
 .mode-btn.active,
 .mode-btn[aria-checked="true"] {
-  background: rgba(232, 228, 217, 0.08);
-  color: var(--text-primary);
-  box-shadow: none;
+  border-color: rgba(232, 228, 217, 0.55);
+  color: var(--accent);
+  background: rgba(232, 228, 217, 0.07);
 }
 
 .mode-btn:focus-visible {
   outline: 2px solid var(--focus-ring);
-  outline-offset: -2px;
+  outline-offset: 2px;
 }
 
 .badge {
@@ -463,16 +467,21 @@ body {
   filter: none;
 }
 
-/* Draw the eye to mode selector after step 2 fades in */
-#splash-step-mode.unlocked #mode-selector {
+/* Draw the eye to mode buttons after step 2 fades in */
+#splash-step-mode.unlocked .mode-btn {
   animation: modeReveal 1s ease-in-out 0.55s both;
 }
 
+#splash-step-mode.unlocked .mode-btn.active,
+#splash-step-mode.unlocked .mode-btn[aria-checked="true"] {
+  animation: none;
+}
+
 @keyframes modeReveal {
-  0%   { border-color: #1a1a22; box-shadow: none; }
+  0%   { border-color: #303042; box-shadow: none; }
   45%  { border-color: rgba(232, 228, 217, 0.32);
-         box-shadow: 0 0 0 1px rgba(232, 228, 217, 0.1), 0 0 24px rgba(232, 228, 217, 0.07); }
-  100% { border-color: #1a1a22; box-shadow: none; }
+         box-shadow: 0 0 18px rgba(100, 100, 160, 0.18); }
+  100% { border-color: #303042; box-shadow: none; }
 }
 
 /* ── Begin Button Ready Animation ────────────────────────── */
