@@ -30,6 +30,10 @@
           <div class="splash-step">
             <span class="step-label" id="select-source-label">Select source</span>
             <div id="splash-buttons" role="group" aria-labelledby="select-source-label">
+              <button id="use-sample-btn" class="btn" type="button">
+                Use Sample Track
+                <span class="sr-only">Use the built-in demo track</span>
+              </button>
               <label id="upload-label" for="audio-upload" class="btn" tabindex="0" role="button">
                 Upload Track
                 <span class="sr-only">Choose an audio file from your device</span>
@@ -41,10 +45,6 @@
                 aria-label="Upload audio file"
                 aria-describedby="file-name"
               />
-              <button id="use-sample-btn" class="btn" type="button">
-                Use Sample Track
-                <span class="sr-only">Use the built-in demo track</span>
-              </button>
             </div>
             <span id="file-name" aria-live="polite" aria-atomic="true"></span>
           </div>
