@@ -68,10 +68,15 @@ export function analyzeWormholeEvents(buffer: AudioBuffer): void {
       bandEnergy[b] = Math.max(0, lpState[b] - lpState[b - 1]);
     }
 
-    // Detect spikes relative to running average
+    // Detect spikes relative to running average.
+    // Asymmetric rates: slow attack (don't let peaks pull the average up),
+    // fast release (quickly track back to the quiet floor between beats).
+    // This prevents the average from converging to the kick level over time,
+    // which would cause consistent periodic events to stop being detected.
     const hopTime = hopStart / sampleRate;
     for (let b = 0; b < NUM_BANDS; b++) {
-      runningAvg[b] += 0.02 * (bandEnergy[b] - runningAvg[b]);
+      const avgRate = bandEnergy[b] > runningAvg[b] ? 0.003 : 0.02;
+      runningAvg[b] += avgRate * (bandEnergy[b] - runningAvg[b]);
       if (runningAvg[b] > 0 && bandEnergy[b] / runningAvg[b] > 1.8) {
         const ratio = bandEnergy[b] / runningAvg[b];
         wormholeEvents.push({
