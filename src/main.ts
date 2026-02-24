@@ -45,6 +45,8 @@ import {
   drawWormhole,
   resetWormhole,
   analyzeWormholeEvents,
+  drawAurora,
+  resetAurora,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -161,6 +163,9 @@ const sketch = (p: P5Instance) => {
       case 'wormhole':
         drawWormhole(p, dt);
         break;
+      case 'aurora':
+        drawAurora(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -182,6 +187,8 @@ const sketch = (p: P5Instance) => {
       resetText();
     } else if (store.state.vizMode === 'wormhole') {
       resetWormhole();
+    } else if (store.state.vizMode === 'aurora') {
+      resetAurora();
     }
   };
 };

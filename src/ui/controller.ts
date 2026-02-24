@@ -93,7 +93,7 @@ function bindVizSelector(): () => void {
   function hide(el: HTMLElement | null): void { el?.classList.add('hidden'); }
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text' | 'wormhole';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text' | 'wormhole' | 'aurora';
     store.setVizMode(mode);
 
     // Per-mode control visibility
@@ -140,6 +140,10 @@ function bindVizSelector(): () => void {
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
+      case 'aurora':
+        show(scaleGroup); show(decayRateGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
+        break;
     }
   };
 
@@ -176,7 +180,7 @@ function bindRandomizeButton(): () => void {
       setSlider('sens-other', rand(1.0, 3.0));
     }
 
-    const useScale = vizMode === 'circle' || vizMode === 'spectrum' || vizMode === 'balls' || vizMode === 'cube';
+    const useScale = vizMode === 'circle' || vizMode === 'spectrum' || vizMode === 'balls' || vizMode === 'cube' || vizMode === 'aurora';
     const useDecay = vizMode !== 'lasers' && vizMode !== 'text';
 
     if (useScale) setSlider('spike-scale', rand(0.5, 2.0));
