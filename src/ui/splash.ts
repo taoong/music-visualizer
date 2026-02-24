@@ -11,12 +11,17 @@ import type { AnalysisMode } from '../types';
 
 let isSeparating = false;
 
-function completeStep1(playBtn: HTMLButtonElement | null): void {
+function completeStep1(): void {
+  document.getElementById('splash-step-mode')?.classList.add('unlocked');
+}
+
+function completeStep2(): void {
+  if (!store.state.useSample && !store.state.userFile) return;
+  const playBtn = document.getElementById('play-btn') as HTMLButtonElement | null;
   if (playBtn) {
     playBtn.disabled = false;
     requestAnimationFrame(() => playBtn.classList.add('is-ready'));
   }
-  document.getElementById('splash-step-mode')?.classList.add('unlocked');
 }
 
 declare global {
@@ -28,7 +33,6 @@ declare global {
 export function bindFileUpload(): () => void {
   const audioInput = document.getElementById('audio-upload') as HTMLInputElement | null;
   const fileNameEl = document.getElementById('file-name');
-  const playBtn = document.getElementById('play-btn') as HTMLButtonElement | null;
 
   if (!audioInput) return () => {};
 
@@ -37,7 +41,7 @@ export function bindFileUpload(): () => void {
     if (target.files?.length) {
       store.setUserFile(target.files[0]);
       if (fileNameEl) fileNameEl.textContent = target.files[0].name;
-      completeStep1(playBtn);
+      completeStep1();
     }
   };
 
@@ -48,14 +52,13 @@ export function bindFileUpload(): () => void {
 export function bindSampleButton(): () => void {
   const btn = document.getElementById('use-sample-btn');
   const fileNameEl = document.getElementById('file-name');
-  const playBtn = document.getElementById('play-btn') as HTMLButtonElement | null;
 
   if (!btn) return () => {};
 
   const handler = () => {
     store.setUseSample(true);
     if (fileNameEl) fileNameEl.textContent = 'Sample track selected';
-    completeStep1(playBtn);
+    completeStep1();
   };
 
   const touchHandler = (e: Event) => {
@@ -81,6 +84,7 @@ export function bindModeSelector(): () => void {
 
   const setMode = (mode: AnalysisMode) => {
     store.setMode(mode);
+    completeStep2();
 
     if (mode === 'freq') {
       modeFreqBtn.classList.add('active');
