@@ -41,6 +41,8 @@ export function bindFileUpload(): () => void {
     if (target.files?.length) {
       store.setUserFile(target.files[0]);
       if (fileNameEl) fileNameEl.textContent = target.files[0].name;
+      document.getElementById('upload-label')?.classList.add('selected');
+      document.getElementById('use-sample-btn')?.classList.remove('selected');
       completeStep1();
     }
   };
@@ -58,6 +60,8 @@ export function bindSampleButton(): () => void {
   const handler = () => {
     store.setUseSample(true);
     if (fileNameEl) fileNameEl.textContent = 'Sample track selected';
+    document.getElementById('use-sample-btn')?.classList.add('selected');
+    document.getElementById('upload-label')?.classList.remove('selected');
     completeStep1();
   };
 
