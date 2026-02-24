@@ -11,6 +11,14 @@ import type { AnalysisMode } from '../types';
 
 let isSeparating = false;
 
+function completeStep1(playBtn: HTMLButtonElement | null): void {
+  if (playBtn) {
+    playBtn.disabled = false;
+    requestAnimationFrame(() => playBtn.classList.add('is-ready'));
+  }
+  document.getElementById('splash-step-mode')?.classList.add('unlocked');
+}
+
 declare global {
   interface Window {
     __pendingImageFile?: File;
@@ -29,7 +37,7 @@ export function bindFileUpload(): () => void {
     if (target.files?.length) {
       store.setUserFile(target.files[0]);
       if (fileNameEl) fileNameEl.textContent = target.files[0].name;
-      if (playBtn) playBtn.disabled = false;
+      completeStep1(playBtn);
     }
   };
 
@@ -47,7 +55,7 @@ export function bindSampleButton(): () => void {
   const handler = () => {
     store.setUseSample(true);
     if (fileNameEl) fileNameEl.textContent = 'Sample track selected';
-    if (playBtn) playBtn.disabled = false;
+    completeStep1(playBtn);
   };
 
   const touchHandler = (e: Event) => {

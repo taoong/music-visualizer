@@ -366,6 +366,8 @@ body {
 
 /* ── Play / Begin Button ─────────────────────────────────── */
 #play-btn {
+  position: relative;
+  overflow: hidden;
   align-self: stretch;
   padding: 20px 40px;
   border: 1px solid rgba(232, 228, 217, 0.12);
@@ -405,6 +407,59 @@ body {
 #play-btn:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+/* ── Step 2 Locked State ─────────────────────────────────── */
+#splash-step-mode {
+  opacity: 0.18;
+  pointer-events: none;
+  user-select: none;
+  filter: blur(0.4px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#splash-step-mode.unlocked {
+  opacity: 1;
+  pointer-events: auto;
+  user-select: auto;
+  filter: none;
+}
+
+/* ── Begin Button Ready Animation ────────────────────────── */
+@keyframes btnActivate {
+  0%   { border-color: rgba(232,228,217,0.12); box-shadow: none; color: rgba(240,240,240,0.2); }
+  40%  { border-color: rgba(232,228,217,0.9);  box-shadow: 0 0 40px rgba(232,228,217,0.2), inset 0 0 20px rgba(232,228,217,0.05); color: rgba(240,240,240,0.9); }
+  100% { border-color: rgba(232,228,217,0.32); box-shadow: none; color: rgba(240,240,240,0.6); }
+}
+
+@keyframes btnBreath {
+  0%, 100% { box-shadow: none;                                border-color: rgba(232,228,217,0.28); }
+  50%       { box-shadow: 0 0 24px rgba(232,228,217,0.14), 0 0 48px rgba(232,228,217,0.06); border-color: rgba(232,228,217,0.55); }
+}
+
+@keyframes btnShimmer {
+  from { transform: translateX(-250%); }
+  to   { transform: translateX(450%); }
+}
+
+#play-btn.is-ready {
+  animation:
+    btnActivate 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    btnBreath 2.5s ease-in-out 0.7s infinite;
+}
+
+#play-btn.is-ready::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(232,228,217,0.14), transparent);
+  transform: translateX(-250%);
+  animation: btnShimmer 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+  pointer-events: none;
 }
 
 /* ── Splash Entrance Animation ───────────────────────────── */

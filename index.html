@@ -26,12 +26,6 @@
     <!-- Splash overlay — requires user gesture to start AudioContext -->
     <div id="splash" role="dialog" aria-modal="true" aria-label="Welcome to Music Visualizer">
       <div id="splash-content">
-        <header class="splash-header">
-          <p class="splash-eyebrow">Music</p>
-          <h1>Visualizer</h1>
-        </header>
-        <div class="splash-divider" aria-hidden="true"></div>
-
         <div class="splash-steps">
           <div class="splash-step">
             <span class="step-label" id="select-source-label">Select source</span>
@@ -55,7 +49,7 @@
             <span id="file-name" aria-live="polite" aria-atomic="true"></span>
           </div>
 
-          <div class="splash-step">
+          <div class="splash-step" id="splash-step-mode">
             <span class="step-label" id="choose-mode-label">Choose mode</span>
             <div id="mode-selector" role="radiogroup" aria-labelledby="choose-mode-label">
               <button
@@ -84,28 +78,6 @@
                   >Use AI to separate audio into kick, drums, bass, vocals, and other stems</span
                 >
               </button>
-            </div>
-          </div>
-          <div class="splash-step">
-            <span class="step-label" id="add-image-label">Add image (optional)</span>
-            <div id="image-upload-group" role="group" aria-labelledby="add-image-label">
-              <label id="image-upload-label" for="image-upload" class="btn" tabindex="0" role="button">
-                Choose Image
-                <span class="sr-only">Upload an image for visualizations</span>
-              </label>
-              <input
-                type="file"
-                id="image-upload"
-                accept="image/*"
-                aria-label="Upload image file"
-              />
-              <button id="image-remove-btn" class="image-remove-btn hidden" type="button" aria-label="Remove image">
-                Remove
-              </button>
-            </div>
-            <div id="image-preview-group" class="hidden">
-              <img id="image-preview-thumb" alt="Image preview" />
-              <span id="image-file-name"></span>
             </div>
           </div>
         </div>
