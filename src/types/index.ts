@@ -87,6 +87,8 @@ export interface WormholeEvent {
   time: number;
   band: number;
   magnitude: number;
+  /** Pre-assigned value in [0, 1) used for deterministic density filtering by intensity. */
+  spawnSeed: number;
 }
 
 export interface ActiveObject {

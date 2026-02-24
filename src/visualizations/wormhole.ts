@@ -83,6 +83,7 @@ export function analyzeWormholeEvents(buffer: AudioBuffer): void {
           time: hopTime,
           band: b,
           magnitude: Math.min((ratio - 1.8) / 4, 1),
+          spawnSeed: Math.random(),
         });
       }
     }
@@ -225,10 +226,12 @@ export function drawWormhole(p: P5Instance, dt: number): void {
   lastPlaybackPos = pos;
 
   // --- Spawn new objects (only while playing) ---
-  // spawnThreshold filters to only the strongest amplitude peaks.
-  // Ceiling is 1.2 so intensity=0 truly spawns nothing (magnitude max is 1.0).
-  // intensity=0 → 1.2 (nothing); intensity=1.0 → 0.85; intensity=2.0 → 0.5 (most events)
-  const spawnThreshold = 1.2 - (config.intensity / 2) * 0.7;
+  // densityFraction maps intensity (0–2) linearly to a spawn probability (0–1).
+  // Each event carries a pre-assigned random spawnSeed; only events whose seed
+  // falls below densityFraction are spawned. This gives a smooth, gradual
+  // progression with no cliff: every increment of intensity adds proportionally
+  // more events across the full range.
+  const densityFraction = config.intensity / 2;
 
   if (state.isPlaying) {
     while (
@@ -236,8 +239,8 @@ export function drawWormhole(p: P5Instance, dt: number): void {
       wormholeEvents[timelineIdx].time <= pos + LOOKAHEAD_SEC
     ) {
       const ev = wormholeEvents[timelineIdx];
-      // Only spawn events that haven't passed yet and clear the magnitude threshold
-      if (ev.time >= pos && ev.magnitude >= spawnThreshold) {
+      // Only spawn events that haven't passed yet and pass the density gate
+      if (ev.time >= pos && ev.spawnSeed < densityFraction) {
         const timeUntilHit = ev.time - pos;
         // Place at z proportional to time-until-hit for correct initial position
         const zInitial = Math.max(HIT_Z + 1, (timeUntilHit / LOOKAHEAD_SEC) * Z_SPAWN);
