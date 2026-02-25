@@ -92,6 +92,8 @@ function bindVizSelector(): () => void {
   function show(el: HTMLElement | null): void { el?.classList.remove('hidden'); }
   function hide(el: HTMLElement | null): void { el?.classList.add('hidden'); }
 
+  const intensityLabel = intensityGroup?.querySelector('label');
+
   const handler = () => {
     const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
     store.setVizMode(mode);
@@ -110,38 +112,46 @@ function bindVizSelector(): () => void {
     switch (mode) {
       case 'circle':
         show(scaleGroup); show(decayRateGroup); show(rotationSpeedGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'spectrum':
       case 'cube':
         show(scaleGroup); show(decayRateGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'tunnel':
       case 'stickman':
         hide(scaleGroup); show(decayRateGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'balls':
         show(scaleGroup); show(decayRateGroup); show(ballsKickBoostGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(rotationSpeedGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
         initBalls(window.p5Instance);
         break;
       case 'lasers':
         show(intensityGroup); show(beatDivisionGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup);
         break;
       case 'text':
         show(intensityGroup); show(beatDivisionGroup); show(textInputGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup);
         break;
       case 'highway':
-        show(intensityGroup);
+        show(intensityGroup); show(beatDivisionGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Speed';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup);
+        hide(ballsKickBoostGroup); hide(textInputGroup);
         break;
       case 'runners':
         show(intensityGroup); show(beatDivisionGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup);
         break;
     }

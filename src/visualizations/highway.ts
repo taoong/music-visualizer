@@ -28,6 +28,7 @@ let initialized = false;
 
 let speedMult = 1.0;
 let burstTimer = 0;
+let beatCount = 0;
 let playerLane = 1;
 let playerTargetLane = 1;
 let playerOffsetX = 0;
@@ -361,6 +362,7 @@ export function resetHighway(): void {
   initialized = true;
   speedMult = 1.0;
   burstTimer = 0;
+  beatCount = 0;
   playerLane = 1;
   playerTargetLane = 1;
   playerOffsetX = 0;
@@ -405,42 +407,52 @@ export function drawHighway(p: P5Instance, dt: number): void {
     }
   }
 
+  // ── Speed (intensity knob) and beat-division knob ─────────────────────────
+  // baseSpeed scales STEP_PER_DT by the Intensity slider (0–2).
+  // division controls how many raw beats are skipped between each swerve/spawn.
+  const baseSpeed = STEP_PER_DT * store.config.intensity;
+  const division = Math.max(1, Math.round(store.config.beatDivision));
+
   // ── Beat detection: always dodge, spawn cars ──────────────────────────────
   if (state.isPlaying && state.beatIntervalSec > 0) {
     const beatIdx = Math.floor((pos - state.beatOffset) / state.beatIntervalSec);
     if (beatIdx > lastBeatIndex) {
       lastBeatIndex = beatIdx;
+      beatCount++;
 
-      speedMult = BURST_SPEED;
-      burstTimer = BURST_DURATION;
+      // Only swerve + spawn on every Nth beat (controlled by Beat Frequency knob)
+      if (beatCount % division === 0) {
+        speedMult = BURST_SPEED;
+        burstTimer = BURST_DURATION;
 
-      // Lanes that already have a car close enough to be a threat
-      const dangerLanes = new Set(cars.filter(c => c.z < 450).map(c => c.lane));
+        // Lanes that already have a car close enough to be a threat
+        const dangerLanes = new Set(cars.filter(c => c.z < 450).map(c => c.lane));
 
-      // Prefer a lane that has no close cars, is not current, and is not the last dodge
-      const safeDiff = [0, 1, 2].filter(l => l !== playerLane && !dangerLanes.has(l) && l !== lastDodgeLane);
-      const safe     = [0, 1, 2].filter(l => l !== playerLane && !dangerLanes.has(l));
-      const anyDiff  = [0, 1, 2].filter(l => l !== playerLane);
-      const pool = safeDiff.length > 0 ? safeDiff
-                 : safe.length    > 0 ? safe
-                 : anyDiff;
-      const dodge = pool[Math.floor(Math.random() * pool.length)];
-      lastDodgeLane = playerLane;
-      playerLane = dodge;
-      playerTargetLane = dodge;
+        // Prefer a lane that has no close cars, is not current, and is not the last dodge
+        const safeDiff = [0, 1, 2].filter(l => l !== playerLane && !dangerLanes.has(l) && l !== lastDodgeLane);
+        const safe     = [0, 1, 2].filter(l => l !== playerLane && !dangerLanes.has(l));
+        const anyDiff  = [0, 1, 2].filter(l => l !== playerLane);
+        const pool = safeDiff.length > 0 ? safeDiff
+                   : safe.length    > 0 ? safe
+                   : anyDiff;
+        const dodge = pool[Math.floor(Math.random() * pool.length)];
+        lastDodgeLane = playerLane;
+        playerLane = dodge;
+        playerTargetLane = dodge;
 
-      // Spawn 1–2 oncoming cars — never in the player's new lane so they
-      // don't arrive right as the player lands there
-      const spawnPool = [0, 1, 2].filter(l => l !== playerTargetLane);
-      const count = 1 + (Math.random() < 0.45 ? 1 : 0);
-      for (let i = 0; i < count; i++) {
-        const bandIdx = Math.floor(Math.random() * 7);
-        cars.push({
-          lane: spawnPool[Math.floor(Math.random() * spawnPool.length)],
-          z: Z_SPAWN,
-          hue: BAND_HUES[bandIdx],
-          expired: false,
-        });
+        // Spawn 1–2 oncoming cars — never in the player's new lane so they
+        // don't arrive right as the player lands there
+        const spawnPool = [0, 1, 2].filter(l => l !== playerTargetLane);
+        const count = 1 + (Math.random() < 0.45 ? 1 : 0);
+        for (let i = 0; i < count; i++) {
+          const bandIdx = Math.floor(Math.random() * 7);
+          cars.push({
+            lane: spawnPool[Math.floor(Math.random() * spawnPool.length)],
+            z: Z_SPAWN,
+            hue: BAND_HUES[bandIdx],
+            expired: false,
+          });
+        }
       }
     }
   }
@@ -451,7 +463,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
       // Trucks that have passed the player exit at 2× speed — mimics the
       // rapid apparent motion of a vehicle that has just overtaken you.
       const exitMult = car.z <= 0 ? 2.0 : 1.0;
-      car.z -= STEP_PER_DT * dt * speedMult * exitMult;
+      car.z -= baseSpeed * dt * speedMult * exitMult;
     }
     // Remove cars flagged expired during the previous frame's render pass
     cars = cars.filter(c => !c.expired);
@@ -469,7 +481,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
   // ── Scroll road markings ───────────────────────────────────────────────────
   if (state.isPlaying) {
-    roadScrollZ += STEP_PER_DT * dt * speedMult;
+    roadScrollZ += baseSpeed * dt * speedMult;
     if (roadScrollZ >= DASH_SPACING) roadScrollZ -= DASH_SPACING;
   }
 
