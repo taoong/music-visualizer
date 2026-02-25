@@ -1,10 +1,8 @@
 /**
  * Highway visualization — perspective road with oncoming car-dodge mechanic.
  *
- * On each beat: oncoming cars spawn and all in-flight cars get a brief 3×
- * speed burst. The player car alternates swerving between lanes to dodge.
- * Every ~8 beats the player fails to dodge and a car hits it, flashing the
- * screen briefly. Non-hit cars expire silently at HIT_Z.
+ * On each beat: oncoming cars spawn and get a brief 3× speed burst.
+ * The player car always swerves to a different lane to dodge — it never crashes.
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
@@ -13,11 +11,9 @@ import { getBandAverages } from './helpers';
 // ── Local types ───────────────────────────────────────────────────────────────
 
 interface RoadCar {
-  lane: number;       // 0=left, 1=center, 2=right
-  z: number;          // depth: Z_SPAWN (far) → 0 (near/player)
-  hue: number;        // HSB hue for car color
-  isHitCar: boolean;  // will this car collide with player?
-  hitFlash: number;   // brightness spike on collision (decays)
+  lane: number;    // 0=left, 1=center, 2=right
+  z: number;       // depth: Z_SPAWN (far) → 0 (near)
+  hue: number;     // HSB hue
   expired: boolean;
 }
 
@@ -26,27 +22,22 @@ interface RoadCar {
 let cars: RoadCar[] = [];
 let roadScrollZ = 0;
 let lastPlaybackPos = -1;
-let screenFlash = 0;
-let carShake = 0;
 let lastBeatIndex = -1;
 let headlightGlow = 0;
 let initialized = false;
 
-// Beat-driven state
 let speedMult = 1.0;
 let burstTimer = 0;
-let beatCount = 0;
-let nextHitBeat = 7 + Math.floor(Math.random() * 4);
-let playerLane = 1;           // current lane 0|1|2
-let playerTargetLane = 1;     // lane we're moving toward
-let playerOffsetX = 0;        // smooth pixel X offset from screen center
-let carBankAngle = 0;         // steering lean (radians)
-let hitCarRef: RoadCar | null = null;
-let lastDodgeLane = -1;       // track last dodge lane to avoid repeating
+let playerLane = 1;
+let playerTargetLane = 1;
+let playerOffsetX = 0;
+let carBankAngle = 0;
+let lastDodgeLane = -1;
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const Z_SPAWN = 1000;
+const Z_CAR_DEPTH = 80;    // car length in z-units (≈ 4.5 m at this scale)
 const HIT_Z = 30;
 const STEP_PER_DT = 6.67;
 const HORIZON_Y_RATIO = 0.35;
@@ -57,26 +48,22 @@ const DASH_SPACING = 120;
 const BURST_SPEED = 3.0;
 const BURST_DURATION = 200;
 
-const BAND_HUES = [270, 30, 60, 120, 180, 240, 0];
+const BAND_HUES = [270, 30, 60, 120, 180, 210, 150];
 
 // ── Perspective helpers ───────────────────────────────────────────────────────
 
-/** Convert depth z to t: 0=far/horizon, 1=near/player */
 function zToT(z: number): number {
   return 1 - Math.min(z / Z_SPAWN, 1);
 }
 
-/** Screen Y for a given t */
 function tToScreenY(t: number, horizY: number, nearY: number): number {
   return horizY + t * (nearY - horizY);
 }
 
-/** Road half-width for a given t */
 function roadHWAt(t: number, nearHW: number): number {
   return HORIZON_HW + t * (nearHW - HORIZON_HW);
 }
 
-/** Screen X for lane (0,1,2) at depth t, relative to center */
 function laneOffsetX(lane: number, t: number, nearHW: number): number {
   return (lane - 1) * (roadHWAt(t, nearHW) * 0.67);
 }
@@ -91,10 +78,11 @@ function drawRoad(
   nearHW: number,
   scrollZ: number
 ): void {
-  // Asphalt trapezoid
   p.noStroke();
+
+  // Asphalt trapezoid
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(25, 10, 18);
+  (p as any).fill(0, 0, 16);
   p.beginShape();
   p.vertex(cx - HORIZON_HW, horizY);
   p.vertex(cx + HORIZON_HW, horizY);
@@ -102,78 +90,135 @@ function drawRoad(
   p.vertex(cx - nearHW, nearY);
   p.endShape(p['CLOSE']);
 
-  // White edge lines
+  // Solid white edge lines
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).stroke(0, 0, 90);
+  (p as any).stroke(0, 0, 88);
   p.strokeWeight(2);
   p.line(cx - HORIZON_HW, horizY, cx - nearHW, nearY);
   p.line(cx + HORIZON_HW, horizY, cx + nearHW, nearY);
 
-  // Dashed lane dividers at ±1/3 of road width
+  // Dashed lane dividers — at ±1/3 of road half-width (between lane centers)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).stroke(0, 0, 70, 80);
+  (p as any).stroke(0, 0, 65, 85);
   p.strokeWeight(1.5);
 
-  for (const divFrac of [-1 / 3, 1 / 3]) {
-    // Step from scrollZ up to Z_SPAWN drawing alternating dashes
+  for (const divSide of [-1, 1]) {
     for (let z = scrollZ; z < Z_SPAWN; z += DASH_SPACING) {
       const dashEnd = z + DASH_SPACING * 0.45;
-
       const t1 = zToT(z);
       const t2 = zToT(Math.min(dashEnd, Z_SPAWN - 1));
-
       const hw1 = roadHWAt(t1, nearHW);
       const hw2 = roadHWAt(t2, nearHW);
-
-      const x1 = cx + divFrac * hw1 * 2;
-      const x2 = cx + divFrac * hw2 * 2;
+      // Dividers sit between adjacent lane centers: ± hw * 0.335
+      const x1 = cx + divSide * hw1 * 0.335;
+      const x2 = cx + divSide * hw2 * 0.335;
       const y1 = tToScreenY(t1, horizY, nearY);
       const y2 = tToScreenY(t2, horizY, nearY);
-
       if (y1 < nearY && y2 > horizY) {
         p.line(x1, y1, x2, y2);
       }
     }
   }
+
+  p.noStroke();
 }
 
+/**
+ * Draw a fully opaque 3D car box from its front-face and back-face geometry.
+ *
+ * Front/back face described by center-X, bottom-Y, width, height at each
+ * respective depth. Faces: left-side → right-side → roof → front (painter's order).
+ */
 function drawOncomingCar(
   p: P5Instance,
-  x: number,
-  y: number,
-  carW: number,
-  carH: number,
-  hue: number,
-  flash: number
+  fx: number, fy: number, fw: number, fh: number,   // front face
+  bx: number, by: number, bw: number, bh: number,   // back face
+  hue: number
 ): void {
-  const sat = 75;
-  const bri = 65 + flash * 35;
-  const alpha = Math.min(100, 70 + flash * 30);
-
-  // Car body
   p.noStroke();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(hue, sat, bri, alpha);
-  p.rect(x - carW / 2, y - carH, carW, carH, carW * 0.12);
 
-  // Windshield strip
-  const wShield = carW * 0.72;
-  const wH = carH * 0.28;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(hue, 30, 90, alpha * 0.85);
-  p.rect(x - wShield / 2, y - carH + carH * 0.08, wShield, wH, 2);
+  // Precomputed corners
+  const ftl = { x: fx - fw / 2, y: fy - fh };  // front top-left
+  const ftr = { x: fx + fw / 2, y: fy - fh };
+  const fbl = { x: fx - fw / 2, y: fy };
+  const fbr = { x: fx + fw / 2, y: fy };
+  const btl = { x: bx - bw / 2, y: by - bh };  // back top-left
+  const btr = { x: bx + bw / 2, y: by - bh };
+  const bbl = { x: bx - bw / 2, y: by };
+  const bbr = { x: bx + bw / 2, y: by };
 
-  // Headlights (two small rects at front/bottom of car)
-  const hlW = carW * 0.18;
-  const hlH = carH * 0.09;
-  const hlY = y - hlH;
-  const glowBri = 85 + flash * 15;
+  // === Left side face (shadow) ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(45, 20, glowBri, alpha);
-  p.rect(x - carW * 0.3 - hlW / 2, hlY, hlW, hlH, 2);
-  p.rect(x + carW * 0.3 - hlW / 2, hlY, hlW, hlH, 2);
+  (p as any).fill(hue, 80, 28);
+  p.beginShape();
+  p.vertex(ftl.x, ftl.y);
+  p.vertex(btl.x, btl.y);
+  p.vertex(bbl.x, bbl.y);
+  p.vertex(fbl.x, fbl.y);
+  p.endShape(p['CLOSE']);
+
+  // === Right side face (lighter shadow) ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(hue, 75, 35);
+  p.beginShape();
+  p.vertex(ftr.x, ftr.y);
+  p.vertex(btr.x, btr.y);
+  p.vertex(bbr.x, bbr.y);
+  p.vertex(fbr.x, fbr.y);
+  p.endShape(p['CLOSE']);
+
+  // === Roof face ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(hue, 65, 48);
+  p.beginShape();
+  p.vertex(ftl.x, ftl.y);
+  p.vertex(ftr.x, ftr.y);
+  p.vertex(btr.x, btr.y);
+  p.vertex(btl.x, btl.y);
+  p.endShape(p['CLOSE']);
+
+  // === Front face — main body ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(hue, 78, 68);
+  p.rect(ftl.x, ftl.y, fw, fh);
+
+  // === Front face — windshield (dark glass) ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(210, 35, 18);
+  p.rect(fx - fw * 0.38, fy - fh + fh * 0.07, fw * 0.76, fh * 0.40, 2);
+
+  // === Headlights ===
+  const hlW = fw * 0.22;
+  const hlH = fh * 0.12;
+  const hlY = fy - fh * 0.17;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(50, 5, 100);
+  p.rect(fx - fw * 0.44, hlY, hlW, hlH, 2);
+  p.rect(fx + fw * 0.44 - hlW, hlY, hlW, hlH, 2);
+
+  // Headlight bloom
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(48, 40, 100, 60);
+  p.ellipse(fx - fw * 0.33, hlY + hlH / 2, hlW * 1.8, hlH * 2.0);
+  p.ellipse(fx + fw * 0.33, hlY + hlH / 2, hlW * 1.8, hlH * 2.0);
+
+  // === Grille ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(hue, 55, 20);
+  p.rect(fx - fw * 0.28, fy - fh * 0.09, fw * 0.56, fh * 0.07, 1);
+
+  // === Bumper highlight ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).stroke(0, 0, 55);
+  p.strokeWeight(Math.max(0.5, fw * 0.025));
+  p.line(ftl.x + fw * 0.06, fy - 1, ftr.x - fw * 0.06, fy - 1);
+  p.noStroke();
 }
 
+/**
+ * Draw the player car from a rear-3/4 perspective view.
+ * (x, y) = rear bumper center at the near-plane bottom of the road.
+ */
 function drawPlayerCar(
   p: P5Instance,
   x: number,
@@ -186,91 +231,139 @@ function drawPlayerCar(
   p.translate(x, y);
   p.rotate(bankAngle);
 
-  const carW = S * 1.8;
-  const carH = S * 3.0;
+  const bW = S * 2.2;    // rear face width
+  const bH = S * 1.65;   // rear face height
+  const rW = bW * 0.78;  // roof width (perspective taper)
+  const rH = S * 1.05;   // roof depth (height of roof trapezoid above rear face)
+  const tlGlow = 0.45 + glowAmp * 0.55;
 
-  // Taillight glow behind car
-  const tlGlow = 0.35 + glowAmp * 0.55;
   p.noStroke();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 90, 80, tlGlow * 22);
-  p.ellipse(0, S * 0.6, carW * 1.5, S * 1.4);
 
-  // Car body — dark gray top view (rear of car, looking forward)
+  // Ground shadow
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 0, 30);
-  p.noStroke();
-  p.rect(-carW / 2, -carH, carW, carH, carW * 0.15);
+  (p as any).fill(0, 0, 0, 25);
+  p.ellipse(0, 6, bW * 1.35, S * 0.45);
 
-  // Roof panel (darker center strip)
+  // === Left side panel ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 0, 20);
-  p.rect(-carW * 0.28, -carH + carH * 0.1, carW * 0.56, carH * 0.65, 4);
+  p.beginShape();
+  p.vertex(-bW / 2,           -bH);
+  p.vertex(-bW / 2 - S * 0.28, -bH + S * 0.18);
+  p.vertex(-bW / 2 - S * 0.28,  S * 0.06);
+  p.vertex(-bW / 2,             0);
+  p.endShape(p['CLOSE']);
 
-  // Rear windshield
+  // === Right side panel ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(200, 20, 60, 75);
-  p.rect(-carW * 0.35, -carH * 0.02, carW * 0.70, carH * 0.15, 3);
+  (p as any).fill(0, 0, 15);
+  p.beginShape();
+  p.vertex( bW / 2,            -bH);
+  p.vertex( bW / 2 + S * 0.28, -bH + S * 0.18);
+  p.vertex( bW / 2 + S * 0.28,  S * 0.06);
+  p.vertex( bW / 2,              0);
+  p.endShape(p['CLOSE']);
 
-  // Headlights (front of car at top since we see rear, but car drives toward us)
-  const hlW = carW * 0.22;
-  const hlH = S * 0.22;
-  const hlGlow = 0.4 + glowAmp * 0.6;
+  // === Roof (trapezoid converging toward vanishing point) ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(45, 10, 100, hlGlow * 95);
-  p.ellipse(-carW * 0.28, -carH + hlH, hlW, hlH * 1.4);
-  p.ellipse( carW * 0.28, -carH + hlH, hlW, hlH * 1.4);
+  (p as any).fill(0, 0, 26);
+  p.beginShape();
+  p.vertex(-bW / 2,  -bH);
+  p.vertex( bW / 2,  -bH);
+  p.vertex( rW / 2,  -bH - rH);
+  p.vertex(-rW / 2,  -bH - rH);
+  p.endShape(p['CLOSE']);
 
-  // Taillights
-  const tlW = carW * 0.20;
-  const tlH = S * 0.16;
+  // Roof window strip
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(200, 30, 35, 80);
+  p.beginShape();
+  p.vertex(-bW * 0.34,  -bH);
+  p.vertex( bW * 0.34,  -bH);
+  p.vertex( rW * 0.34,  -bH - rH * 0.98);
+  p.vertex(-rW * 0.34,  -bH - rH * 0.98);
+  p.endShape(p['CLOSE']);
+
+  // === Rear face (main body) ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 0, 30);
+  p.rect(-bW / 2, -bH, bW, bH, bW * 0.07);
+
+  // === Rear window ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(210, 30, 38, 90);
+  p.rect(-bW * 0.37, -bH + bH * 0.06, bW * 0.74, bH * 0.42, 3);
+
+  // === Trunk panel line ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).stroke(0, 0, 48);
+  p.strokeWeight(1);
+  p.line(-bW * 0.46, -bH * 0.24, bW * 0.46, -bH * 0.24);
+  p.noStroke();
+
+  // === Taillights ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 100, 90, tlGlow * 100);
-  p.rect(-carW / 2 + 2, -tlH, tlW, tlH, 2);
-  p.rect( carW / 2 - tlW - 2, -tlH, tlW, tlH, 2);
+  p.rect(-bW / 2 + 2, -bH * 0.22, bW * 0.25, bH * 0.19, 2);
+  p.rect( bW / 2 - 2 - bW * 0.25, -bH * 0.22, bW * 0.25, bH * 0.19, 2);
 
-  // Wheel arches (four corners)
+  // Taillight glow bloom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 0, 12);
-  const wW = carW * 0.28;
-  const wH = S * 0.38;
-  p.rect(-carW / 2 - wW * 0.15, -carH * 0.3 - wH / 2, wW, wH, 4);
-  p.rect( carW / 2 - wW * 0.85, -carH * 0.3 - wH / 2, wW, wH, 4);
-  p.rect(-carW / 2 - wW * 0.15, -carH * 0.75 - wH / 2, wW, wH, 4);
-  p.rect( carW / 2 - wW * 0.85, -carH * 0.75 - wH / 2, wW, wH, 4);
+  (p as any).fill(0, 90, 80, tlGlow * 20);
+  p.ellipse(-bW * 0.37, -bH * 0.125, bW * 0.38, bH * 0.30);
+  p.ellipse( bW * 0.37, -bH * 0.125, bW * 0.38, bH * 0.30);
+
+  // === Bumper ===
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 0, 18);
+  p.rect(-bW * 0.47, -bH * 0.20, bW * 0.94, bH * 0.20, 3);
+
+  // Bumper center vent/detail
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 0, 38);
+  p.rect(-bW * 0.20, -bH * 0.165, bW * 0.40, bH * 0.08, 2);
+
+  // Reverse light (center, white)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 0, 82, 55);
+  p.ellipse(0, -bH * 0.11, bW * 0.11, bH * 0.08);
+
+  // === Wheels ===
+  const wRX = bW / 2 + S * 0.20;
+  const wRY = 0;
+  const wRw = S * 0.45;
+  const wRh = S * 0.60;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 0, 10);
+  p.ellipse(-wRX, wRY, wRw, wRh);
+  p.ellipse( wRX, wRY, wRw, wRh);
+  // Rim
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 0, 52);
+  p.ellipse(-wRX, wRY, wRw * 0.58, wRh * 0.58);
+  p.ellipse( wRX, wRY, wRw * 0.58, wRh * 0.58);
 
   p.pop();
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
-/**
- * Reset highway playback state. Call on track load, seek, and window resize.
- */
 export function resetHighway(): void {
   cars = [];
   roadScrollZ = 0;
   lastPlaybackPos = -1;
-  screenFlash = 0;
-  carShake = 0;
   lastBeatIndex = -1;
   headlightGlow = 0;
   initialized = true;
   speedMult = 1.0;
   burstTimer = 0;
-  beatCount = 0;
-  nextHitBeat = 7 + Math.floor(Math.random() * 4);
   playerLane = 1;
   playerTargetLane = 1;
   playerOffsetX = 0;
   carBankAngle = 0;
-  hitCarRef = null;
   lastDodgeLane = -1;
 }
 
-/**
- * Main draw function for the highway visualization.
- */
 export function drawHighway(p: P5Instance, dt: number): void {
   const { state } = store;
   const w = p.width;
@@ -295,7 +388,6 @@ export function drawHighway(p: P5Instance, dt: number): void {
   if (Math.abs(pos - lastPlaybackPos) > 0.5) {
     cars = [];
     lastBeatIndex = -1;
-    hitCarRef = null;
     roadScrollZ = 0;
   }
   lastPlaybackPos = pos;
@@ -309,77 +401,42 @@ export function drawHighway(p: P5Instance, dt: number): void {
     }
   }
 
-  // ── Beat detection: spawn cars, trigger dodge / hit ───────────────────────
+  // ── Beat detection: always dodge, spawn cars ──────────────────────────────
   if (state.isPlaying && state.beatIntervalSec > 0) {
     const beatIdx = Math.floor((pos - state.beatOffset) / state.beatIntervalSec);
     if (beatIdx > lastBeatIndex) {
       lastBeatIndex = beatIdx;
-      beatCount++;
 
       speedMult = BURST_SPEED;
       burstTimer = BURST_DURATION;
 
-      const isHitBeat = beatCount >= nextHitBeat;
-      if (isHitBeat) {
-        nextHitBeat = beatCount + 7 + Math.floor(Math.random() * 4);
-        // Player fails to dodge — stays in current lane
-        playerTargetLane = playerLane;
-      } else {
-        // Pick a lane different from current and last dodge
-        const available = [0, 1, 2].filter(l => l !== playerLane && l !== lastDodgeLane);
-        const dodge = available.length > 0 ? available[Math.floor(Math.random() * available.length)] : (playerLane === 0 ? 2 : 0);
-        lastDodgeLane = playerLane;
-        playerLane = dodge;
-        playerTargetLane = dodge;
-      }
+      // Always pick a lane different from current (and prefer not repeating last dodge)
+      const preferred = [0, 1, 2].filter(l => l !== playerLane && l !== lastDodgeLane);
+      const pool = preferred.length > 0 ? preferred : [0, 1, 2].filter(l => l !== playerLane);
+      const dodge = pool[Math.floor(Math.random() * pool.length)];
+      lastDodgeLane = playerLane;
+      playerLane = dodge;
+      playerTargetLane = dodge;
 
-      // Spawn 1–2 oncoming cars
+      // Spawn 1–2 oncoming cars in random lanes
       const count = 1 + (Math.random() < 0.45 ? 1 : 0);
       for (let i = 0; i < count; i++) {
-        const spawnLane = Math.floor(Math.random() * 3);
         const bandIdx = Math.floor(Math.random() * 7);
-        const hue = BAND_HUES[bandIdx] === 0 ? 210 : BAND_HUES[bandIdx];
-
-        const car: RoadCar = {
-          lane: spawnLane,
+        cars.push({
+          lane: Math.floor(Math.random() * 3),
           z: Z_SPAWN,
-          hue,
-          isHitCar: false,
-          hitFlash: 0,
+          hue: BAND_HUES[bandIdx],
           expired: false,
-        };
-
-        if (isHitBeat && i === 0) {
-          // Force hit car into player's lane (playerTargetLane = playerLane on hit)
-          car.lane = playerLane;
-          car.isHitCar = true;
-          hitCarRef = car;
-        }
-
-        cars.push(car);
+        });
       }
     }
   }
 
-  // ── Advance cars + detect hits ────────────────────────────────────────────
+  // ── Advance cars ──────────────────────────────────────────────────────────
   if (state.isPlaying) {
     for (const car of cars) {
       car.z -= STEP_PER_DT * dt * speedMult;
-      car.hitFlash *= Math.pow(0.88, dt);
-
-      if (car.z <= HIT_Z && !car.expired) {
-        if (car === hitCarRef) {
-          car.hitFlash = 1.0;
-          screenFlash = 0.95;
-          carShake = 20;
-          hitCarRef = null;
-          car.expired = true;
-        } else {
-          car.expired = true;
-        }
-      }
-
-      if (car.z < -80 && car.hitFlash < 0.01) car.expired = true;
+      if (car.z <= HIT_Z) car.expired = true;
     }
     cars = cars.filter(c => !c.expired);
   }
@@ -403,65 +460,62 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // ── Render: sky ───────────────────────────────────────────────────────────
   p.noStroke();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(220, 30, 12);
+  (p as any).fill(220, 30, 10);
   p.rect(0, 0, w, horizY);
 
-  // Horizon gradient suggestion (subtle lighter strip at horizon)
+  // Horizon glow strip
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(220, 20, 22, 80);
-  p.rect(0, horizY - 8, w, 16);
+  (p as any).fill(220, 20, 20, 70);
+  p.rect(0, horizY - 10, w, 20);
 
   // ── Render: road ──────────────────────────────────────────────────────────
   drawRoad(p, cx, horizY, nearY, nearHW, roadScrollZ);
 
-  // Ground below road bottom (covers canvas from nearY to bottom)
+  // Ground below near plane
   p.noStroke();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(100, 15, 12);
+  (p as any).fill(100, 15, 10);
   p.rect(0, nearY, w, h - nearY);
 
-  // ── Render: oncoming cars (sorted back-to-front) ──────────────────────────
+  // ── Render: oncoming cars (back → front) ──────────────────────────────────
   const sortedCars = [...cars].sort((a, b) => b.z - a.z);
 
   for (const car of sortedCars) {
     if (car.z <= 0) continue;
 
-    const t = zToT(car.z);
-    const screenY = tToScreenY(t, horizY, nearY);
-    const screenX = cx + laneOffsetX(car.lane, t, nearHW);
-    const hw = roadHWAt(t, nearHW);
-    const carW = hw * 0.6;
-    const carH = carW * 1.7;
+    const zF = car.z;
+    const zB = Math.min(car.z + Z_CAR_DEPTH, Z_SPAWN - 1);
 
-    if (carW < 1) continue;
+    const tF = zToT(zF);
+    const tB = zToT(zB);
 
-    drawOncomingCar(p, screenX, screenY, carW, carH, car.hue, car.hitFlash);
-  }
+    const hwF = roadHWAt(tF, nearHW);
+    const hwB = roadHWAt(tB, nearHW);
+    const fw = hwF * 0.6;
+    const bw = hwB * 0.6;
+    const fh = fw * 1.7;
+    const bh = bw * 1.7;
 
-  // ── Screen flash overlay ───────────────────────────────────────────────────
-  if (screenFlash > 0.01) {
-    p.noStroke();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (p as any).fill(0, 0, 100, screenFlash * 40);
-    p.rect(0, 0, w, h);
-    if (state.isPlaying) screenFlash *= Math.pow(0.75, dt);
+    if (fw < 1) continue;
+
+    const fy = tToScreenY(tF, horizY, nearY);
+    const by = tToScreenY(tB, horizY, nearY);
+    const fx = cx + laneOffsetX(car.lane, tF, nearHW);
+    const bx = cx + laneOffsetX(car.lane, tB, nearHW);
+
+    drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
 
   // ── Render: player car ────────────────────────────────────────────────────
   const S = minDim * 0.065;
-  const shakeX = (Math.random() - 0.5) * carShake;
-  const shakeY = (Math.random() - 0.5) * carShake;
   drawPlayerCar(
     p,
-    cx + playerOffsetX + shakeX,
-    nearY + S * 0.5 + shakeY,
+    cx + playerOffsetX,
+    nearY + S * 0.4,
     S,
     headlightGlow,
     carBankAngle
   );
-
-  // ── Decay carShake ─────────────────────────────────────────────────────────
-  carShake *= Math.pow(0.85, dt);
 
   p.colorMode(p['RGB'], 255);
   p.noStroke();
