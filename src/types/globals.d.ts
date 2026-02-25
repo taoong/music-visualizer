@@ -48,7 +48,7 @@ declare global {
 
     // Shapes
     ellipse(x: number, y: number, w: number, h?: number): void;
-    rect(x: number, y: number, w: number, h?: number): void;
+    rect(x: number, y: number, w: number, h?: number, tl?: number, tr?: number, br?: number, bl?: number): void;
     vertex(x: number, y: number): void;
     beginShape(): void;
     endShape(mode?: number): void;

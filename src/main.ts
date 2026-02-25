@@ -42,8 +42,8 @@ import {
   resetLasers,
   drawText,
   resetText,
-  drawSpace,
-  resetSpace,
+  drawHighway,
+  resetHighway,
   drawRunners,
   resetRunners,
   loadUserImage,
@@ -92,9 +92,9 @@ const sketch = (p: P5Instance) => {
     const cleanupUI = initUI();
     const cleanupKeyboard = initKeyboardShortcuts();
 
-    // Reset space state when a new track is loaded
+    // Reset highway state when a new track is loaded
     const unsubAudioReady = store.on('audioReady', () => {
-      resetSpace();
+      resetHighway();
     });
 
     // Cleanup on page unload
@@ -155,8 +155,8 @@ const sketch = (p: P5Instance) => {
       case 'text':
         drawText(p, dt);
         break;
-      case 'space':
-        drawSpace(p, dt);
+      case 'highway':
+        drawHighway(p, dt);
         break;
       case 'runners':
         drawRunners(p, dt);
@@ -180,8 +180,8 @@ const sketch = (p: P5Instance) => {
       resetLasers();
     } else if (store.state.vizMode === 'text') {
       resetText();
-    } else if (store.state.vizMode === 'space') {
-      resetSpace();
+    } else if (store.state.vizMode === 'highway') {
+      resetHighway();
     } else if (store.state.vizMode === 'runners') {
       resetRunners();
     }
