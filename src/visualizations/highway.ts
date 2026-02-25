@@ -15,6 +15,7 @@ interface RoadCar {
   z: number;       // depth: Z_SPAWN (far) → 0 (near)
   hue: number;     // HSB hue
   expired: boolean;
+  speed: number;   // z-units per dt tick — calculated at spawn to arrive on the beat
 }
 
 // ── Module state ──────────────────────────────────────────────────────────────
@@ -26,8 +27,6 @@ let lastBeatIndex = -1;
 let headlightGlow = 0;
 let initialized = false;
 
-let speedMult = 1.0;
-let burstTimer = 0;
 let beatCount = 0;
 let playerLane = 1;
 let playerTargetLane = 1;
@@ -45,9 +44,6 @@ const NEAR_Y_RATIO = 0.88;
 const NEAR_HW_RATIO = 0.46;
 const HORIZON_HW = 15;
 const DASH_SPACING = 120;
-const BURST_SPEED = 3.0;
-const BURST_DURATION = 200;
-
 const BAND_HUES = [270, 30, 60, 120, 180, 210, 150];
 
 // ── Perspective helpers ───────────────────────────────────────────────────────
@@ -360,8 +356,6 @@ export function resetHighway(): void {
   lastBeatIndex = -1;
   headlightGlow = 0;
   initialized = true;
-  speedMult = 1.0;
-  burstTimer = 0;
   beatCount = 0;
   playerLane = 1;
   playerTargetLane = 1;
@@ -398,15 +392,6 @@ export function drawHighway(p: P5Instance, dt: number): void {
   }
   lastPlaybackPos = pos;
 
-  // ── Speed burst decay ──────────────────────────────────────────────────────
-  if (state.isPlaying && burstTimer > 0) {
-    burstTimer -= p.deltaTime;
-    if (burstTimer <= 0) {
-      burstTimer = 0;
-      speedMult = 1.0;
-    }
-  }
-
   // ── Speed (intensity knob) and beat-division knob ─────────────────────────
   // baseSpeed scales STEP_PER_DT by the Intensity slider (0–2).
   // division controls how many raw beats are skipped between each swerve/spawn.
@@ -422,8 +407,10 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
       // Only swerve + spawn on every Nth beat (controlled by Beat Frequency knob)
       if (beatCount % division === 0) {
-        speedMult = BURST_SPEED;
-        burstTimer = BURST_DURATION;
+        // Speed for cars spawned now: travel Z_SPAWN units in exactly
+        // `division * beatIntervalSec` seconds so they reach the player on the next trigger beat.
+        const travelSec = division * state.beatIntervalSec;
+        const carSpeed = travelSec > 0 ? Z_SPAWN / (travelSec * 60) : STEP_PER_DT;
 
         // Lanes that already have a car close enough to be a threat
         const dangerLanes = new Set(cars.filter(c => c.z < 450).map(c => c.lane));
@@ -451,6 +438,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
             z: Z_SPAWN,
             hue: BAND_HUES[bandIdx],
             expired: false,
+            speed: carSpeed,
           });
         }
       }
@@ -463,7 +451,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
       // Trucks that have passed the player exit at 2× speed — mimics the
       // rapid apparent motion of a vehicle that has just overtaken you.
       const exitMult = car.z <= 0 ? 2.0 : 1.0;
-      car.z -= baseSpeed * dt * speedMult * exitMult;
+      car.z -= car.speed * dt * exitMult;
     }
     // Remove cars flagged expired during the previous frame's render pass
     cars = cars.filter(c => !c.expired);
@@ -481,7 +469,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
   // ── Scroll road markings ───────────────────────────────────────────────────
   if (state.isPlaying) {
-    roadScrollZ += baseSpeed * dt * speedMult;
+    roadScrollZ += baseSpeed * dt;
     if (roadScrollZ >= DASH_SPACING) roadScrollZ -= DASH_SPACING;
   }
 
