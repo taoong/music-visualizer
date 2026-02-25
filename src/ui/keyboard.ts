@@ -28,7 +28,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('6', () => setVizMode('stickman'), 'Stickman visualization');
   defineShortcut('7', () => setVizMode('lasers'), 'Lasers visualization');
   defineShortcut('8', () => setVizMode('text'), 'Text visualization');
-  defineShortcut('9', () => setVizMode('wormhole'), 'Wormhole visualization');
+  defineShortcut('9', () => setVizMode('space'), 'Space visualization');
   defineShortcut('0', () => setVizMode('runners'), 'Runners visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');

@@ -53,6 +53,7 @@ declare global {
     beginShape(): void;
     endShape(mode?: number): void;
     line(x1: number, y1: number, x2: number, y2: number): void;
+    point(x: number, y: number): void;
     curveVertex(x: number, y: number): void;
 
     // Style

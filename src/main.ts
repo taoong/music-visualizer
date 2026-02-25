@@ -42,9 +42,9 @@ import {
   resetLasers,
   drawText,
   resetText,
-  drawWormhole,
-  resetWormhole,
-  analyzeWormholeEvents,
+  drawSpace,
+  resetSpace,
+  analyzeSpaceEvents,
   drawRunners,
   resetRunners,
   loadUserImage,
@@ -93,12 +93,12 @@ const sketch = (p: P5Instance) => {
     const cleanupUI = initUI();
     const cleanupKeyboard = initKeyboardShortcuts();
 
-    // Pre-compute wormhole events when audio becomes ready
+    // Pre-compute space events when audio becomes ready
     const unsubAudioReady = store.on('audioReady', () => {
       const buf = audioEngine.getAudioBuffer();
       if (buf) {
-        analyzeWormholeEvents(buf);
-        resetWormhole();
+        analyzeSpaceEvents(buf);
+        resetSpace();
       }
     });
 
@@ -160,8 +160,8 @@ const sketch = (p: P5Instance) => {
       case 'text':
         drawText(p, dt);
         break;
-      case 'wormhole':
-        drawWormhole(p, dt);
+      case 'space':
+        drawSpace(p, dt);
         break;
       case 'runners':
         drawRunners(p, dt);
@@ -185,8 +185,8 @@ const sketch = (p: P5Instance) => {
       resetLasers();
     } else if (store.state.vizMode === 'text') {
       resetText();
-    } else if (store.state.vizMode === 'wormhole') {
-      resetWormhole();
+    } else if (store.state.vizMode === 'space') {
+      resetSpace();
     } else if (store.state.vizMode === 'runners') {
       resetRunners();
     }

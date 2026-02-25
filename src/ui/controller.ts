@@ -93,7 +93,7 @@ function bindVizSelector(): () => void {
   function hide(el: HTMLElement | null): void { el?.classList.add('hidden'); }
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text' | 'wormhole' | 'runners';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text' | 'space' | 'runners';
     store.setVizMode(mode);
 
     // Per-mode control visibility
@@ -135,7 +135,7 @@ function bindVizSelector(): () => void {
         show(intensityGroup); show(beatDivisionGroup); show(textInputGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup);
         break;
-      case 'wormhole':
+      case 'space':
         show(intensityGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup);

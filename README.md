@@ -63,7 +63,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `6` | Stickman | Dancing stick figure with kick zoom and high-freq color |
 | `7` | Lasers | Concert laser light show with beat-synced beams |
 | `8` | Text | Beat-synced text in 7 cycling visual patterns |
-| `9` | Wormhole | Guitar Hero-style geometric objects flying toward the viewer, timed to song events |
+| `9` | Space | Third-person spaceship navigating an asteroid field; asteroids fly toward the viewer timed to song events |
 | `0` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
 
 ## Keyboard Shortcuts
