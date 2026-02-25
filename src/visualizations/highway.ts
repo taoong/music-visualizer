@@ -32,6 +32,7 @@ let playerLane = 1;
 let playerTargetLane = 1;
 let playerOffsetX = 0;
 let carBankAngle = 0;
+let cameraOffsetX = 0;
 let lastDodgeLane = -1;
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -361,6 +362,7 @@ export function resetHighway(): void {
   playerTargetLane = 1;
   playerOffsetX = 0;
   carBankAngle = 0;
+  cameraOffsetX = 0;
   lastDodgeLane = -1;
 }
 
@@ -464,6 +466,10 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const velX = playerOffsetX - prevOffsetX;
   carBankAngle += (velX / minDim * 8.0 - carBankAngle) * Math.min(1, 0.18 * dt);
 
+  // Camera lags behind player — creates authentic racing-game follow feel.
+  cameraOffsetX += (playerOffsetX - cameraOffsetX) * Math.min(1, 0.08 * dt);
+  const vanishX = cx - cameraOffsetX;
+
   // ── Headlight glow tracks bass ─────────────────────────────────────────────
   headlightGlow += (bassAmp - headlightGlow) * Math.min(1, 0.15 * dt);
 
@@ -485,7 +491,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   p.rect(0, horizY - 10, w, 20);
 
   // ── Render: road ──────────────────────────────────────────────────────────
-  drawRoad(p, cx, horizY, nearY, nearHW, roadScrollZ, h);
+  drawRoad(p, vanishX, horizY, nearY, nearHW, roadScrollZ, h);
 
   // ── Render: oncoming cars (back → front) ──────────────────────────────────
   // Painter's algorithm: far trucks first, then player car, then trucks that
@@ -510,8 +516,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
     const fy = tToScreenY(tF, horizY, nearY);
     const by = tToScreenY(tB, horizY, nearY);
-    const fx = cx + laneOffsetX(car.lane, tF, nearHW);
-    const bx = cx + laneOffsetX(car.lane, tB, nearHW);
+    const fx = vanishX + laneOffsetX(car.lane, tF, nearHW);
+    const bx = vanishX + laneOffsetX(car.lane, tB, nearHW);
 
     drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
@@ -520,7 +526,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const S = minDim * 0.065;
   drawPlayerCar(
     p,
-    cx + playerOffsetX,
+    cx + (playerOffsetX - cameraOffsetX),
     nearY + S * 0.4,
     S,
     headlightGlow,
@@ -551,7 +557,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
     }
 
     // X pinned at the near-plane lane position (no lateral drift)
-    const fx = cx + laneOffsetX(car.lane, 1.0, nearHW);
+    const fx = vanishX + laneOffsetX(car.lane, 1.0, nearHW);
 
     // Draw as a flat face (degenerate box) — the truck has passed, so we
     // just show its face sliding off the bottom at consistent size
