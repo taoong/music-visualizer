@@ -105,11 +105,11 @@ function drawRoad(
   // Dashed lane dividers — at ±1/3 of road half-width (between lane centers)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).stroke(0, 0, 65, 85);
-  p.strokeWeight(1.5);
+  p.strokeWeight(3);
 
   for (const divSide of [-1, 1]) {
     for (let z = scrollZ; z < Z_SPAWN; z += DASH_SPACING) {
-      const dashEnd = z + DASH_SPACING * 0.45;
+      const dashEnd = z + DASH_SPACING * 0.72;
       const t1 = zToT(z);
       const t2 = zToT(Math.min(dashEnd, Z_SPAWN - 1));
       const hw1 = roadHWAt(t1, nearHW);
