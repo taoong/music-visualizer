@@ -27,8 +27,7 @@ interface Runner {
 
 // ── Constants ──────────────────────────────────────────────────────────────
 
-const BEAT_SPEED_MULT = 7.0;
-const BEAT_BURST_MS   = 180;
+const BEAT_BURST_MS = 180;
 const FORWARD_LEAN    = 0.18;   // radians
 const THIGH_SWING     = 0.80;
 const SHIN_FACTOR     = 0.35;
@@ -47,8 +46,9 @@ const BAND_HUES = [200, 270, 130, 30, 300, 160, 50] as const;
 
 let runners: Runner[] = [];
 let speedMult = 1.0;
-let burstTimer = 0;      // ms remaining in burst
+let burstTimer = 0;          // ms remaining in burst
 let lastBeatIndex = -1;
+let lastBeatGroupIndex = -1;
 let initialized = false;
 
 // ── Initialization ─────────────────────────────────────────────────────────
@@ -83,6 +83,7 @@ function initRunners(p: P5Instance): void {
   speedMult = 1.0;
   burstTimer = 0;
   lastBeatIndex = -1;
+  lastBeatGroupIndex = -1;
   initialized = true;
 }
 
@@ -196,15 +197,22 @@ export function drawRunners(p: P5Instance, dt: number): void {
   (p as any).colorMode(p['HSB'], 360, 100, 100, 100);
 
   // Beat detection — instant square wave, no attack/release
-  const { state } = store;
+  // intensity knob (0–2) scales burst speed: at 0 → 1×, at 1 → 7×, at 2 → 13×
+  // beatDivision knob gates which beat groups trigger a burst (same as lasers/text)
+  const { state, config } = store;
   if (state.detectedBPM > 0 && state.isPlaying) {
     const pos = audioEngine.getPlaybackPosition();
     const adjusted = pos - state.beatOffset;
     const currentBeatIndex = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
-      speedMult = BEAT_SPEED_MULT;
-      burstTimer = BEAT_BURST_MS;
       lastBeatIndex = currentBeatIndex;
+      const beatsPerBurst = Math.pow(2, config.beatDivision - 1);
+      const currentGroup = Math.floor(currentBeatIndex / beatsPerBurst);
+      if (currentGroup !== lastBeatGroupIndex) {
+        lastBeatGroupIndex = currentGroup;
+        speedMult = 1 + config.intensity * 6;
+        burstTimer = BEAT_BURST_MS;
+      }
     }
   }
 
@@ -257,4 +265,5 @@ export function resetRunners(): void {
   speedMult = 1.0;
   burstTimer = 0;
   lastBeatIndex = -1;
+  lastBeatGroupIndex = -1;
 }

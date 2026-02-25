@@ -141,8 +141,8 @@ function bindVizSelector(): () => void {
         hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'runners':
-        hide(scaleGroup); show(decayRateGroup);
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
+        show(intensityGroup); show(beatDivisionGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup);
         break;
     }
   };
