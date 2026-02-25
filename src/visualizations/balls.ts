@@ -1,7 +1,8 @@
 /**
- * Pong visualization — AI vs AI pong game, audio-reactive
+ * Pong visualization — AI vs AI pong game, beat-synchronized speed bursts
  */
 import { store } from '../state/store';
+import { audioEngine } from '../audio/engine';
 
 interface PongBall {
   x: number;
@@ -17,8 +18,7 @@ const PADDLE_H_RATIO = 0.18;
 const PADDLE_MARGIN = 40;
 const BASE_BALL_SPEED = 4;
 const BASE_PADDLE_SPEED = 5;
-const KICK_BURST_MS = 200;
-const KICK_THRESHOLD = 1.5;
+const BEAT_BURST_MS = 180;
 const BALL_R = 8;
 const BAND_HUES = [200, 270, 130, 30, 300, 160, 50];
 
@@ -27,7 +27,8 @@ let leftPaddleY = 0;
 let rightPaddleY = 0;
 let speedMult = 1.0;
 let burstTimer = 0;
-let kickWasActive = false;
+let lastBeatIndex = -1;
+let lastBeatGroupIndex = -1;
 let initialized = false;
 let leftScore = 0;
 let rightScore = 0;
@@ -54,7 +55,8 @@ function initPong(p: P5Instance): void {
   rightScore = 0;
   speedMult = 1.0;
   burstTimer = 0;
-  kickWasActive = false;
+  lastBeatIndex = -1;
+  lastBeatGroupIndex = -1;
   const { config } = store;
   for (let i = 0; i < config.pongBallCount; i++) {
     pongBalls.push(spawnBall(p));
@@ -66,7 +68,8 @@ export function resetPong(): void {
   pongBalls = [];
   speedMult = 1.0;
   burstTimer = 0;
-  kickWasActive = false;
+  lastBeatIndex = -1;
+  lastBeatGroupIndex = -1;
   leftScore = 0;
   rightScore = 0;
 }
@@ -79,23 +82,29 @@ export function drawPong(p: P5Instance, dt: number): void {
     initialized = true;
   }
 
-  // Kick detection (square-wave burst)
-  const isFreqMode = state.mode === 'freq';
-  const kickTransient = isFreqMode
-    ? audioState.transientValues[0]
-    : audioState.transientStems['kick']?.multiplier ?? 1.0;
-
-  if (kickTransient > KICK_THRESHOLD && !kickWasActive) {
-    speedMult = 1.0 + config.ballsKickBoost * 0.5;
-    burstTimer = KICK_BURST_MS;
-    kickWasActive = true;
+  // Beat-synchronized speed burst — square wave, same pattern as runners
+  if (state.detectedBPM > 0 && state.isPlaying) {
+    const pos = audioEngine.getPlaybackPosition();
+    const adjusted = pos - state.beatOffset;
+    const currentBeatIndex = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
+    if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
+      lastBeatIndex = currentBeatIndex;
+      const beatsPerBurst = Math.pow(2, config.beatDivision - 1);
+      const currentGroup = Math.floor(currentBeatIndex / beatsPerBurst);
+      if (currentGroup !== lastBeatGroupIndex) {
+        lastBeatGroupIndex = currentGroup;
+        speedMult = 1 + config.intensity * 6;
+        burstTimer = BEAT_BURST_MS;
+      }
+    }
   }
-  if (kickTransient <= KICK_THRESHOLD) kickWasActive = false;
 
-  burstTimer -= p.deltaTime;
-  if (burstTimer <= 0) {
-    burstTimer = 0;
-    speedMult = 1.0;
+  if (burstTimer > 0) {
+    burstTimer -= p.deltaTime;
+    if (burstTimer <= 0) {
+      burstTimer = 0;
+      speedMult = 1.0;
+    }
   }
 
   // Ball count management

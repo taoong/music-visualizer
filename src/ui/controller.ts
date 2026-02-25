@@ -129,10 +129,10 @@ function bindVizSelector(): () => void {
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'pong':
-        show(ballsKickBoostGroup); show(intensityGroup); show(pongBallCountGroup);
+        show(intensityGroup); show(beatDivisionGroup); show(pongBallCountGroup);
         if (intensityLabel) intensityLabel.textContent = 'Speed';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(beatDivisionGroup); hide(textInputGroup);
+        hide(ballsKickBoostGroup); hide(textInputGroup);
         break;
       case 'lasers':
         show(intensityGroup); show(beatDivisionGroup);
@@ -202,7 +202,7 @@ function bindRandomizeButton(): () => void {
     }
 
     if (vizMode === 'pong') {
-      setSlider('balls-kick-boost', rand(2.0, 10.0));
+      setSlider('beat-division', Math.floor(rand(1, 5)));
       setSlider('pong-ball-count', Math.floor(rand(1, 4)));
     }
 
