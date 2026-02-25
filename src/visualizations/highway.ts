@@ -38,10 +38,10 @@ let lastDodgeLane = -1;
 
 const Z_SPAWN = 1000;
 const Z_CAR_DEPTH = 80;    // car length in z-units (≈ 4.5 m at this scale)
-const STEP_PER_DT = 6.67;
+const STEP_PER_DT = 11.0;
 const HORIZON_Y_RATIO = 0.35;
 const NEAR_Y_RATIO = 0.88;
-const NEAR_HW_RATIO = 0.38;
+const NEAR_HW_RATIO = 0.46;
 const HORIZON_HW = 15;
 const DASH_SPACING = 120;
 const BURST_SPEED = 3.0;
