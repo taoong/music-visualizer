@@ -45,7 +45,7 @@ src/
 │   ├── stickman.ts            # Animated stick figure, beat-synced poses, kick zoom, high-freq color
 │   ├── text.ts                # Beat-synced text patterns (7 modes: zoom, diagonal, quad-mirror, crown, echo, reflect, kaleidoscope)
 │   ├── wormhole.ts            # Guitar Hero-style objects flying toward viewer; events pre-computed from audio buffer
-│   ├── aurora.ts              # Aurora Borealis: layered sine-wave ribbons, starfield, horizon reflection, beat shimmer
+│   ├── runners.ts             # Infinite side-scrolling marathon runners at 3 depth layers; beat → instant 7× speed burst 180 ms
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode

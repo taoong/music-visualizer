@@ -29,7 +29,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('7', () => setVizMode('lasers'), 'Lasers visualization');
   defineShortcut('8', () => setVizMode('text'), 'Text visualization');
   defineShortcut('9', () => setVizMode('wormhole'), 'Wormhole visualization');
-  defineShortcut('0', () => setVizMode('aurora'), 'Aurora visualization');
+  defineShortcut('0', () => setVizMode('runners'), 'Runners visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

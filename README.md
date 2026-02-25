@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **10 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Stickman, Lasers, Text, Wormhole, Aurora
+- **10 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Stickman, Lasers, Text, Wormhole, Runners
 - **Two audio analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
@@ -64,7 +64,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `7` | Lasers | Concert laser light show with beat-synced beams |
 | `8` | Text | Beat-synced text in 7 cycling visual patterns |
 | `9` | Wormhole | Guitar Hero-style geometric objects flying toward the viewer, timed to song events |
-| `0` | Aurora | Organic aurora borealis curtains of light — layered sine-wave ribbons, starfield, water reflection |
+| `0` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
 
 ## Keyboard Shortcuts
 
