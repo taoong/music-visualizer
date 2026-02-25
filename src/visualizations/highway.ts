@@ -409,20 +409,29 @@ export function drawHighway(p: P5Instance, dt: number): void {
       speedMult = BURST_SPEED;
       burstTimer = BURST_DURATION;
 
-      // Always pick a lane different from current (and prefer not repeating last dodge)
-      const preferred = [0, 1, 2].filter(l => l !== playerLane && l !== lastDodgeLane);
-      const pool = preferred.length > 0 ? preferred : [0, 1, 2].filter(l => l !== playerLane);
+      // Lanes that already have a car close enough to be a threat
+      const dangerLanes = new Set(cars.filter(c => c.z < 450).map(c => c.lane));
+
+      // Prefer a lane that has no close cars, is not current, and is not the last dodge
+      const safeDiff = [0, 1, 2].filter(l => l !== playerLane && !dangerLanes.has(l) && l !== lastDodgeLane);
+      const safe     = [0, 1, 2].filter(l => l !== playerLane && !dangerLanes.has(l));
+      const anyDiff  = [0, 1, 2].filter(l => l !== playerLane);
+      const pool = safeDiff.length > 0 ? safeDiff
+                 : safe.length    > 0 ? safe
+                 : anyDiff;
       const dodge = pool[Math.floor(Math.random() * pool.length)];
       lastDodgeLane = playerLane;
       playerLane = dodge;
       playerTargetLane = dodge;
 
-      // Spawn 1–2 oncoming cars in random lanes
+      // Spawn 1–2 oncoming cars — never in the player's new lane so they
+      // don't arrive right as the player lands there
+      const spawnPool = [0, 1, 2].filter(l => l !== playerTargetLane);
       const count = 1 + (Math.random() < 0.45 ? 1 : 0);
       for (let i = 0; i < count; i++) {
         const bandIdx = Math.floor(Math.random() * 7);
         cars.push({
-          lane: Math.floor(Math.random() * 3),
+          lane: spawnPool[Math.floor(Math.random() * spawnPool.length)],
           z: Z_SPAWN,
           hue: BAND_HUES[bandIdx],
           expired: false,
@@ -443,7 +452,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // ── Player X smoothing + banking ──────────────────────────────────────────
   const targetOffsetX = laneOffsetX(playerTargetLane, 1.0, nearHW);
   const prevOffsetX = playerOffsetX;
-  playerOffsetX += (targetOffsetX - playerOffsetX) * Math.min(1, 0.12 * dt);
+  playerOffsetX += (targetOffsetX - playerOffsetX) * Math.min(1, 0.18 * dt);
   const velX = playerOffsetX - prevOffsetX;
   carBankAngle += (velX / minDim * 8.0 - carBankAngle) * Math.min(1, 0.18 * dt);
 
