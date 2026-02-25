@@ -443,7 +443,10 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // ── Advance cars ──────────────────────────────────────────────────────────
   if (state.isPlaying) {
     for (const car of cars) {
-      car.z -= STEP_PER_DT * dt * speedMult;
+      // Trucks that have passed the player exit at 2× speed — mimics the
+      // rapid apparent motion of a vehicle that has just overtaken you.
+      const exitMult = car.z <= 0 ? 2.0 : 1.0;
+      car.z -= STEP_PER_DT * dt * speedMult * exitMult;
     }
     // Remove cars flagged expired during the previous frame's render pass
     cars = cars.filter(c => !c.expired);
@@ -526,36 +529,34 @@ export function drawHighway(p: P5Instance, dt: number): void {
   );
 
   // Pass 2 — trucks that have passed the player (z ≤ 0): drawn on top,
-  // occluding the player car. Use unclamped perspective (t > 1) so the truck
-  // continues to grow and move naturally until it exits the canvas.
+  // occluding the player car as they exit the bottom of the screen.
+  //
+  // Size is capped at the near-plane (z=0) values so the truck never expands
+  // beyond the size it was when it passed the player.  The Y position uses
+  // unclamped t (> 1 for z < 0) so the truck continues moving downward
+  // naturally rather than suddenly stopping or falling at a fixed rate.
+  const fwExit = roadHWAt(1.0, nearHW) * 0.40;
+  const fhExit = fwExit * 1.5;
+
   for (const car of sortedCars) {
     if (car.z > 0) continue;
 
-    // Unclamped t: > 1 for z < 0
+    // Unclamped t gives the correct Y position below the near plane
     const tF = 1 - car.z / Z_SPAWN;
-    const tB = 1 - (car.z + Z_CAR_DEPTH) / Z_SPAWN;
-
-    const hwF = roadHWAt(tF, nearHW);
-    const hwB = roadHWAt(tB, nearHW);
-    const fw = hwF * 0.40;
-    const bw = hwB * 0.40;
-    const fh = fw * 1.5;
-    const bh = bw * 1.5;
-
     const fy = tToScreenY(tF, horizY, nearY);
-    const by = tToScreenY(tB, horizY, nearY);
 
-    // Pin lane X at t=1.0 so the truck stays in its lane (no lateral drift)
-    const fx = cx + laneOffsetX(car.lane, Math.min(tF, 1.0), nearHW);
-    const bx = cx + laneOffsetX(car.lane, Math.min(tB, 1.0), nearHW);
-
-    // Expire once the front-face bottom edge exits the canvas
-    if (fy - fh > h) {
+    // Expire when the top of the truck has fully exited the canvas
+    if (fy - fhExit > h) {
       car.expired = true;
       continue;
     }
 
-    drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
+    // X pinned at the near-plane lane position (no lateral drift)
+    const fx = cx + laneOffsetX(car.lane, 1.0, nearHW);
+
+    // Draw as a flat face (degenerate box) — the truck has passed, so we
+    // just show its face sliding off the bottom at consistent size
+    drawOncomingCar(p, fx, fy, fwExit, fhExit, fx, fy, fwExit, fhExit, car.hue);
   }
 
   p.colorMode(p['RGB'], 255);
