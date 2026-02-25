@@ -44,7 +44,7 @@ src/
 │   ├── cube.ts                # 3D wireframe cube, beat-synced rotation, optional image on faces
 │   ├── stickman.ts            # Animated stick figure, beat-synced poses, kick zoom, high-freq color
 │   ├── text.ts                # Beat-synced text patterns (7 modes: zoom, diagonal, quad-mirror, crown, echo, reflect, kaleidoscope)
-│   ├── space.ts               # Third-person spaceship + asteroid field; events pre-computed from audio buffer via IIR bandpass
+│   ├── space.ts               # Third-person spaceship + asteroid field; asteroids spawn on beat, ship swerves to dodge, ~every 8 beats ship mis-swerves and gets hit
 │   ├── runners.ts             # Infinite side-scrolling marathon runners at 3 depth layers; beat → instant 7× speed burst 180 ms
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
@@ -70,7 +70,7 @@ src/
 
 1. **Audio input** — User uploads a file or selects sample track. Optionally run stem separation via `/api/separate` (Demucs).
 2. **BPM detection** — Server-side Essentia via `/api/detect-bpm`, with client-side onset/autocorrelation fallback.
-3. **Space pre-processing** — On `audioReady`, `analyzeSpaceEvents(buffer)` scans the raw PCM in 10 ms hops via IIR bandpass filtering to build a sorted event timeline (`WormholeEvent[]`). Used by the space visualization for lookahead asteroid spawning.
+3. **Space reset** — On `audioReady`, `resetSpace()` clears asteroid/beat state for the new track. Asteroids are spawned purely on detected beats at runtime (no pre-computation).
 4. **Playback** — `audioEngine` creates Tone.js Player(s) + FFT node(s). Freq mode: 1 player. Stem mode: 5 parallel players (kick, drums, bass, vocals, other).
 5. **Render loop** (`main.ts` `p.draw`) runs at 60fps:
    - Get raw FFT → log-band amplitudes (7 bands) or per-stem amplitudes (5 stems)

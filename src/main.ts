@@ -44,7 +44,6 @@ import {
   resetText,
   drawSpace,
   resetSpace,
-  analyzeSpaceEvents,
   drawRunners,
   resetRunners,
   loadUserImage,
@@ -93,13 +92,9 @@ const sketch = (p: P5Instance) => {
     const cleanupUI = initUI();
     const cleanupKeyboard = initKeyboardShortcuts();
 
-    // Pre-compute space events when audio becomes ready
+    // Reset space state when a new track is loaded
     const unsubAudioReady = store.on('audioReady', () => {
-      const buf = audioEngine.getAudioBuffer();
-      if (buf) {
-        analyzeSpaceEvents(buf);
-        resetSpace();
-      }
+      resetSpace();
     });
 
     // Cleanup on page unload
