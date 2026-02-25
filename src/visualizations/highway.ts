@@ -75,26 +75,31 @@ function drawRoad(
   horizY: number,
   nearY: number,
   nearHW: number,
-  scrollZ: number
+  scrollZ: number,
+  bottomY: number
 ): void {
   p.noStroke();
 
-  // Asphalt trapezoid
+  // Road half-width at the canvas bottom (linear extrapolation beyond nearY)
+  const bottomT = (bottomY - horizY) / (nearY - horizY);
+  const bottomHW = roadHWAt(bottomT, nearHW);
+
+  // Asphalt trapezoid — extends all the way to the canvas bottom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 0, 16);
   p.beginShape();
   p.vertex(cx - HORIZON_HW, horizY);
   p.vertex(cx + HORIZON_HW, horizY);
-  p.vertex(cx + nearHW, nearY);
-  p.vertex(cx - nearHW, nearY);
+  p.vertex(cx + bottomHW, bottomY);
+  p.vertex(cx - bottomHW, bottomY);
   p.endShape(p['CLOSE']);
 
-  // Solid white edge lines
+  // Solid white edge lines — also extend to canvas bottom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).stroke(0, 0, 88);
   p.strokeWeight(2);
-  p.line(cx - HORIZON_HW, horizY, cx - nearHW, nearY);
-  p.line(cx + HORIZON_HW, horizY, cx + nearHW, nearY);
+  p.line(cx - HORIZON_HW, horizY, cx - bottomHW, bottomY);
+  p.line(cx + HORIZON_HW, horizY, cx + bottomHW, bottomY);
 
   // Dashed lane dividers — at ±1/3 of road half-width (between lane centers)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -480,13 +485,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   p.rect(0, horizY - 10, w, 20);
 
   // ── Render: road ──────────────────────────────────────────────────────────
-  drawRoad(p, cx, horizY, nearY, nearHW, roadScrollZ);
-
-  // Ground below near plane
-  p.noStroke();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(100, 15, 10);
-  p.rect(0, nearY, w, h - nearY);
+  drawRoad(p, cx, horizY, nearY, nearHW, roadScrollZ, h);
 
   // ── Render: oncoming cars (back → front) ──────────────────────────────────
   // Painter's algorithm: far trucks first, then player car, then trucks that
