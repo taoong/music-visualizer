@@ -26,6 +26,7 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   intensity: 'viz-intensity',
   beatDivision: 'beat-division',
   masterVolume: 'master-volume',
+  pongBallCount: 'pong-ball-count',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

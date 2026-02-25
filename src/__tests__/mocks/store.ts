@@ -21,8 +21,6 @@ export function createMockStoreState() {
       beatIntervalSec: 0.5,
       lastBeatIndex: -1,
       beatOffset: 0,
-      balls: [],
-      kickBoostMultiplier: 1.0,
     },
     config: {
       sensSub: 1.5,
@@ -42,6 +40,9 @@ export function createMockStoreState() {
       ballsKickBoost: 6.0,
       masterVolume: 0.8,
       decayRate: 0.88,
+      intensity: 1.0,
+      beatDivision: 1,
+      pongBallCount: 1,
     },
     audioState: {
       smoothedBands: Array(7)

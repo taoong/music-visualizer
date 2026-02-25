@@ -32,8 +32,8 @@ import {
   drawSpikeCircle,
   drawSpectrum,
   drawTunnel,
-  drawBalls,
-  initBalls,
+  drawPong,
+  resetPong,
   drawCube,
   resetCube,
   drawStickman,
@@ -140,8 +140,8 @@ const sketch = (p: P5Instance) => {
       case 'spectrum':
         drawSpectrum(p);
         break;
-      case 'balls':
-        drawBalls(p, dt);
+      case 'pong':
+        drawPong(p, dt);
         break;
       case 'cube':
         drawCube(p, dt);
@@ -170,8 +170,8 @@ const sketch = (p: P5Instance) => {
 
   p.windowResized = () => {
     p.resizeCanvas(window.innerWidth, window.innerHeight);
-    if (store.state.vizMode === 'balls') {
-      initBalls(p);
+    if (store.state.vizMode === 'pong') {
+      resetPong();
     } else if (store.state.vizMode === 'cube') {
       resetCube();
     } else if (store.state.vizMode === 'stickman') {

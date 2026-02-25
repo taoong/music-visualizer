@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'pong' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -52,6 +52,7 @@ export interface Config {
   decayRate: number;
   intensity: number;
   beatDivision: number;
+  pongBallCount: number;
 }
 
 // Application state
@@ -77,9 +78,6 @@ export interface AppState {
   lastBeatIndex: number;
   beatOffset: number;
 
-  // Balls visualization
-  balls: Ball[];
-  kickBoostMultiplier: number;
 }
 
 // Wormhole visualization types
@@ -100,16 +98,6 @@ export interface ActiveObject {
   magnitude: number;
   hitFlash: number;
   expired: boolean;
-}
-
-// Ball object for balls visualization
-export interface Ball {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  baseRadius: number;
-  band: number;
 }
 
 // Audio processing state

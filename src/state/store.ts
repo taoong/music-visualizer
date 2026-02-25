@@ -47,8 +47,6 @@ class StateStore {
     beatIntervalSec: 0,
     lastBeatIndex: -1,
     beatOffset: 0,
-    balls: [],
-    kickBoostMultiplier: 1.0,
   };
 
   // Configuration
@@ -258,9 +256,6 @@ class StateStore {
     this.state.beatOffset = 0;
     this.state.circleOutlineHue = 0;
 
-    // Reset balls
-    this.state.balls = [];
-    this.state.kickBoostMultiplier = 1.0;
   }
 
   // Getters

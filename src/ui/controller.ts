@@ -3,7 +3,7 @@
  */
 import { store } from '../state/store';
 import { injectErrorStyles } from '../utils/errors';
-import { initBalls, setVisualizerText } from '../visualizations';
+import { setVisualizerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
 import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton, bindImageUpload } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
@@ -79,14 +79,15 @@ function bindVizSelector(): () => void {
   const intensityGroup = document.getElementById('intensity-group');
   const beatDivisionGroup = document.getElementById('beat-division-group');
   const textInputGroup = document.getElementById('text-input-group');
+  const pongBallCountGroup = document.getElementById('pong-ball-count-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
 
-  // Remove balls option on mobile
+  // Remove pong option on mobile
   if (isMobile) {
-    const ballsOption = vizSelect.querySelector('option[value="balls"]');
-    ballsOption?.remove();
+    const pongOption = vizSelect.querySelector('option[value="pong"]');
+    pongOption?.remove();
   }
 
   function show(el: HTMLElement | null): void { el?.classList.remove('hidden'); }
@@ -95,7 +96,7 @@ function bindVizSelector(): () => void {
   const intensityLabel = intensityGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'balls' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'pong' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
     store.setVizMode(mode);
 
     // Per-mode control visibility
@@ -127,11 +128,11 @@ function bindVizSelector(): () => void {
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
-      case 'balls':
-        show(scaleGroup); show(decayRateGroup); show(ballsKickBoostGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
-        initBalls(window.p5Instance);
+      case 'pong':
+        show(ballsKickBoostGroup); show(intensityGroup); show(pongBallCountGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Speed';
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
+        hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'lasers':
         show(intensityGroup); show(beatDivisionGroup);
@@ -190,8 +191,8 @@ function bindRandomizeButton(): () => void {
       setSlider('sens-other', rand(1.0, 3.0));
     }
 
-    const useScale = vizMode === 'circle' || vizMode === 'spectrum' || vizMode === 'balls' || vizMode === 'cube';
-    const useDecay = vizMode !== 'lasers' && vizMode !== 'text';
+    const useScale = vizMode === 'circle' || vizMode === 'spectrum' || vizMode === 'cube';
+    const useDecay = vizMode !== 'lasers' && vizMode !== 'text' && vizMode !== 'pong';
 
     if (useScale) setSlider('spike-scale', rand(0.5, 2.0));
     if (useDecay) setSlider('decay-rate', rand(0.7, 0.95));
@@ -200,8 +201,9 @@ function bindRandomizeButton(): () => void {
       setSlider('rotation-speed', rand(0.0, 15.0));
     }
 
-    if (vizMode === 'balls') {
+    if (vizMode === 'pong') {
       setSlider('balls-kick-boost', rand(2.0, 10.0));
+      setSlider('pong-ball-count', Math.floor(rand(1, 4)));
     }
 
     if (vizMode === 'lasers' || vizMode === 'text') {

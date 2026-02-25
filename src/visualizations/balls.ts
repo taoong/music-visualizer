@@ -1,102 +1,247 @@
 /**
- * Balls visualization with bouncing physics
+ * Pong visualization — AI vs AI pong game, audio-reactive
  */
 import { store } from '../state/store';
-import { BAND_COUNT, BALL_COUNT, STEMS, DELTA_BRIGHTNESS_BOOST, isMobile } from '../utils/constants';
-import { getBandAverages } from './helpers';
 
-export function initBalls(p: P5Instance): void {
-  const { state } = store;
-  const isFreqMode = state.mode === 'freq';
-  const bandCount = isFreqMode ? BAND_COUNT : STEMS.length;
+interface PongBall {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  hue: number;
+  band: number;
+}
 
-  state.balls = [];
-  for (let i = 0; i < BALL_COUNT; i++) {
-    const speed = 1 + Math.random() * 2;
-    const angle = Math.random() * Math.PI * 2;
-    const minR = isMobile ? 2 : 8;
-    const rangeR = isMobile ? 4 : 20;
+const PADDLE_W = 14;
+const PADDLE_H_RATIO = 0.18;
+const PADDLE_MARGIN = 40;
+const BASE_BALL_SPEED = 4;
+const BASE_PADDLE_SPEED = 5;
+const KICK_BURST_MS = 200;
+const KICK_THRESHOLD = 1.5;
+const BALL_R = 8;
+const BAND_HUES = [200, 270, 130, 30, 300, 160, 50];
 
-    state.balls.push({
-      x: Math.random() * p.width,
-      y: Math.random() * p.height,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
-      baseRadius: minR + Math.random() * rangeR,
-      band: i % bandCount,
-    });
+let pongBalls: PongBall[] = [];
+let leftPaddleY = 0;
+let rightPaddleY = 0;
+let speedMult = 1.0;
+let burstTimer = 0;
+let kickWasActive = false;
+let initialized = false;
+let leftScore = 0;
+let rightScore = 0;
+
+function spawnBall(p: P5Instance): PongBall {
+  const sign = Math.random() < 0.5 ? 1 : -1;
+  const angle = (25 + Math.random() * 40) * Math.PI / 180;
+  const band = Math.floor(Math.random() * 7);
+  return {
+    x: p.width / 2,
+    y: p.height / 2,
+    vx: sign * Math.cos(angle),
+    vy: (Math.random() < 0.5 ? 1 : -1) * Math.sin(angle),
+    hue: BAND_HUES[band],
+    band,
+  };
+}
+
+function initPong(p: P5Instance): void {
+  leftPaddleY = p.height / 2;
+  rightPaddleY = p.height / 2;
+  pongBalls = [];
+  leftScore = 0;
+  rightScore = 0;
+  speedMult = 1.0;
+  burstTimer = 0;
+  kickWasActive = false;
+  const { config } = store;
+  for (let i = 0; i < config.pongBallCount; i++) {
+    pongBalls.push(spawnBall(p));
   }
 }
 
-export function drawBalls(p: P5Instance, dt: number): void {
+export function resetPong(): void {
+  initialized = false;
+  pongBalls = [];
+  speedMult = 1.0;
+  burstTimer = 0;
+  kickWasActive = false;
+  leftScore = 0;
+  rightScore = 0;
+}
+
+export function drawPong(p: P5Instance, dt: number): void {
   const { state, config, audioState } = store;
-  if (state.balls.length === 0) return;
 
-  // Kick detection — read transient from sub band (freq) or kick stem (stems)
-  let kickTransient = 1.0;
+  if (!initialized) {
+    initPong(p);
+    initialized = true;
+  }
+
+  // Kick detection (square-wave burst)
   const isFreqMode = state.mode === 'freq';
-  if (isFreqMode) {
-    kickTransient = audioState.transientValues[0];
-  } else if (audioState.transientStems['kick'] !== undefined) {
-    kickTransient = audioState.transientStems['kick'].multiplier;
+  const kickTransient = isFreqMode
+    ? audioState.transientValues[0]
+    : audioState.transientStems['kick']?.multiplier ?? 1.0;
+
+  if (kickTransient > KICK_THRESHOLD && !kickWasActive) {
+    speedMult = 1.0 + config.ballsKickBoost * 0.5;
+    burstTimer = KICK_BURST_MS;
+    kickWasActive = true;
+  }
+  if (kickTransient <= KICK_THRESHOLD) kickWasActive = false;
+
+  burstTimer -= p.deltaTime;
+  if (burstTimer <= 0) {
+    burstTimer = 0;
+    speedMult = 1.0;
   }
 
-  // Fast attack / slow decay for kick boost multiplier (frame-rate independent)
-  const targetBoost = 1.0 + (kickTransient - 1.0) * config.ballsKickBoost;
-  if (targetBoost > state.kickBoostMultiplier) {
-    state.kickBoostMultiplier +=
-      (targetBoost - state.kickBoostMultiplier) * (1 - Math.pow(1 - 0.5, dt));
-  } else {
-    state.kickBoostMultiplier +=
-      (targetBoost - state.kickBoostMultiplier) * (1 - Math.pow(1 - 0.08, dt));
+  // Ball count management
+  while (pongBalls.length < config.pongBallCount) {
+    pongBalls.push(spawnBall(p));
+  }
+  if (pongBalls.length > config.pongBallCount) {
+    pongBalls.length = config.pongBallCount;
   }
 
-  const bandCount = isFreqMode ? BAND_COUNT : STEMS.length;
+  const paddleH = p.height * PADDLE_H_RATIO;
+  const effectiveSpeed = config.intensity * speedMult;
 
-  // Pre-compute per-band averages (avoids redundant loops per ball)
-  const { amps: bandAmps, transients: bandTransients, deltas: bandDeltas } = getBandAverages(bandCount);
-
-  for (let i = 0; i < state.balls.length; i++) {
-    const ball = state.balls[i];
-    const b = ball.band % bandCount;
-    const amp = bandAmps[b];
-    const tMult = bandTransients[b];
-    const delta = bandDeltas[b];
-
-    // Physics: update position with kick boost and delta influence (frame-rate independent)
-    const speedMult = state.kickBoostMultiplier * (1 + delta * 0.5) * dt;
-    ball.x += ball.vx * speedMult;
-    ball.y += ball.vy * speedMult;
-
-    // Bounce off walls
-    if (ball.x < 0) {
-      ball.x = 0;
-      ball.vx = Math.abs(ball.vx);
-    } else if (ball.x > p.width) {
-      ball.x = p.width;
-      ball.vx = -Math.abs(ball.vx);
+  // AI paddle movement — tracks nearest ball moving toward that side
+  const nearestBallY = (isLeft: boolean): number => {
+    let nearest = p.height / 2;
+    let minDist = Infinity;
+    for (const ball of pongBalls) {
+      const movingToward = isLeft ? ball.vx < 0 : ball.vx > 0;
+      if (!movingToward) continue;
+      const paddleX = isLeft ? PADDLE_MARGIN + PADDLE_W : p.width - PADDLE_MARGIN - PADDLE_W;
+      const dist = Math.abs(ball.x - paddleX);
+      if (dist < minDist) {
+        minDist = dist;
+        nearest = ball.y;
+      }
     }
-    if (ball.y < 0) {
-      ball.y = 0;
+    return nearest;
+  };
+
+  const paddleSpeed = BASE_PADDLE_SPEED * effectiveSpeed * dt;
+
+  const moveToward = (current: number, target: number, speed: number): number => {
+    const diff = target - current;
+    const step = Math.max(-speed, Math.min(speed, diff));
+    return Math.max(paddleH / 2, Math.min(p.height - paddleH / 2, current + step));
+  };
+
+  leftPaddleY = moveToward(leftPaddleY, nearestBallY(true), paddleSpeed);
+  rightPaddleY = moveToward(rightPaddleY, nearestBallY(false), paddleSpeed);
+
+  // Bass amplitude for paddle brightness
+  const bassData = audioState.smoothedBands[1];
+  const bassAmp = bassData
+    ? Array.from(bassData).reduce((a, b) => a + b, 0) / bassData.length
+    : 0;
+
+  // Ball physics
+  for (let i = 0; i < pongBalls.length; i++) {
+    const ball = pongBalls[i];
+    const ballSpeed = BASE_BALL_SPEED * effectiveSpeed;
+
+    ball.x += ball.vx * ballSpeed * dt;
+    ball.y += ball.vy * ballSpeed * dt;
+
+    // Top/bottom walls
+    if (ball.y < BALL_R) {
+      ball.y = BALL_R;
       ball.vy = Math.abs(ball.vy);
-    } else if (ball.y > p.height) {
-      ball.y = p.height;
+    } else if (ball.y > p.height - BALL_R) {
+      ball.y = p.height - BALL_R;
       ball.vy = -Math.abs(ball.vy);
     }
 
-    // Size pulses with amplitude
-    const scaledAmp = amp * config.spikeScale * tMult;
-    const r = ball.baseRadius * (1 + scaledAmp * 1.5);
+    // Left paddle collision (only when moving left)
+    if (
+      ball.vx < 0 &&
+      ball.x - BALL_R < PADDLE_MARGIN + PADDLE_W &&
+      ball.x - BALL_R > PADDLE_MARGIN &&
+      Math.abs(ball.y - leftPaddleY) < paddleH / 2
+    ) {
+      ball.vx = Math.abs(ball.vx);
+      ball.vy += ((ball.y - leftPaddleY) / paddleH) * 0.5;
+      const len = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+      if (len > 0) { ball.vx /= len; ball.vy /= len; }
+    }
 
-    // Brightness from amplitude + delta
-    const brightness = 60 + Math.min(scaledAmp, 1.0) * 160 + delta * DELTA_BRIGHTNESS_BOOST;
-    const clampedBright = Math.min(brightness, 255);
+    // Right paddle collision (only when moving right)
+    if (
+      ball.vx > 0 &&
+      ball.x + BALL_R > p.width - PADDLE_MARGIN - PADDLE_W &&
+      ball.x + BALL_R < p.width - PADDLE_MARGIN &&
+      Math.abs(ball.y - rightPaddleY) < paddleH / 2
+    ) {
+      ball.vx = -Math.abs(ball.vx);
+      ball.vy += ((ball.y - rightPaddleY) / paddleH) * 0.5;
+      const len = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+      if (len > 0) { ball.vx /= len; ball.vy /= len; }
+    }
 
-    // Single ellipse with thick stroke for glow + solid fill for core
-    const glowWeight = r * 0.6;
-    p.stroke(clampedBright * 0.3);
-    p.strokeWeight(glowWeight);
-    p.fill(clampedBright);
-    p.ellipse(ball.x, ball.y, r * 2, r * 2);
+    // Miss: ball exits left or right — respawn at center
+    if (ball.x < 0) {
+      rightScore++;
+      pongBalls[i] = spawnBall(p);
+    } else if (ball.x > p.width) {
+      leftScore++;
+      pongBalls[i] = spawnBall(p);
+    }
   }
+
+  // Rendering (HSB mode)
+  (p as any).colorMode(p['HSB'], 360, 100, 100, 100);
+
+  // Center dashed dividing line
+  (p as any).stroke(0, 0, 100, 20);
+  p.strokeWeight(2);
+  const dashLen = 16;
+  for (let y = 0; y < p.height; y += dashLen * 2) {
+    p.line(p.width / 2, y, p.width / 2, y + dashLen);
+  }
+
+  // Paddles — white-ish, reactive to bass amplitude
+  const paddleBrightness = 70 + bassAmp * 30;
+  (p as any).fill(0, 0, paddleBrightness, 100);
+  p.noStroke();
+  (p as any).rect(PADDLE_MARGIN, leftPaddleY - paddleH / 2, PADDLE_W, paddleH, 4);
+  (p as any).rect(p.width - PADDLE_MARGIN - PADDLE_W, rightPaddleY - paddleH / 2, PADDLE_W, paddleH, 4);
+
+  // Balls with optional motion streak during burst
+  for (const ball of pongBalls) {
+    const bandData = audioState.smoothedBands[ball.band];
+    const amp = bandData
+      ? Array.from(bandData).reduce((a, b) => a + b, 0) / bandData.length
+      : 0;
+
+    const brightness = 80 + amp * 50;
+    const radius = BALL_R * (1 + amp * 0.4);
+
+    if (burstTimer > 0) {
+      (p as any).fill(ball.hue, 80, brightness, 30);
+      p.noStroke();
+      p.rect(ball.x - 24 * ball.vx, ball.y - 4, 24 * Math.abs(ball.vx), 8);
+    }
+
+    (p as any).fill(ball.hue, 80, brightness, 100);
+    p.noStroke();
+    p.ellipse(ball.x, ball.y, radius * 2, radius * 2);
+  }
+
+  // Score display — subtle, low alpha
+  (p as any).fill(0, 0, 100, 30);
+  p.noStroke();
+  (p as any).textSize(14);
+  (p as any).textAlign(p['CENTER']);
+  (p as any).text(`L: ${leftScore}   R: ${rightScore}`, p.width / 2, 20);
+
+  // Reset color mode
+  (p as any).colorMode(p['RGB'], 255, 255, 255, 255);
 }

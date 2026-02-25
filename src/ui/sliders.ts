@@ -68,6 +68,7 @@ export function bindDisplaySliders(): () => void {
     { id: 'balls-kick-boost', key: 'ballsKickBoost' },
     { id: 'viz-intensity', key: 'intensity' },
     { id: 'beat-division', key: 'beatDivision' },
+    { id: 'pong-ball-count', key: 'pongBallCount' },
   ] as const;
 
   for (const { id, key } of configs) {

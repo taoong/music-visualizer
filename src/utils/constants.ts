@@ -10,7 +10,6 @@ export const isMobile =
 
 // Visualization constants
 export const SPIKES_PER_BAND = isMobile ? 30 : 60;
-export const BALL_COUNT = isMobile ? 15 : 30;
 
 // Frequency band definitions
 export const BANDS: FrequencyBand[] = [
@@ -181,6 +180,7 @@ export const DEFAULT_CONFIG = {
   decayRate: 0.88, // Default decay rate (0.0 = instant, 1.0 = no decay)
   intensity: 1.0,
   beatDivision: 1,
+  pongBallCount: 1,
 };
 
 // FFT and decay constants
