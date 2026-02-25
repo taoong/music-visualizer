@@ -490,12 +490,6 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // have already passed the player (z ≤ 0) so they occlude the player car.
   const sortedCars = [...cars].sort((a, b) => b.z - a.z);
 
-  // Fixed near-plane size (used for cars that have passed the player)
-  const fwNear = roadHWAt(1.0, nearHW) * 0.40;
-  const fhNear = fwNear * 1.5;
-  // Exit slide rate: 2× the natural perspective rate so cars leave briskly
-  const slideRate = (nearY - horizY) / Z_SPAWN * 2;
-
   // Pass 1 — approaching trucks (z > 0): drawn behind the player car
   for (const car of sortedCars) {
     if (car.z <= 0) continue;
@@ -532,19 +526,36 @@ export function drawHighway(p: P5Instance, dt: number): void {
   );
 
   // Pass 2 — trucks that have passed the player (z ≤ 0): drawn on top,
-  // occluding the player car as they slide off the bottom of the screen
+  // occluding the player car. Use unclamped perspective (t > 1) so the truck
+  // continues to grow and move naturally until it exits the canvas.
   for (const car of sortedCars) {
     if (car.z > 0) continue;
 
-    const fy = nearY + (-car.z) * slideRate;
-    // Expire once the car's top edge exits the canvas
-    if (fy - fhNear > h) {
+    // Unclamped t: > 1 for z < 0
+    const tF = 1 - car.z / Z_SPAWN;
+    const tB = 1 - (car.z + Z_CAR_DEPTH) / Z_SPAWN;
+
+    const hwF = roadHWAt(tF, nearHW);
+    const hwB = roadHWAt(tB, nearHW);
+    const fw = hwF * 0.40;
+    const bw = hwB * 0.40;
+    const fh = fw * 1.5;
+    const bh = bw * 1.5;
+
+    const fy = tToScreenY(tF, horizY, nearY);
+    const by = tToScreenY(tB, horizY, nearY);
+
+    // Pin lane X at t=1.0 so the truck stays in its lane (no lateral drift)
+    const fx = cx + laneOffsetX(car.lane, Math.min(tF, 1.0), nearHW);
+    const bx = cx + laneOffsetX(car.lane, Math.min(tB, 1.0), nearHW);
+
+    // Expire once the front-face bottom edge exits the canvas
+    if (fy - fh > h) {
       car.expired = true;
       continue;
     }
-    const fx = cx + laneOffsetX(car.lane, 1.0, nearHW);
-    // Degenerate back = front → only the front face renders (no sides/roof)
-    drawOncomingCar(p, fx, fy, fwNear, fhNear, fx, fy, fwNear, fhNear, car.hue);
+
+    drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
 
   p.colorMode(p['RGB'], 255);
