@@ -128,10 +128,9 @@ function bindVizSelector(): () => void {
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'tetris':
-        show(intensityGroup); show(beatDivisionGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Speed';
+        show(beatDivisionGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(textInputGroup);
+        hide(ballsKickBoostGroup); hide(intensityGroup); hide(textInputGroup);
         break;
       case 'lasers':
         show(intensityGroup); show(beatDivisionGroup);
@@ -202,7 +201,6 @@ function bindRandomizeButton(): () => void {
 
     if (vizMode === 'tetris') {
       setSlider('beat-division', Math.floor(rand(1, 5)));
-      setSlider('viz-intensity', rand(0.5, 2.0));
     }
 
     if (vizMode === 'lasers' || vizMode === 'text') {

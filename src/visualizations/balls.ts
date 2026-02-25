@@ -265,8 +265,8 @@ export function drawTetris(p: P5Instance, dt: number): void {
     }
   }
 
-  // Animate displayCol toward currentCol
-  const moveSpeed = config.intensity * 20 * dt;
+  // Animate displayCol toward currentCol at a fixed speed
+  const moveSpeed = 20 * dt;
   const diff = currentCol - displayCol;
   if (Math.abs(diff) <= moveSpeed) {
     displayCol = currentCol;
