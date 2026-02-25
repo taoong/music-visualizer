@@ -31,6 +31,8 @@ declare global {
     RGB: string;
     CLOSE: number;
     CENTER: string;
+    LEFT: string;
+    RIGHT: string;
 
     // Setup/Lifecycle
     createCanvas(w: number, h: number): { parent(id: string): void };

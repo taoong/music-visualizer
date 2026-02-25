@@ -65,10 +65,8 @@ export function bindDisplaySliders(): () => void {
     { id: 'spike-scale', key: 'spikeScale' },
     { id: 'decay-rate', key: 'decayRate' },
     { id: 'rotation-speed', key: 'rotationSpeed' },
-    { id: 'balls-kick-boost', key: 'ballsKickBoost' },
     { id: 'viz-intensity', key: 'intensity' },
     { id: 'beat-division', key: 'beatDivision' },
-    { id: 'pong-ball-count', key: 'pongBallCount' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -4,7 +4,7 @@
 export { drawSpikeCircle } from './circle';
 export { drawSpectrum } from './spectrum';
 export { drawTunnel } from './tunnel';
-export { drawPong, resetPong } from './balls';
+export { drawTetris, resetTetris } from './balls';
 export { drawCube, resetCube } from './cube';
 export { drawStickman, resetStickman } from './stickman';
 export { drawLasers, resetLasers } from './lasers';

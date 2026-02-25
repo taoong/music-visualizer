@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'pong' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -47,12 +47,10 @@ export interface Config {
   // Shared
   spikeScale: number;
   rotationSpeed: number;
-  ballsKickBoost: number;
   masterVolume: number;
   decayRate: number;
   intensity: number;
   beatDivision: number;
-  pongBallCount: number;
 }
 
 // Application state

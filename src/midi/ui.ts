@@ -41,7 +41,6 @@ const DISPLAY_ROWS: ControlRow[] = [
   { label: 'Scale', configKey: 'spikeScale' },
   { label: 'Decay Rate', configKey: 'decayRate' },
   { label: 'Rotation Speed', configKey: 'rotationSpeed' },
-  { label: 'Kick Boost', configKey: 'ballsKickBoost' },
   { label: 'Intensity', configKey: 'intensity' },
   { label: 'Beat Frequency', configKey: 'beatDivision' },
   { label: 'Volume', configKey: 'masterVolume' },

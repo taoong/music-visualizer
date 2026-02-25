@@ -79,15 +79,14 @@ function bindVizSelector(): () => void {
   const intensityGroup = document.getElementById('intensity-group');
   const beatDivisionGroup = document.getElementById('beat-division-group');
   const textInputGroup = document.getElementById('text-input-group');
-  const pongBallCountGroup = document.getElementById('pong-ball-count-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
 
-  // Remove pong option on mobile
+  // Remove tetris option on mobile
   if (isMobile) {
-    const pongOption = vizSelect.querySelector('option[value="pong"]');
-    pongOption?.remove();
+    const tetrisOption = vizSelect.querySelector('option[value="tetris"]');
+    tetrisOption?.remove();
   }
 
   function show(el: HTMLElement | null): void { el?.classList.remove('hidden'); }
@@ -96,7 +95,7 @@ function bindVizSelector(): () => void {
   const intensityLabel = intensityGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'pong' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'runners';
     store.setVizMode(mode);
 
     // Per-mode control visibility
@@ -128,8 +127,8 @@ function bindVizSelector(): () => void {
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
-      case 'pong':
-        show(intensityGroup); show(beatDivisionGroup); show(pongBallCountGroup);
+      case 'tetris':
+        show(intensityGroup); show(beatDivisionGroup);
         if (intensityLabel) intensityLabel.textContent = 'Speed';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(textInputGroup);
@@ -192,7 +191,7 @@ function bindRandomizeButton(): () => void {
     }
 
     const useScale = vizMode === 'circle' || vizMode === 'spectrum' || vizMode === 'cube';
-    const useDecay = vizMode !== 'lasers' && vizMode !== 'text' && vizMode !== 'pong';
+    const useDecay = vizMode !== 'lasers' && vizMode !== 'text' && vizMode !== 'tetris';
 
     if (useScale) setSlider('spike-scale', rand(0.5, 2.0));
     if (useDecay) setSlider('decay-rate', rand(0.7, 0.95));
@@ -201,9 +200,9 @@ function bindRandomizeButton(): () => void {
       setSlider('rotation-speed', rand(0.0, 15.0));
     }
 
-    if (vizMode === 'pong') {
+    if (vizMode === 'tetris') {
       setSlider('beat-division', Math.floor(rand(1, 5)));
-      setSlider('pong-ball-count', Math.floor(rand(1, 4)));
+      setSlider('viz-intensity', rand(0.5, 2.0));
     }
 
     if (vizMode === 'lasers' || vizMode === 'text') {

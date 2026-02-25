@@ -1,255 +1,398 @@
 /**
- * Pong visualization — AI vs AI pong game, beat-synchronized speed bursts
+ * Tetris visualization — AI plays Tetris, pieces hard-drop on each detected beat
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 
-interface PongBall {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  hue: number;
-  band: number;
+const COLS = 10;
+const ROWS = 20;
+
+// Type index: 0=I, 1=O, 2=T, 3=S, 4=Z, 5=J, 6=L
+const PIECE_SHAPES: [number, number][][] = [
+  [[0,0],[0,1],[0,2],[0,3]],   // I
+  [[0,0],[0,1],[1,0],[1,1]],   // O
+  [[0,1],[1,0],[1,1],[1,2]],   // T
+  [[0,1],[0,2],[1,0],[1,1]],   // S
+  [[0,0],[0,1],[1,1],[1,2]],   // Z
+  [[0,0],[1,0],[1,1],[1,2]],   // J
+  [[0,2],[1,0],[1,1],[1,2]],   // L
+];
+const PIECE_SIZES: number[] = [4, 2, 3, 3, 3, 3, 3];
+const PIECE_HUES: number[] = [180, 60, 300, 120, 0, 210, 30];
+
+function rotateCW(cells: [number, number][], size: number): [number, number][] {
+  return cells.map(([r, c]) => [c, size - 1 - r] as [number, number]);
 }
 
-const PADDLE_W = 14;
-const PADDLE_H_RATIO = 0.18;
-const PADDLE_MARGIN = 40;
-const BASE_BALL_SPEED = 4;
-const BASE_PADDLE_SPEED = 5;
-const BEAT_BURST_MS = 180;
-const BALL_R = 8;
-const BAND_HUES = [200, 270, 130, 30, 300, 160, 50];
+// Precompute all 4 rotations for all 7 piece types
+const ALL_ROTATIONS: [number, number][][][] = PIECE_SHAPES.map((shape, i) => {
+  const size = PIECE_SIZES[i];
+  const rots: [number, number][][] = [shape];
+  for (let r = 1; r < 4; r++) {
+    rots.push(rotateCW(rots[r - 1], size));
+  }
+  return rots;
+});
 
-let pongBalls: PongBall[] = [];
-let leftPaddleY = 0;
-let rightPaddleY = 0;
-let speedMult = 1.0;
-let burstTimer = 0;
+// Module-scoped game state
+let board: number[][];
+let currentType = 0;
+let currentRot = 0;
+let currentCol = 0;   // integer — logical position (= targetCol)
+let displayCol = 0;   // float — animated toward currentCol
+let nextType = 0;
+let targetCol = 0;
+let targetRot = 0;
+let score = 0;
+let linesCleared = 0;
+let clearingRows: number[] = [];
+let clearTimer = 0;
 let lastBeatIndex = -1;
 let lastBeatGroupIndex = -1;
+let autoDropTimer = 0;
 let initialized = false;
-let leftScore = 0;
-let rightScore = 0;
 
-function spawnBall(p: P5Instance): PongBall {
-  const sign = Math.random() < 0.5 ? 1 : -1;
-  const angle = (25 + Math.random() * 40) * Math.PI / 180;
-  const band = Math.floor(Math.random() * 7);
-  return {
-    x: p.width / 2,
-    y: p.height / 2,
-    vx: sign * Math.cos(angle),
-    vy: (Math.random() < 0.5 ? 1 : -1) * Math.sin(angle),
-    hue: BAND_HUES[band],
-    band,
-  };
+function emptyBoard(): number[][] {
+  return Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
 }
 
-function initPong(p: P5Instance): void {
-  leftPaddleY = p.height / 2;
-  rightPaddleY = p.height / 2;
-  pongBalls = [];
-  leftScore = 0;
-  rightScore = 0;
-  speedMult = 1.0;
-  burstTimer = 0;
-  lastBeatIndex = -1;
-  lastBeatGroupIndex = -1;
-  const { config } = store;
-  for (let i = 0; i < config.pongBallCount; i++) {
-    pongBalls.push(spawnBall(p));
+function collides(testBoard: number[][], cells: [number, number][], row: number, col: number): boolean {
+  for (const [dr, dc] of cells) {
+    const r = row + dr;
+    const c = col + dc;
+    if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return true;
+    if (testBoard[r][c] !== 0) return true;
+  }
+  return false;
+}
+
+function findDropRow(testBoard: number[][], cells: [number, number][], col: number): number {
+  let row = 0;
+  while (row + 1 < ROWS && !collides(testBoard, cells, row + 1, col)) {
+    row++;
+  }
+  return row;
+}
+
+function placeOnBoard(testBoard: number[][], cells: [number, number][], row: number, col: number, type: number): void {
+  for (const [dr, dc] of cells) {
+    testBoard[row + dr][col + dc] = type + 1;
   }
 }
 
-export function resetPong(): void {
-  initialized = false;
-  pongBalls = [];
-  speedMult = 1.0;
-  burstTimer = 0;
-  lastBeatIndex = -1;
-  lastBeatGroupIndex = -1;
-  leftScore = 0;
-  rightScore = 0;
+// El-Tetris evaluation
+function evaluateBoard(testBoard: number[][]): number {
+  const colHeights: number[] = new Array(COLS).fill(0);
+  for (let c = 0; c < COLS; c++) {
+    for (let r = 0; r < ROWS; r++) {
+      if (testBoard[r][c] !== 0) {
+        colHeights[c] = ROWS - r;
+        break;
+      }
+    }
+  }
+  const aggregateHeight = colHeights.reduce((s, h) => s + h, 0);
+
+  let completedLines = 0;
+  for (let r = 0; r < ROWS; r++) {
+    if (testBoard[r].every(c => c !== 0)) completedLines++;
+  }
+
+  let holes = 0;
+  for (let c = 0; c < COLS; c++) {
+    let foundBlock = false;
+    for (let r = 0; r < ROWS; r++) {
+      if (testBoard[r][c] !== 0) foundBlock = true;
+      else if (foundBlock) holes++;
+    }
+  }
+
+  let bumpiness = 0;
+  for (let c = 0; c < COLS - 1; c++) {
+    bumpiness += Math.abs(colHeights[c] - colHeights[c + 1]);
+  }
+
+  return (
+    -0.510066 * aggregateHeight +
+     0.760666 * completedLines -
+     0.35663  * holes -
+     0.184483 * bumpiness
+  );
 }
 
-export function drawPong(p: P5Instance, dt: number): void {
+function findBestPlacement(type: number): [number, number] {
+  let bestScore = -Infinity;
+  let bestRot = 0;
+  let bestCol = 3;
+
+  for (let rot = 0; rot < 4; rot++) {
+    const cells = ALL_ROTATIONS[type][rot];
+    const maxDc = cells.reduce((mx, [, c]) => Math.max(mx, c), 0);
+    const minDc = cells.reduce((mn, [, c]) => Math.min(mn, c), Infinity);
+    const maxValidCol = COLS - 1 - maxDc;
+    const minValidCol = -minDc;
+
+    for (let col = minValidCol; col <= maxValidCol; col++) {
+      if (collides(board, cells, 0, col)) continue;
+      const dropRow = findDropRow(board, cells, col);
+      const testBoard = board.map(row => [...row]);
+      placeOnBoard(testBoard, cells, dropRow, col, type);
+      const s = evaluateBoard(testBoard);
+      if (s > bestScore) {
+        bestScore = s;
+        bestRot = rot;
+        bestCol = col;
+      }
+    }
+  }
+
+  return [bestRot, bestCol];
+}
+
+function hardDrop(): void {
+  // Snap visual display to target before placing
+  currentRot = targetRot;
+  currentCol = targetCol;
+  displayCol = targetCol;
+
+  const cells = ALL_ROTATIONS[currentType][currentRot];
+  const dropRow = findDropRow(board, cells, currentCol);
+  placeOnBoard(board, cells, dropRow, currentCol, currentType);
+
+  // Check for completed rows
+  clearingRows = [];
+  for (let r = 0; r < ROWS; r++) {
+    if (board[r].every(c => c !== 0)) clearingRows.push(r);
+  }
+
+  if (clearingRows.length > 0) {
+    clearTimer = 200;
+    const pts = [0, 100, 300, 500, 800];
+    score += pts[Math.min(clearingRows.length, 4)];
+    linesCleared += clearingRows.length;
+  }
+
+  // Spawn next piece
+  currentType = nextType;
+  nextType = Math.floor(Math.random() * 7);
+  displayCol = 3;
+
+  // Board full — reset
+  if (collides(board, ALL_ROTATIONS[currentType][0], 0, 3)) {
+    board = emptyBoard();
+    score = 0;
+    linesCleared = 0;
+    clearingRows = [];
+    clearTimer = 0;
+  }
+
+  // AI: compute best placement for new piece and snap rotation/col
+  [targetRot, targetCol] = findBestPlacement(currentType);
+  currentRot = targetRot;
+  currentCol = targetCol;
+  // displayCol stays at 3 and animates toward currentCol
+}
+
+function clearCompletedRows(): void {
+  if (clearingRows.length === 0) return;
+  const sorted = [...clearingRows].sort((a, b) => b - a);
+  for (const r of sorted) {
+    board.splice(r, 1);
+    board.unshift(new Array(COLS).fill(0));
+  }
+  clearingRows = [];
+}
+
+function initTetris(): void {
+  board = emptyBoard();
+  currentType = Math.floor(Math.random() * 7);
+  nextType = Math.floor(Math.random() * 7);
+  currentRot = 0;
+  currentCol = 3;
+  displayCol = 3;
+  score = 0;
+  linesCleared = 0;
+  clearingRows = [];
+  clearTimer = 0;
+  lastBeatIndex = -1;
+  lastBeatGroupIndex = -1;
+  autoDropTimer = 0;
+  [targetRot, targetCol] = findBestPlacement(currentType);
+  currentRot = targetRot;
+  currentCol = targetCol;
+}
+
+export function resetTetris(): void {
+  initialized = false;
+}
+
+export function drawTetris(p: P5Instance, dt: number): void {
   const { state, config, audioState } = store;
 
   if (!initialized) {
-    initPong(p);
+    initTetris();
     initialized = true;
   }
 
-  // Beat-synchronized speed burst — square wave, same pattern as runners
+  // Line-clear flash timer
+  if (clearTimer > 0) {
+    clearTimer -= p.deltaTime;
+    if (clearTimer <= 0) {
+      clearTimer = 0;
+      clearCompletedRows();
+    }
+  }
+
+  // Beat detection — same pattern as runners/highway
   if (state.detectedBPM > 0 && state.isPlaying) {
     const pos = audioEngine.getPlaybackPosition();
     const adjusted = pos - state.beatOffset;
-    const currentBeatIndex = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
-    if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
-      lastBeatIndex = currentBeatIndex;
-      const beatsPerBurst = Math.pow(2, config.beatDivision - 1);
-      const currentGroup = Math.floor(currentBeatIndex / beatsPerBurst);
-      if (currentGroup !== lastBeatGroupIndex) {
-        lastBeatGroupIndex = currentGroup;
-        speedMult = 1 + config.intensity * 6;
-        burstTimer = BEAT_BURST_MS;
+    const beatIdx = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
+    if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
+      lastBeatIndex = beatIdx;
+      const beatsPerDrop = Math.pow(2, config.beatDivision - 1);
+      const group = Math.floor(beatIdx / beatsPerDrop);
+      if (group !== lastBeatGroupIndex) {
+        lastBeatGroupIndex = group;
+        if (clearTimer <= 0) hardDrop();
       }
     }
-  }
-
-  if (burstTimer > 0) {
-    burstTimer -= p.deltaTime;
-    if (burstTimer <= 0) {
-      burstTimer = 0;
-      speedMult = 1.0;
+  } else {
+    autoDropTimer += p.deltaTime;
+    if (autoDropTimer >= 2000) {
+      autoDropTimer = 0;
+      if (clearTimer <= 0) hardDrop();
     }
   }
 
-  // Ball count management
-  while (pongBalls.length < config.pongBallCount) {
-    pongBalls.push(spawnBall(p));
-  }
-  if (pongBalls.length > config.pongBallCount) {
-    pongBalls.length = config.pongBallCount;
-  }
-
-  const paddleH = p.height * PADDLE_H_RATIO;
-  const effectiveSpeed = config.intensity * speedMult;
-
-  // AI paddle movement — tracks nearest ball moving toward that side
-  const nearestBallY = (isLeft: boolean): number => {
-    let nearest = p.height / 2;
-    let minDist = Infinity;
-    for (const ball of pongBalls) {
-      const movingToward = isLeft ? ball.vx < 0 : ball.vx > 0;
-      if (!movingToward) continue;
-      const paddleX = isLeft ? PADDLE_MARGIN + PADDLE_W : p.width - PADDLE_MARGIN - PADDLE_W;
-      const dist = Math.abs(ball.x - paddleX);
-      if (dist < minDist) {
-        minDist = dist;
-        nearest = ball.y;
-      }
-    }
-    return nearest;
-  };
-
-  const paddleSpeed = BASE_PADDLE_SPEED * effectiveSpeed * dt;
-
-  const moveToward = (current: number, target: number, speed: number): number => {
-    const diff = target - current;
-    const step = Math.max(-speed, Math.min(speed, diff));
-    return Math.max(paddleH / 2, Math.min(p.height - paddleH / 2, current + step));
-  };
-
-  leftPaddleY = moveToward(leftPaddleY, nearestBallY(true), paddleSpeed);
-  rightPaddleY = moveToward(rightPaddleY, nearestBallY(false), paddleSpeed);
-
-  // Bass amplitude for paddle brightness
-  const bassData = audioState.smoothedBands[1];
-  const bassAmp = bassData
-    ? Array.from(bassData).reduce((a, b) => a + b, 0) / bassData.length
-    : 0;
-
-  // Ball physics
-  for (let i = 0; i < pongBalls.length; i++) {
-    const ball = pongBalls[i];
-    const ballSpeed = BASE_BALL_SPEED * effectiveSpeed;
-
-    ball.x += ball.vx * ballSpeed * dt;
-    ball.y += ball.vy * ballSpeed * dt;
-
-    // Top/bottom walls
-    if (ball.y < BALL_R) {
-      ball.y = BALL_R;
-      ball.vy = Math.abs(ball.vy);
-    } else if (ball.y > p.height - BALL_R) {
-      ball.y = p.height - BALL_R;
-      ball.vy = -Math.abs(ball.vy);
-    }
-
-    // Left paddle collision (only when moving left)
-    if (
-      ball.vx < 0 &&
-      ball.x - BALL_R < PADDLE_MARGIN + PADDLE_W &&
-      ball.x - BALL_R > PADDLE_MARGIN &&
-      Math.abs(ball.y - leftPaddleY) < paddleH / 2
-    ) {
-      ball.vx = Math.abs(ball.vx);
-      ball.vy += ((ball.y - leftPaddleY) / paddleH) * 0.5;
-      const len = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
-      if (len > 0) { ball.vx /= len; ball.vy /= len; }
-    }
-
-    // Right paddle collision (only when moving right)
-    if (
-      ball.vx > 0 &&
-      ball.x + BALL_R > p.width - PADDLE_MARGIN - PADDLE_W &&
-      ball.x + BALL_R < p.width - PADDLE_MARGIN &&
-      Math.abs(ball.y - rightPaddleY) < paddleH / 2
-    ) {
-      ball.vx = -Math.abs(ball.vx);
-      ball.vy += ((ball.y - rightPaddleY) / paddleH) * 0.5;
-      const len = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
-      if (len > 0) { ball.vx /= len; ball.vy /= len; }
-    }
-
-    // Miss: ball exits left or right — respawn at center
-    if (ball.x < 0) {
-      rightScore++;
-      pongBalls[i] = spawnBall(p);
-    } else if (ball.x > p.width) {
-      leftScore++;
-      pongBalls[i] = spawnBall(p);
-    }
+  // Animate displayCol toward currentCol
+  const moveSpeed = config.intensity * 20 * dt;
+  const diff = currentCol - displayCol;
+  if (Math.abs(diff) <= moveSpeed) {
+    displayCol = currentCol;
+  } else {
+    displayCol += Math.sign(diff) * moveSpeed;
   }
 
-  // Rendering (HSB mode)
+  // Layout
+  const cellSize = Math.min(
+    Math.floor(p.height * 0.85 / ROWS),
+    Math.floor(p.width * 0.38 / COLS)
+  );
+  const boardW = COLS * cellSize;
+  const boardH = ROWS * cellSize;
+  const boardX = p.width / 2 - boardW / 2 - cellSize * 3;
+  const boardY = (p.height - boardH) / 2;
+
   (p as any).colorMode(p['HSB'], 360, 100, 100, 100);
 
-  // Center dashed dividing line
-  (p as any).stroke(0, 0, 100, 20);
-  p.strokeWeight(2);
-  const dashLen = 16;
-  for (let y = 0; y < p.height; y += dashLen * 2) {
-    p.line(p.width / 2, y, p.width / 2, y + dashLen);
+  // Board background
+  (p as any).fill(0, 0, 8, 100);
+  p.noStroke();
+  p.rect(boardX, boardY, boardW, boardH);
+
+  // Grid lines
+  (p as any).stroke(0, 0, 15, 100);
+  p.strokeWeight(0.5);
+  for (let c = 1; c < COLS; c++) {
+    p.line(boardX + c * cellSize, boardY, boardX + c * cellSize, boardY + boardH);
+  }
+  for (let r = 1; r < ROWS; r++) {
+    p.line(boardX, boardY + r * cellSize, boardX + boardW, boardY + r * cellSize);
   }
 
-  // Paddles — white-ish, reactive to bass amplitude
-  const paddleBrightness = 70 + bassAmp * 30;
-  (p as any).fill(0, 0, paddleBrightness, 100);
+  // Board border
+  p.noFill();
+  (p as any).stroke(0, 0, 40, 100);
+  p.strokeWeight(2);
+  p.rect(boardX, boardY, boardW, boardH);
+
+  // Placed cells
   p.noStroke();
-  (p as any).rect(PADDLE_MARGIN, leftPaddleY - paddleH / 2, PADDLE_W, paddleH, 4);
-  (p as any).rect(p.width - PADDLE_MARGIN - PADDLE_W, rightPaddleY - paddleH / 2, PADDLE_W, paddleH, 4);
+  for (let r = 0; r < ROWS; r++) {
+    const isClearing = clearTimer > 0 && clearingRows.includes(r);
+    for (let c = 0; c < COLS; c++) {
+      const cell = board[r][c];
+      if (cell === 0) continue;
+      const colorIdx = cell - 1;
+      if (isClearing) {
+        (p as any).fill(0, 0, 100, 100);
+      } else {
+        const hue = PIECE_HUES[colorIdx];
+        const bandData = audioState.smoothedBands[colorIdx % 7];
+        const bandAmp = bandData
+          ? Array.from(bandData).reduce((a, b) => a + b, 0) / bandData.length
+          : 0;
+        (p as any).fill(hue, 80, 70 + bandAmp * 30, 100);
+      }
+      p.rect(boardX + c * cellSize + 1, boardY + r * cellSize + 1, cellSize - 2, cellSize - 2);
+    }
+  }
 
-  // Balls with optional motion streak during burst
-  for (const ball of pongBalls) {
-    const bandData = audioState.smoothedBands[ball.band];
-    const amp = bandData
-      ? Array.from(bandData).reduce((a, b) => a + b, 0) / bandData.length
-      : 0;
+  // Ghost piece and current piece (hidden during line-clear flash)
+  if (clearTimer <= 0) {
+    const cells = ALL_ROTATIONS[currentType][currentRot];
+    const ghostRow = findDropRow(board, cells, currentCol);
+    const hue = PIECE_HUES[currentType];
 
-    const brightness = 80 + amp * 50;
-    const radius = BALL_R * (1 + amp * 0.4);
-
-    if (burstTimer > 0) {
-      (p as any).fill(ball.hue, 80, brightness, 30);
-      p.noStroke();
-      p.rect(ball.x - 24 * ball.vx, ball.y - 4, 24 * Math.abs(ball.vx), 8);
+    // Ghost
+    (p as any).fill(hue, 80, 30, 40);
+    p.noStroke();
+    for (const [dr, dc] of cells) {
+      const gr = ghostRow + dr;
+      const gc = currentCol + dc;
+      if (gr >= 0 && gr < ROWS && gc >= 0 && gc < COLS) {
+        p.rect(boardX + gc * cellSize + 1, boardY + gr * cellSize + 1, cellSize - 2, cellSize - 2);
+      }
     }
 
-    (p as any).fill(ball.hue, 80, brightness, 100);
+    // Current piece (animated displayCol)
+    (p as any).fill(hue, 90, 90, 100);
     p.noStroke();
-    p.ellipse(ball.x, ball.y, radius * 2, radius * 2);
+    for (const [dr, dc] of cells) {
+      const pr = dr;
+      const pc = displayCol + dc;
+      p.rect(boardX + pc * cellSize + 1, boardY + pr * cellSize + 1, cellSize - 2, cellSize - 2);
+    }
   }
 
-  // Score display — subtle, low alpha
-  (p as any).fill(0, 0, 100, 30);
+  // Side panel
+  const panelX = boardX + boardW + cellSize;
+  const panelY = boardY;
+
+  (p as any).fill(0, 0, 80, 100);
   p.noStroke();
-  (p as any).textSize(14);
-  (p as any).textAlign(p['CENTER']);
-  (p as any).text(`L: ${leftScore}   R: ${rightScore}`, p.width / 2, 20);
+  (p as any).textAlign(p['LEFT']);
+  (p as any).textSize(cellSize * 0.7);
+  (p as any).text('NEXT', panelX, panelY + cellSize * 0.8);
+
+  // Next piece preview
+  const previewCells = ALL_ROTATIONS[nextType][0];
+  (p as any).fill(PIECE_HUES[nextType], 80, 80, 100);
+  p.noStroke();
+  for (const [dr, dc] of previewCells) {
+    p.rect(
+      panelX + dc * cellSize + 1,
+      panelY + cellSize + dr * cellSize + 1,
+      cellSize - 2,
+      cellSize - 2
+    );
+  }
+
+  const statsY = panelY + cellSize * 6;
+  (p as any).fill(0, 0, 70, 100);
+  (p as any).textSize(cellSize * 0.6);
+  (p as any).text('SCORE', panelX, statsY);
+  (p as any).fill(0, 0, 100, 100);
+  (p as any).textSize(cellSize * 0.75);
+  (p as any).text(String(score), panelX, statsY + cellSize * 0.9);
+
+  (p as any).fill(0, 0, 70, 100);
+  (p as any).textSize(cellSize * 0.6);
+  (p as any).text('LINES', panelX, statsY + cellSize * 2.2);
+  (p as any).fill(0, 0, 100, 100);
+  (p as any).textSize(cellSize * 0.75);
+  (p as any).text(String(linesCleared), panelX, statsY + cellSize * 3.1);
 
   // Reset color mode
   (p as any).colorMode(p['RGB'], 255, 255, 255, 255);

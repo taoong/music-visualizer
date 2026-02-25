@@ -37,12 +37,10 @@ export function createMockStoreState() {
       sensOther: 2.0,
       spikeScale: 1.2,
       rotationSpeed: 0.3,
-      ballsKickBoost: 6.0,
       masterVolume: 0.8,
       decayRate: 0.88,
       intensity: 1.0,
       beatDivision: 1,
-      pongBallCount: 1,
     },
     audioState: {
       smoothedBands: Array(7)

@@ -22,11 +22,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   spikeScale: 'spike-scale',
   decayRate: 'decay-rate',
   rotationSpeed: 'rotation-speed',
-  ballsKickBoost: 'balls-kick-boost',
   intensity: 'viz-intensity',
   beatDivision: 'beat-division',
   masterVolume: 'master-volume',
-  pongBallCount: 'pong-ball-count',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
