@@ -486,6 +486,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
   p.rect(0, nearY, w, h - nearY);
 
   // ── Render: oncoming cars (back → front) ──────────────────────────────────
+  // Painter's algorithm: far trucks first, then player car, then trucks that
+  // have already passed the player (z ≤ 0) so they occlude the player car.
   const sortedCars = [...cars].sort((a, b) => b.z - a.z);
 
   // Fixed near-plane size (used for cars that have passed the player)
@@ -494,42 +496,31 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // Exit slide rate: 2× the natural perspective rate so cars leave briskly
   const slideRate = (nearY - horizY) / Z_SPAWN * 2;
 
+  // Pass 1 — approaching trucks (z > 0): drawn behind the player car
   for (const car of sortedCars) {
-    if (car.z > 0) {
-      // ── Approaching car: full 3D perspective box ─────────────────────────
-      const tF = zToT(car.z);
-      const tB = zToT(Math.min(car.z + Z_CAR_DEPTH, Z_SPAWN - 1));
+    if (car.z <= 0) continue;
 
-      const hwF = roadHWAt(tF, nearHW);
-      const hwB = roadHWAt(tB, nearHW);
-      const fw = hwF * 0.40;
-      const bw = hwB * 0.40;
-      const fh = fw * 1.5;
-      const bh = bw * 1.5;
+    const tF = zToT(car.z);
+    const tB = zToT(Math.min(car.z + Z_CAR_DEPTH, Z_SPAWN - 1));
 
-      if (fw < 1) continue;
+    const hwF = roadHWAt(tF, nearHW);
+    const hwB = roadHWAt(tB, nearHW);
+    const fw = hwF * 0.40;
+    const bw = hwB * 0.40;
+    const fh = fw * 1.5;
+    const bh = bw * 1.5;
 
-      const fy = tToScreenY(tF, horizY, nearY);
-      const by = tToScreenY(tB, horizY, nearY);
-      const fx = cx + laneOffsetX(car.lane, tF, nearHW);
-      const bx = cx + laneOffsetX(car.lane, tB, nearHW);
+    if (fw < 1) continue;
 
-      drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
-    } else {
-      // ── Past the player: fixed size, slide off the bottom ────────────────
-      const fy = nearY + (-car.z) * slideRate;
-      // Expire once the car's top edge exits the canvas
-      if (fy - fhNear > h) {
-        car.expired = true;
-        continue;
-      }
-      const fx = cx + laneOffsetX(car.lane, 1.0, nearHW);
-      // Degenerate back = front → only the front face renders (no sides/roof)
-      drawOncomingCar(p, fx, fy, fwNear, fhNear, fx, fy, fwNear, fhNear, car.hue);
-    }
+    const fy = tToScreenY(tF, horizY, nearY);
+    const by = tToScreenY(tB, horizY, nearY);
+    const fx = cx + laneOffsetX(car.lane, tF, nearHW);
+    const bx = cx + laneOffsetX(car.lane, tB, nearHW);
+
+    drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
 
-  // ── Render: player car ────────────────────────────────────────────────────
+  // ── Render: player car (between the two truck passes) ────────────────────
   const S = minDim * 0.065;
   drawPlayerCar(
     p,
@@ -539,6 +530,22 @@ export function drawHighway(p: P5Instance, dt: number): void {
     headlightGlow,
     carBankAngle
   );
+
+  // Pass 2 — trucks that have passed the player (z ≤ 0): drawn on top,
+  // occluding the player car as they slide off the bottom of the screen
+  for (const car of sortedCars) {
+    if (car.z > 0) continue;
+
+    const fy = nearY + (-car.z) * slideRate;
+    // Expire once the car's top edge exits the canvas
+    if (fy - fhNear > h) {
+      car.expired = true;
+      continue;
+    }
+    const fx = cx + laneOffsetX(car.lane, 1.0, nearHW);
+    // Degenerate back = front → only the front face renders (no sides/roof)
+    drawOncomingCar(p, fx, fy, fwNear, fhNear, fx, fy, fwNear, fhNear, car.hue);
+  }
 
   p.colorMode(p['RGB'], 255);
   p.noStroke();
