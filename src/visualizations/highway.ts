@@ -410,8 +410,9 @@ export function drawHighway(p: P5Instance, dt: number): void {
       // Only swerve + spawn on every Nth beat (controlled by Beat Frequency knob)
       if (beatCount % division === 0) {
         // Speed for cars spawned now: travel Z_SPAWN units in exactly
-        // `division * beatIntervalSec` seconds so they reach the player on the next trigger beat.
-        const travelSec = division * state.beatIntervalSec;
+        // `(division + 0.5) * beatIntervalSec` seconds so they pass the player
+        // on the offbeat — after the swerve has settled, not mid-transition.
+        const travelSec = (division + 0.5) * state.beatIntervalSec;
         const carSpeed = travelSec > 0 ? Z_SPAWN / (travelSec * 60) : STEP_PER_DT;
 
         // Lanes that already have a car close enough to be a threat
