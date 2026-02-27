@@ -45,6 +45,7 @@ const NEAR_Y_RATIO = 0.88;
 const NEAR_HW_RATIO = 0.46;
 const HORIZON_HW = 15;
 const DASH_SPACING = 120;
+const TREE_SPACING = 150;
 const BAND_HUES = [270, 30, 60, 120, 180, 210, 150];
 
 // ── Perspective helpers ───────────────────────────────────────────────────────
@@ -105,7 +106,7 @@ function drawRoad(
   p.strokeWeight(3);
 
   for (const divSide of [-1, 1]) {
-    for (let z = scrollZ; z < Z_SPAWN; z += DASH_SPACING) {
+    for (let z = DASH_SPACING - scrollZ; z < Z_SPAWN; z += DASH_SPACING) {
       const dashEnd = z + DASH_SPACING * 0.72;
       const t1 = zToT(z);
       const t2 = zToT(Math.min(dashEnd, Z_SPAWN - 1));
@@ -215,6 +216,56 @@ function drawOncomingCar(
   p.strokeWeight(Math.max(0.5, fw * 0.025));
   p.line(ftl.x + fw * 0.06, fy - 1, ftr.x - fw * 0.06, fy - 1);
   p.noStroke();
+}
+
+/** Draw a single pine-tree silhouette. baseY is the ground contact point. */
+function drawTreeSilhouette(p: P5Instance, x: number, baseY: number, sz: number): void {
+  p.noStroke();
+  const trkW = sz * 0.13;
+  const trkH = sz * 0.38;
+
+  // Trunk
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(28, 55, 12);
+  p.rect(x - trkW / 2, baseY - trkH, trkW, trkH);
+
+  // Lower foliage layer (wider)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(130, 65, 22);
+  p.triangle(x, baseY - trkH - sz * 1.4, x - sz * 0.60, baseY - trkH, x + sz * 0.60, baseY - trkH);
+
+  // Upper foliage layer (narrower)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(130, 60, 18);
+  p.triangle(x, baseY - trkH - sz * 2.1, x - sz * 0.38, baseY - trkH - sz * 0.85, x + sz * 0.38, baseY - trkH - sz * 0.85);
+}
+
+/** Draw perspective-correct pine trees on both road shoulders. */
+function drawRoadside(
+  p: P5Instance,
+  vanishX: number,
+  horizY: number,
+  nearY: number,
+  nearHW: number,
+  scrollZ: number
+): void {
+  const phase = scrollZ % TREE_SPACING;
+  for (let z = TREE_SPACING - phase; z < Z_SPAWN; z += TREE_SPACING) {
+    const t = zToT(z);
+    if (t < 0.04) continue;
+
+    const y   = tToScreenY(t, horizY, nearY);
+    const hw  = roadHWAt(t, nearHW);
+    const sz  = t * nearHW * 0.22;
+    if (sz < 1.5) continue;
+
+    // Slight deterministic lateral stagger so trees don't look like a perfect grid
+    const idx   = Math.round(z / TREE_SPACING);
+    const jitter = Math.sin(idx * 1.618) * hw * 0.10;
+
+    drawTreeSilhouette(p, vanishX - hw - sz * 0.75 + jitter, y, sz);
+    drawTreeSilhouette(p, vanishX + hw + sz * 0.75 - jitter, y, sz);
+  }
 }
 
 /**
@@ -479,7 +530,6 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // ── Scroll road markings ───────────────────────────────────────────────────
   if (state.isPlaying) {
     roadScrollZ += baseSpeed * dt;
-    if (roadScrollZ >= DASH_SPACING) roadScrollZ -= DASH_SPACING;
   }
 
   // ── Render: sky ───────────────────────────────────────────────────────────
@@ -494,7 +544,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
   p.rect(0, horizY - 10, w, 20);
 
   // ── Render: road ──────────────────────────────────────────────────────────
-  drawRoad(p, vanishX, horizY, nearY, nearHW, roadScrollZ, h);
+  drawRoad(p, vanishX, horizY, nearY, nearHW, roadScrollZ % DASH_SPACING, h);
+  drawRoadside(p, vanishX, horizY, nearY, nearHW, roadScrollZ);
 
   // ── Render: oncoming cars (back → front) ──────────────────────────────────
   // Painter's algorithm: far cars first, then player car, then cars that
