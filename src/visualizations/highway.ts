@@ -413,10 +413,6 @@ export function drawHighway(p: P5Instance, dt: number): void {
         // `division * beatIntervalSec` seconds so they reach the player on the next trigger beat.
         const travelSec = division * state.beatIntervalSec;
         const carSpeed = travelSec > 0 ? Z_SPAWN / (travelSec * 60) : STEP_PER_DT;
-        // Phase-shift spawn point by half a beat so cars pass z=0 on the offbeat
-        // (after the player has settled into the new lane, not mid-swerve).
-        // extra distance = speed × 0.5 beat = Z_SPAWN × 0.5 / division
-        const spawnZ = Z_SPAWN + Z_SPAWN * 0.5 / division;
 
         // Lanes that already have a car close enough to be a threat
         const dangerLanes = new Set(cars.filter(c => c.z < 450).map(c => c.lane));
@@ -441,7 +437,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
           const bandIdx = Math.floor(Math.random() * 7);
           cars.push({
             lane: spawnPool[Math.floor(Math.random() * spawnPool.length)],
-            z: spawnZ,
+            z: Z_SPAWN,
             hue: BAND_HUES[bandIdx],
             expired: false,
             speed: carSpeed,
@@ -505,7 +501,6 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // Pass 1 — approaching cars (z > 0): drawn behind the player car
   for (const car of sortedCars) {
     if (car.z <= 0) continue;
-    if (car.z >= Z_SPAWN) continue; // still beyond horizon — not yet visible
 
     const tF = zToT(car.z);
     const tB = zToT(Math.min(car.z + Z_CAR_DEPTH, Z_SPAWN - 1));
