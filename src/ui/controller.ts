@@ -109,6 +109,7 @@ function bindVizSelector(): () => void {
     // | stickman |  hide |  show |     hide |      hide |      hide |    hide |      hide |
     // | lasers   |  hide |  hide |     hide |      hide |      show |    show |      hide |
     // | text     |  hide |  hide |     hide |      hide |      show |    show |      show |
+    // | highway  |  hide |  hide |     hide |      hide |      show |    hide |      hide |
     switch (mode) {
       case 'circle':
         show(scaleGroup); show(decayRateGroup); show(rotationSpeedGroup);
@@ -143,10 +144,10 @@ function bindVizSelector(): () => void {
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup);
         break;
       case 'highway':
-        show(intensityGroup); show(beatDivisionGroup);
+        show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Speed';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(textInputGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'runners':
         show(intensityGroup); show(beatDivisionGroup);

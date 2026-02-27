@@ -394,11 +394,13 @@ export function drawHighway(p: P5Instance, dt: number): void {
   }
   lastPlaybackPos = pos;
 
-  // ── Speed (intensity knob) and beat-division knob ─────────────────────────
-  // baseSpeed scales STEP_PER_DT by the Intensity slider (0–2).
-  // division controls how many raw beats are skipped between each swerve/spawn.
-  const baseSpeed = STEP_PER_DT * store.config.intensity;
-  const division = Math.max(1, Math.round(store.config.beatDivision));
+  // ── Speed knob drives both road speed and beat division ───────────────────
+  // intensity (0–2) controls road scroll speed continuously, and also sets
+  // the beat division in discrete steps so cars always align with the beat:
+  //   < 0.5 → every 4 beats   0.5–1.0 → every 2 beats   ≥ 1.0 → every beat
+  const intensity = store.config.intensity;
+  const baseSpeed = STEP_PER_DT * intensity;
+  const division = intensity < 0.5 ? 4 : intensity < 1.0 ? 2 : 1;
 
   // ── Beat detection: always dodge, spawn cars ──────────────────────────────
   if (state.isPlaying && state.beatIntervalSec > 0) {
