@@ -432,14 +432,14 @@ export function drawHighway(p: P5Instance, dt: number): void {
         playerLane = dodge;
         playerTargetLane = dodge;
 
-        // Spawn 1–2 oncoming cars — never in the player's new lane so they
-        // don't arrive right as the player lands there
+        // Spawn one car in each non-target lane (always 2 cars).
+        // This guarantees a car in the lane the player just left, so every
+        // swerve looks forced rather than optional.
         const spawnPool = [0, 1, 2].filter(l => l !== playerTargetLane);
-        const count = 1 + (Math.random() < 0.45 ? 1 : 0);
-        for (let i = 0; i < count; i++) {
+        for (const lane of spawnPool) {
           const bandIdx = Math.floor(Math.random() * 7);
           cars.push({
-            lane: spawnPool[Math.floor(Math.random() * spawnPool.length)],
+            lane,
             z: Z_SPAWN,
             hue: BAND_HUES[bandIdx],
             expired: false,
