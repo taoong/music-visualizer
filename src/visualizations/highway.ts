@@ -525,7 +525,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const prevOffsetX = playerOffsetX;
   playerOffsetX += (targetOffsetX - playerOffsetX) * Math.min(1, 0.18 * dt);
   const velX = playerOffsetX - prevOffsetX;
-  carBankAngle += (velX / minDim * 8.0 - carBankAngle) * Math.min(1, 0.18 * dt);
+  carBankAngle += (velX / minDim * 4.0 - carBankAngle) * Math.min(1, 0.18 * dt);
 
   // Camera lags behind player — creates authentic racing-game follow feel.
   cameraOffsetX += (playerOffsetX - cameraOffsetX) * Math.min(1, 0.08 * dt);
@@ -539,16 +539,28 @@ export function drawHighway(p: P5Instance, dt: number): void {
     roadScrollZ += baseSpeed * dt;
   }
 
-  // ── Render: sky ───────────────────────────────────────────────────────────
+  // ── Render: sky + ground (pre-rotation, oversized to survive any roll) ────
   p.noStroke();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(220, 30, 10);
-  p.rect(0, 0, w, horizY);
+  (p as any).fill(220, 30, 10);           // sky colour
+  p.rect(-w, -h, w * 3, h * 3);          // oversized to survive any rotation
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(100, 35, 8);            // dark ground outside road
+  p.rect(-w, horizY, w * 3, h * 3);
 
-  // Horizon glow strip
+  // ── Camera roll: rotate entire world around the vanishing point ───────────
+  // At max lane offset cameraOffsetX ≈ ±0.31w → roll ≈ ±0.055 rad ≈ ±3.1°
+  const cameraRoll = -cameraOffsetX / (nearHW * 2) * 0.07;
+  p.push();
+  p.translate(vanishX, horizY);
+  p.rotate(cameraRoll);
+  p.translate(-vanishX, -horizY);
+
+  // Horizon glow (inside rotation so it tilts with the road)
+  p.noStroke();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(220, 20, 20, 70);
-  p.rect(0, horizY - 10, w, 20);
+  p.rect(-w * 2, horizY - 10, w * 5, 20);  // wide enough to survive rotation
 
   // ── Render: road ──────────────────────────────────────────────────────────
   drawRoad(p, vanishX, horizY, nearY, nearHW, roadScrollZ % DASH_SPACING, h);
@@ -585,13 +597,22 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
   // ── Render: player car (between the two car passes) ──────────────────────
   const S = minDim * 0.065;
+  const carScreenX = cx + (playerOffsetX - cameraOffsetX);
+  const carScreenY = nearY + S * 0.4;
+
+  // Rotate car body so it points toward the vanishing point rather than
+  // always facing straight ahead.  Full geometric angle (atan2) scaled to
+  // 25% avoids cartoonish over-rotation while still clearly showing the car
+  // is aimed at its lane's horizon.
+  const facingAngle = Math.atan2(vanishX - carScreenX, carScreenY - horizY) * 0.25;
+
   drawPlayerCar(
     p,
-    cx + (playerOffsetX - cameraOffsetX),
-    nearY + S * 0.4,
+    carScreenX,
+    carScreenY,
     S,
     headlightGlow,
-    carBankAngle
+    facingAngle + carBankAngle
   );
 
   // Pass 2 — cars that have passed the player (z ≤ 0): drawn on top,
@@ -625,6 +646,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
     drawOncomingCar(p, fx, fy, fwExit, fhExit, fx, fy, fwExit, fhExit, car.hue);
   }
 
+  p.pop(); // end camera roll transform
   p.colorMode(p['RGB'], 255);
   p.noStroke();
 }
