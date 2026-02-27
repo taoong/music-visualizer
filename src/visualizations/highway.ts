@@ -600,11 +600,10 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const carScreenX = cx + (playerOffsetX - cameraOffsetX);
   const carScreenY = nearY + S * 0.4;
 
-  // Rotate car body so it points toward the vanishing point rather than
-  // always facing straight ahead.  Full geometric angle (atan2) scaled to
-  // 25% avoids cartoonish over-rotation while still clearly showing the car
-  // is aimed at its lane's horizon.
-  const facingAngle = Math.atan2(vanishX - carScreenX, carScreenY - horizY) * 0.25;
+  // Rotate car body to be parallel to its lane.  In perspective all lane
+  // lines converge to the vanishing point, so the exact lane direction at
+  // the car's screen position is the vector from the car to (vanishX, horizY).
+  const facingAngle = Math.atan2(vanishX - carScreenX, carScreenY - horizY);
 
   drawPlayerCar(
     p,
