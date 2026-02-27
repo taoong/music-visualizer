@@ -38,7 +38,7 @@ let lastDodgeLane = -1;
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const Z_SPAWN = 1000;
-const Z_CAR_DEPTH = 80;    // car length in z-units (≈ 4.5 m at this scale)
+const Z_CAR_DEPTH = 50;    // car length in z-units
 const STEP_PER_DT = 11.0;
 const HORIZON_Y_RATIO = 0.35;
 const NEAR_Y_RATIO = 0.88;
@@ -450,7 +450,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // ── Advance cars ──────────────────────────────────────────────────────────
   if (state.isPlaying) {
     for (const car of cars) {
-      // Trucks that have passed the player exit at 2× speed — mimics the
+      // Cars that have passed the player exit at 2× speed — mimics the
       // rapid apparent motion of a vehicle that has just overtaken you.
       const exitMult = car.z <= 0 ? 2.0 : 1.0;
       car.z -= car.speed * dt * exitMult;
@@ -494,11 +494,11 @@ export function drawHighway(p: P5Instance, dt: number): void {
   drawRoad(p, vanishX, horizY, nearY, nearHW, roadScrollZ, h);
 
   // ── Render: oncoming cars (back → front) ──────────────────────────────────
-  // Painter's algorithm: far trucks first, then player car, then trucks that
+  // Painter's algorithm: far cars first, then player car, then cars that
   // have already passed the player (z ≤ 0) so they occlude the player car.
   const sortedCars = [...cars].sort((a, b) => b.z - a.z);
 
-  // Pass 1 — approaching trucks (z > 0): drawn behind the player car
+  // Pass 1 — approaching cars (z > 0): drawn behind the player car
   for (const car of sortedCars) {
     if (car.z <= 0) continue;
 
@@ -507,10 +507,10 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
     const hwF = roadHWAt(tF, nearHW);
     const hwB = roadHWAt(tB, nearHW);
-    const fw = hwF * 0.40;
-    const bw = hwB * 0.40;
-    const fh = fw * 1.5;
-    const bh = bw * 1.5;
+    const fw = hwF * 0.30;
+    const bw = hwB * 0.30;
+    const fh = fw * 0.70;
+    const bh = bw * 0.70;
 
     if (fw < 1) continue;
 
@@ -522,7 +522,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
     drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
 
-  // ── Render: player car (between the two truck passes) ────────────────────
+  // ── Render: player car (between the two car passes) ──────────────────────
   const S = minDim * 0.065;
   drawPlayerCar(
     p,
@@ -533,15 +533,15 @@ export function drawHighway(p: P5Instance, dt: number): void {
     carBankAngle
   );
 
-  // Pass 2 — trucks that have passed the player (z ≤ 0): drawn on top,
+  // Pass 2 — cars that have passed the player (z ≤ 0): drawn on top,
   // occluding the player car as they exit the bottom of the screen.
   //
-  // Size is capped at the near-plane (z=0) values so the truck never expands
+  // Size is capped at the near-plane (z=0) values so the car never expands
   // beyond the size it was when it passed the player.  The Y position uses
-  // unclamped t (> 1 for z < 0) so the truck continues moving downward
+  // unclamped t (> 1 for z < 0) so the car continues moving downward
   // naturally rather than suddenly stopping or falling at a fixed rate.
-  const fwExit = roadHWAt(1.0, nearHW) * 0.40;
-  const fhExit = fwExit * 1.5;
+  const fwExit = roadHWAt(1.0, nearHW) * 0.30;
+  const fhExit = fwExit * 0.70;
 
   for (const car of sortedCars) {
     if (car.z > 0) continue;
@@ -550,7 +550,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
     const tF = 1 - car.z / Z_SPAWN;
     const fy = tToScreenY(tF, horizY, nearY);
 
-    // Expire when the top of the truck has fully exited the canvas
+    // Expire when the top of the car has fully exited the canvas
     if (fy - fhExit > h) {
       car.expired = true;
       continue;
@@ -559,7 +559,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
     // X pinned at the near-plane lane position (no lateral drift)
     const fx = vanishX + laneOffsetX(car.lane, 1.0, nearHW);
 
-    // Draw as a flat face (degenerate box) — the truck has passed, so we
+    // Draw as a flat face (degenerate box) — the car has passed, so we
     // just show its face sliding off the bottom at consistent size
     drawOncomingCar(p, fx, fy, fwExit, fhExit, fx, fy, fwExit, fhExit, car.hue);
   }
