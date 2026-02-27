@@ -437,7 +437,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
           const bandIdx = Math.floor(Math.random() * 7);
           cars.push({
             lane: spawnPool[Math.floor(Math.random() * spawnPool.length)],
-            z: Z_SPAWN * (1 - 0.1 / division),
+            z: Z_SPAWN * (1 - 0.3 / division),
             hue: BAND_HUES[bandIdx],
             expired: false,
             speed: carSpeed,
