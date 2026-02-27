@@ -39,7 +39,6 @@ let lastDodgeLane = -1;
 
 const Z_SPAWN = 1000;
 const Z_CAR_DEPTH = 50;    // car length in z-units
-const STEP_PER_DT = 11.0;
 const HORIZON_Y_RATIO = 0.35;
 const NEAR_Y_RATIO = 0.88;
 const NEAR_HW_RATIO = 0.46;
@@ -103,7 +102,6 @@ function drawRoad(
   // Dashed lane dividers — at ±1/3 of road half-width (between lane centers)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).stroke(0, 0, 65, 85);
-  p.strokeWeight(3);
 
   for (const divSide of [-1, 1]) {
     for (let z = DASH_SPACING - scrollZ; z < Z_SPAWN; z += DASH_SPACING) {
@@ -118,6 +116,8 @@ function drawRoad(
       const y1 = tToScreenY(t1, horizY, nearY);
       const y2 = tToScreenY(t2, horizY, nearY);
       if (y1 < nearY && y2 > horizY) {
+        // Scale stroke weight with t1 (near-end): thin at horizon, bold near player
+        p.strokeWeight(Math.max(0.5, 3 * t1));
         p.line(x1, y1, x2, y2);
       }
     }
@@ -450,8 +450,16 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // the beat division in discrete steps so cars always align with the beat:
   //   < 0.5 → every 4 beats   0.5–1.0 → every 2 beats   ≥ 1.0 → every beat
   const intensity = store.config.intensity;
-  const baseSpeed = STEP_PER_DT * intensity;
   const division = intensity < 0.5 ? 4 : intensity < 1.0 ? 2 : 1;
+
+  // Road scroll speed derived from traffic car speed so markings feel consistent.
+  // refCarSpeed = same formula used for spawning cars.
+  // baseSpeed = half of car approach speed × intensity knob.
+  const travelSec = state.beatIntervalSec > 0
+    ? Math.max(0.01, (division - 0.3) * state.beatIntervalSec)
+    : 1.0;
+  const refCarSpeed = Z_SPAWN / (travelSec * 60);
+  const baseSpeed = refCarSpeed * 0.5 * intensity;
 
   // ── Beat detection: always dodge, spawn cars ──────────────────────────────
   if (state.isPlaying && state.beatIntervalSec > 0) {
@@ -465,8 +473,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
         // Speed for cars spawned now: travel Z_SPAWN units in
         // `(division - 0.3) * beatIntervalSec` seconds so they pass the player
         // 30% of a beat before the next trigger beat.
-        const travelSec = (division - 0.3) * state.beatIntervalSec;
-        const carSpeed = travelSec > 0 ? Z_SPAWN / (travelSec * 60) : STEP_PER_DT;
+        const carSpeed = refCarSpeed;  // already computed above
 
         // Lanes that already have a car close enough to be a threat
         const dangerLanes = new Set(cars.filter(c => c.z < 450).map(c => c.lane));
