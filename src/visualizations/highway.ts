@@ -69,7 +69,8 @@ function laneOffsetX(lane: number, t: number, nearHW: number): number {
 
 function drawRoad(
   p: P5Instance,
-  cx: number,
+  vanishX: number,
+  cameraOffsetX: number,
   horizY: number,
   nearY: number,
   nearHW: number,
@@ -79,25 +80,26 @@ function drawRoad(
   p.noStroke();
 
   // Road half-width at the canvas bottom (linear extrapolation beyond nearY)
-  const bottomT = (bottomY - horizY) / (nearY - horizY);
+  const bottomT  = (bottomY - horizY) / (nearY - horizY);
+  const bottomCX = vanishX + cameraOffsetX * bottomT;
   const bottomHW = roadHWAt(bottomT, nearHW);
 
   // Asphalt trapezoid — extends all the way to the canvas bottom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 0, 16);
   p.beginShape();
-  p.vertex(cx - HORIZON_HW, horizY);
-  p.vertex(cx + HORIZON_HW, horizY);
-  p.vertex(cx + bottomHW, bottomY);
-  p.vertex(cx - bottomHW, bottomY);
+  p.vertex(vanishX - HORIZON_HW, horizY);
+  p.vertex(vanishX + HORIZON_HW, horizY);
+  p.vertex(bottomCX + bottomHW, bottomY);
+  p.vertex(bottomCX - bottomHW, bottomY);
   p.endShape(p['CLOSE']);
 
   // Solid white edge lines — also extend to canvas bottom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).stroke(0, 0, 88);
   p.strokeWeight(2);
-  p.line(cx - HORIZON_HW, horizY, cx - bottomHW, bottomY);
-  p.line(cx + HORIZON_HW, horizY, cx + bottomHW, bottomY);
+  p.line(vanishX - HORIZON_HW, horizY, bottomCX - bottomHW, bottomY);
+  p.line(vanishX + HORIZON_HW, horizY, bottomCX + bottomHW, bottomY);
 
   // Dashed lane dividers — at ±1/3 of road half-width (between lane centers)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -111,8 +113,10 @@ function drawRoad(
       const hw1 = roadHWAt(t1, nearHW);
       const hw2 = roadHWAt(t2, nearHW);
       // Dividers sit between adjacent lane centers: ± hw * 0.335
-      const x1 = cx + divSide * hw1 * 0.335;
-      const x2 = cx + divSide * hw2 * 0.335;
+      const cx1 = vanishX + cameraOffsetX * t1;
+      const cx2 = vanishX + cameraOffsetX * t2;
+      const x1 = cx1 + divSide * hw1 * 0.335;
+      const x2 = cx2 + divSide * hw2 * 0.335;
       const y1 = tToScreenY(t1, horizY, nearY);
       const y2 = tToScreenY(t2, horizY, nearY);
       if (y1 < nearY && y2 > horizY) {
@@ -244,6 +248,7 @@ function drawTreeSilhouette(p: P5Instance, x: number, baseY: number, sz: number)
 function drawRoadside(
   p: P5Instance,
   vanishX: number,
+  cameraOffsetX: number,
   horizY: number,
   nearY: number,
   nearHW: number,
@@ -254,17 +259,18 @@ function drawRoadside(
     const t = zToT(z);
     if (t < 0.04) continue;
 
-    const y   = tToScreenY(t, horizY, nearY);
-    const hw  = roadHWAt(t, nearHW);
-    const sz  = t * nearHW * 0.22;
+    const y      = tToScreenY(t, horizY, nearY);
+    const hw     = roadHWAt(t, nearHW);
+    const sz     = t * nearHW * 0.22;
     if (sz < 1.5) continue;
 
     // Slight deterministic lateral stagger so trees don't look like a perfect grid
-    const idx   = Math.round(z / TREE_SPACING);
+    const idx    = Math.round(z / TREE_SPACING);
     const jitter = Math.sin(idx * 1.618) * hw * 0.10;
 
-    drawTreeSilhouette(p, vanishX - hw - sz * 0.75 + jitter, y, sz);
-    drawTreeSilhouette(p, vanishX + hw + sz * 0.75 - jitter, y, sz);
+    const treeCX = vanishX + cameraOffsetX * t;
+    drawTreeSilhouette(p, treeCX - hw - sz * 0.75 + jitter, y, sz);
+    drawTreeSilhouette(p, treeCX + hw + sz * 0.75 - jitter, y, sz);
   }
 }
 
@@ -558,8 +564,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
   p.rect(-w * 2, horizY - 10, w * 5, 20);  // wide enough to survive rotation
 
   // ── Render: road ──────────────────────────────────────────────────────────
-  drawRoad(p, vanishX, horizY, nearY, nearHW, roadScrollZ % DASH_SPACING, h);
-  drawRoadside(p, vanishX, horizY, nearY, nearHW, roadScrollZ);
+  drawRoad(p, vanishX, cameraOffsetX, horizY, nearY, nearHW, roadScrollZ % DASH_SPACING, h);
+  drawRoadside(p, vanishX, cameraOffsetX, horizY, nearY, nearHW, roadScrollZ);
 
   // ── Render: oncoming cars (back → front) ──────────────────────────────────
   // Painter's algorithm: far cars first, then player car, then cars that
@@ -584,8 +590,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
     const fy = tToScreenY(tF, horizY, nearY);
     const by = tToScreenY(tB, horizY, nearY);
-    const fx = vanishX + laneOffsetX(car.lane, tF, nearHW);
-    const bx = vanishX + laneOffsetX(car.lane, tB, nearHW);
+    const fx = vanishX + cameraOffsetX * tF + laneOffsetX(car.lane, tF, nearHW);
+    const bx = vanishX + cameraOffsetX * tB + laneOffsetX(car.lane, tB, nearHW);
 
     drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
@@ -636,7 +642,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
     }
 
     // X pinned at the near-plane lane position (no lateral drift)
-    const fx = vanishX + laneOffsetX(car.lane, 1.0, nearHW);
+    const fx = vanishX + cameraOffsetX * 1.0 + laneOffsetX(car.lane, 1.0, nearHW);
 
     // Draw as a flat face (degenerate box) — the car has passed, so we
     // just show its face sliding off the bottom at consistent size
