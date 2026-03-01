@@ -607,11 +607,11 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const pScale = roadHWAt(tFront, nearHW) / roadHWAt(1.0, nearHW);
 
   // Near face (rear bumper): player's current position on the near plane
-  const nx = vanishX + playerOffsetX;
+  const nx = cx + playerOffsetX;
   const ny = nearY + S * 0.4;
 
   // Far face (front bumper): perspective-correct — converges toward vanishX
-  const fx = vanishX + playerOffsetX * pScale;
+  const fx = vanishX + cameraOffsetX * tFront + playerOffsetX * pScale;
   const fy = tToScreenY(tFront, horizY, nearY) + S * 0.4;
   const fw = nw * pScale;
   const fh = nh * pScale;
