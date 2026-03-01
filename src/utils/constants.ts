@@ -179,6 +179,11 @@ export const DEFAULT_CONFIG = {
   decayRate: 0.88, // Default decay rate (0.0 = instant, 1.0 = no decay)
   intensity: 1.0,
   beatDivision: 1,
+  // Highway-specific
+  highwayCamFollow: 0.35,
+  highwayCamRoll: 0.5,
+  highwayHorizon: 0.35,
+  highwayRoadWidth: 0.46,
 };
 
 // FFT and decay constants

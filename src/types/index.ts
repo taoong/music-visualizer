@@ -51,6 +51,11 @@ export interface Config {
   decayRate: number;
   intensity: number;
   beatDivision: number;
+  // Highway-specific
+  highwayCamFollow: number;
+  highwayCamRoll: number;
+  highwayHorizon: number;
+  highwayRoadWidth: number;
 }
 
 // Application state

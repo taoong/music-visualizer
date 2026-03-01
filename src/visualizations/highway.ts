@@ -38,9 +38,7 @@ let lastDodgeLane = -1;
 
 const Z_SPAWN = 1000;
 const Z_CAR_DEPTH = 50;    // car length in z-units
-const HORIZON_Y_RATIO = 0.35;
 const NEAR_Y_RATIO = 0.88;
-const NEAR_HW_RATIO = 0.46;
 const HORIZON_HW = 15;
 const DASH_SPACING = 120;
 const TREE_SPACING = 150;
@@ -426,8 +424,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const w = p.width;
   const h = p.height;
   const cx = w / 2;
-  const nearHW = w * NEAR_HW_RATIO;
-  const horizY = h * HORIZON_Y_RATIO;
+  const nearHW = w * store.config.highwayRoadWidth;
+  const horizY = h * store.config.highwayHorizon;
   const nearY = h * NEAR_Y_RATIO;
   const minDim = Math.min(w, h);
 
@@ -528,9 +526,9 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const targetOffsetX = laneOffsetX(playerTargetLane, 1.0, nearHW);
   playerOffsetX += (targetOffsetX - playerOffsetX) * Math.min(1, 0.18 * dt);
 
-  // Camera partially follows player — vanishing point shifts only 35% of the
-  // lane offset so the road stays near-center while the car sits in its lane.
-  cameraOffsetX += (playerOffsetX * 0.35 - cameraOffsetX) * Math.min(1, 0.08 * dt);
+  // Camera partially follows player — vanishing point shifts only a fraction of
+  // the lane offset so the road stays near-center while the car sits in its lane.
+  cameraOffsetX += (playerOffsetX * store.config.highwayCamFollow - cameraOffsetX) * Math.min(1, 0.08 * dt);
   const vanishX = cx - cameraOffsetX;
 
   // ── Headlight glow tracks bass ─────────────────────────────────────────────
@@ -551,8 +549,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
   p.rect(-w, horizY, w * 3, h * 3);
 
   // ── Camera roll: rotate entire world around the vanishing point ───────────
-  // At max lane offset cameraOffsetX ≈ ±0.31w → roll ≈ ±0.055 rad ≈ ±3.1°
-  const cameraRoll = -cameraOffsetX / (nearHW * 2) * 0.07;
+  // highwayCamRoll 0→1 maps to 0–0.14 rad max roll; default 0.5 → 0.07 rad ≈ 4°
+  const cameraRoll = -cameraOffsetX / (nearHW * 2) * (store.config.highwayCamRoll * 0.14);
   p.push();
   p.translate(vanishX, horizY);
   p.rotate(cameraRoll);

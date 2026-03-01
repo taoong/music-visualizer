@@ -67,6 +67,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'rotation-speed', key: 'rotationSpeed' },
     { id: 'viz-intensity', key: 'intensity' },
     { id: 'beat-division', key: 'beatDivision' },
+    { id: 'highway-cam-follow', key: 'highwayCamFollow' },
+    { id: 'highway-cam-roll', key: 'highwayCamRoll' },
+    { id: 'highway-horizon', key: 'highwayHorizon' },
+    { id: 'highway-road-width', key: 'highwayRoadWidth' },
   ] as const;
 
   for (const { id, key } of configs) {

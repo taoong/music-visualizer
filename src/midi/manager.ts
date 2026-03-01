@@ -25,6 +25,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   intensity: 'viz-intensity',
   beatDivision: 'beat-division',
   masterVolume: 'master-volume',
+  highwayCamFollow: 'highway-cam-follow',
+  highwayCamRoll: 'highway-cam-roll',
+  highwayHorizon: 'highway-horizon',
+  highwayRoadWidth: 'highway-road-width',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -44,6 +44,10 @@ const DISPLAY_ROWS: ControlRow[] = [
   { label: 'Intensity', configKey: 'intensity' },
   { label: 'Beat Frequency', configKey: 'beatDivision' },
   { label: 'Volume', configKey: 'masterVolume' },
+  { label: 'Highway: Cam Follow', configKey: 'highwayCamFollow' },
+  { label: 'Highway: Cam Roll', configKey: 'highwayCamRoll' },
+  { label: 'Highway: Horizon', configKey: 'highwayHorizon' },
+  { label: 'Highway: Road Width', configKey: 'highwayRoadWidth' },
 ];
 
 function getMappingLabel(configKey: keyof Config): string {
