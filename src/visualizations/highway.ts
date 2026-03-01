@@ -528,13 +528,10 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const targetOffsetX = laneOffsetX(playerTargetLane, 1.0, nearHW);
   playerOffsetX += (targetOffsetX - playerOffsetX) * Math.min(1, 0.18 * dt);
 
-  // Camera lags behind player — creates authentic racing-game follow feel.
-  cameraOffsetX += (playerOffsetX - cameraOffsetX) * Math.min(1, 0.08 * dt);
+  // Camera partially follows player — vanishing point shifts only 35% of the
+  // lane offset so the road stays near-center while the car sits in its lane.
+  cameraOffsetX += (playerOffsetX * 0.35 - cameraOffsetX) * Math.min(1, 0.08 * dt);
   const vanishX = cx - cameraOffsetX;
-
-  // Scene pan: shift entire world in screen-space so car settles ~40% of its
-  // lane offset from center rather than the full lane offset. 0.6 = follow fraction.
-  const scenePanX = -cameraOffsetX * 0.6;
 
   // ── Headlight glow tracks bass ─────────────────────────────────────────────
   headlightGlow += (bassAmp - headlightGlow) * Math.min(1, 0.15 * dt);
@@ -557,7 +554,6 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // At max lane offset cameraOffsetX ≈ ±0.31w → roll ≈ ±0.055 rad ≈ ±3.1°
   const cameraRoll = -cameraOffsetX / (nearHW * 2) * 0.07;
   p.push();
-  p.translate(scenePanX, 0);          // pan scene so car settles near (not at) screen center
   p.translate(vanishX, horizY);
   p.rotate(cameraRoll);
   p.translate(-vanishX, -horizY);
