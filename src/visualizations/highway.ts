@@ -549,8 +549,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   p.rect(-w, horizY, w * 3, h * 3);
 
   // ── Camera roll: rotate entire world around the vanishing point ───────────
-  // highwayCamRoll 0→1 maps to 0–0.14 rad max roll; default 0.5 → 0.07 rad ≈ 4°
-  const cameraRoll = -cameraOffsetX / (nearHW * 2) * (store.config.highwayCamRoll * 0.14);
+  const cameraRoll = -cameraOffsetX / (nearHW * 2) * 0.07;
   p.push();
   p.translate(vanishX, horizY);
   p.rotate(cameraRoll);

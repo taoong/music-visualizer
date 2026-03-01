@@ -181,7 +181,6 @@ export const DEFAULT_CONFIG = {
   beatDivision: 1,
   // Highway-specific
   highwayCamFollow: 0.35,
-  highwayCamRoll: 0.5,
   highwayHorizon: 0.35,
   highwayRoadWidth: 0.46,
 };

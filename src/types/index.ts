@@ -53,7 +53,6 @@ export interface Config {
   beatDivision: number;
   // Highway-specific
   highwayCamFollow: number;
-  highwayCamRoll: number;
   highwayHorizon: number;
   highwayRoadWidth: number;
 }

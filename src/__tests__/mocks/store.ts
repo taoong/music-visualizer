@@ -42,7 +42,6 @@ export function createMockStoreState() {
       intensity: 1.0,
       beatDivision: 1,
       highwayCamFollow: 0.35,
-      highwayCamRoll: 0.5,
       highwayHorizon: 0.35,
       highwayRoadWidth: 0.46,
     },

@@ -26,7 +26,6 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   beatDivision: 'beat-division',
   masterVolume: 'master-volume',
   highwayCamFollow: 'highway-cam-follow',
-  highwayCamRoll: 'highway-cam-roll',
   highwayHorizon: 'highway-horizon',
   highwayRoadWidth: 'highway-road-width',
 };
