@@ -44,6 +44,7 @@ const DASH_SPACING = 120;
 const TREE_SPACING = 150;
 const BAND_HUES = [270, 30, 60, 120, 180, 210, 150];
 const PLAYER_Z_DEPTH = 200;  // z-units representing player car length (for perspective side panels)
+const PERSP_POW = 2;          // perspective warp: t^PERSP_POW compresses horizon, opens near camera
 
 // ── Perspective helpers ───────────────────────────────────────────────────────
 
@@ -51,12 +52,16 @@ function zToT(z: number): number {
   return 1 - Math.min(z / Z_SPAWN, 1);
 }
 
+function perspT(t: number): number {
+  return Math.pow(t, PERSP_POW);
+}
+
 function tToScreenY(t: number, horizY: number, nearY: number): number {
-  return horizY + t * (nearY - horizY);
+  return horizY + perspT(t) * (nearY - horizY);
 }
 
 function roadHWAt(t: number, nearHW: number): number {
-  return HORIZON_HW + t * (nearHW - HORIZON_HW);
+  return HORIZON_HW + perspT(t) * (nearHW - HORIZON_HW);
 }
 
 function laneOffsetX(lane: number, t: number, nearHW: number): number {
@@ -107,7 +112,7 @@ function drawRoad(
     for (let z = DASH_SPACING - scrollZ; z < Z_SPAWN; z += DASH_SPACING) {
       const t1 = zToT(z);
       // Dash length scales with depth: very short at horizon, long near camera
-      const dashEnd = z + DASH_SPACING * (0.1 + 0.8 * t1);
+      const dashEnd = z + DASH_SPACING * 0.25;
       const t2 = zToT(Math.min(dashEnd, Z_SPAWN - 1));
       const hw1 = roadHWAt(t1, nearHW);
       const hw2 = roadHWAt(t2, nearHW);
@@ -260,7 +265,7 @@ function drawRoadside(
 
     const y      = tToScreenY(t, horizY, nearY);
     const hw     = roadHWAt(t, nearHW);
-    const sz     = t * nearHW * 0.22;
+    const sz     = perspT(t) * nearHW * 0.22;
     if (sz < 1.5) continue;
 
     // Slight deterministic lateral stagger so trees don't look like a perfect grid
