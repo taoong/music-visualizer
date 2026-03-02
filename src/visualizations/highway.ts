@@ -539,6 +539,12 @@ export function drawHighway(p: P5Instance, dt: number): void {
     roadScrollZ += baseSpeed * dt;
   }
 
+  // ── World pan: shift entire scene so car moves toward screen center ─────────
+  // cameraOffsetX targets -playerOffsetX * follow, so at follow=1 the world
+  // pans enough that the player's lane appears at cx (car centered on screen).
+  p.push();
+  p.translate(cameraOffsetX, 0);
+
   // ── Render: sky + ground (pre-rotation, oversized to survive any roll) ────
   p.noStroke();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -648,6 +654,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   }
 
   p.pop(); // end camera roll transform
+  p.pop(); // end world pan
   p.colorMode(p['RGB'], 255);
   p.noStroke();
 }
