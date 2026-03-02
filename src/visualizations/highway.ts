@@ -105,8 +105,9 @@ function drawRoad(
 
   for (const divSide of [-1, 1]) {
     for (let z = DASH_SPACING - scrollZ; z < Z_SPAWN; z += DASH_SPACING) {
-      const dashEnd = z + DASH_SPACING * 0.72;
       const t1 = zToT(z);
+      // Dash length scales with depth: very short at horizon, long near camera
+      const dashEnd = z + DASH_SPACING * (0.1 + 0.8 * t1);
       const t2 = zToT(Math.min(dashEnd, Z_SPAWN - 1));
       const hw1 = roadHWAt(t1, nearHW);
       const hw2 = roadHWAt(t2, nearHW);
