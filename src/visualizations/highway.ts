@@ -528,7 +528,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
   // Camera partially follows player — vanishing point shifts only a fraction of
   // the lane offset so the road stays near-center while the car sits in its lane.
-  cameraOffsetX += (playerOffsetX * store.config.highwayCamFollow - cameraOffsetX) * Math.min(1, 0.08 * dt);
+  cameraOffsetX += (-playerOffsetX * store.config.highwayCamFollow - cameraOffsetX) * Math.min(1, 0.08 * dt);
   const vanishX = cx - cameraOffsetX;
 
   // ── Headlight glow tracks bass ─────────────────────────────────────────────
