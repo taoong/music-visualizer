@@ -85,7 +85,9 @@ function drawRoad(
   // Road half-width at the canvas bottom (linear extrapolation beyond nearY)
   const bottomT  = (bottomY - horizY) / (nearY - horizY);
   const bottomCX = vanishX + cameraOffsetX * bottomT;
-  const bottomHW = roadHWAt(bottomT, nearHW);
+  // Linear extrapolation for the canvas-bottom clip — bottomT is a screen-space
+  // ratio (can be > 1), not a real z-depth t, so bypass perspT here.
+  const bottomHW = HORIZON_HW + bottomT * (nearHW - HORIZON_HW);
 
   // Asphalt trapezoid — extends all the way to the canvas bottom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -117,8 +119,8 @@ function drawRoad(
       const hw1 = roadHWAt(t1, nearHW);
       const hw2 = roadHWAt(t2, nearHW);
       // Dividers sit between adjacent lane centers: ± hw * 0.335
-      const cx1 = vanishX + cameraOffsetX * t1;
-      const cx2 = vanishX + cameraOffsetX * t2;
+      const cx1 = vanishX + cameraOffsetX * perspT(t1);
+      const cx2 = vanishX + cameraOffsetX * perspT(t2);
       const x1 = cx1 + divSide * hw1 * 0.335;
       const x2 = cx2 + divSide * hw2 * 0.335;
       const y1 = tToScreenY(t1, horizY, nearY);
@@ -272,7 +274,7 @@ function drawRoadside(
     const idx    = Math.round(z / TREE_SPACING);
     const jitter = Math.sin(idx * 1.618) * hw * 0.10;
 
-    const treeCX = vanishX + cameraOffsetX * t;
+    const treeCX = vanishX + cameraOffsetX * perspT(t);
     drawTreeSilhouette(p, treeCX - hw - sz * 0.75 + jitter, y, sz);
     drawTreeSilhouette(p, treeCX + hw + sz * 0.75 - jitter, y, sz);
   }
@@ -600,8 +602,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
     const fy = tToScreenY(tF, horizY, nearY);
     const by = tToScreenY(tB, horizY, nearY);
-    const fx = vanishX + cameraOffsetX * tF + laneOffsetX(car.lane, tF, nearHW);
-    const bx = vanishX + cameraOffsetX * tB + laneOffsetX(car.lane, tB, nearHW);
+    const fx = vanishX + cameraOffsetX * perspT(tF) + laneOffsetX(car.lane, tF, nearHW);
+    const bx = vanishX + cameraOffsetX * perspT(tB) + laneOffsetX(car.lane, tB, nearHW);
 
     drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
@@ -621,7 +623,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const ny = nearY + S * 0.4;
 
   // Far face (front bumper): perspective-correct — converges toward vanishX
-  const fx = vanishX + cameraOffsetX * tFront + playerOffsetX * pScale;
+  const fx = vanishX + cameraOffsetX * perspT(tFront) + playerOffsetX * pScale;
   const fy = tToScreenY(tFront, horizY, nearY) + S * 0.4;
   const fw = nw * pScale;
   const fh = nh * pScale;
