@@ -43,7 +43,7 @@ const HORIZON_HW = 15;
 const DASH_SPACING = 120;
 const TREE_SPACING = 150;
 const BAND_HUES = [270, 30, 60, 120, 180, 210, 150];
-const PLAYER_Z_DEPTH = 200;  // z-units representing player car length (for perspective side panels)
+const PLAYER_Z_DEPTH = 100;  // z-units representing player car length (for perspective side panels)
 const PERSP_POW = 2;          // perspective warp: t^PERSP_POW compresses horizon, opens near camera
 
 // ── Perspective helpers ───────────────────────────────────────────────────────
@@ -296,8 +296,8 @@ function drawPlayerCar(
   fx: number, fy: number, fw: number, fh: number,
   glowAmp: number
 ): void {
-  const rNW = nw * 0.78;  // roof width at near (rear) edge — matches original taper ratio
-  const rFW = fw * 0.78;  // roof width at far (front) edge
+  const rNW = nw * 0.60;  // narrow fastback roofline
+  const rFW = fw * 0.60;
   const tlGlow = 0.45 + glowAmp * 0.55;
 
   p.noStroke();
@@ -308,29 +308,27 @@ function drawPlayerCar(
   p.ellipse(nx, ny + 6, nw * 1.35, nh * 0.27);
 
   // === Side panel — only the lane-facing side is visible ===
-  // Right lane: far face shifts left of near face → inner (left) side visible
-  // Left lane:  far face shifts right of near face → inner (right) side visible
   if (fx < nx - 1) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (p as any).fill(0, 0, 20);
     p.beginShape();
-    p.vertex(nx - nw / 2, ny - nh);   // near top-left
-    p.vertex(fx - fw / 2, fy - fh);   // far top-left
-    p.vertex(fx - fw / 2, fy);        // far bottom-left
-    p.vertex(nx - nw / 2, ny);        // near bottom-left
+    p.vertex(nx - nw / 2, ny - nh);
+    p.vertex(fx - fw / 2, fy - fh);
+    p.vertex(fx - fw / 2, fy);
+    p.vertex(nx - nw / 2, ny);
     p.endShape(p['CLOSE']);
   } else if (fx > nx + 1) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (p as any).fill(0, 0, 15);
     p.beginShape();
-    p.vertex(nx + nw / 2, ny - nh);   // near top-right
-    p.vertex(fx + fw / 2, fy - fh);   // far top-right
-    p.vertex(fx + fw / 2, fy);        // far bottom-right
-    p.vertex(nx + nw / 2, ny);        // near bottom-right
+    p.vertex(nx + nw / 2, ny - nh);
+    p.vertex(fx + fw / 2, fy - fh);
+    p.vertex(fx + fw / 2, fy);
+    p.vertex(nx + nw / 2, ny);
     p.endShape(p['CLOSE']);
   }
 
-  // === Roof: spans rear-top to front-top, naturally tapers with perspective ===
+  // === Roof: narrow fastback taper ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 0, 26);
   p.beginShape();
@@ -340,62 +338,74 @@ function drawPlayerCar(
   p.vertex(fx - rFW / 2, fy - fh);
   p.endShape(p['CLOSE']);
 
-  // Roof window strip
+  // Roof glass strip (narrow, sports car)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(200, 30, 35, 80);
   p.beginShape();
-  p.vertex(nx - nw * 0.34, ny - nh);
-  p.vertex(nx + nw * 0.34, ny - nh);
-  p.vertex(fx + fw * 0.34, fy - fh);
-  p.vertex(fx - fw * 0.34, fy - fh);
+  p.vertex(nx - nw * 0.26, ny - nh);
+  p.vertex(nx + nw * 0.26, ny - nh);
+  p.vertex(fx + fw * 0.26, fy - fh);
+  p.vertex(fx - fw * 0.26, fy - fh);
   p.endShape(p['CLOSE']);
 
   // === Rear face (main body) ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 0, 30);
-  p.rect(nx - nw / 2, ny - nh, nw, nh, nw * 0.07);
+  p.rect(nx - nw / 2, ny - nh, nw, nh, nw * 0.06);
 
-  // === Rear window ===
+  // === Rear window — large, takes up most of body height (fastback style) ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(210, 30, 38, 90);
-  p.rect(nx - nw * 0.37, ny - nh + nh * 0.06, nw * 0.74, nh * 0.42, 3);
+  p.rect(nx - nw * 0.30, ny - nh + nh * 0.05, nw * 0.60, nh * 0.52, 4);
 
-  // === Trunk panel line ===
+  // === Deck lid crease line ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).stroke(0, 0, 48);
+  (p as any).stroke(0, 0, 52);
   p.strokeWeight(1);
-  p.line(nx - nw * 0.46, ny - nh * 0.24, nx + nw * 0.46, ny - nh * 0.24);
+  p.line(nx - nw * 0.44, ny - nh * 0.38, nx + nw * 0.44, ny - nh * 0.38);
   p.noStroke();
 
-  // === Taillights ===
+  // === Taillights — wide horizontal slashes (sports car style) ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 100, 90, tlGlow * 100);
-  p.rect(nx - nw / 2 + 2, ny - nh * 0.22, nw * 0.25, nh * 0.19, 2);
-  p.rect(nx + nw / 2 - 2 - nw * 0.25, ny - nh * 0.22, nw * 0.25, nh * 0.19, 2);
+  p.rect(nx - nw * 0.47, ny - nh * 0.32, nw * 0.32, nh * 0.11, 2);
+  p.rect(nx + nw * 0.47 - nw * 0.32, ny - nh * 0.32, nw * 0.32, nh * 0.11, 2);
+
+  // Center connecting light bar
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 90, 60, tlGlow * 80);
+  p.rect(nx - nw * 0.15, ny - nh * 0.29, nw * 0.30, nh * 0.04, 0);
 
   // Taillight glow bloom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 90, 80, tlGlow * 20);
-  p.ellipse(nx - nw * 0.37, ny - nh * 0.125, nw * 0.38, nh * 0.30);
-  p.ellipse(nx + nw * 0.37, ny - nh * 0.125, nw * 0.38, nh * 0.30);
+  p.ellipse(nx - nw * 0.32, ny - nh * 0.265, nw * 0.38, nh * 0.22);
+  p.ellipse(nx + nw * 0.32, ny - nh * 0.265, nw * 0.38, nh * 0.22);
 
-  // === Bumper ===
+  // === Bumper / diffuser (lower 22% of body) ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 0, 18);
-  p.rect(nx - nw * 0.47, ny - nh * 0.20, nw * 0.94, nh * 0.20, 3);
+  p.rect(nx - nw * 0.47, ny - nh * 0.22, nw * 0.94, nh * 0.22, 3);
 
-  // Bumper center vent/detail
+  // Diffuser vents (3 horizontal slots)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 0, 38);
-  p.rect(nx - nw * 0.20, ny - nh * 0.165, nw * 0.40, nh * 0.08, 2);
+  (p as any).fill(0, 0, 8);
+  const ventW = nw * 0.19;
+  const ventH = nh * 0.07;
+  const ventY = ny - nh * 0.14;
+  p.rect(nx - nw * 0.34, ventY, ventW, ventH, 1);
+  p.rect(nx - ventW / 2, ventY, ventW, ventH, 1);
+  p.rect(nx + nw * 0.34 - ventW, ventY, ventW, ventH, 1);
 
-  // Reverse light (center, white)
+  // === Rear spoiler ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 0, 82, 55);
-  p.ellipse(nx, ny - nh * 0.11, nw * 0.11, nh * 0.08);
+  (p as any).fill(0, 0, 22);
+  p.rect(nx - nw * 0.44, ny - nh - nh * 0.11, nw * 0.88, nh * 0.07, 1);
+  // Spoiler end mounts
+  p.rect(nx - nw * 0.44, ny - nh - nh * 0.11, nh * 0.06, nh * 0.11);
+  p.rect(nx + nw * 0.44 - nh * 0.06, ny - nh - nh * 0.11, nh * 0.06, nh * 0.11);
 
-  // === Wheels (rear axle, at near face ground level) ===
-  // Ratios match original: wRX = (bW/2 + S*0.20)/bW, wRw = S*0.45/bW, wRh = S*0.60/bW
+  // === Wheels (rear axle) ===
   const wRX = nw * 0.591;
   const wRw = nw * 0.205;
   const wRh = nw * 0.273;
@@ -610,8 +620,8 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
   // ── Render: player car (between the two car passes) ──────────────────────
   const S = minDim * 0.065;
-  const nw = S * 2.2;
-  const nh = S * 1.65;
+  const nw = S * 2.6;   // wider stance (was 2.2)
+  const nh = S * 1.1;   // low sports car body (was 1.65)
 
   // Perspective scale: front of car is PLAYER_Z_DEPTH units further than rear bumper.
   // pScale < 1 — the far face is smaller and shifted toward the vanishing point.
