@@ -661,32 +661,36 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // Pass 2 — cars that have passed the player (z ≤ 0): drawn on top,
   // occluding the player car as they exit the bottom of the screen.
   //
-  // Size is capped at the near-plane (z=0) values so the car never expands
-  // beyond the size it was when it passed the player.  The Y position uses
-  // unclamped t (> 1 for z < 0) so the car continues moving downward
-  // naturally rather than suddenly stopping or falling at a fixed rate.
-  const fwExit = roadHWAt(1.0, nearHW) * 0.30;
-  const fhExit = fwExit * 0.70;
-
+  // Mirrors the approaching-car code (Pass 1) but uses the *Ex extended
+  // helpers so that both size and lane position continue to evolve past the
+  // near plane (t > 1) — this prevents the "frozen / straight-on" look for
+  // off-centre cars and keeps the exit trajectory visually continuous.
   for (const car of sortedCars) {
     if (car.z > 0) continue;
 
-    // Unclamped t gives the correct Y position below the near plane
-    const tF = 1 - car.z / Z_SPAWN;
-    const fy = tToScreenYEx(tF, horizY, nearY);
+    const tF = 1 - car.z / Z_SPAWN;                    // leading face, t > 1
+    const tB = 1 - (car.z + Z_CAR_DEPTH) / Z_SPAWN;   // trailing face
 
-    // Expire when the top of the car has fully exited the canvas
-    if (fy - fhExit > h) {
+    const hwF = roadHWAtEx(tF, nearHW);
+    const hwB = roadHWAtEx(tB, nearHW);
+    const fw = hwF * 0.30;
+    const bw = hwB * 0.30;
+    const fh = fw * 0.70;
+    const bh = bw * 0.70;
+
+    const fy = tToScreenYEx(tF, horizY, nearY);
+    const by = tToScreenYEx(tB, horizY, nearY);
+
+    // Expire when the trailing (upper) face has fully cleared the canvas
+    if (by - bh > h) {
       car.expired = true;
       continue;
     }
 
-    // X pinned at the near-plane lane position (no lateral drift)
-    const fx = vanishX + cameraOffsetX * 1.0 + laneOffsetX(car.lane, 1.0, nearHW);
+    const fx = vanishX + cameraOffsetX * perspTEx(tF) + (car.lane - 1) * hwF * 0.67;
+    const bx = vanishX + cameraOffsetX * perspTEx(tB) + (car.lane - 1) * hwB * 0.67;
 
-    // Draw as a flat face (degenerate box) — the car has passed, so we
-    // just show its face sliding off the bottom at consistent size
-    drawOncomingCar(p, fx, fy, fwExit, fhExit, fx, fy, fwExit, fhExit, car.hue);
+    drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
 
   p.pop(); // end camera roll transform
