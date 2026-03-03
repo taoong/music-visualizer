@@ -68,6 +68,24 @@ function laneOffsetX(lane: number, t: number, nearHW: number): number {
   return (lane - 1) * (roadHWAt(t, nearHW) * 0.67);
 }
 
+/** Screen Y — linear continuation below near plane (t > 1). */
+function tToScreenYEx(t: number, horizY: number, nearY: number): number {
+  if (t <= 1) return tToScreenY(t, horizY, nearY);
+  return nearY + (t - 1) * PERSP_POW * (nearY - horizY);
+}
+
+/** Road half-width — linear continuation below near plane. */
+function roadHWAtEx(t: number, nearHW: number): number {
+  if (t <= 1) return roadHWAt(t, nearHW);
+  return nearHW + (t - 1) * PERSP_POW * (nearHW - HORIZON_HW);
+}
+
+/** perspT — linear continuation below near plane. */
+function perspTEx(t: number): number {
+  if (t <= 1) return perspT(t);
+  return 1 + (t - 1) * PERSP_POW;
+}
+
 // ── Drawing helpers ───────────────────────────────────────────────────────────
 
 function drawRoad(
@@ -111,23 +129,23 @@ function drawRoad(
   (p as any).stroke(0, 0, 65, 85);
 
   for (const divSide of [-1, 1]) {
-    for (let z = DASH_SPACING - scrollZ; z < Z_SPAWN; z += DASH_SPACING) {
-      const t1 = zToT(z);
+    for (let z = (DASH_SPACING - scrollZ) - DASH_SPACING; z < Z_SPAWN; z += DASH_SPACING) {
+      const t1 = 1 - z / Z_SPAWN;
       // Dash length scales with depth: very short at horizon, long near camera
       const dashEnd = z + DASH_SPACING * 0.25;
-      const t2 = zToT(Math.min(dashEnd, Z_SPAWN - 1));
-      const hw1 = roadHWAt(t1, nearHW);
-      const hw2 = roadHWAt(t2, nearHW);
+      const t2 = 1 - dashEnd / Z_SPAWN;
+      const hw1 = roadHWAtEx(t1, nearHW);
+      const hw2 = roadHWAtEx(t2, nearHW);
       // Dividers sit between adjacent lane centers: ± hw * 0.335
-      const cx1 = vanishX + cameraOffsetX * perspT(t1);
-      const cx2 = vanishX + cameraOffsetX * perspT(t2);
+      const cx1 = vanishX + cameraOffsetX * perspTEx(t1);
+      const cx2 = vanishX + cameraOffsetX * perspTEx(t2);
       const x1 = cx1 + divSide * hw1 * 0.335;
       const x2 = cx2 + divSide * hw2 * 0.335;
-      const y1 = tToScreenY(t1, horizY, nearY);
-      const y2 = tToScreenY(t2, horizY, nearY);
-      if (y1 < nearY && y2 > horizY) {
+      const y1 = tToScreenYEx(t1, horizY, nearY);
+      const y2 = tToScreenYEx(t2, horizY, nearY);
+      if (y2 > horizY) {
         // Scale stroke weight with t1 (near-end): thin at horizon, bold near player
-        p.strokeWeight(Math.max(0.5, 3 * t1));
+        p.strokeWeight(Math.max(0.5, 3 * Math.min(t1, 1)));
         p.line(x1, y1, x2, y2);
       }
     }
@@ -655,7 +673,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
     // Unclamped t gives the correct Y position below the near plane
     const tF = 1 - car.z / Z_SPAWN;
-    const fy = tToScreenY(tF, horizY, nearY);
+    const fy = tToScreenYEx(tF, horizY, nearY);
 
     // Expire when the top of the car has fully exited the canvas
     if (fy - fhExit > h) {
