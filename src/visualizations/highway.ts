@@ -131,8 +131,10 @@ function drawRoad(
   for (const divSide of [-1, 1]) {
     for (let z = (DASH_SPACING - scrollZ) - DASH_SPACING; z < Z_SPAWN; z += DASH_SPACING) {
       const t1 = 1 - z / Z_SPAWN;
-      // Dash length scales with depth: very short at horizon, long near camera
-      const dashEnd = z + DASH_SPACING * 0.25;
+      // World-space dash length scales with t1 so screen-space length grows as t1²,
+      // matching the quadratic road-width expansion for correct depth perception.
+      const worldDashLen = DASH_SPACING * 0.5 * Math.min(Math.max(t1, 0), 1.0);
+      const dashEnd = z + worldDashLen;
       const t2 = 1 - dashEnd / Z_SPAWN;
       const hw1 = roadHWAtEx(t1, nearHW);
       const hw2 = roadHWAtEx(t2, nearHW);
