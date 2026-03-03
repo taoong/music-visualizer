@@ -44,7 +44,7 @@ const DASH_SPACING = 120;
 const TREE_SPACING = 150;
 const BAND_HUES = [270, 30, 60, 120, 180, 210, 150];
 const PLAYER_Z_DEPTH = 100;  // z-units representing player car length (for perspective side panels)
-const PERSP_POW = 3;          // perspective warp: t^PERSP_POW compresses horizon, opens near camera
+const PERSP_POW = 4;          // perspective warp: t^PERSP_POW compresses horizon, opens near camera
 
 // ── Perspective helpers ───────────────────────────────────────────────────────
 
@@ -499,7 +499,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
     ? Math.max(0.01, (division - 0.3) * state.beatIntervalSec)
     : 1.0;
   const refCarSpeed = Z_SPAWN / (travelSec * 60);
-  const baseSpeed = refCarSpeed * 0.5 * intensity;
+  const baseSpeed = refCarSpeed * 1.0 * intensity;
 
   // ── Beat detection: always dodge, spawn cars ──────────────────────────────
   if (state.isPlaying && state.beatIntervalSec > 0) {
