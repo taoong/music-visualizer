@@ -549,10 +549,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // ── Advance cars ──────────────────────────────────────────────────────────
   if (state.isPlaying) {
     for (const car of cars) {
-      // Cars that have passed the player exit at 2× speed — mimics the
-      // rapid apparent motion of a vehicle that has just overtaken you.
-      const exitMult = car.z <= 0 ? 2.0 : 1.0;
-      car.z -= car.speed * dt * exitMult;
+      car.z -= car.speed * dt;
     }
     // Remove cars flagged expired during the previous frame's render pass
     cars = cars.filter(c => !c.expired);
