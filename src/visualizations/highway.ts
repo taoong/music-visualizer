@@ -44,7 +44,7 @@ const DASH_SPACING = 120;
 const TREE_SPACING = 150;
 const BAND_HUES = [270, 30, 60, 120, 180, 210, 150];
 const PLAYER_Z_DEPTH = 100;  // z-units representing player car length (for perspective side panels)
-const PERSP_POW = 2;          // perspective warp: t^PERSP_POW compresses horizon, opens near camera
+const PERSP_POW = 3;          // perspective warp: t^PERSP_POW compresses horizon, opens near camera
 
 // ── Perspective helpers ───────────────────────────────────────────────────────
 
