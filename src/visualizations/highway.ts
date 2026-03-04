@@ -43,7 +43,7 @@ const HORIZON_HW = 15;
 const DASH_SPACING = 120;
 const TREE_SPACING = 150;
 const BAND_HUES = [270, 30, 60, 120, 180, 210, 150];
-const PLAYER_Z_DEPTH = 100;  // z-units representing player car length (for perspective side panels)
+const PLAYER_Z_DEPTH = 60;  // z-units representing player car length (for perspective side panels)
 const PERSP_POW = 4;          // perspective warp: t^PERSP_POW compresses horizon, opens near camera
 
 // ── Perspective helpers ───────────────────────────────────────────────────────
@@ -326,6 +326,19 @@ function drawPlayerCar(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(0, 0, 0, 25);
   p.ellipse(nx, ny + 6, nw * 1.35, nh * 0.27);
+
+  // === Front wheels (drawn before side panels so body partially occludes inner half) ===
+  const wFX = fw * 0.591;
+  const wFw = fw * 0.205;
+  const wFh = fw * 0.273;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 0, 10);
+  p.ellipse(fx - wFX, fy, wFw, wFh);
+  p.ellipse(fx + wFX, fy, wFw, wFh);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(0, 0, 52);
+  p.ellipse(fx - wFX, fy, wFw * 0.58, wFh * 0.58);
+  p.ellipse(fx + wFX, fy, wFw * 0.58, wFh * 0.58);
 
   // === Side panel — only the lane-facing side is visible ===
   if (fx < nx - 1) {
