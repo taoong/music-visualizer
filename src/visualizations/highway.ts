@@ -516,7 +516,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
 
   // ── Beat detection: always dodge, spawn cars ──────────────────────────────
   if (state.isPlaying && state.beatIntervalSec > 0) {
-    const beatIdx = Math.floor((pos - state.beatOffset) / state.beatIntervalSec);
+    const beatIdx = Math.floor((pos - state.beatOffset) / state.beatIntervalSec - 0.05);
     if (beatIdx > lastBeatIndex) {
       lastBeatIndex = beatIdx;
       beatCount++;
