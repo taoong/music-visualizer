@@ -291,8 +291,8 @@ function drawRoadside(
     if (sz < 1.5) continue;
 
     // Slight deterministic lateral stagger so trees don't look like a perfect grid
-    const idx    = Math.round(z / TREE_SPACING);
-    const jitter = Math.sin(idx * 1.618) * hw * 0.10;
+    const idx    = Math.floor((scrollZ + z) / TREE_SPACING);
+    const jitter = Math.sin(idx * 1.618) * perspT(t) * nearHW * 0.10;
 
     const treeCX = vanishX + cameraOffsetX * perspT(t);
     drawTreeSilhouette(p, treeCX - hw - sz * 0.75 + jitter, y, sz);
