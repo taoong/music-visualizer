@@ -543,20 +543,31 @@ export function drawHighway(p: P5Instance, dt: number): void {
         playerLane = dodge;
         playerTargetLane = dodge;
 
-        // Spawn one car in each non-target lane (always 2 cars).
-        // This guarantees a car in the lane the player just left, so every
-        // swerve looks forced rather than optional.
+        // Random: 50% chance of 2 cars, 50% chance of 1 car.
+        // Single-car case always uses lastDodgeLane (the lane just vacated)
+        // so the swerve still looks forced.
         const spawnPool = [0, 1, 2].filter(l => l !== playerTargetLane);
-        for (const lane of spawnPool) {
-          const bandIdx = Math.floor(Math.random() * 7);
+        const lanesToSpawn = Math.random() < 0.5 ? spawnPool : [lastDodgeLane];
+        for (const lane of lanesToSpawn) {
           cars.push({
             lane,
             z: Z_SPAWN,
-            hue: BAND_HUES[bandIdx],
+            hue: BAND_HUES[Math.floor(Math.random() * 7)],
             expired: false,
             speed: carSpeed,
           });
         }
+      } else if (Math.random() < 0.2) {
+        // Off-beat: occasional extra car in a non-player lane (~20% of in-between beats)
+        const safeOffBeatLanes = [0, 1, 2].filter(l => l !== playerTargetLane);
+        const offBeatLane = safeOffBeatLanes[Math.floor(Math.random() * safeOffBeatLanes.length)];
+        cars.push({
+          lane: offBeatLane,
+          z: Z_SPAWN,
+          hue: BAND_HUES[Math.floor(Math.random() * 7)],
+          expired: false,
+          speed: refCarSpeed,
+        });
       }
     }
   }
