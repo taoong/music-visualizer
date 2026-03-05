@@ -343,7 +343,7 @@ function drawPlayerCar(
   // === Side panel — only the lane-facing side is visible ===
   if (fx < nx - 1) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (p as any).fill(0, 0, 20);
+    (p as any).fill(22, 95, 55);  // dark Papaya Orange (shadow side)
     p.beginShape();
     p.vertex(nx - nw / 2, ny - nh);
     p.vertex(fx - fw / 2, fy - fh);
@@ -352,7 +352,7 @@ function drawPlayerCar(
     p.endShape(p['CLOSE']);
   } else if (fx > nx + 1) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (p as any).fill(0, 0, 15);
+    (p as any).fill(22, 90, 48);  // slightly darker orange (light side)
     p.beginShape();
     p.vertex(nx + nw / 2, ny - nh);
     p.vertex(fx + fw / 2, fy - fh);
@@ -361,9 +361,9 @@ function drawPlayerCar(
     p.endShape(p['CLOSE']);
   }
 
-  // === Roof: narrow fastback taper ===
+  // === Roof: narrow fastback taper (carbon fibre) ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 0, 26);
+  (p as any).fill(0, 0, 12);
   p.beginShape();
   p.vertex(nx - rNW / 2, ny - nh);
   p.vertex(nx + rNW / 2, ny - nh);
@@ -381,9 +381,9 @@ function drawPlayerCar(
   p.vertex(fx - fw * 0.26, fy - fh);
   p.endShape(p['CLOSE']);
 
-  // === Rear face (main body) ===
+  // === Rear face (main body) — McLaren Papaya Orange ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 0, 30);
+  (p as any).fill(22, 92, 90);
   p.rect(nx - nw / 2, ny - nh, nw, nh, nw * 0.06);
 
   // === Rear window — large, takes up most of body height (fastback style) ===
@@ -391,9 +391,9 @@ function drawPlayerCar(
   (p as any).fill(210, 30, 38, 90);
   p.rect(nx - nw * 0.30, ny - nh + nh * 0.05, nw * 0.60, nh * 0.52, 4);
 
-  // === Deck lid crease line ===
+  // === Deck lid crease line — silver accent ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).stroke(0, 0, 52);
+  (p as any).stroke(22, 20, 75);
   p.strokeWeight(1);
   p.line(nx - nw * 0.44, ny - nh * 0.38, nx + nw * 0.44, ny - nh * 0.38);
   p.noStroke();
@@ -415,9 +415,9 @@ function drawPlayerCar(
   p.ellipse(nx - nw * 0.32, ny - nh * 0.265, nw * 0.38, nh * 0.22);
   p.ellipse(nx + nw * 0.32, ny - nh * 0.265, nw * 0.38, nh * 0.22);
 
-  // === Bumper / diffuser (lower 22% of body) ===
+  // === Bumper / diffuser (lower 22% of body) — carbon / dark ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 0, 18);
+  (p as any).fill(0, 0, 12);
   p.rect(nx - nw * 0.47, ny - nh * 0.22, nw * 0.94, nh * 0.22, 3);
 
   // Diffuser vents (3 horizontal slots)
@@ -430,9 +430,9 @@ function drawPlayerCar(
   p.rect(nx - ventW / 2, ventY, ventW, ventH, 1);
   p.rect(nx + nw * 0.34 - ventW, ventY, ventW, ventH, 1);
 
-  // === Rear spoiler ===
+  // === Rear spoiler — carbon fibre ===
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(0, 0, 22);
+  (p as any).fill(0, 0, 10);
   p.rect(nx - nw * 0.44, ny - nh - nh * 0.11, nw * 0.88, nh * 0.07, 1);
   // Spoiler end mounts
   p.rect(nx - nw * 0.44, ny - nh - nh * 0.11, nh * 0.06, nh * 0.11);
