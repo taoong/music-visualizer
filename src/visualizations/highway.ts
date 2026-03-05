@@ -33,6 +33,7 @@ let playerTargetLane = 1;
 let playerOffsetX = 0;
 let cameraOffsetX = 0;
 let lastDodgeLane = -1;
+let timeOfDay = 0.25;  // 0=midnight, 0.25=dawn, 0.5=noon, 0.75=dusk
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -84,6 +85,54 @@ function roadHWAtEx(t: number, nearHW: number): number {
 function perspTEx(t: number): number {
   if (t <= 1) return perspT(t);
   return 1 + (t - 1) * PERSP_POW;
+}
+
+// ── Sky color helpers ─────────────────────────────────────────────────────────
+
+/** Linearly interpolate each component of two HSB(A) arrays. */
+function lerpHSB(a: number[], b: number[], t: number): number[] {
+  return a.map((v, i) => v + (b[i] - v) * t);
+}
+
+interface SkyColors {
+  zenith: number[];
+  horizon: number[];
+  ground: number[];
+  glow: number[];
+}
+
+// Keyframes: [zenith, horizon, ground, glow(HSBA)]
+const SKY_KEYFRAMES: { t: number; zenith: number[]; horizon: number[]; ground: number[]; glow: number[] }[] = [
+  { t: 0.00, zenith: [220, 75,  4], horizon: [220, 55, 10], ground: [110, 40,  5], glow: [220, 30, 20, 40] },  // midnight
+  { t: 0.25, zenith: [ 25, 65, 38], horizon: [ 22, 55, 65], ground: [ 75, 38, 12], glow: [ 20, 70, 70, 90] },  // dawn
+  { t: 0.50, zenith: [210, 55, 90], horizon: [195, 30,100], ground: [100, 45, 22], glow: [210, 15,100, 50] },  // noon
+  { t: 0.75, zenith: [ 18, 80, 38], horizon: [ 15, 70, 62], ground: [ 50, 38, 12], glow: [ 15, 75, 70, 95] },  // dusk
+];
+
+function sampleSkyColors(tod: number): SkyColors {
+  const n = SKY_KEYFRAMES.length;
+  // Find surrounding keyframes (wrapping from last back to first)
+  let aIdx = n - 1;
+  for (let i = 0; i < n - 1; i++) {
+    if (tod >= SKY_KEYFRAMES[i].t && tod < SKY_KEYFRAMES[i + 1].t) {
+      aIdx = i;
+      break;
+    }
+  }
+  const bIdx = (aIdx + 1) % n;
+  const a = SKY_KEYFRAMES[aIdx];
+  const b = SKY_KEYFRAMES[bIdx];
+
+  // Width of this segment (wrap-around from 0.75 → 1.0 = 0.0)
+  const segWidth = bIdx === 0 ? (1.0 - a.t) : (b.t - a.t);
+  const segT = segWidth > 0 ? (tod - a.t) / segWidth : 0;
+
+  return {
+    zenith:  lerpHSB(a.zenith,  b.zenith,  segT),
+    horizon: lerpHSB(a.horizon, b.horizon, segT),
+    ground:  lerpHSB(a.ground,  b.ground,  segT),
+    glow:    lerpHSB(a.glow,    b.glow,    segT),
+  };
 }
 
 // ── Drawing helpers ───────────────────────────────────────────────────────────
@@ -249,24 +298,24 @@ function drawOncomingCar(
 }
 
 /** Draw a single pine-tree silhouette. baseY is the ground contact point. */
-function drawTreeSilhouette(p: P5Instance, x: number, baseY: number, sz: number): void {
+function drawTreeSilhouette(p: P5Instance, x: number, baseY: number, sz: number, brightMult: number): void {
   p.noStroke();
   const trkW = sz * 0.13;
   const trkH = sz * 0.38;
 
   // Trunk
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(28, 55, 12);
+  (p as any).fill(28, 55, 12 * brightMult);
   p.rect(x - trkW / 2, baseY - trkH, trkW, trkH);
 
   // Lower foliage layer (wider)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(130, 65, 22);
+  (p as any).fill(130, 65, 22 * brightMult);
   p.triangle(x, baseY - trkH - sz * 1.4, x - sz * 0.60, baseY - trkH, x + sz * 0.60, baseY - trkH);
 
   // Upper foliage layer (narrower)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(130, 60, 18);
+  (p as any).fill(130, 60, 18 * brightMult);
   p.triangle(x, baseY - trkH - sz * 2.1, x - sz * 0.38, baseY - trkH - sz * 0.85, x + sz * 0.38, baseY - trkH - sz * 0.85);
 }
 
@@ -280,6 +329,10 @@ function drawRoadside(
   nearHW: number,
   scrollZ: number
 ): void {
+  // Brightness scales with time of day: noon = full, midnight = half
+  const noonBlend = Math.sin(timeOfDay * Math.PI * 2) * 0.5 + 0.5;
+  const brightMult = 0.5 + 0.5 * noonBlend;
+
   const phase = scrollZ % TREE_SPACING;
   for (let z = TREE_SPACING - phase; z < Z_SPAWN; z += TREE_SPACING) {
     const t = zToT(z);
@@ -295,8 +348,8 @@ function drawRoadside(
     const jitter = Math.sin(idx * 1.618) * perspT(t) * nearHW * 0.10;
 
     const treeCX = vanishX + cameraOffsetX * perspT(t);
-    drawTreeSilhouette(p, treeCX - hw - sz * 0.75 + jitter, y, sz);
-    drawTreeSilhouette(p, treeCX + hw + sz * 0.75 - jitter, y, sz);
+    drawTreeSilhouette(p, treeCX - hw - sz * 0.75 + jitter, y, sz, brightMult);
+    drawTreeSilhouette(p, treeCX + hw + sz * 0.75 - jitter, y, sz, brightMult);
   }
 }
 
@@ -468,6 +521,7 @@ export function resetHighway(): void {
   playerOffsetX = 0;
   cameraOffsetX = 0;
   lastDodgeLane = -1;
+  timeOfDay = 0.25;
 }
 
 export function drawHighway(p: P5Instance, dt: number): void {
@@ -598,19 +652,87 @@ export function drawHighway(p: P5Instance, dt: number): void {
     roadScrollZ += baseSpeed * dt;
   }
 
+  // ── Time-of-day advance ───────────────────────────────────────────────────
+  if (state.isPlaying) {
+    timeOfDay = (timeOfDay + store.config.highwayDaySpeed * dt / 1800) % 1;
+  }
+
+  const skyColors = sampleSkyColors(timeOfDay);
+
   // ── World pan: shift entire scene so car moves toward screen center ─────────
   // cameraOffsetX targets -playerOffsetX * follow, so at follow=1 the world
   // pans enough that the player's lane appears at cx (car centered on screen).
   p.push();
   p.translate(cameraOffsetX, 0);
 
-  // ── Render: sky + ground (pre-rotation, oversized to survive any roll) ────
+  // ── Render: sky (pre-rotation) — gradient zenith→horizon ─────────────────
   p.noStroke();
+  const h_extra = h * 0.5;  // extra height above canvas top to cover any rotation
+  const NUM_SLICES = 24;
+  for (let i = 0; i < NUM_SLICES; i++) {
+    const frac = i / NUM_SLICES;
+    const [sh, ss, sb] = lerpHSB(skyColors.zenith, skyColors.horizon, frac);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (p as any).fill(sh, ss, sb);
+    const y0 = -h_extra + frac * (horizY + h_extra);
+    const sliceH = (horizY + h_extra) / NUM_SLICES + 1;
+    p.rect(-w, y0, w * 3, sliceH);
+  }
+
+  // Stars — visible only at night
+  const nightBlend = Math.max(0, 1 - Math.sin(timeOfDay * Math.PI * 2) * 2 - 0.3);
+  const NUM_STARS = 55;
+  for (let i = 0; i < NUM_STARS; i++) {
+    const sx = (Math.sin(i * 1.6180) * 0.5 + 0.5) * w * 3 - w;
+    const sy = (Math.sin(i * 2.3999) * 0.5 + 0.5) * horizY * 0.92;
+    const twinkle = 0.6 + 0.4 * Math.sin(i * 3.14 + timeOfDay * 40);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (p as any).fill(55, 8, 100, nightBlend * twinkle * 90);
+    p.circle(sx, sy, 1.5 + Math.sin(i * 1.234) * 1.0);
+  }
+
+  // Sun and Moon
+  const sunAngle = timeOfDay * Math.PI * 2;
+  const moonAngle = sunAngle + Math.PI;
+
+  const drawCelestialBody = (angle: number, isSun: boolean): void => {
+    const norm = (-Math.cos(angle) + 1) / 2;   // 0 at midnight, 1 at noon
+    if (norm < 0.02) return;                    // below horizon
+    const bodyX = cx + Math.sin(angle) * w * 0.30;
+    const bodyY = horizY - norm * horizY * 0.82;
+    const r = minDim * (isSun ? 0.028 : 0.020);
+    const alpha = Math.min(1, (norm - 0.02) / 0.08);  // fade in near horizon
+
+    if (isSun) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (p as any).fill(48, 30, 100, alpha * 25);
+      p.circle(bodyX, bodyY, r * 5.0);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (p as any).fill(48, 15, 100, alpha * 40);
+      p.circle(bodyX, bodyY, r * 3.0);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (p as any).fill(45, 20, 100, alpha * 100);
+      p.circle(bodyX, bodyY, r * 2);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (p as any).fill(210, 15, 90, alpha * 20);
+      p.circle(bodyX, bodyY, r * 4.0);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (p as any).fill(40, 5, 95, alpha * 100);
+      p.circle(bodyX, bodyY, r * 2);
+      // Crescent shadow (offset dark circle)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (p as any).fill(skyColors.zenith[0], skyColors.zenith[1], skyColors.zenith[2], alpha * 100);
+      p.circle(bodyX + r * 0.35, bodyY - r * 0.1, r * 1.8);
+    }
+  };
+
+  drawCelestialBody(sunAngle, true);
+  drawCelestialBody(moonAngle, false);
+
+  // Ground
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(220, 30, 10);           // sky colour
-  p.rect(-w, -h, w * 3, h * 3);          // oversized to survive any rotation
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(100, 35, 8);            // dark ground outside road
+  (p as any).fill(skyColors.ground[0], skyColors.ground[1], skyColors.ground[2]);
   p.rect(-w, horizY, w * 3, h * 3);
 
   // ── Camera roll: rotate entire world around the vanishing point ───────────
@@ -623,7 +745,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   // Horizon glow (inside rotation so it tilts with the road)
   p.noStroke();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(220, 20, 20, 70);
+  (p as any).fill(skyColors.glow[0], skyColors.glow[1], skyColors.glow[2], skyColors.glow[3]);
   p.rect(-w * 2, horizY - 10, w * 5, 20);  // wide enough to survive rotation
 
   // ── Render: road ──────────────────────────────────────────────────────────

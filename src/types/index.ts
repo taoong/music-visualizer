@@ -55,6 +55,7 @@ export interface Config {
   highwayCamFollow: number;
   highwayHorizon: number;
   highwayRoadWidth: number;
+  highwayDaySpeed: number;
 }
 
 // Application state

@@ -70,6 +70,7 @@ export function bindDisplaySliders(): () => void {
     { id: 'highway-cam-follow', key: 'highwayCamFollow' },
     { id: 'highway-horizon', key: 'highwayHorizon' },
     { id: 'highway-road-width', key: 'highwayRoadWidth' },
+    { id: 'highway-day-speed', key: 'highwayDaySpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

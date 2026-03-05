@@ -183,6 +183,7 @@ export const DEFAULT_CONFIG = {
   highwayCamFollow: 0.35,
   highwayHorizon: 0.35,
   highwayRoadWidth: 0.46,
+  highwayDaySpeed: 0.5,
 };
 
 // FFT and decay constants

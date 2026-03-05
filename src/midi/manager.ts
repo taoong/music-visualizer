@@ -28,6 +28,7 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   highwayCamFollow: 'highway-cam-follow',
   highwayHorizon: 'highway-horizon',
   highwayRoadWidth: 'highway-road-width',
+  highwayDaySpeed: 'highway-day-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
