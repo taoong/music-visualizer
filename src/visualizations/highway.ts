@@ -742,7 +742,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   p.noStroke();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).fill(skyColors.glow[0], skyColors.glow[1], skyColors.glow[2], skyColors.glow[3]);
-  p.rect(-w * 2, horizY - 10, w * 5, 20);
+  p.rect(-w * 2, horizY - 20, w * 5, 20);
 
   // ── Camera roll: rotate entire world around the vanishing point ───────────
   const cameraRoll = -cameraOffsetX / (nearHW * 2) * 0.07;
