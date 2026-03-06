@@ -735,18 +735,21 @@ export function drawHighway(p: P5Instance, dt: number): void {
   (p as any).fill(skyColors.ground[0], skyColors.ground[1], skyColors.ground[2]);
   p.rect(-w, horizY, w * 3, h * 3);
 
+  // Horizon glow — drawn OUTSIDE camera roll so it stays flat and covers the
+  // sky/grass boundary uniformly across the full canvas width. If drawn inside
+  // the roll, the band tilts and shifts away from horizY at the screen edges,
+  // leaving a visible gap where sky meets grass on either side of the road.
+  p.noStroke();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (p as any).fill(skyColors.glow[0], skyColors.glow[1], skyColors.glow[2], skyColors.glow[3]);
+  p.rect(-w * 2, horizY - 10, w * 5, 20);
+
   // ── Camera roll: rotate entire world around the vanishing point ───────────
   const cameraRoll = -cameraOffsetX / (nearHW * 2) * 0.07;
   p.push();
   p.translate(vanishX, horizY);
   p.rotate(cameraRoll);
   p.translate(-vanishX, -horizY);
-
-  // Horizon glow (inside rotation so it tilts with the road)
-  p.noStroke();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (p as any).fill(skyColors.glow[0], skyColors.glow[1], skyColors.glow[2], skyColors.glow[3]);
-  p.rect(-w * 2, horizY - 10, w * 5, 20);  // wide enough to survive rotation
 
   // ── Render: road ──────────────────────────────────────────────────────────
   drawRoad(p, vanishX, cameraOffsetX, horizY, nearY, nearHW, roadScrollZ % DASH_SPACING, h);
