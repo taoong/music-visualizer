@@ -698,7 +698,7 @@ export function drawHighway(p: P5Instance, dt: number): void {
   const drawCelestialBody = (angle: number, isSun: boolean): void => {
     const norm = (-Math.cos(angle) + 1) / 2;   // 0 at midnight, 1 at noon
     if (norm < 0.02) return;                    // below horizon
-    const bodyX = cx + Math.sin(angle) * w * 0.30;
+    const bodyX = cx + Math.sin(angle) * w * 0.30 - cameraOffsetX;
     const bodyY = horizY - norm * horizY * 0.82;
     const r = minDim * (isSun ? 0.028 : 0.020);
     const alpha = Math.min(1, (norm - 0.02) / 0.08);  // fade in near horizon
