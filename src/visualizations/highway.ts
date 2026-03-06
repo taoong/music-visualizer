@@ -838,6 +838,21 @@ export function drawHighway(p: P5Instance, dt: number): void {
     drawOncomingCar(p, fx, fy, fw, fh, bx, by, bw, bh, car.hue);
   }
 
+  // ── Horizon fog: road fades into sky at the vanishing point ───────────────
+  // Gradient overlay using the horizon sky color — opaque at horizY, fading
+  // to transparent ~22% of canvas height below, creating atmospheric depth.
+  const FOG_DEPTH = h * 0.22;
+  const FOG_SLICES = 20;
+  p.noStroke();
+  for (let i = 0; i < FOG_SLICES; i++) {
+    const frac = i / FOG_SLICES;
+    const alpha = Math.pow(1 - frac, 1.5) * 90;
+    (p as any).fill(skyColors.horizon[0], skyColors.horizon[1], skyColors.horizon[2], alpha);
+    const y0 = horizY + frac * FOG_DEPTH;
+    const sliceH = FOG_DEPTH / FOG_SLICES + 1;
+    p.rect(-w * 2, y0, w * 5, sliceH);
+  }
+
   p.pop(); // end camera roll transform
   p.pop(); // end world pan
   p.colorMode(p['RGB'], 255);
