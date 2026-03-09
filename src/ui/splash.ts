@@ -11,6 +11,30 @@ import type { AnalysisMode } from '../types';
 
 let isSeparating = false;
 
+async function checkServerAvailable(): Promise<boolean> {
+  try {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 3000);
+    const resp = await fetch('/api/health', { signal: controller.signal });
+    return resp.ok;
+  } catch {
+    return false;
+  }
+}
+
+export async function initStemAvailability(): Promise<void> {
+  const btn = document.getElementById('mode-stems') as HTMLButtonElement | null;
+  const note = document.getElementById('mode-stems-unavail');
+  if (!btn) return;
+
+  const available = await checkServerAvailable();
+  if (!available) {
+    btn.disabled = true;
+    btn.setAttribute('aria-disabled', 'true');
+    note?.classList.remove('hidden');
+  }
+}
+
 function completeStep1(): void {
   document.getElementById('splash-step-mode')?.classList.add('unlocked');
 }

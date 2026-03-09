@@ -47,6 +47,12 @@ def static_files(path):
     return send_from_directory(PROJECT_ROOT, path)
 
 
+# ── Health check endpoint ─────────────────────────────────────
+@app.route('/api/health')
+def health():
+    return jsonify({'ok': True})
+
+
 # ── Stem separation endpoint ──────────────────────────────────
 @app.route('/api/separate', methods=['POST'])
 def separate():

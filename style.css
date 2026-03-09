@@ -306,6 +306,13 @@ body {
   margin-left: 0.3rem;
 }
 
+.mode-btn-note {
+  display: block;
+  font-size: 0.7rem;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+
 /* ── Image Upload (Splash) ──────────────────────────────── */
 #image-upload {
   display: none;

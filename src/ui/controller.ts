@@ -5,7 +5,7 @@ import { store } from '../state/store';
 import { injectErrorStyles } from '../utils/errors';
 import { setVisualizerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
-import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton, bindImageUpload } from './splash';
+import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton, bindImageUpload, initStemAvailability } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
@@ -50,6 +50,9 @@ export function initUI(): () => void {
 
   // BPM controls
   cleanupFns.push(bindBPMControls());
+
+  // Probe for Flask server; disable stems button if unavailable
+  initStemAvailability();
 
   // MIDI mapping UI
   initMidiUI();
