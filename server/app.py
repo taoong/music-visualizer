@@ -9,6 +9,7 @@ Run:  pip install -r requirements.txt && python app.py
 """
 
 import os
+import sys
 import uuid
 import shutil
 import subprocess
@@ -21,6 +22,11 @@ try:
 except ImportError:
     MonoLoader = None
     RhythmExtractor2013 = None
+
+try:
+    from pydub import AudioSegment
+except ImportError:
+    AudioSegment = None
 
 # ── Paths ──────────────────────────────────────────────────────
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -63,7 +69,7 @@ def separate():
         # ── 1. Run Demucs htdemucs_6s ──────────────────────────
         demucs_out = os.path.join(job_dir, 'demucs_out')
         subprocess.run([
-            'python', '-m', 'demucs',
+            sys.executable, '-m', 'demucs',
             '--mp3', '--mp3-bitrate', '192',
             '-n', 'htdemucs_6s',
             '-o', demucs_out,
@@ -78,7 +84,8 @@ def separate():
         stem_dir = os.path.join(model_dir, track_dirs[0])
 
         # ── 2. Kick isolation via DSP (low-pass on drums stem) ─
-        from pydub import AudioSegment
+        if AudioSegment is None:
+            return jsonify({'error': 'pydub is not installed. Run: pip install pydub'}), 500
         drums_path = os.path.join(stem_dir, 'drums.mp3')
         drums = AudioSegment.from_mp3(drums_path)
 
@@ -125,6 +132,11 @@ def separate():
             subprocess.run(cmd, check=True, capture_output=True)
         elif merge_inputs:
             shutil.copy2(merge_inputs[0], other_path)
+        else:
+            return jsonify({
+                'error': 'Demucs produced no guitar, piano, or other stem',
+                'detail': f'Expected at least one of: {guitar_path}, {piano_path}, {other_orig_path}',
+            }), 500
 
         # ── 4. Copy bass and vocals ────────────────────────────
         bass_path = os.path.join(job_dir, 'bass.mp3')

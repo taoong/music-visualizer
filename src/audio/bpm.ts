@@ -189,6 +189,9 @@ export async function separateStems(
 
     if (!resp.ok) {
       const errData = await resp.json().catch(() => ({}));
+      if (errData.detail) {
+        console.error("Stem separation server detail:", errData.detail);
+      }
       throw new Error(errData.error || "Stem separation failed");
     }
 
