@@ -28,6 +28,11 @@ let imageUnsub: (() => void) | null = null;
 let initialized = false;
 let glitchCooldown = 0;
 
+// Rotation axis — unit vector that drifts via random walk each frame
+let rotDirX = 0.0;
+let rotDirY = 1.0;
+let rotDirZ = 0.0;
+
 // Uniform objects — mutated in place each frame, Three.js reads by reference
 const uTime: THREE.IUniform<number> = { value: 0.0 };
 const uBassAmp: THREE.IUniform<number> = { value: 0.0 };
@@ -223,10 +228,28 @@ export function drawLiquidMetal(_p: unknown, dt: number): void {
   uBassAmp.value = bassAmp;
   uTransient.value = transientNorm;
 
-  // Sphere idle rotation + scale pump on kick
+  // Sphere rotation + scale pump on kick
   if (sphereMesh) {
-    sphereMesh.rotation.y += 0.003 * dt;
-    sphereMesh.rotation.x += 0.001 * dt;
+    const spinSpeed = store.config.rotationSpeed; // 0–20
+    const spinChaos = store.config.intensity;     // 0–2
+
+    // Drift the rotation axis via a random walk on the unit sphere.
+    // chaos controls how quickly the spin direction changes.
+    const drift = spinChaos * 0.002 * dt;
+    rotDirX += (Math.random() - 0.5) * drift;
+    rotDirY += (Math.random() - 0.5) * drift;
+    rotDirZ += (Math.random() - 0.5) * drift * 0.4; // less z-axis roll
+
+    // Keep it a unit vector so speed stays independent of chaos
+    const rMag = Math.sqrt(rotDirX * rotDirX + rotDirY * rotDirY + rotDirZ * rotDirZ);
+    if (rMag > 0) { rotDirX /= rMag; rotDirY /= rMag; rotDirZ /= rMag; }
+
+    // Apply: speed sets the angular rate, direction drifts with chaos
+    const rate = spinSpeed * 0.012 * dt;
+    sphereMesh.rotation.x += rotDirX * rate;
+    sphereMesh.rotation.y += rotDirY * rate;
+    sphereMesh.rotation.z += rotDirZ * rate;
+
     sphereMesh.scale.setScalar(1.0 + transientNorm * 0.12);
   }
 

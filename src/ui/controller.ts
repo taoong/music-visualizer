@@ -154,8 +154,10 @@ function bindVizSelector(): () => void {
         hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup);
         break;
       case 'liquidmetal':
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
+        show(rotationSpeedGroup); show(intensityGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Spin Chaos';
+        hide(scaleGroup); hide(decayRateGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup);
         break;
     }
