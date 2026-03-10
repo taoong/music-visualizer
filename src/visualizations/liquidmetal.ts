@@ -127,8 +127,9 @@ function setup(): void {
 
   scene.add(new THREE.AmbientLight(0x111111, 0.8));
 
-  // High-poly icosahedron: detail 5 = 20,480 triangles (smooth displacement)
-  const geometry = new THREE.IcosahedronGeometry(1.0, 5);
+  // SphereGeometry gives proper equirectangular UV mapping for texture wrapping
+  // 128×64 segments = 16,384 triangles, smooth enough for FBM displacement
+  const geometry = new THREE.SphereGeometry(1.0, 128, 64);
 
   // PBR material + custom vertex displacement via onBeforeCompile
   const material = new THREE.MeshStandardMaterial({
@@ -188,15 +189,17 @@ function setup(): void {
 
 function applyUserImage(url: string): void {
   new THREE.TextureLoader().load(url, (texture) => {
-    // Equirectangular reflection mapping gives the classic chrome-ball look
-    // where the image appears warped and reflected across the metallic surface
-    texture.mapping = THREE.EquirectangularReflectionMapping;
     texture.colorSpace = THREE.SRGBColorSpace;
     userImageTexture?.dispose();
     userImageTexture = texture;
     if (sphereMaterial) {
-      sphereMaterial.envMap = texture;
-      sphereMaterial.envMapIntensity = 2.0; // boost so image is clearly visible
+      // Map the image onto the sphere surface as the base color (albedo).
+      // scene.environment (RoomEnvironment) still drives specular reflections,
+      // so the ball looks glossy on top of the image.
+      sphereMaterial.map = texture;
+      sphereMaterial.color.set(0xffffff); // white: let the map color show through
+      sphereMaterial.metalness = 0.2;     // low metalness so image isn't washed out
+      sphereMaterial.roughness = 0.05;    // low roughness = tight glossy highlights
       sphereMaterial.needsUpdate = true;
     }
   });
@@ -206,8 +209,10 @@ function clearUserImageTexture(): void {
   userImageTexture?.dispose();
   userImageTexture = null;
   if (sphereMaterial) {
-    sphereMaterial.envMap = envTexture; // restore room environment
-    sphereMaterial.envMapIntensity = 1.5;
+    sphereMaterial.map = null;
+    sphereMaterial.color.set(0xcccccc); // restore default grey metal
+    sphereMaterial.metalness = 1.0;
+    sphereMaterial.roughness = 0.08;
     sphereMaterial.needsUpdate = true;
   }
 }
