@@ -9,6 +9,7 @@ import { GlitchPass } from 'three/addons/postprocessing/GlitchPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { store } from '../state/store';
 import { getBandAverages } from './helpers';
+import { getUserImageUrl } from './userImage';
 
 // ── Module state ──────────────────────────────────────────────────────────────
 
@@ -19,8 +20,11 @@ let camera: THREE.PerspectiveCamera | null = null;
 let composer: EffectComposer | null = null;
 let glitchPass: GlitchPass | null = null;
 let sphereMesh: THREE.Mesh | null = null;
+let sphereMaterial: THREE.MeshStandardMaterial | null = null;
 let envTexture: THREE.Texture | null = null;
+let userImageTexture: THREE.Texture | null = null;
 let vizModeUnsub: (() => void) | null = null;
+let imageUnsub: (() => void) | null = null;
 let initialized = false;
 let glitchCooldown = 0;
 
@@ -139,8 +143,13 @@ function setup(): void {
     shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', GLSL_DISPLACEMENT);
   };
 
+  sphereMaterial = material;
   sphereMesh = new THREE.Mesh(geometry, material);
   scene.add(sphereMesh);
+
+  // If an image is already loaded when this viz first activates, apply it
+  const existingUrl = getUserImageUrl();
+  if (existingUrl) applyUserImage(existingUrl);
 
   // Post-processing: RenderPass → GlitchPass
   composer = new EffectComposer(renderer);
@@ -157,7 +166,45 @@ function setup(): void {
     threeCanvas.style.display = data === 'liquidmetal' ? 'block' : 'none';
   });
 
+  // Swap envMap when user uploads or removes an image
+  imageUnsub = store.on('imageChange', (data) => {
+    if (data) {
+      const url = getUserImageUrl();
+      if (url) applyUserImage(url);
+    } else {
+      clearUserImageTexture();
+    }
+  });
+
   initialized = true;
+}
+
+// ── Image helpers ─────────────────────────────────────────────────────────────
+
+function applyUserImage(url: string): void {
+  new THREE.TextureLoader().load(url, (texture) => {
+    // Equirectangular reflection mapping gives the classic chrome-ball look
+    // where the image appears warped and reflected across the metallic surface
+    texture.mapping = THREE.EquirectangularReflectionMapping;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    userImageTexture?.dispose();
+    userImageTexture = texture;
+    if (sphereMaterial) {
+      sphereMaterial.envMap = texture;
+      sphereMaterial.envMapIntensity = 2.0; // boost so image is clearly visible
+      sphereMaterial.needsUpdate = true;
+    }
+  });
+}
+
+function clearUserImageTexture(): void {
+  userImageTexture?.dispose();
+  userImageTexture = null;
+  if (sphereMaterial) {
+    sphereMaterial.envMap = envTexture; // restore room environment
+    sphereMaterial.envMapIntensity = 1.5;
+    sphereMaterial.needsUpdate = true;
+  }
 }
 
 // ── Draw (called by p5 draw loop at ~60fps) ───────────────────────────────────
@@ -218,13 +265,17 @@ export function disposeLiquidMetal(): void {
   if (!initialized) return;
   vizModeUnsub?.();
   vizModeUnsub = null;
+  imageUnsub?.();
+  imageUnsub = null;
   (sphereMesh?.geometry)?.dispose();
-  (sphereMesh?.material as THREE.Material | undefined)?.dispose();
+  sphereMaterial?.dispose();
   envTexture?.dispose();
+  userImageTexture?.dispose();
   composer?.dispose();
   renderer?.dispose();
   threeCanvas?.remove();
   threeCanvas = null; renderer = null; scene = null; camera = null;
-  composer = null; glitchPass = null; sphereMesh = null; envTexture = null;
+  composer = null; glitchPass = null; sphereMesh = null; sphereMaterial = null;
+  envTexture = null; userImageTexture = null;
   initialized = false;
 }

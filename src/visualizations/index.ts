@@ -11,4 +11,4 @@ export { drawLasers, resetLasers } from './lasers';
 export { drawText, resetText, setVisualizerText } from './text';
 export { drawHighway, resetHighway } from './highway';
 export { drawLiquidMetal, resetLiquidMetal, disposeLiquidMetal } from './liquidmetal';
-export { loadUserImage, clearUserImage, getUserImage, hasUserImage } from './userImage';
+export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

@@ -46,3 +46,7 @@ export function getUserImage(): P5Image | null {
 export function hasUserImage(): boolean {
   return currentImage !== null;
 }
+
+export function getUserImageUrl(): string | null {
+  return currentObjectUrl;
+}
