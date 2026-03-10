@@ -44,8 +44,9 @@ import {
   resetText,
   drawHighway,
   resetHighway,
-  drawRunners,
-  resetRunners,
+  drawLiquidMetal,
+  resetLiquidMetal,
+  disposeLiquidMetal,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -103,6 +104,7 @@ const sketch = (p: P5Instance) => {
       cleanupUI();
       cleanupKeyboard();
       audioEngine.disposeAll();
+      disposeLiquidMetal();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -158,8 +160,8 @@ const sketch = (p: P5Instance) => {
       case 'highway':
         drawHighway(p, dt);
         break;
-      case 'runners':
-        drawRunners(p, dt);
+      case 'liquidmetal':
+        drawLiquidMetal(p, dt);
         break;
       case 'circle':
       default:
@@ -182,8 +184,8 @@ const sketch = (p: P5Instance) => {
       resetText();
     } else if (store.state.vizMode === 'highway') {
       resetHighway();
-    } else if (store.state.vizMode === 'runners') {
-      resetRunners();
+    } else if (store.state.vizMode === 'liquidmetal') {
+      resetLiquidMetal();
     }
   };
 };

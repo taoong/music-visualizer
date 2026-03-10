@@ -34,8 +34,12 @@
     "url": "https://github.com/taoong/music-visualizer/issues"
   },
   "homepage": "https://github.com/taoong/music-visualizer#readme",
+  "dependencies": {
+    "three": "^0.170.0"
+  },
   "devDependencies": {
     "@types/node": "^25.2.3",
+    "@types/three": "^0.183.1",
     "@typescript-eslint/eslint-plugin": "^8.55.0",
     "@typescript-eslint/parser": "^8.55.0",
     "eslint": "^9.39.2",

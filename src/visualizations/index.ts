@@ -10,5 +10,5 @@ export { drawStickman, resetStickman } from './stickman';
 export { drawLasers, resetLasers } from './lasers';
 export { drawText, resetText, setVisualizerText } from './text';
 export { drawHighway, resetHighway } from './highway';
-export { drawRunners, resetRunners } from './runners';
+export { drawLiquidMetal, resetLiquidMetal, disposeLiquidMetal } from './liquidmetal';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage } from './userImage';
