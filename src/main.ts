@@ -50,6 +50,9 @@ import {
   drawNeon,
   resetNeon,
   disposeNeon,
+  drawPillars,
+  resetPillars,
+  disposePillars,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -109,6 +112,7 @@ const sketch = (p: P5Instance) => {
       audioEngine.disposeAll();
       disposeLiquidMetal();
       disposeNeon();
+      disposePillars();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -170,6 +174,9 @@ const sketch = (p: P5Instance) => {
       case 'neon':
         drawNeon(p, dt);
         break;
+      case 'pillars':
+        drawPillars(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -195,6 +202,8 @@ const sketch = (p: P5Instance) => {
       resetLiquidMetal();
     } else if (store.state.vizMode === 'neon') {
       resetNeon();
+    } else if (store.state.vizMode === 'pillars') {
+      resetPillars();
     }
   };
 };
