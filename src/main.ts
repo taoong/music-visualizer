@@ -47,6 +47,9 @@ import {
   drawLiquidMetal,
   resetLiquidMetal,
   disposeLiquidMetal,
+  drawNeon,
+  resetNeon,
+  disposeNeon,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -105,6 +108,7 @@ const sketch = (p: P5Instance) => {
       cleanupKeyboard();
       audioEngine.disposeAll();
       disposeLiquidMetal();
+      disposeNeon();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -163,6 +167,9 @@ const sketch = (p: P5Instance) => {
       case 'liquidmetal':
         drawLiquidMetal(p, dt);
         break;
+      case 'neon':
+        drawNeon(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -186,6 +193,8 @@ const sketch = (p: P5Instance) => {
       resetHighway();
     } else if (store.state.vizMode === 'liquidmetal') {
       resetLiquidMetal();
+    } else if (store.state.vizMode === 'neon') {
+      resetNeon();
     }
   };
 };

@@ -30,6 +30,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('8', () => setVizMode('text'), 'Text visualization');
   defineShortcut('9', () => setVizMode('highway'), 'Highway visualization');
   defineShortcut('0', () => setVizMode('liquidmetal'), 'Liquid Metal visualization');
+  defineShortcut('n', () => setVizMode('neon'), 'Neon Grid visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
