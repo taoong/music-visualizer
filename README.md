@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **12 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Stickman, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Frequency Pillars
+- **13 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Stickman, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Frequency Pillars, Image Grid
 - **Two audio analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
@@ -67,6 +67,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `0` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
 | `N` | Neon Grid | Three.js synthwave terrain with audio-driven height displacement and bloom |
 | `P` | Frequency Pillars | 7 glowing 3D pillars in a circle, each color-coded to a frequency band; beat → flash + ring shockwave + particle bursts |
+| `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |
 
 ## Keyboard Shortcuts
 
@@ -78,6 +79,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `1`-`9`, `0` | Switch visualization mode |
 | `N` | Neon Grid visualization |
 | `P` | Frequency Pillars visualization |
+| `G` | Image Grid visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

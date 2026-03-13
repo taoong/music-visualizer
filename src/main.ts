@@ -53,6 +53,9 @@ import {
   drawPillars,
   resetPillars,
   disposePillars,
+  drawImageGrid,
+  resetImageGrid,
+  disposeImageGrid,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -113,6 +116,7 @@ const sketch = (p: P5Instance) => {
       disposeLiquidMetal();
       disposeNeon();
       disposePillars();
+      disposeImageGrid();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -177,6 +181,9 @@ const sketch = (p: P5Instance) => {
       case 'pillars':
         drawPillars(p, dt);
         break;
+      case 'imagegrid':
+        drawImageGrid(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -204,6 +211,8 @@ const sketch = (p: P5Instance) => {
       resetNeon();
     } else if (store.state.vizMode === 'pillars') {
       resetPillars();
+    } else if (store.state.vizMode === 'imagegrid') {
+      resetImageGrid();
     }
   };
 };
