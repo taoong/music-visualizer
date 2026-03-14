@@ -10,6 +10,7 @@ import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlide
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
 import { bindBPMControls } from './bpm';
+import { initSwipeGestures } from './swipe';
 
 export { updateScrubberUI };
 
@@ -53,6 +54,9 @@ export function initUI(): () => void {
 
   // Probe for Flask server; disable stems button if unavailable
   initStemAvailability();
+
+  // Mobile swipe gestures
+  cleanupFns.push(initSwipeGestures());
 
   // MIDI mapping UI
   initMidiUI();
