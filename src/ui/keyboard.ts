@@ -3,7 +3,6 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { formatTime } from '../utils/format';
 import { hasUserImage, clearUserImage } from '../visualizations/userImage';
 import type { VizMode } from '../types';
 
@@ -16,8 +15,8 @@ const SHORTCUTS: Record<string, { action: () => void; description: string }> = {
 export function initKeyboardShortcuts(): () => void {
   // Define shortcuts
   defineShortcut(' ', togglePlayPause, 'Play/Pause');
-  defineShortcut('ArrowLeft', () => seek(-5), 'Seek backward 5s');
-  defineShortcut('ArrowRight', () => seek(5), 'Seek forward 5s');
+  defineShortcut('ArrowLeft', () => cycleVizMode(-1), 'Previous visualization');
+  defineShortcut('ArrowRight', () => cycleVizMode(1), 'Next visualization');
   defineShortcut('ArrowUp', () => adjustVolume(0.05), 'Volume up');
   defineShortcut('ArrowDown', () => adjustVolume(-0.05), 'Volume down');
   defineShortcut('1', () => setVizMode('circle'), 'Circle visualization');
@@ -90,18 +89,7 @@ function togglePlayPause(): void {
   }
 }
 
-/**
- * Seek by offset seconds
- */
-function seek(offset: number): void {
-  const currentPos = audioEngine.getPlaybackPosition();
-  const duration = audioEngine.getDuration();
-  const newPos = Math.max(0, Math.min(duration, currentPos + offset));
-  audioEngine.seek(newPos);
 
-  // Announce to screen readers
-  announceToScreenReader(`Seeked to ${formatTime(newPos)}`);
-}
 
 /**
  * Adjust volume
@@ -323,12 +311,11 @@ function cycleVizMode(direction: 1 | -1): void {
 }
 
 /**
- * Initialize swipe gesture navigation (touch + trackpad two-finger horizontal swipe).
+ * Initialize swipe gesture navigation (mobile touch).
  * Swipe left → next visualization, swipe right → previous visualization.
  * Returns a cleanup function.
  */
 export function initSwipeGestures(): () => void {
-  // --- Touch (mobile) ---
   let touchStartX = 0;
   let touchStartY = 0;
   let touchActive = false;
@@ -356,47 +343,11 @@ export function initSwipeGestures(): () => void {
     }
   };
 
-  // --- Trackpad two-finger horizontal swipe (desktop) ---
-  let wheelAccum = 0;
-  let lastTrigger = 0;
-  let resetTimer: ReturnType<typeof setTimeout> | null = null;
-  const TRIGGER_THRESHOLD = 100;
-  const COOLDOWN_MS = 500;
-  const ACCUM_RESET_MS = 200;
-
-  const onWheel = (e: WheelEvent) => {
-    // Only act on horizontally-dominant wheel movement
-    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-
-    // Ignore when interacting with sidebar or splash
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar?.contains(e.target as Node)) return;
-    const splash = document.getElementById('splash');
-    if (splash && !splash.classList.contains('hidden')) return;
-
-    wheelAccum += e.deltaX;
-
-    // Reset accumulator if gesturing stops
-    if (resetTimer) clearTimeout(resetTimer);
-    resetTimer = setTimeout(() => { wheelAccum = 0; }, ACCUM_RESET_MS);
-
-    const now = Date.now();
-    if (Math.abs(wheelAccum) >= TRIGGER_THRESHOLD && now - lastTrigger >= COOLDOWN_MS) {
-      lastTrigger = now;
-      cycleVizMode(wheelAccum > 0 ? 1 : -1);
-      wheelAccum = 0;
-      if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
-    }
-  };
-
   document.addEventListener('touchstart', onTouchStart, { passive: true });
   document.addEventListener('touchend', onTouchEnd, { passive: true });
-  document.addEventListener('wheel', onWheel, { passive: true });
 
   return () => {
     document.removeEventListener('touchstart', onTouchStart);
     document.removeEventListener('touchend', onTouchEnd);
-    document.removeEventListener('wheel', onWheel);
-    if (resetTimer) clearTimeout(resetTimer);
   };
 }
