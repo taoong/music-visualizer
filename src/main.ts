@@ -59,7 +59,7 @@ import {
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
-import { initKeyboardShortcuts, announceToScreenReader } from './ui/keyboard';
+import { initKeyboardShortcuts, initSwipeGestures, announceToScreenReader } from './ui/keyboard';
 import { showError } from './utils/errors';
 import {
   BANDS,
@@ -98,9 +98,10 @@ const sketch = (p: P5Instance) => {
       p.frameRate(30);
     }
 
-    // Initialize UI and keyboard shortcuts
+    // Initialize UI, keyboard shortcuts, and swipe gestures
     const cleanupUI = initUI();
     const cleanupKeyboard = initKeyboardShortcuts();
+    const cleanupSwipe = initSwipeGestures();
 
     // Reset highway state when a new track is loaded
     const unsubAudioReady = store.on('audioReady', () => {
@@ -112,6 +113,7 @@ const sketch = (p: P5Instance) => {
       unsubAudioReady();
       cleanupUI();
       cleanupKeyboard();
+      cleanupSwipe();
       audioEngine.disposeAll();
       disposeLiquidMetal();
       disposeNeon();

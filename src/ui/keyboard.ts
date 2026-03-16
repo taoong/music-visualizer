@@ -304,3 +304,99 @@ export function getAllShortcuts(): Record<string, string> {
   }
   return result;
 }
+
+/**
+ * Cycle to the next or previous visualization mode.
+ * Uses options currently present in the viz-selector to respect mobile exclusions.
+ */
+function cycleVizMode(direction: 1 | -1): void {
+  const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
+  const available: VizMode[] = vizSelect
+    ? Array.from(vizSelect.options).map(o => o.value as VizMode)
+    : ['circle', 'spectrum', 'tunnel', 'cube', 'stickman', 'lasers', 'text', 'highway', 'liquidmetal', 'neon', 'pillars', 'imagegrid'];
+
+  const current = store.state.vizMode;
+  const idx = available.indexOf(current);
+  if (idx === -1) return;
+  const next = (idx + direction + available.length) % available.length;
+  setVizMode(available[next]);
+}
+
+/**
+ * Initialize swipe gesture navigation (touch + trackpad two-finger horizontal swipe).
+ * Swipe left → next visualization, swipe right → previous visualization.
+ * Returns a cleanup function.
+ */
+export function initSwipeGestures(): () => void {
+  // --- Touch (mobile) ---
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchActive = false;
+
+  const onTouchStart = (e: TouchEvent) => {
+    // Ignore touches that start inside the sidebar or splash screen
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar?.contains(e.target as Node)) return;
+    const splash = document.getElementById('splash');
+    if (splash && !splash.classList.contains('hidden')) return;
+
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchActive = true;
+  };
+
+  const onTouchEnd = (e: TouchEvent) => {
+    if (!touchActive) return;
+    touchActive = false;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    // Require horizontal dominance and minimum 50px travel
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      cycleVizMode(dx < 0 ? 1 : -1);
+    }
+  };
+
+  // --- Trackpad two-finger horizontal swipe (desktop) ---
+  let wheelAccum = 0;
+  let lastTrigger = 0;
+  let resetTimer: ReturnType<typeof setTimeout> | null = null;
+  const TRIGGER_THRESHOLD = 100;
+  const COOLDOWN_MS = 500;
+  const ACCUM_RESET_MS = 200;
+
+  const onWheel = (e: WheelEvent) => {
+    // Only act on horizontally-dominant wheel movement
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+
+    // Ignore when interacting with sidebar or splash
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar?.contains(e.target as Node)) return;
+    const splash = document.getElementById('splash');
+    if (splash && !splash.classList.contains('hidden')) return;
+
+    wheelAccum += e.deltaX;
+
+    // Reset accumulator if gesturing stops
+    if (resetTimer) clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => { wheelAccum = 0; }, ACCUM_RESET_MS);
+
+    const now = Date.now();
+    if (Math.abs(wheelAccum) >= TRIGGER_THRESHOLD && now - lastTrigger >= COOLDOWN_MS) {
+      lastTrigger = now;
+      cycleVizMode(wheelAccum > 0 ? 1 : -1);
+      wheelAccum = 0;
+      if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
+    }
+  };
+
+  document.addEventListener('touchstart', onTouchStart, { passive: true });
+  document.addEventListener('touchend', onTouchEnd, { passive: true });
+  document.addEventListener('wheel', onWheel, { passive: true });
+
+  return () => {
+    document.removeEventListener('touchstart', onTouchStart);
+    document.removeEventListener('touchend', onTouchEnd);
+    document.removeEventListener('wheel', onWheel);
+    if (resetTimer) clearTimeout(resetTimer);
+  };
+}
