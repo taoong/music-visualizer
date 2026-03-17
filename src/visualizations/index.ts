@@ -14,4 +14,5 @@ export { drawLiquidMetal, resetLiquidMetal, disposeLiquidMetal } from './liquidm
 export { drawNeon, resetNeon, disposeNeon } from './neon';
 export { drawPillars, resetPillars, disposePillars } from './pillars';
 export { drawImageGrid, resetImageGrid, disposeImageGrid } from './imagegrid';
+export { drawWaveform, resetWaveform } from './waveform';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

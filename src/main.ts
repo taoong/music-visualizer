@@ -56,6 +56,8 @@ import {
   drawImageGrid,
   resetImageGrid,
   disposeImageGrid,
+  drawWaveform,
+  resetWaveform,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -186,6 +188,9 @@ const sketch = (p: P5Instance) => {
       case 'imagegrid':
         drawImageGrid(p, dt);
         break;
+      case 'waveform':
+        drawWaveform(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -215,6 +220,8 @@ const sketch = (p: P5Instance) => {
       resetPillars();
     } else if (store.state.vizMode === 'imagegrid') {
       resetImageGrid();
+    } else if (store.state.vizMode === 'waveform') {
+      resetWaveform();
     }
   };
 };
@@ -251,6 +258,12 @@ function processFreqMode(dt: number): void {
     }
 
     updateCentroid(computeSpectralCentroid(fft));
+
+    const waveformAnalyser = audioEngine.getWaveformAnalyser();
+    if (waveformAnalyser) {
+      const waveRaw = waveformAnalyser.getValue();
+      audioState.waveformData.set(waveRaw.subarray(0, audioState.waveformData.length));
+    }
 
     if (state.vizMode === 'tunnel') {
       const rawOct = applyAutoGain(getOctaveAmplitudes(fft), audioState.autoGainOctaves);
@@ -323,6 +336,12 @@ function processStemMode(dt: number): void {
     }
 
     updateCentroid(computeStemCentroid(stemFfts, STEMS));
+
+    const waveformAnalyserStem = audioEngine.getWaveformAnalyser();
+    if (waveformAnalyserStem) {
+      const waveRaw = waveformAnalyserStem.getValue();
+      audioState.waveformData.set(waveRaw.subarray(0, audioState.waveformData.length));
+    }
 
     if (state.vizMode === 'tunnel') {
       const rawOct = applyAutoGain(

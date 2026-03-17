@@ -24,6 +24,7 @@ class AudioEngine {
   private stemAudio: StemModeAudio | null = null;
   private blobUrls: string[] = [];
   private rawAudioBuffer: AudioBuffer | null = null;
+  private waveformAnalyser: ToneAnalyser | null = null;
 
   /**
    * Initialize frequency mode audio
@@ -82,6 +83,9 @@ class AudioEngine {
     gainNode.toDestination();
     player.connect(fft);
 
+    this.waveformAnalyser = new Tone.Analyser('waveform', FFT_SIZE);
+    player.connect(this.waveformAnalyser);
+
     this.freqAudio = { player, gainNode, fft };
     store.setAudioReady(true);
   }
@@ -138,6 +142,9 @@ class AudioEngine {
       throw new Error('No stems could be loaded. Check that the Flask server is running.');
     }
 
+    this.waveformAnalyser = new Tone.Analyser('waveform', FFT_SIZE);
+    masterGain.connect(this.waveformAnalyser);
+
     await Tone.loaded();
 
     this.stemAudio = {
@@ -161,6 +168,11 @@ class AudioEngine {
       this.freqAudio.gainNode.dispose();
       this.freqAudio.fft.dispose();
       this.freqAudio = null;
+    }
+
+    if (this.waveformAnalyser) {
+      this.waveformAnalyser.dispose();
+      this.waveformAnalyser = null;
     }
 
     this.rawAudioBuffer = null;
@@ -279,6 +291,13 @@ class AudioEngine {
     } else if (!isFreqMode && this.stemAudio) {
       this.stemAudio.masterGain.gain.value = volume;
     }
+  }
+
+  /**
+   * Get waveform analyser
+   */
+  getWaveformAnalyser(): ToneAnalyser | null {
+    return this.waveformAnalyser;
   }
 
   /**

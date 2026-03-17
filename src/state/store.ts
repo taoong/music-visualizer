@@ -10,6 +10,7 @@ import {
   OCTAVE_COUNT,
   AUTO_GAIN_FRAMES,
   AUTO_GAIN_FLOOR,
+  FFT_SIZE,
 } from '../utils/constants';
 
 // Event types
@@ -77,6 +78,7 @@ class StateStore {
         .fill(null)
         .map(() => ({ prevMean: 0, smoothed: 0 })),
       deltaStems: {},
+      waveformData: new Float32Array(FFT_SIZE),
       smoothedCentroid: 0.5,
       centroidYOffset: 0,
       smoothedOctaves: new Float32Array(OCTAVE_COUNT).fill(0),
@@ -231,6 +233,9 @@ class StateStore {
     this.audioState.autoGainStems = {};
     this.audioState.transientStems = {};
     this.audioState.deltaStems = {};
+
+    // Reset waveform data
+    this.audioState.waveformData.fill(0);
 
     // Reset centroid
     this.audioState.smoothedCentroid = 0.5;

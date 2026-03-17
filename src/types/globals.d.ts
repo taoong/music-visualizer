@@ -109,6 +109,7 @@ declare global {
 
     Gain: new (value?: number) => ToneGain;
     FFT: new (size?: number) => ToneFFT;
+    Analyser: new (type: 'waveform' | 'fft', size?: number) => ToneAnalyser;
   };
 
   interface TonePlayer {
@@ -128,6 +129,12 @@ declare global {
   }
 
   interface ToneFFT {
+    getValue(): Float32Array;
+    dispose(): void;
+    connect(destination: unknown): void;
+  }
+
+  interface ToneAnalyser {
     getValue(): Float32Array;
     dispose(): void;
     connect(destination: unknown): void;

@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'pillars' | 'imagegrid';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'pillars' | 'imagegrid' | 'waveform';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -121,6 +121,9 @@ export interface AudioProcessingState {
   // Delta (rate of change) detection
   deltaBands: DeltaState[];
   deltaStems: Record<string, DeltaState>;
+
+  // Waveform time-domain data
+  waveformData: Float32Array;
 
   // Spectral centroid
   smoothedCentroid: number;
