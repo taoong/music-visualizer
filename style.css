@@ -434,6 +434,12 @@ body {
   margin-left: 4px;
 }
 
+/* Stems unavailable state */
+.term-item[data-unavailable="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* Server unavailable note */
 .term-note {
   display: block;

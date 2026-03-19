@@ -31,7 +31,7 @@ export async function initStemAvailability(): Promise<void> {
 
   const available = await checkServerAvailable();
   if (!available) {
-    btn.disabled = true;
+    btn.dataset.unavailable = 'true';
     btn.setAttribute('aria-disabled', 'true');
     note?.classList.remove('hidden');
   }
@@ -130,7 +130,10 @@ export function bindModeSelector(): () => void {
   };
 
   const freqHandler = () => setMode('freq');
-  const stemsHandler = () => setMode('stems');
+  const stemsHandler = () => {
+    if ((modeStemsBtn as HTMLElement).dataset.unavailable === 'true') return;
+    setMode('stems');
+  };
 
   modeFreqBtn.addEventListener('click', freqHandler);
   modeStemsBtn.addEventListener('click', stemsHandler);
@@ -338,7 +341,8 @@ export function bindSplashKeyboard(): () => void {
     if (!el) return false;
     const modeSection = el.closest('#splash-step-mode');
     if (modeSection && !modeSection.classList.contains('unlocked')) return false;
-    if ((el as HTMLButtonElement).disabled) return false;
+    // Only the launch button uses disabled to gate availability
+    if (el.id === 'play-btn' && (el as HTMLButtonElement).disabled) return false;
     return true;
   }
 
