@@ -23,6 +23,7 @@ export interface MicModeAudio {
   mic: ToneUserMedia;
   gainNode: ToneGain;
   fft: ToneFFT;
+  silentGain: ToneGain;
 }
 
 class AudioEngine {
@@ -179,16 +180,19 @@ class AudioEngine {
     const gainNode = new Tone.Gain(store.config.masterVolume);
     const fft = new Tone.FFT(FFT_SIZE);
 
+    // Mic → gain → FFT → silent output
+    // The graph must terminate at destination for Tone.js analyzers to work.
+    // Use a zero-gain node to keep mic audio inaudible (no feedback).
+    const silentGain = new Tone.Gain(0);
     mic.connect(gainNode);
-    mic.connect(fft);
+    gainNode.connect(fft);
+    fft.connect(silentGain);
+    silentGain.toDestination();
 
     this.waveformAnalyser = new Tone.Analyser('waveform', FFT_SIZE);
     mic.connect(this.waveformAnalyser);
 
-    // Don't route mic to speakers to avoid feedback
-    // gainNode is available for volume-based processing but not connected to destination
-
-    this.micAudio = { mic, gainNode, fft };
+    this.micAudio = { mic, gainNode, fft, silentGain };
     store.setAudioReady(true);
   }
 
@@ -218,6 +222,7 @@ class AudioEngine {
       this.micAudio.mic.dispose();
       this.micAudio.gainNode.dispose();
       this.micAudio.fft.dispose();
+      this.micAudio.silentGain.dispose();
       this.micAudio = null;
     }
 
