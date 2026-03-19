@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -23,74 +23,85 @@
     <!-- Skip link for keyboard navigation -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Splash overlay — requires user gesture to start AudioContext -->
-    <div id="splash" role="dialog" aria-modal="true" aria-label="Welcome to Music Visualizer">
-      <div id="splash-content">
-        <div class="splash-steps">
-          <div class="splash-step">
-            <span class="step-label" id="select-source-label">Select source</span>
-            <div id="splash-buttons" role="group" aria-labelledby="select-source-label">
-              <button id="use-sample-btn" class="btn" type="button">
-                Use Sample Track
-                <span class="sr-only">Use the built-in demo track</span>
-              </button>
-              <label id="upload-label" for="audio-upload" class="btn" tabindex="0" role="button">
-                Upload Track
-                <span class="sr-only">Choose an audio file from your device</span>
-              </label>
-              <input
-                type="file"
-                id="audio-upload"
-                accept="audio/*"
-                aria-label="Upload audio file"
-                aria-describedby="file-name"
-              />
-              <button id="use-mic-btn" class="btn" type="button">
-                Use Microphone
-                <span class="sr-only">Use your microphone for live audio input</span>
-              </button>
+    <!-- Splash overlay — terminal / game menu style -->
+    <div id="splash" role="dialog" aria-modal="true" aria-label="Music Visualizer Terminal">
+      <div id="splash-terminal">
+        <div class="term-scanlines" aria-hidden="true"></div>
+        <div class="term-glow" aria-hidden="true"></div>
+        <div class="term-chrome">
+          <div class="term-dots"><span></span><span></span><span></span></div>
+          <span class="term-chrome-title">music_visualizer — session</span>
+        </div>
+        <div id="splash-content">
+          <!-- Boot sequence -->
+          <div id="term-boot">
+            <div class="term-line" style="--i:0"><span class="term-prompt">❯</span> music-visualizer --start</div>
+            <div class="term-line" style="--i:1">&nbsp;&nbsp;audio_engine <span class="term-ellipsis">···</span> <span class="term-ok">ok</span></div>
+            <div class="term-line" style="--i:2">&nbsp;&nbsp;webgl_renderer <span class="term-ellipsis">···</span> <span class="term-ok">ok</span></div>
+            <div class="term-line" style="--i:3">&nbsp;&nbsp;fft_analyzer <span class="term-ellipsis">···</span> <span class="term-ok">ok</span></div>
+            <div class="term-line term-title-line" style="--i:4">
+              <span class="term-main-title">MUSIC VISUALIZER</span>
+              <span class="term-version">v2.0</span>
             </div>
-            <span id="file-name" aria-live="polite" aria-atomic="true"></span>
           </div>
 
-          <div class="splash-step" id="splash-step-mode">
-            <span class="step-label" id="choose-mode-label">Choose mode</span>
-            <div id="mode-selector" role="radiogroup" aria-labelledby="choose-mode-label">
-              <button
-                id="mode-freq"
-                class="mode-btn"
-                type="button"
-                role="radio"
-                aria-checked="false"
-                aria-describedby="mode-freq-desc"
-              >
-                Frequency Bands
-                <span id="mode-freq-desc" class="sr-only"
-                  >Analyze audio using 7 frequency bands</span
-                >
-              </button>
-              <button
-                id="mode-stems"
-                class="mode-btn"
-                type="button"
-                role="radio"
-                aria-checked="false"
-                aria-describedby="mode-stems-desc"
-              >
-                Stem Separation <span class="badge">Experimental</span>
-                <span id="mode-stems-unavail" class="mode-btn-note hidden">Requires local server</span>
-                <span id="mode-stems-desc" class="sr-only"
-                  >Use AI to separate audio into kick, drums, bass, vocals, and other stems</span
-                >
-              </button>
+          <!-- Navigable menu -->
+          <div id="term-menu">
+            <div id="nav-cursor" aria-hidden="true">▸</div>
+
+            <div class="term-section">
+              <div class="term-comment">// audio source</div>
+              <div id="splash-buttons" role="group" aria-labelledby="select-source-label">
+                <span class="sr-only" id="select-source-label">Select audio source</span>
+                <button class="term-item" data-nav="0" id="use-sample-btn" type="button">
+                  <span class="term-radio" aria-hidden="true"></span><span>sample_track</span>
+                  <span class="sr-only">Use the built-in demo track</span>
+                </button>
+                <label class="term-item" data-nav="1" id="upload-label" for="audio-upload" tabindex="0" role="button">
+                  <span class="term-radio" aria-hidden="true"></span><span>upload_file</span>
+                  <span class="sr-only">Choose an audio file from your device</span>
+                </label>
+                <input type="file" id="audio-upload" accept="audio/*" aria-label="Upload audio file" aria-describedby="file-name" />
+                <button class="term-item" data-nav="2" id="use-mic-btn" type="button">
+                  <span class="term-radio" aria-hidden="true"></span><span>microphone</span>
+                  <span class="sr-only">Use your microphone for live audio input</span>
+                </button>
+              </div>
+              <span id="file-name" aria-live="polite" aria-atomic="true"></span>
             </div>
+
+            <div class="term-section" id="splash-step-mode">
+              <div class="term-comment">// analysis mode</div>
+              <div id="mode-selector" role="radiogroup" aria-labelledby="choose-mode-label">
+                <span class="sr-only" id="choose-mode-label">Choose analysis mode</span>
+                <button class="term-item mode-btn" data-nav="3" id="mode-freq" type="button" role="radio" aria-checked="false" aria-describedby="mode-freq-desc">
+                  <span class="term-radio" aria-hidden="true"></span><span>frequency_bands</span>
+                  <span id="mode-freq-desc" class="sr-only">Analyze audio using 7 frequency bands</span>
+                </button>
+                <button class="term-item mode-btn" data-nav="4" id="mode-stems" type="button" role="radio" aria-checked="false" aria-describedby="mode-stems-desc">
+                  <span class="term-radio" aria-hidden="true"></span><span>stem_separation</span> <span class="badge">exp</span>
+                  <span id="mode-stems-unavail" class="term-note hidden">// requires local server</span>
+                  <span id="mode-stems-desc" class="sr-only">Use AI to separate audio into stems</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="term-divider-line"></div>
+
+            <button class="term-item term-launch" data-nav="5" id="play-btn" disabled type="button" aria-describedby="file-name">
+              LAUNCH
+              <span class="sr-only">Start the music visualization</span>
+            </button>
+          </div>
+
+          <!-- Status bar with hints -->
+          <div class="term-statusbar">
+            <span class="term-hint">↑↓ navigate</span>
+            <span class="term-sep">│</span>
+            <span class="term-hint">⏎ select</span>
+            <span class="term-cursor-blink" aria-hidden="true">█</span>
           </div>
         </div>
-
-        <button id="play-btn" disabled type="button" aria-describedby="file-name">
-          Begin
-          <span class="sr-only">Start the music visualization</span>
-        </button>
       </div>
     </div>
 

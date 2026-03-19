@@ -5,7 +5,7 @@ import { store } from '../state/store';
 import { injectErrorStyles } from '../utils/errors';
 import { setVisualizerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
-import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, initStemAvailability } from './splash';
+import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, bindSplashKeyboard, initStemAvailability } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
@@ -31,6 +31,7 @@ export function initUI(): () => void {
   cleanupFns.push(bindModeSelector());
   cleanupFns.push(bindImageUpload());
   cleanupFns.push(bindPlayButton());
+  cleanupFns.push(bindSplashKeyboard());
 
   // Playback controls
   cleanupFns.push(bindPauseButton());

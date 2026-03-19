@@ -10,6 +10,8 @@ import { loadUserImage, clearUserImage } from '../visualizations/userImage';
 import type { AnalysisMode } from '../types';
 
 let isSeparating = false;
+let navCursorIndex = 0;
+let navItems: HTMLElement[] = [];
 
 async function checkServerAvailable(): Promise<boolean> {
   try {
@@ -317,6 +319,118 @@ async function handleMicModePlay(): Promise<void> {
     const errorMsg = err instanceof Error ? err.message : 'Unknown error';
     setFileStatus(`Microphone error: ${errorMsg}`, true);
   }
+}
+
+export function bindSplashKeyboard(): () => void {
+  const splash = document.getElementById('splash');
+  const cursor = document.getElementById('nav-cursor');
+  const menu = document.getElementById('term-menu');
+
+  if (!splash || !cursor || !menu) return () => {};
+
+  navItems = Array.from(menu.querySelectorAll<HTMLElement>('[data-nav]'));
+  if (navItems.length === 0) return () => {};
+
+  navCursorIndex = 0;
+
+  function isItemAvailable(index: number): boolean {
+    const el = navItems[index];
+    if (!el) return false;
+    const modeSection = el.closest('#splash-step-mode');
+    if (modeSection && !modeSection.classList.contains('unlocked')) return false;
+    if ((el as HTMLButtonElement).disabled) return false;
+    return true;
+  }
+
+  function updateCursorPosition(): void {
+    const target = navItems[navCursorIndex];
+    if (!target || !menu) return;
+    const menuRect = menu.getBoundingClientRect();
+    const itemRect = target.getBoundingClientRect();
+    const top = itemRect.top - menuRect.top + itemRect.height / 2 - 8;
+    cursor!.style.top = `${top}px`;
+    navItems.forEach(el => el.classList.remove('nav-active'));
+    target.classList.add('nav-active');
+  }
+
+  function moveTo(index: number): void {
+    if (index === navCursorIndex) return;
+    navCursorIndex = index;
+    updateCursorPosition();
+  }
+
+  function findNext(from: number, dir: 1 | -1): number {
+    let next = from + dir;
+    while (next >= 0 && next < navItems.length) {
+      if (isItemAvailable(next)) return next;
+      next += dir;
+    }
+    return from;
+  }
+
+  const keyHandler = (e: KeyboardEvent) => {
+    if (splash!.classList.contains('hidden')) return;
+
+    switch (e.key) {
+      case 'ArrowDown': {
+        e.preventDefault();
+        moveTo(findNext(navCursorIndex, 1));
+        break;
+      }
+      case 'ArrowUp': {
+        e.preventDefault();
+        moveTo(findNext(navCursorIndex, -1));
+        break;
+      }
+      case 'Enter': {
+        e.preventDefault();
+        const target = navItems[navCursorIndex];
+        if (!target || !isItemAvailable(navCursorIndex)) break;
+        target.click();
+
+        // Auto-advance cursor after source selection (not mic — it auto-launches)
+        if (navCursorIndex <= 1) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              const freqIdx = navItems.findIndex(el => el.id === 'mode-freq');
+              if (freqIdx >= 0 && isItemAvailable(freqIdx)) {
+                moveTo(freqIdx);
+              }
+            });
+          });
+        }
+
+        // Auto-advance cursor after mode selection
+        if (navCursorIndex === 3 || navCursorIndex === 4) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              const launchIdx = navItems.findIndex(el => el.id === 'play-btn');
+              if (launchIdx >= 0 && isItemAvailable(launchIdx)) {
+                moveTo(launchIdx);
+              }
+            });
+          });
+        }
+        break;
+      }
+    }
+  };
+
+  document.addEventListener('keydown', keyHandler);
+
+  // Position cursor after menu animation completes
+  const initTimer = setTimeout(() => {
+    updateCursorPosition();
+  }, 2100);
+
+  const resizeHandler = () => updateCursorPosition();
+  window.addEventListener('resize', resizeHandler);
+
+  return () => {
+    document.removeEventListener('keydown', keyHandler);
+    window.removeEventListener('resize', resizeHandler);
+    clearTimeout(initTimer);
+  };
 }
 
 async function handleStemModePlay(): Promise<void> {
