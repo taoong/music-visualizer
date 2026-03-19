@@ -60,9 +60,10 @@ body {
   inset: 0;
   z-index: 1000;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-start;
   background: #020201;
+  padding: 3vh 3vw;
 }
 
 #splash.hidden {
@@ -74,8 +75,8 @@ body {
 
 #splash-terminal {
   position: relative;
-  max-width: 560px;
-  width: 92%;
+  max-width: 900px;
+  width: 100%;
   border: 1px solid #1c1812;
   border-radius: 8px;
   overflow: hidden;
@@ -161,19 +162,8 @@ body {
 }
 
 .term-dots {
-  display: flex;
-  gap: 6px;
+  display: none;
 }
-
-.term-dots span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.term-dots span:nth-child(1) { background: #ff5f57; opacity: 0.7; }
-.term-dots span:nth-child(2) { background: #febc2e; opacity: 0.7; }
-.term-dots span:nth-child(3) { background: #28c840; opacity: 0.7; }
 
 .term-chrome-title {
   font-family: 'Space Mono', 'Courier New', monospace;
@@ -184,9 +174,9 @@ body {
 
 /* Terminal content area */
 #splash-content {
-  padding: 20px 24px 16px;
+  padding: 28px 32px 20px;
   font-family: 'Space Mono', 'Courier New', monospace;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   line-height: 1.7;
   color: #e8a831;
   display: flex;
@@ -405,18 +395,20 @@ body {
   color: #ff5f57;
 }
 
-/* ── Mode section locked state ───────────────────────────── */
+/* ── Mode section locked state — fully hidden until source selected ── */
 #splash-step-mode {
-  opacity: 0.15;
+  display: none;
+  opacity: 0;
   pointer-events: none;
   user-select: none;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #splash-step-mode.unlocked {
+  display: block;
   opacity: 1;
   pointer-events: auto;
   user-select: auto;
+  animation: termLineIn 0.4s ease-out forwards;
 }
 
 /* Badge (experimental tag) */
@@ -443,14 +435,25 @@ body {
   font-style: italic;
 }
 
-/* Divider */
+/* Divider — hidden until mode section unlocks */
 .term-divider-line {
   height: 1px;
   background: linear-gradient(to right, #1a1610, #2a2518, #1a1610);
   margin: 10px 0;
+  display: none;
 }
 
-/* ── Launch button ───────────────────────────────────────── */
+#splash-step-mode.unlocked ~ .term-divider-line {
+  display: block;
+  animation: termLineIn 0.4s ease-out 0.15s both;
+}
+
+#splash-step-mode.unlocked ~ .term-launch {
+  display: flex;
+  animation: termLineIn 0.4s ease-out 0.25s both;
+}
+
+/* ── Launch button — hidden until mode section unlocks ──── */
 .term-launch {
   justify-content: center;
   padding: 10px 20px;
@@ -461,6 +464,7 @@ body {
   border: 1px solid #1a1610;
   border-radius: 3px;
   color: #3d3520;
+  display: none;
   transition:
     border-color 0.3s ease,
     color 0.3s ease,
