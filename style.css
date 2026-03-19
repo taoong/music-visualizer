@@ -533,19 +533,6 @@ body {
   opacity: 0.3;
 }
 
-.term-cursor-blink {
-  margin-left: auto;
-  color: #e8a831;
-  opacity: 0;
-  animation: cursorBlink 1s step-end infinite;
-  animation-delay: 2s;
-}
-
-@keyframes cursorBlink {
-  0%   { opacity: 1; }
-  50%  { opacity: 0; }
-  100% { opacity: 1; }
-}
 
 /* ── Image Controls (Playback Bar) ─────────────────────── */
 #image-group {
