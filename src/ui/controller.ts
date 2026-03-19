@@ -100,7 +100,7 @@ function bindVizSelector(): () => void {
   const intensityLabel = intensityGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'pillars' | 'imagegrid' | 'waveform';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'pillars' | 'imagegrid' | 'waveform';
     store.setVizMode(mode);
 
     // Per-mode control visibility
@@ -111,7 +111,6 @@ function bindVizSelector(): () => void {
     // | tunnel   |  hide |  show |     hide |      hide |      hide |    hide |      hide |
     // | balls    |  show |  show |     hide |      show |      hide |    hide |      hide |
     // | cube     |  show |  show |     hide |      hide |      hide |    hide |      hide |
-    // | stickman |  hide |  show |     hide |      hide |      hide |    hide |      hide |
     // | lasers   |  hide |  hide |     hide |      hide |      show |    show |      hide |
     // | text     |  hide |  hide |     hide |      hide |      show |    show |      show |
     // | highway  |  hide |  hide |     hide |      hide |      show |    hide |      hide |
@@ -128,7 +127,6 @@ function bindVizSelector(): () => void {
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup);
         break;
       case 'tunnel':
-      case 'stickman':
         hide(scaleGroup); show(decayRateGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup);

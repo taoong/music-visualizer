@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **13 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Stickman, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Frequency Pillars, Image Grid
+- **12 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Frequency Pillars, Image Grid
 - **Three audio input modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
@@ -61,11 +61,10 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `3` | Tunnel | Octave-based concentric rings with glow effect |
 | `4` | Balls | Physics-based bouncing balls with kick boost |
 | `5` | 3D Cube | Wireframe cube with beat-synced rotation |
-| `6` | Stickman | Dancing stick figure with kick zoom and high-freq color |
-| `7` | Lasers | Concert laser light show with beat-synced beams |
-| `8` | Text | Beat-synced text in 7 cycling visual patterns |
-| `9` | Space | Third-person spaceship navigating an asteroid field; asteroids fly toward the viewer timed to song events |
-| `0` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
+| `6` | Lasers | Concert laser light show with beat-synced beams |
+| `7` | Text | Beat-synced text in 7 cycling visual patterns |
+| `8` | Space | Third-person spaceship navigating an asteroid field; asteroids fly toward the viewer timed to song events |
+| `9` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
 | `N` | Neon Grid | Three.js synthwave terrain with audio-driven height displacement and bloom |
 | `P` | Frequency Pillars | 7 glowing 3D pillars in a circle, each color-coded to a frequency band; beat → flash + ring shockwave + particle bursts |
 | `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |

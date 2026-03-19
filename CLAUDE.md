@@ -42,7 +42,6 @@ src/
 │   ├── tunnel.ts              # Octave-based concentric rings with glow, optional center image
 │   ├── balls.ts               # Physics-based bouncing balls with kick boost
 │   ├── cube.ts                # 3D wireframe cube, beat-synced rotation, optional image on faces
-│   ├── stickman.ts            # Animated stick figure, beat-synced poses, kick zoom, high-freq color
 │   ├── text.ts                # Beat-synced text patterns (7 modes: zoom, diagonal, quad-mirror, crown, echo, reflect, kaleidoscope)
 │   ├── space.ts               # Third-person spaceship + asteroid field; asteroids spawn on beat, ship swerves to dodge, ~every 8 beats ship mis-swerves and gets hit
 │   ├── runners.ts             # Infinite side-scrolling marathon runners at 3 depth layers; beat → instant 7× speed burst 180 ms

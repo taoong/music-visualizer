@@ -36,8 +36,6 @@ import {
   resetTetris,
   drawCube,
   resetCube,
-  drawStickman,
-  resetStickman,
   drawLasers,
   resetLasers,
   drawText,
@@ -164,9 +162,6 @@ const sketch = (p: P5Instance) => {
       case 'cube':
         drawCube(p, dt);
         break;
-      case 'stickman':
-        drawStickman(p, dt);
-        break;
       case 'lasers':
         drawLasers(p, dt);
         break;
@@ -204,8 +199,6 @@ const sketch = (p: P5Instance) => {
       resetTetris();
     } else if (store.state.vizMode === 'cube') {
       resetCube();
-    } else if (store.state.vizMode === 'stickman') {
-      resetStickman();
     } else if (store.state.vizMode === 'lasers') {
       resetLasers();
     } else if (store.state.vizMode === 'text') {

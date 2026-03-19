@@ -6,7 +6,6 @@ export { drawSpectrum } from './spectrum';
 export { drawTunnel } from './tunnel';
 export { drawTetris, resetTetris } from './balls';
 export { drawCube, resetCube } from './cube';
-export { drawStickman, resetStickman } from './stickman';
 export { drawLasers, resetLasers } from './lasers';
 export { drawText, resetText, setVisualizerText } from './text';
 export { drawHighway, resetHighway } from './highway';
