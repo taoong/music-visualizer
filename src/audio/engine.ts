@@ -180,13 +180,15 @@ class AudioEngine {
     const gainNode = new Tone.Gain(store.config.masterVolume);
     const fft = new Tone.FFT(FFT_SIZE);
 
-    // Mic → gain → FFT → silent output
-    // The graph must terminate at destination for Tone.js analyzers to work.
-    // Use a zero-gain node to keep mic audio inaudible (no feedback).
+    // Parallel branches from mic (same pattern as freq mode):
+    //   Branch 1: mic → gainNode → fft          (analysis)
+    //   Branch 2: mic → gainNode → silentGain → destination  (keeps audio graph alive)
+    //   Branch 3: mic → waveformAnalyser         (time-domain data)
+    // Silent gain (volume 0) prevents mic feedback through speakers.
     const silentGain = new Tone.Gain(0);
     mic.connect(gainNode);
     gainNode.connect(fft);
-    fft.connect(silentGain);
+    gainNode.connect(silentGain);
     silentGain.toDestination();
 
     this.waveformAnalyser = new Tone.Analyser('waveform', FFT_SIZE);
