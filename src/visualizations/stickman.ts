@@ -90,7 +90,7 @@ export function drawStickman(p: P5Instance, dt: number): void {
   lerpPose(currentPose, targetPose, poseLerp);
 
   // --- Kick zoom ---
-  const isFreqMode = state.mode === 'freq';
+  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
   let kickTransient = 1.0;
   if (isFreqMode) {
     kickTransient = audioState.transientValues[0]; // sub-bass band

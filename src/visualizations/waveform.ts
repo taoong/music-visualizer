@@ -43,7 +43,7 @@ export function drawWaveform(p: P5Instance, dt: number): void {
   if (beatFlash < 0.001) beatFlash = 0;
 
   // Displacement from sub + bass (bands 0 and 1)
-  const bandCount = state.mode === 'freq' ? 7 : 5;
+  const bandCount = (state.mode === 'freq' || state.mode === 'mic') ? 7 : 5;
   const { amps } = getBandAverages(bandCount);
   const bassAmp = Math.min((amps[0] + amps[1]) / 2 * config.spikeScale, 1.0);
   const displace = bassAmp * p.height * 0.18;

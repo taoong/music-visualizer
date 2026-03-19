@@ -107,7 +107,7 @@ export function drawCube(p: P5Instance, dt: number): void {
   // Calculate audio-reactive color intensity
   let totalAmplitude = 0;
   let maxAmplitude = 0;
-  const isFreqMode = state.mode === 'freq';
+  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
   const bandCount = isFreqMode ? BAND_COUNT : 5;
 
   if (isFreqMode) {
