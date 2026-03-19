@@ -5,7 +5,7 @@ import { store } from '../state/store';
 import { injectErrorStyles } from '../utils/errors';
 import { setVisualizerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
-import { bindFileUpload, bindSampleButton, bindModeSelector, bindPlayButton, bindImageUpload, initStemAvailability } from './splash';
+import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, initStemAvailability } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
@@ -27,6 +27,7 @@ export function initUI(): () => void {
   // Splash screen controls
   cleanupFns.push(bindFileUpload());
   cleanupFns.push(bindSampleButton());
+  cleanupFns.push(bindMicButton());
   cleanupFns.push(bindModeSelector());
   cleanupFns.push(bindImageUpload());
   cleanupFns.push(bindPlayButton());
@@ -210,7 +211,7 @@ function bindRandomizeButton(): () => void {
     const rand = (min: number, max: number) => Math.random() * (max - min) + min;
     const vizMode = store.state.vizMode;
 
-    if (store.isFreqMode) {
+    if (store.isFreqMode || store.isMicMode) {
       for (const band of BANDS) {
         setSlider(band.sliderId, rand(1.0, 3.0));
       }

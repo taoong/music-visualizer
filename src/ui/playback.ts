@@ -58,6 +58,8 @@ export function bindScrubber(): () => void {
 }
 
 export function updateScrubberUI(): void {
+  if (store.isMicMode) return;
+
   const scrubber = document.getElementById('scrubber') as HTMLInputElement | null;
   const timeDisplay = document.getElementById('time-display');
 

@@ -7,9 +7,10 @@ Created by Tao Ong with Claude Code.
 ## Features
 
 - **13 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Stickman, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Frequency Pillars, Image Grid
-- **Two audio analysis modes:**
+- **Three audio input modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
+  - **Microphone** — Live audio input from your mic for real-time visualization
 - **Beat synchronization** — BPM detection with beat-reactive animations; BPM input, TAP tempo, and BEAT phase sync in the playback bar
 - **Real-time audio processing** — Transient detection, auto-gain normalization, spectral centroid tracking
 - **Full keyboard controls** — Switch visualizations, seek, volume, fullscreen, and more

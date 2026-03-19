@@ -1,6 +1,6 @@
 # Music Visualizer
 
-Real-time audio-reactive visualizer built with TypeScript, p5.js, and Tone.js. Optional Flask backend for AI stem separation (Demucs) and BPM detection (Essentia).
+Real-time audio-reactive visualizer built with TypeScript, p5.js, and Tone.js. Supports file upload, sample track, and live microphone input. Optional Flask backend for AI stem separation (Demucs) and BPM detection (Essentia).
 
 ## Commands
 
@@ -54,7 +54,7 @@ src/
 │   └── ui.ts                  # MIDI overlay panel: Map/Clear buttons per slider, status badge, ESC close
 ├── ui/
 │   ├── controller.ts          # Top-level UI orchestrator, sidebar toggle, viz selector, randomize, MIDI init
-│   ├── splash.ts              # Splash screen: file upload, sample button, mode selector, image upload, play button
+│   ├── splash.ts              # Splash screen: file upload, sample button, mic button, mode selector, image upload, play button
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
@@ -70,7 +70,7 @@ src/
 
 ### Data flow
 
-1. **Audio input** — User uploads a file or selects sample track. Optionally run stem separation via `/api/separate` (Demucs).
+1. **Audio input** — User uploads a file, selects sample track, or uses microphone for live input (via `Tone.UserMedia`). Optionally run stem separation via `/api/separate` (Demucs).
 2. **BPM detection** — Server-side Essentia via `/api/detect-bpm`, with client-side onset/autocorrelation fallback.
 3. **Space reset** — On `audioReady`, `resetSpace()` clears asteroid/beat state for the new track. Asteroids are spawned purely on detected beats at runtime (no pre-computation).
 4. **Playback** — `audioEngine` creates Tone.js Player(s) + FFT node(s). Freq mode: 1 player. Stem mode: 5 parallel players (kick, drums, bass, vocals, other).
@@ -86,7 +86,7 @@ src/
 ### State management
 
 `store` is a singleton `StateStore` with three state objects:
-- **`state: AppState`** — mode, vizMode, isPlaying, BPM data, balls array
+- **`state: AppState`** — mode (`freq`/`stems`/`mic`), vizMode, isPlaying, BPM data
 - **`config: Config`** — sensitivities (7 freq + 5 stem), spikeScale, decayRate, rotationSpeed, masterVolume
 - **`audioState: AudioProcessingState`** — smoothedBands, transientValues, deltaValues, spectral centroid, octave data
 

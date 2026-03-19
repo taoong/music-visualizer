@@ -271,6 +271,10 @@ class StateStore {
   get isStemMode(): boolean {
     return this.state.mode === 'stems';
   }
+
+  get isMicMode(): boolean {
+    return this.state.mode === 'mic';
+  }
 }
 
 // Export singleton instance

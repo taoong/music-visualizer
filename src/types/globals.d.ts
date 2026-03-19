@@ -110,6 +110,7 @@ declare global {
     Gain: new (value?: number) => ToneGain;
     FFT: new (size?: number) => ToneFFT;
     Analyser: new (type: 'waveform' | 'fft', size?: number) => ToneAnalyser;
+    UserMedia: new (volume?: number) => ToneUserMedia;
   };
 
   interface TonePlayer {
@@ -138,6 +139,14 @@ declare global {
     getValue(): Float32Array;
     dispose(): void;
     connect(destination: unknown): void;
+  }
+
+  interface ToneUserMedia {
+    open(): Promise<void>;
+    close(): void;
+    dispose(): void;
+    connect(destination: unknown): void;
+    state: string;
   }
 }
 

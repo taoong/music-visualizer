@@ -19,9 +19,16 @@ export interface StemModeAudio {
   smoothed: Record<string, Float32Array>;
 }
 
+export interface MicModeAudio {
+  mic: ToneUserMedia;
+  gainNode: ToneGain;
+  fft: ToneFFT;
+}
+
 class AudioEngine {
   private freqAudio: FreqModeAudio | null = null;
   private stemAudio: StemModeAudio | null = null;
+  private micAudio: MicModeAudio | null = null;
   private blobUrls: string[] = [];
   private rawAudioBuffer: AudioBuffer | null = null;
   private waveformAnalyser: ToneAnalyser | null = null;
@@ -158,6 +165,34 @@ class AudioEngine {
   }
 
   /**
+   * Initialize microphone mode audio
+   */
+  async initMicMode(): Promise<void> {
+    this.disposeAll();
+    await Tone.start();
+
+    console.log('[AudioEngine] Opening microphone…');
+
+    const mic = new Tone.UserMedia();
+    await mic.open();
+
+    const gainNode = new Tone.Gain(store.config.masterVolume);
+    const fft = new Tone.FFT(FFT_SIZE);
+
+    mic.connect(gainNode);
+    mic.connect(fft);
+
+    this.waveformAnalyser = new Tone.Analyser('waveform', FFT_SIZE);
+    mic.connect(this.waveformAnalyser);
+
+    // Don't route mic to speakers to avoid feedback
+    // gainNode is available for volume-based processing but not connected to destination
+
+    this.micAudio = { mic, gainNode, fft };
+    store.setAudioReady(true);
+  }
+
+  /**
    * Dispose all audio resources
    */
   disposeAll(): void {
@@ -176,6 +211,15 @@ class AudioEngine {
     }
 
     this.rawAudioBuffer = null;
+
+    // Dispose mic mode
+    if (this.micAudio) {
+      this.micAudio.mic.close();
+      this.micAudio.mic.dispose();
+      this.micAudio.gainNode.dispose();
+      this.micAudio.fft.dispose();
+      this.micAudio = null;
+    }
 
     // Dispose stem mode
     if (this.stemAudio) {
@@ -204,6 +248,13 @@ class AudioEngine {
    * Start playback
    */
   start(offset: number = 0): void {
+    // Mic mode is always "playing" while open — just set state
+    if (store.state.mode === 'mic') {
+      store.setPlaying(true);
+      store.setPlaybackTiming(Tone.now(), 0);
+      return;
+    }
+
     const time = '+0';
     const isFreqMode = store.state.mode === 'freq';
 
@@ -223,6 +274,12 @@ class AudioEngine {
    * Stop playback
    */
   stop(): void {
+    // Mic mode: just toggle playing state (mic stays open)
+    if (store.state.mode === 'mic') {
+      store.setPlaying(false);
+      return;
+    }
+
     const isFreqMode = store.state.mode === 'freq';
     const currentPosition = this.getPlaybackPosition();
 
@@ -284,11 +341,11 @@ class AudioEngine {
    * Update master volume
    */
   setVolume(volume: number): void {
-    const isFreqMode = store.state.mode === 'freq';
-
-    if (isFreqMode && this.freqAudio) {
+    if (store.state.mode === 'mic' && this.micAudio) {
+      this.micAudio.gainNode.gain.value = volume;
+    } else if (store.state.mode === 'freq' && this.freqAudio) {
       this.freqAudio.gainNode.gain.value = volume;
-    } else if (!isFreqMode && this.stemAudio) {
+    } else if (this.stemAudio) {
       this.stemAudio.masterGain.gain.value = volume;
     }
   }
@@ -304,7 +361,7 @@ class AudioEngine {
    * Get FFT for frequency mode
    */
   getFreqFFT(): ToneFFT | null {
-    return this.freqAudio?.fft || null;
+    return this.freqAudio?.fft || this.micAudio?.fft || null;
   }
 
   /**

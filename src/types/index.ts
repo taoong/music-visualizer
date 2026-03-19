@@ -3,7 +3,7 @@
  */
 
 // Audio analysis modes
-export type AnalysisMode = 'freq' | 'stems';
+export type AnalysisMode = 'freq' | 'stems' | 'mic';
 export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'stickman' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'pillars' | 'imagegrid' | 'waveform';
 
 // Frequency band definitions

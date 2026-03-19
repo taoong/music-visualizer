@@ -140,8 +140,8 @@ const sketch = (p: P5Instance) => {
     const dt = p.deltaTime / 16.667; // normalize to 60fps reference
 
     // Process audio based on mode
-    const isFreqMode = store.state.mode === 'freq';
-    if (isFreqMode) {
+    const mode = store.state.mode;
+    if (mode === 'freq' || mode === 'mic') {
       processFreqMode(dt);
     } else {
       processStemMode(dt);
@@ -235,7 +235,9 @@ function processFreqMode(dt: number): void {
 
   const { state, config, audioState } = store;
 
-  if (state.isPlaying) {
+  const isMicActive = state.mode === 'mic' && state.audioReady;
+
+  if (state.isPlaying || isMicActive) {
     const rawBands = getLogBandAmplitudes(fft);
     const decayFactor = computeDecayFactor();
 

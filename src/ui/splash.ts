@@ -139,6 +139,32 @@ export function bindModeSelector(): () => void {
   };
 }
 
+export function bindMicButton(): () => void {
+  const btn = document.getElementById('use-mic-btn');
+
+  if (!btn) return () => {};
+
+  const handler = async () => {
+    btn.classList.add('selected');
+    document.getElementById('use-sample-btn')?.classList.remove('selected');
+    document.getElementById('upload-label')?.classList.remove('selected');
+
+    await handleMicModePlay();
+  };
+
+  const touchHandler = (e: Event) => {
+    e.preventDefault();
+    handler();
+  };
+
+  btn.addEventListener('click', handler);
+  btn.addEventListener('touchend', touchHandler);
+  return () => {
+    btn.removeEventListener('click', handler);
+    btn.removeEventListener('touchend', touchHandler);
+  };
+}
+
 export function bindPlayButton(): () => void {
   const playBtn = document.getElementById('play-btn');
 
@@ -262,6 +288,34 @@ async function handleFreqModePlay(): Promise<void> {
     const errorMsg = err instanceof Error ? err.message : 'Unknown error';
     setFileStatus(`Error: ${errorMsg}`, true);
     if (playBtn) playBtn.disabled = false;
+  }
+}
+
+async function handleMicModePlay(): Promise<void> {
+  const splash = document.getElementById('splash');
+
+  setFileStatus('Requesting microphone access…');
+
+  try {
+    store.setMode('mic');
+    await audioEngine.initMicMode();
+
+    splash?.classList.add('hidden');
+    document.getElementById('playback-bar')?.classList.add('visible');
+
+    // Hide scrubber and track info for mic mode
+    document.getElementById('scrubber-row')?.classList.add('hidden');
+    document.getElementById('track-info')?.classList.add('hidden');
+    document.getElementById('bpm-group')?.classList.add('hidden');
+
+    audioEngine.start();
+
+    const trackName = document.getElementById('track-name');
+    if (trackName) trackName.textContent = 'Microphone';
+  } catch (err) {
+    console.error('Microphone init error:', err);
+    const errorMsg = err instanceof Error ? err.message : 'Unknown error';
+    setFileStatus(`Microphone error: ${errorMsg}`, true);
   }
 }
 
