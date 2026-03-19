@@ -317,6 +317,23 @@ async function handleMicModePlay(): Promise<void> {
 
     const trackName = document.getElementById('track-name');
     if (trackName) trackName.textContent = 'Microphone';
+
+    // Hide beat-dependent visualizations in mic mode
+    const beatVizModes = ['tetris', 'cube', 'lasers', 'text', 'highway'];
+    const vizSelector = document.getElementById('viz-selector') as HTMLSelectElement | null;
+    if (vizSelector) {
+      for (const opt of Array.from(vizSelector.options)) {
+        if (beatVizModes.includes(opt.value)) {
+          opt.hidden = true;
+          opt.disabled = true;
+        }
+      }
+      // If current viz is beat-dependent, switch to circle
+      if (beatVizModes.includes(vizSelector.value)) {
+        vizSelector.value = 'circle';
+        vizSelector.dispatchEvent(new Event('change'));
+      }
+    }
   } catch (err) {
     console.error('Microphone init error:', err);
     const errorMsg = err instanceof Error ? err.message : 'Unknown error';

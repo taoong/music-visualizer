@@ -113,11 +113,13 @@ function adjustVolume(delta: number): void {
  */
 function setVizMode(mode: VizMode): void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
-  if (vizSelect) {
-    vizSelect.value = mode;
-    vizSelect.dispatchEvent(new Event('change'));
-    announceToScreenReader(`Switched to ${mode} visualization`);
-  }
+  if (!vizSelect) return;
+  // Don't switch to hidden/disabled options (e.g. beat-dependent modes in mic mode)
+  const option = vizSelect.querySelector<HTMLOptionElement>(`option[value="${mode}"]`);
+  if (!option || option.disabled || option.hidden) return;
+  vizSelect.value = mode;
+  vizSelect.dispatchEvent(new Event('change'));
+  announceToScreenReader(`Switched to ${mode} visualization`);
 }
 
 /**
@@ -300,7 +302,7 @@ export function getAllShortcuts(): Record<string, string> {
 function cycleVizMode(direction: 1 | -1): void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
   const available: VizMode[] = vizSelect
-    ? Array.from(vizSelect.options).map(o => o.value as VizMode)
+    ? Array.from(vizSelect.options).filter(o => !o.disabled && !o.hidden).map(o => o.value as VizMode)
     : ['circle', 'spectrum', 'tunnel', 'cube', 'lasers', 'text', 'highway', 'liquidmetal', 'neon', 'pillars', 'imagegrid', 'waveform'];
 
   const current = store.state.vizMode;
