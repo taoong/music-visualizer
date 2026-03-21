@@ -15,4 +15,5 @@ export { drawPillars, resetPillars, disposePillars } from './pillars';
 export { drawImageGrid, resetImageGrid, disposeImageGrid } from './imagegrid';
 export { drawWaveform, resetWaveform } from './waveform';
 export { drawColormap, resetColormap, disposeColormap } from './colormap';
+export { drawSculpture, resetSculpture, disposeSculpture } from './sculpture';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

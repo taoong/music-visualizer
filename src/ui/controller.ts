@@ -101,7 +101,7 @@ function bindVizSelector(): () => void {
   const intensityLabel = intensityGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'pillars' | 'imagegrid' | 'waveform' | 'colormap';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'pillars' | 'imagegrid' | 'waveform' | 'colormap' | 'sculpture';
     store.setVizMode(mode);
 
     // Per-mode control visibility
@@ -190,6 +190,13 @@ function bindVizSelector(): () => void {
         show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Color Boost';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
+        hide(textInputGroup); hide(highwayControlsGroup);
+        break;
+      case 'sculpture':
+        show(rotationSpeedGroup); show(intensityGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
+        hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup);
         break;

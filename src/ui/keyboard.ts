@@ -33,6 +33,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('g', () => setVizMode('imagegrid'), 'Image Grid visualization');
   defineShortcut('w', () => setVizMode('waveform'), 'Waveform visualization');
   defineShortcut('c', () => setVizMode('colormap'), 'Color Map visualization');
+  defineShortcut('u', () => setVizMode('sculpture'), 'Sculpture visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
@@ -304,7 +305,7 @@ function cycleVizMode(direction: 1 | -1): void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
   const available: VizMode[] = vizSelect
     ? Array.from(vizSelect.options).filter(o => !o.disabled && !o.hidden).map(o => o.value as VizMode)
-    : ['circle', 'spectrum', 'tunnel', 'cube', 'lasers', 'text', 'highway', 'liquidmetal', 'neon', 'pillars', 'imagegrid', 'waveform', 'colormap'];
+    : ['circle', 'spectrum', 'tunnel', 'cube', 'lasers', 'text', 'highway', 'liquidmetal', 'neon', 'pillars', 'imagegrid', 'waveform', 'colormap', 'sculpture'];
 
   const current = store.state.vizMode;
   const idx = available.indexOf(current);

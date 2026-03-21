@@ -70,6 +70,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |
 | `W` | Waveform | Real-time waveform oscilloscope display |
 | `C` | Color Map | Pixel-level audio-reactive color modulation; user image (or rainbow gradient) with hue-mapped frequency band boosting |
+| `U` | Sculpture | 3D sphere with image texture and audio-reactive vertex displacement; camera transitions to a new orbit on each beat |
 
 ## Keyboard Shortcuts
 
@@ -84,6 +85,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `G` | Image Grid visualization |
 | `W` | Waveform visualization |
 | `C` | Color Map visualization |
+| `U` | Sculpture visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |
