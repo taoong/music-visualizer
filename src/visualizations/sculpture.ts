@@ -1,8 +1,8 @@
 /**
  * Sculpture — Three.js WebGL overlay visualization
- * User image (or procedural gradient) mapped onto a 3D sphere with
- * audio-reactive vertex displacement. On each beat the camera smoothly
- * transitions to a new position around the sculpture, always looking at center.
+ * 8 flat panels arranged in a circle, each showing a vertical strip of the
+ * user's image. Camera orbits and transitions between panels on beats.
+ * Audio reactivity via panel tilt, emissive glow, spacing pulse, and edge lines.
  */
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -16,24 +16,35 @@ import { getUserImageUrl } from './userImage';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const SPHERE_RADIUS   = 20;
-const SPHERE_SEGMENTS = 64;
-const CAMERA_DIST     = 55;       // distance from center
-const CAMERA_LERP     = 0.04;     // per-frame lerp speed (dt-normalized)
-const DISPLACE_SCALE  = 6;        // max vertex displacement from audio
-const PULSE_SCALE     = 3;        // bass pulse scale addition
-const BASE_EMISSIVE   = 0.15;
+const PANEL_COUNT     = 8;
+const PANEL_WIDTH     = 14;
+const PANEL_HEIGHT    = 20;
+const CIRCLE_RADIUS   = 22;
+const CAMERA_DIST     = 38;
+const FOV             = 45;
+const CAMERA_LERP     = 0.04;
+const INWARD_TILT     = 0.26;    // ~15° inward tilt
+const TILT_RANGE      = 0.087;   // ±5° Y-rotation from audio
+const SPACING_PULSE   = 2;       // max radius increase on bass hit
+const IDLE_ROTATION   = 0.0004;  // slow group rotation
 
-// Pre-defined camera orbit positions (spherical: theta, phi) — avoids poles
-const CAMERA_PRESETS: [number, number][] = [];
-{
-  const phiSteps  = [0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.7];
-  const thetaSteps = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5];
-  for (const phi of phiSteps) {
-    for (const theta of thetaSteps) {
-      CAMERA_PRESETS.push([theta, phi]);
-    }
-  }
+const BAND_COLORS = [
+  0xaa44ff, // Sub       – violet
+  0x4466ff, // Bass      – blue
+  0x00ddff, // Low-Mid   – cyan
+  0x00ff88, // Mid       – green
+  0xffff00, // Upper-Mid – yellow
+  0xff8800, // Presence  – orange
+  0xff2244, // Brilliance– red
+  0xcc66ff, // wrap      – light violet
+] as const;
+
+// Camera presets: one per panel, offset half-panel so neighbors are visible
+const CAMERA_PRESETS: { angle: number; y: number }[] = [];
+for (let i = 0; i < PANEL_COUNT; i++) {
+  const angle = (i + 0.5) * ((Math.PI * 2) / PANEL_COUNT);
+  const y = 3 + (i % 3) * 2.5;  // slight height variation
+  CAMERA_PRESETS.push({ angle, y });
 }
 
 // ── Module state ──────────────────────────────────────────────────────────────
@@ -47,23 +58,36 @@ let composer       : EffectComposer | null = null;
 let vizModeUnsub   : (() => void) | null = null;
 let imageUnsub     : (() => void) | null = null;
 
-let sphereMesh     : THREE.Mesh | null = null;
-let sphereMat      : THREE.MeshStandardMaterial | null = null;
-let sphereGeo      : THREE.SphereGeometry | null = null;
-let basePositions  : Float32Array | null = null;   // original vertex positions
+let panelGroup     : THREE.Group | null = null;
+let panels         : THREE.Mesh[] = [];
+let panelMats      : THREE.MeshStandardMaterial[] = [];
+let edgeLines      : THREE.LineSegments[] = [];
 let imageTexture   : THREE.Texture | null = null;
+let ambientLight   : THREE.AmbientLight | null = null;
 
 // Camera animation
-let currentCamTheta = 1.0;
-let currentCamPhi   = 1.2;
-let targetCamTheta  = 1.0;
-let targetCamPhi    = 1.2;
+let currentCamAngle = CAMERA_PRESETS[0].angle;
+let currentCamY     = CAMERA_PRESETS[0].y;
+let targetCamAngle  = CAMERA_PRESETS[0].angle;
+let targetCamY      = CAMERA_PRESETS[0].y;
 let lastBeatIndex   = -1;
 let lastPresetIndex = -1;
 
 // Audio smoothing
-let smoothedBass  = 0;
-let smoothedTotal = 0;
+let smoothedBass     = 0;
+let smoothedTotal    = 0;
+let beatFlashDecay   = 0;
+let spacingOffset    = 0;
+
+// ── Angle lerp (shortest path, handles 0/2π wrap) ────────────────────────────
+
+function lerpAngle(from: number, to: number, t: number): number {
+  let diff = to - from;
+  // Wrap to [-PI, PI]
+  while (diff > Math.PI) diff -= Math.PI * 2;
+  while (diff < -Math.PI) diff += Math.PI * 2;
+  return from + diff * t;
+}
 
 // ── Setup ─────────────────────────────────────────────────────────────────────
 
@@ -86,46 +110,102 @@ function setup(): void {
   scene.background = new THREE.Color(0x050510);
 
   // Camera
-  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 500);
-  updateCameraPosition(1.0);  // instant
+  camera = new THREE.PerspectiveCamera(FOV, window.innerWidth / window.innerHeight, 0.1, 500);
 
   // Lights
-  scene.add(new THREE.AmbientLight(0x333344, 0.6));
-  const keyLight = new THREE.PointLight(0xffffff, 1.8, 200);
-  keyLight.position.set(30, 40, 30);
+  ambientLight = new THREE.AmbientLight(0x333344, 0.6);
+  scene.add(ambientLight);
+  const keyLight = new THREE.PointLight(0xffffff, 1.5, 200);
+  keyLight.position.set(0, 30, 0);
   scene.add(keyLight);
-  const fillLight = new THREE.PointLight(0x4466ff, 0.8, 200);
-  fillLight.position.set(-30, -10, -30);
-  scene.add(fillLight);
-  const rimLight = new THREE.PointLight(0xff4488, 0.6, 200);
-  rimLight.position.set(0, -30, 40);
-  scene.add(rimLight);
 
-  // Sphere
-  sphereGeo = new THREE.SphereGeometry(SPHERE_RADIUS, SPHERE_SEGMENTS, SPHERE_SEGMENTS);
-  basePositions = new Float32Array(sphereGeo.attributes['position'].array);
+  // Panel group (for idle rotation)
+  panelGroup = new THREE.Group();
+  scene.add(panelGroup);
 
-  sphereMat = new THREE.MeshStandardMaterial({
-    color: 0x8844ff,
-    emissive: 0x221144,
-    emissiveIntensity: BASE_EMISSIVE,
-    metalness: 0.3,
-    roughness: 0.4,
-    side: THREE.DoubleSide,
-  });
+  // Create panels
+  panels = [];
+  panelMats = [];
+  edgeLines = [];
 
-  sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
-  scene.add(sphereMesh);
+  for (let i = 0; i < PANEL_COUNT; i++) {
+    const angle = (i * Math.PI * 2) / PANEL_COUNT;
+
+    // Material — diffuse only, no specular
+    const mat = new THREE.MeshStandardMaterial({
+      color: BAND_COLORS[i],
+      emissive: new THREE.Color(BAND_COLORS[i]),
+      emissiveIntensity: 0.1,
+      metalness: 0.0,
+      roughness: 0.85,
+      side: THREE.DoubleSide,
+    });
+    panelMats.push(mat);
+
+    // Geometry with custom UVs for image strip
+    const geo = new THREE.PlaneGeometry(PANEL_WIDTH, PANEL_HEIGHT);
+    const uvAttr = geo.attributes['uv'] as THREE.BufferAttribute;
+    const uMin = i / PANEL_COUNT;
+    const uMax = (i + 1) / PANEL_COUNT;
+    for (let v = 0; v < uvAttr.count; v++) {
+      const origU = uvAttr.getX(v);  // 0 or 1
+      const origV = uvAttr.getY(v);  // 0 or 1
+      uvAttr.setXY(v, uMin + origU * (uMax - uMin), origV);
+    }
+
+    const mesh = new THREE.Mesh(geo, mat);
+
+    // Position in circle, face outward, tilt inward
+    mesh.position.set(
+      Math.cos(angle) * CIRCLE_RADIUS,
+      0,
+      Math.sin(angle) * CIRCLE_RADIUS,
+    );
+    mesh.rotation.y = -angle + Math.PI / 2;  // face outward
+    mesh.rotation.x = INWARD_TILT;           // tilt inward toward camera
+
+    panelGroup.add(mesh);
+    panels.push(mesh);
+
+    // Edge glow lines
+    const edgeGeo = new THREE.BufferGeometry();
+    const hw = PANEL_WIDTH / 2;
+    const hh = PANEL_HEIGHT / 2;
+    const edgeVerts = new Float32Array([
+      -hw, -hh, 0,  -hw,  hh, 0,
+      -hw,  hh, 0,   hw,  hh, 0,
+       hw,  hh, 0,   hw, -hh, 0,
+       hw, -hh, 0,  -hw, -hh, 0,
+    ]);
+    edgeGeo.setAttribute('position', new THREE.BufferAttribute(edgeVerts, 3));
+    const edgeMat = new THREE.LineBasicMaterial({
+      color: BAND_COLORS[i],
+      transparent: true,
+      opacity: 0.4,
+    });
+    const line = new THREE.LineSegments(edgeGeo, edgeMat);
+    line.position.copy(mesh.position);
+    line.rotation.copy(mesh.rotation);
+    panelGroup.add(line);
+    edgeLines.push(line);
+  }
 
   // If image already loaded, apply it
   const existingUrl = getUserImageUrl();
   if (existingUrl) applyImage(existingUrl);
 
+  // Update camera position instantly
+  currentCamAngle = CAMERA_PRESETS[0].angle;
+  currentCamY = CAMERA_PRESETS[0].y;
+  targetCamAngle = currentCamAngle;
+  targetCamY = currentCamY;
+  updateCameraPosition(1.0);
+
   // Post-processing
   const res = new THREE.Vector2(window.innerWidth, window.innerHeight);
   composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  composer.addPass(new UnrealBloomPass(res, 0.8, 0.4, 0.2));
+  composer.addPass(new UnrealBloomPass(res, 0.6, 0.4, 0.3));
   composer.addPass(new OutputPass());
 
   // Hide canvas when switching away
@@ -154,11 +234,11 @@ function applyImage(url: string): void {
     tex.colorSpace = THREE.SRGBColorSpace;
     imageTexture?.dispose();
     imageTexture = tex;
-    if (sphereMat) {
-      sphereMat.map = tex;
-      sphereMat.color.set(0xffffff);
-      sphereMat.emissive.set(0x222222);
-      sphereMat.needsUpdate = true;
+    for (const mat of panelMats) {
+      mat.map = tex;
+      mat.color.set(0xffffff);
+      mat.emissive.set(0x222222);
+      mat.needsUpdate = true;
     }
   });
 }
@@ -166,86 +246,44 @@ function applyImage(url: string): void {
 function clearImage(): void {
   imageTexture?.dispose();
   imageTexture = null;
-  if (sphereMat) {
-    sphereMat.map = null;
-    sphereMat.color.set(0x8844ff);
-    sphereMat.emissive.set(0x221144);
-    sphereMat.needsUpdate = true;
+  for (let i = 0; i < panelMats.length; i++) {
+    panelMats[i].map = null;
+    panelMats[i].color.set(BAND_COLORS[i]);
+    panelMats[i].emissive.set(BAND_COLORS[i]);
+    panelMats[i].needsUpdate = true;
   }
 }
 
 // ── Camera helpers ────────────────────────────────────────────────────────────
 
-function sphericalToCartesian(theta: number, phi: number, r: number): THREE.Vector3 {
-  return new THREE.Vector3(
-    r * Math.sin(phi) * Math.cos(theta),
-    r * Math.cos(phi),
-    r * Math.sin(phi) * Math.sin(theta),
-  );
-}
-
 function updateCameraPosition(lerpFactor: number): void {
   if (!camera) return;
 
-  // Lerp spherical coordinates
-  currentCamTheta += (targetCamTheta - currentCamTheta) * lerpFactor;
-  currentCamPhi   += (targetCamPhi - currentCamPhi) * lerpFactor;
+  currentCamAngle = lerpAngle(currentCamAngle, targetCamAngle, lerpFactor);
+  currentCamY += (targetCamY - currentCamY) * lerpFactor;
 
-  const pos = sphericalToCartesian(currentCamTheta, currentCamPhi, CAMERA_DIST);
-  camera.position.copy(pos);
+  camera.position.set(
+    Math.cos(currentCamAngle) * CAMERA_DIST,
+    currentCamY,
+    Math.sin(currentCamAngle) * CAMERA_DIST,
+  );
   camera.lookAt(0, 0, 0);
 }
 
 function pickNewCameraTarget(): void {
-  // Pick a random preset, avoiding the previous one
+  // 70% advance to next panel, 30% random jump (never same twice)
   let idx: number;
-  do {
-    idx = Math.floor(Math.random() * CAMERA_PRESETS.length);
-  } while (idx === lastPresetIndex && CAMERA_PRESETS.length > 1);
+  if (Math.random() < 0.7 && lastPresetIndex >= 0) {
+    idx = (lastPresetIndex + 1) % PANEL_COUNT;
+  } else {
+    do {
+      idx = Math.floor(Math.random() * PANEL_COUNT);
+    } while (idx === lastPresetIndex && PANEL_COUNT > 1);
+  }
   lastPresetIndex = idx;
 
-  const [theta, phi] = CAMERA_PRESETS[idx];
-  targetCamTheta = theta;
-  targetCamPhi   = phi;
-}
-
-// ── Vertex displacement ───────────────────────────────────────────────────────
-
-function displaceVertices(amps: number[]): void {
-  if (!sphereGeo || !basePositions) return;
-
-  const posAttr = sphereGeo.attributes['position'] as THREE.BufferAttribute;
-  const count   = posAttr.count;
-
-  for (let i = 0; i < count; i++) {
-    const bx = basePositions[i * 3];
-    const by = basePositions[i * 3 + 1];
-    const bz = basePositions[i * 3 + 2];
-
-    // Normalize position to get direction
-    const len = Math.sqrt(bx * bx + by * by + bz * bz);
-    const nx = bx / len;
-    const ny = by / len;
-    const nz = bz / len;
-
-    // Map vertex latitude to a frequency band (0-6)
-    // phi: 0 at top, PI at bottom → band index
-    const phi = Math.acos(Math.max(-1, Math.min(1, ny)));
-    const bandIdx = Math.min(6, Math.floor((phi / Math.PI) * 7));
-    const amp = amps[bandIdx] ?? 0;
-
-    // Displacement outward along normal
-    const displacement = amp * DISPLACE_SCALE * store.config.spikeScale;
-    posAttr.setXYZ(
-      i,
-      bx + nx * displacement,
-      by + ny * displacement,
-      bz + nz * displacement,
-    );
-  }
-
-  posAttr.needsUpdate = true;
-  sphereGeo.computeVertexNormals();
+  targetCamAngle = CAMERA_PRESETS[idx].angle;
+  targetCamY = CAMERA_PRESETS[idx].y;
 }
 
 // ── Draw ──────────────────────────────────────────────────────────────────────
@@ -262,7 +300,7 @@ export function drawSculpture(_p: unknown, dt: number): void {
   smoothedBass  += (bass - smoothedBass) * 0.15 * dt;
   smoothedTotal += (total - smoothedTotal) * 0.12 * dt;
 
-  // Beat detection → camera transition
+  // Beat detection → camera transition + flash
   if (state.beatIntervalSec > 0 && state.isPlaying) {
     const pos      = audioEngine.getPlaybackPosition();
     const adjusted = pos - state.beatOffset;
@@ -270,32 +308,63 @@ export function drawSculpture(_p: unknown, dt: number): void {
     if (beatIdx > lastBeatIndex) {
       lastBeatIndex = beatIdx;
       pickNewCameraTarget();
+      beatFlashDecay = 1.0;
     }
   }
+
+  // Beat flash decay (~200ms at 60fps)
+  beatFlashDecay *= Math.pow(0.85, dt);
+  if (beatFlashDecay < 0.01) beatFlashDecay = 0;
+
+  // Ambient light flash on beat
+  if (ambientLight) {
+    ambientLight.intensity = 0.6 + beatFlashDecay * 0.9;
+  }
+
+  // Spacing pulse: bass pushes panels outward, decay back
+  const targetSpacing = smoothedBass * SPACING_PULSE * store.config.spikeScale;
+  spacingOffset += (targetSpacing - spacingOffset) * 0.1 * dt;
 
   // Update camera (smooth lerp)
   updateCameraPosition(CAMERA_LERP * dt);
 
-  // Displace sphere vertices based on frequency bands
-  displaceVertices(amps);
+  // Update panels
+  if (panelGroup) {
+    const effectiveRadius = CIRCLE_RADIUS + spacingOffset;
 
-  // Pulse sphere scale with bass
-  if (sphereMesh) {
-    const scale = 1.0 + smoothedBass * PULSE_SCALE * 0.1;
-    sphereMesh.scale.setScalar(scale);
+    for (let i = 0; i < PANEL_COUNT; i++) {
+      const angle = (i * Math.PI * 2) / PANEL_COUNT;
+      const bandIdx = i % 7;
+      const bandAmp = amps[bandIdx] ?? 0;
+
+      // Reposition with spacing pulse
+      panels[i].position.set(
+        Math.cos(angle) * effectiveRadius,
+        0,
+        Math.sin(angle) * effectiveRadius,
+      );
+
+      // Panel tilt: base facing + breathing from band amplitude
+      panels[i].rotation.y = -angle + Math.PI / 2 + (bandAmp - 0.5) * TILT_RANGE;
+      panels[i].rotation.x = INWARD_TILT;
+
+      // Emissive glow from band amplitude
+      panelMats[i].emissiveIntensity = 0.1 + bandAmp * 1.2;
+
+      // Edge line sync position and glow
+      edgeLines[i].position.copy(panels[i].position);
+      edgeLines[i].rotation.copy(panels[i].rotation);
+      const edgeMat = edgeLines[i].material as THREE.LineBasicMaterial;
+      edgeMat.opacity = 0.3 + bandAmp * 0.7 + beatFlashDecay * 0.3;
+    }
 
     // Slow idle rotation
-    sphereMesh.rotation.y += dt * 0.001 * store.config.rotationSpeed;
-  }
-
-  // Emissive intensity from amplitude
-  if (sphereMat) {
-    sphereMat.emissiveIntensity = BASE_EMISSIVE + smoothedTotal * 1.5;
+    panelGroup.rotation.y += dt * IDLE_ROTATION * store.config.rotationSpeed;
   }
 
   // Bloom strength from intensity slider
   if (composer && composer.passes[1]) {
-    (composer.passes[1] as UnrealBloomPass).strength = 0.8 * store.config.intensity;
+    (composer.passes[1] as UnrealBloomPass).strength = 0.6 * store.config.intensity;
   }
 
   composer?.render();
@@ -321,8 +390,16 @@ export function disposeSculpture(): void {
   vizModeUnsub = null;
   imageUnsub   = null;
 
-  sphereGeo?.dispose();
-  sphereMat?.dispose();
+  for (const mesh of panels) {
+    mesh.geometry.dispose();
+  }
+  for (const mat of panelMats) {
+    mat.dispose();
+  }
+  for (const line of edgeLines) {
+    line.geometry.dispose();
+    (line.material as THREE.LineBasicMaterial).dispose();
+  }
   imageTexture?.dispose();
 
   composer?.dispose();
@@ -330,12 +407,16 @@ export function disposeSculpture(): void {
   threeCanvas?.remove();
 
   threeCanvas = null; renderer = null; scene = null; camera = null;
-  composer = null; sphereMesh = null; sphereMat = null; sphereGeo = null;
-  basePositions = null; imageTexture = null;
+  composer = null; panelGroup = null; ambientLight = null;
+  panels = []; panelMats = []; edgeLines = [];
+  imageTexture = null;
 
   lastBeatIndex = -1; lastPresetIndex = -1;
   smoothedBass = 0; smoothedTotal = 0;
-  currentCamTheta = 1.0; currentCamPhi = 1.2;
-  targetCamTheta = 1.0; targetCamPhi = 1.2;
+  beatFlashDecay = 0; spacingOffset = 0;
+  currentCamAngle = CAMERA_PRESETS[0].angle;
+  currentCamY = CAMERA_PRESETS[0].y;
+  targetCamAngle = CAMERA_PRESETS[0].angle;
+  targetCamY = CAMERA_PRESETS[0].y;
   initialized = false;
 }

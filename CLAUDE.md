@@ -48,7 +48,7 @@ src/
 │   ├── pillars.ts             # 7 glowing 3D box pillars in a circle, each color-coded per band; beat → flash + ring shockwave + particle burst
 │   ├── imagegrid.ts           # 16×16 mosaic of 3D tiles viewed top-down; tile height driven by column's freq band; beat → radiating height-wave; image upload → tile tops show image regions
 │   ├── colormap.ts            # Pixel-level audio-reactive color modulation; user image (or rainbow gradient) hue-mapped to 7 freq bands; band amplitude boosts saturation/brightness of matching pixels
-│   ├── sculpture.ts           # 3D sphere with image texture + audio-reactive vertex displacement; camera transitions to new orbit position on each beat; Three.js WebGL overlay
+│   ├── sculpture.ts           # 8 flat panels in a circle showing image strips; beat-synced camera orbit; audio-reactive tilt/glow/spacing; Three.js WebGL overlay
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
