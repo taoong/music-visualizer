@@ -14,4 +14,5 @@ export { drawNeon, resetNeon, disposeNeon } from './neon';
 export { drawPillars, resetPillars, disposePillars } from './pillars';
 export { drawImageGrid, resetImageGrid, disposeImageGrid } from './imagegrid';
 export { drawWaveform, resetWaveform } from './waveform';
+export { drawColormap, resetColormap, disposeColormap } from './colormap';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

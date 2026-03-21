@@ -56,6 +56,9 @@ import {
   disposeImageGrid,
   drawWaveform,
   resetWaveform,
+  drawColormap,
+  resetColormap,
+  disposeColormap,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -119,6 +122,7 @@ const sketch = (p: P5Instance) => {
       disposeNeon();
       disposePillars();
       disposeImageGrid();
+      disposeColormap();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -186,6 +190,9 @@ const sketch = (p: P5Instance) => {
       case 'waveform':
         drawWaveform(p, dt);
         break;
+      case 'colormap':
+        drawColormap(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -215,6 +222,8 @@ const sketch = (p: P5Instance) => {
       resetImageGrid();
     } else if (store.state.vizMode === 'waveform') {
       resetWaveform();
+    } else if (store.state.vizMode === 'colormap') {
+      resetColormap();
     }
   };
 };
