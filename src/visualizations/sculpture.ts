@@ -20,7 +20,8 @@ const PANEL_COUNT     = 8;
 const PANEL_WIDTH     = 14;
 const PANEL_HEIGHT    = 20;
 const CIRCLE_RADIUS   = 22;
-const CAMERA_DIST     = 38;
+const CAMERA_DIST_FAR  = 55;     // zoom slider = 0
+const CAMERA_DIST_NEAR = 25;     // zoom slider = 1
 const FOV             = 45;
 const CAMERA_LERP     = 0.04;
 const INWARD_TILT     = 0.26;    // ~15° inward tilt
@@ -265,16 +266,22 @@ function clearImage(): void {
 
 // ── Camera helpers ────────────────────────────────────────────────────────────
 
+function getCameraDist(): number {
+  const zoom = store.config.sculptureZoom;  // 0 = far, 1 = near
+  return CAMERA_DIST_FAR + (CAMERA_DIST_NEAR - CAMERA_DIST_FAR) * zoom;
+}
+
 function updateCameraPosition(lerpFactor: number): void {
   if (!camera) return;
 
   currentCamAngle = lerpAngle(currentCamAngle, targetCamAngle, lerpFactor);
   currentCamY += (targetCamY - currentCamY) * lerpFactor;
 
+  const dist = getCameraDist();
   camera.position.set(
-    Math.cos(currentCamAngle) * CAMERA_DIST,
+    Math.cos(currentCamAngle) * dist,
     currentCamY,
-    Math.sin(currentCamAngle) * CAMERA_DIST,
+    Math.sin(currentCamAngle) * dist,
   );
   camera.lookAt(0, 0, 0);
 }

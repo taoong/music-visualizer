@@ -56,6 +56,8 @@ export interface Config {
   highwayHorizon: number;
   highwayRoadWidth: number;
   highwayDaySpeed: number;
+  // Sculpture-specific
+  sculptureZoom: number;
 }
 
 // Application state

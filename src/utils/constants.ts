@@ -184,6 +184,8 @@ export const DEFAULT_CONFIG = {
   highwayHorizon: 0.35,
   highwayRoadWidth: 0.46,
   highwayDaySpeed: 0.5,
+  // Sculpture-specific
+  sculptureZoom: 0.5,
 };
 
 // FFT and decay constants

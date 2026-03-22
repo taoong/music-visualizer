@@ -106,7 +106,7 @@ Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChang
 - `initMidi()` — calls `navigator.requestMIDIAccess()`, attaches `onmidimessage` to all inputs, re-attaches on `onstatechange` (device plug/unplug), loads saved mappings from localStorage.
 - CC messages (`0xB0`): if `startMappingMode(configKey)` is active, the next CC resolves the promise and saves the mapping; otherwise the CC value is mapped `0–127 → [slider.min, slider.max]` and dispatched as an `input` event on the slider DOM element.
 - Mappings persisted under `localStorage` key `visualizer-midi-mappings`.
-- `CONFIG_TO_SLIDER` table maps every `keyof Config` to its slider DOM id (19 entries).
+- `CONFIG_TO_SLIDER` table maps every `keyof Config` to its slider DOM id (20 entries).
 
 `src/midi/ui.ts` renders the overlay panel and is initialized by `initUI()` in `controller.ts`. The overlay is injected into `<body>` on first call (not present in static HTML). Styles are injected as a `<style>` tag.
 
