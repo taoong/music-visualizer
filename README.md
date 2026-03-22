@@ -70,6 +70,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `W` | Waveform | Real-time waveform oscilloscope display |
 | `C` | Color Map | Pixel-level audio-reactive color modulation; user image (or rainbow gradient) with hue-mapped frequency band boosting |
 | `U` | Sculpture | 8 flat panels in a circle showing image strips; beat-synced camera orbit with audio-reactive tilt, glow, and spacing |
+| `B` | Binary | Matrix-style cascading binary/ASCII characters; columns mapped to frequency bands with beat-synced wave ripple |
 
 ## Keyboard Shortcuts
 
@@ -84,6 +85,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `W` | Waveform visualization |
 | `C` | Color Map visualization |
 | `U` | Sculpture visualization |
+| `B` | Binary visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

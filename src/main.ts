@@ -59,6 +59,8 @@ import {
   drawSculpture,
   resetSculpture,
   disposeSculpture,
+  drawBinary,
+  resetBinary,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -193,6 +195,9 @@ const sketch = (p: P5Instance) => {
       case 'sculpture':
         drawSculpture(p, dt);
         break;
+      case 'binary':
+        drawBinary(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -224,6 +229,8 @@ const sketch = (p: P5Instance) => {
       resetColormap();
     } else if (store.state.vizMode === 'sculpture') {
       resetSculpture();
+    } else if (store.state.vizMode === 'binary') {
+      resetBinary();
     }
   };
 };
