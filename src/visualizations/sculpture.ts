@@ -39,11 +39,11 @@ const BAND_COLORS = [
   0xcc66ff, // wrap      – light violet
 ] as const;
 
-// Camera presets: one per panel, offset half-panel so neighbors are visible
+// Camera presets: one per panel, aligned to face each panel directly
 const CAMERA_PRESETS: { angle: number; y: number }[] = [];
 for (let i = 0; i < PANEL_COUNT; i++) {
-  const angle = (i + 0.5) * ((Math.PI * 2) / PANEL_COUNT);
-  const y = 3 + (i % 3) * 2.5;  // slight height variation
+  const angle = (i * Math.PI * 2) / PANEL_COUNT;
+  const y = 2 + (i % 3) * 2;  // slight height variation
   CAMERA_PRESETS.push({ angle, y });
 }
 
@@ -102,7 +102,7 @@ function setup(): void {
   renderer = new THREE.WebGLRenderer({ canvas: threeCanvas, antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMapping = THREE.NoToneMapping;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   // Scene
@@ -112,12 +112,19 @@ function setup(): void {
   // Camera
   camera = new THREE.PerspectiveCamera(FOV, window.innerWidth / window.innerHeight, 0.1, 500);
 
-  // Lights
-  ambientLight = new THREE.AmbientLight(0x333344, 0.6);
+  // Lights — bright enough to clearly show image textures on vertical panels
+  ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
   scene.add(ambientLight);
-  const keyLight = new THREE.PointLight(0xffffff, 1.5, 200);
-  keyLight.position.set(0, 30, 0);
+  // Hemisphere: sky/ground fill so vertical panels are lit from all angles
+  const hemiLight = new THREE.HemisphereLight(0xccccff, 0x444466, 0.6);
+  scene.add(hemiLight);
+  // Point light at camera height to illuminate facing panel
+  const keyLight = new THREE.PointLight(0xffffff, 1.2, 200);
+  keyLight.position.set(30, 5, 30);
   scene.add(keyLight);
+  const fillLight = new THREE.PointLight(0xffffff, 0.8, 200);
+  fillLight.position.set(-30, 5, -30);
+  scene.add(fillLight);
 
   // Panel group (for idle rotation)
   panelGroup = new THREE.Group();
@@ -237,7 +244,8 @@ function applyImage(url: string): void {
     for (const mat of panelMats) {
       mat.map = tex;
       mat.color.set(0xffffff);
-      mat.emissive.set(0x222222);
+      mat.emissive.set(0x888888);
+      mat.emissiveMap = tex;
       mat.needsUpdate = true;
     }
   });
@@ -248,6 +256,7 @@ function clearImage(): void {
   imageTexture = null;
   for (let i = 0; i < panelMats.length; i++) {
     panelMats[i].map = null;
+    panelMats[i].emissiveMap = null;
     panelMats[i].color.set(BAND_COLORS[i]);
     panelMats[i].emissive.set(BAND_COLORS[i]);
     panelMats[i].needsUpdate = true;
