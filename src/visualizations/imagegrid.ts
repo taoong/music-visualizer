@@ -228,7 +228,7 @@ export function drawImageGrid(_p: unknown, dt: number): void {
   const { amps } = getBandAverages(7);
   const { state } = store;
 
-  // Beat detection (same pattern as neon.ts / pillars.ts)
+  // Beat detection (same pattern as neon.ts)
   if (state.beatIntervalSec > 0 && state.isPlaying) {
     const pos      = audioEngine.getPlaybackPosition();
     const adjusted = pos - state.beatOffset;

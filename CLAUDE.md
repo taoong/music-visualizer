@@ -45,7 +45,6 @@ src/
 │   ├── text.ts                # Beat-synced text patterns (7 modes: zoom, diagonal, quad-mirror, crown, echo, reflect, kaleidoscope)
 │   ├── space.ts               # Third-person spaceship + asteroid field; asteroids spawn on beat, ship swerves to dodge, ~every 8 beats ship mis-swerves and gets hit
 │   ├── runners.ts             # Infinite side-scrolling marathon runners at 3 depth layers; beat → instant 7× speed burst 180 ms
-│   ├── pillars.ts             # 7 glowing 3D box pillars in a circle, each color-coded per band; beat → flash + ring shockwave + particle burst
 │   ├── imagegrid.ts           # 16×16 mosaic of 3D tiles viewed top-down; tile height driven by column's freq band; beat → radiating height-wave; image upload → tile tops show image regions
 │   ├── colormap.ts            # Pixel-level audio-reactive color modulation; user image (or rainbow gradient) hue-mapped to 7 freq bands; band amplitude boosts saturation/brightness of matching pixels
 │   ├── sculpture.ts           # 8 flat panels in a circle showing image strips; beat-synced camera orbit; audio-reactive tilt/glow/spacing; Three.js WebGL overlay

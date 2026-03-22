@@ -48,9 +48,6 @@ import {
   drawNeon,
   resetNeon,
   disposeNeon,
-  drawPillars,
-  resetPillars,
-  disposePillars,
   drawImageGrid,
   resetImageGrid,
   disposeImageGrid,
@@ -123,7 +120,6 @@ const sketch = (p: P5Instance) => {
       audioEngine.disposeAll();
       disposeLiquidMetal();
       disposeNeon();
-      disposePillars();
       disposeImageGrid();
       disposeColormap();
       disposeSculpture();
@@ -185,9 +181,6 @@ const sketch = (p: P5Instance) => {
       case 'neon':
         drawNeon(p, dt);
         break;
-      case 'pillars':
-        drawPillars(p, dt);
-        break;
       case 'imagegrid':
         drawImageGrid(p, dt);
         break;
@@ -223,8 +216,6 @@ const sketch = (p: P5Instance) => {
       resetLiquidMetal();
     } else if (store.state.vizMode === 'neon') {
       resetNeon();
-    } else if (store.state.vizMode === 'pillars') {
-      resetPillars();
     } else if (store.state.vizMode === 'imagegrid') {
       resetImageGrid();
     } else if (store.state.vizMode === 'waveform') {

@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **12 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Frequency Pillars, Image Grid
+- **11 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Image Grid
 - **Three audio input modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
@@ -66,7 +66,6 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `8` | Space | Third-person spaceship navigating an asteroid field; asteroids fly toward the viewer timed to song events |
 | `9` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
 | `N` | Neon Grid | Three.js synthwave terrain with audio-driven height displacement and bloom |
-| `P` | Frequency Pillars | 7 glowing 3D pillars in a circle, each color-coded to a frequency band; beat → flash + ring shockwave + particle bursts |
 | `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |
 | `W` | Waveform | Real-time waveform oscilloscope display |
 | `C` | Color Map | Pixel-level audio-reactive color modulation; user image (or rainbow gradient) with hue-mapped frequency band boosting |
@@ -81,7 +80,6 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `Up` / `Down` | Volume up / down |
 | `1`-`9`, `0` | Switch visualization mode |
 | `N` | Neon Grid visualization |
-| `P` | Frequency Pillars visualization |
 | `G` | Image Grid visualization |
 | `W` | Waveform visualization |
 | `C` | Color Map visualization |
