@@ -197,8 +197,9 @@ function applyImage(url: string): void {
     imageTexture = tex;
     for (let i = 0; i < TOTAL_CELLS; i++) {
       topMats[i].map = tex;
+      topMats[i].emissiveMap = tex;
       topMats[i].color.set(0xffffff);    // let image show through
-      topMats[i].emissive.set(0x333333); // slight emissive so bloom picks it up
+      topMats[i].emissive.set(0x888888); // emissive so image is visible under dim lighting
       topMats[i].needsUpdate = true;
     }
   });
@@ -211,6 +212,7 @@ function clearImage(): void {
     const col  = i % COLS;
     const band = colToBand(col);
     topMats[i].map = null;
+    topMats[i].emissiveMap = null;
     topMats[i].color.setHex(BAND_COLORS[band]);
     topMats[i].emissive.setHex(BAND_COLORS[band]);
     topMats[i].emissiveIntensity = 0.15;
