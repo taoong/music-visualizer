@@ -57,6 +57,8 @@ declare global {
     beginShape(): void;
     endShape(mode?: number): void;
     line(x1: number, y1: number, x2: number, y2: number): void;
+    quad(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, x4: number, y4: number): void;
+    arc(x: number, y: number, w: number, h: number, start: number, stop: number): void;
     point(x: number, y: number): void;
     curveVertex(x: number, y: number): void;
 
@@ -66,6 +68,7 @@ declare global {
     stroke(color: number | string, s?: number, b?: number): void;
     noStroke(): void;
     strokeWeight(weight: number): void;
+    strokeCap(cap: string | number): void;
     colorMode(mode: string | number, max1?: number, max2?: number, max3?: number, maxA?: number): void;
     text(str: string, x: number, y: number): void;
     textSize(size: number): void;

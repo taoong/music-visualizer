@@ -59,6 +59,8 @@ import {
   disposeSculpture,
   drawBinary,
   resetBinary,
+  drawTungTung,
+  resetTungTung,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -193,6 +195,9 @@ const sketch = (p: P5Instance) => {
       case 'binary':
         drawBinary(p, dt);
         break;
+      case 'tungtung':
+        drawTungTung(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -224,6 +229,8 @@ const sketch = (p: P5Instance) => {
       resetSculpture();
     } else if (store.state.vizMode === 'binary') {
       resetBinary();
+    } else if (store.state.vizMode === 'tungtung') {
+      resetTungTung();
     }
   };
 };
