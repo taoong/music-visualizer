@@ -187,7 +187,7 @@ export const DEFAULT_CONFIG = {
   // Sculpture-specific
   sculptureZoom: 0.5,
   // Waveform-specific
-  waveformSpeed: 1.0,
+  waveformSpeed: 5.0,
 };
 
 // FFT and decay constants

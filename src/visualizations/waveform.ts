@@ -53,7 +53,7 @@ export function drawWaveform(p: P5Instance, dt: number): void {
 
   // Push new samples into the circular buffer (frame-rate independent)
   if (state.isPlaying) {
-    const samplesPerFrame = Math.max(1, Math.round(4 * config.waveformSpeed * dt));
+    const samplesPerFrame = Math.max(1, Math.round(8 * config.waveformSpeed * dt));
     const step = N / samplesPerFrame;
     for (let s = 0; s < samplesPerFrame; s++) {
       const srcIdx = Math.min(Math.floor(s * step), N - 1);

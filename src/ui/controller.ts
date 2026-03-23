@@ -255,7 +255,7 @@ function bindRandomizeButton(): () => void {
     }
 
     if (vizMode === 'waveform') {
-      setSlider('waveform-speed', rand(0.5, 3.0));
+      setSlider('waveform-speed', rand(2, 20));
     }
   };
 
