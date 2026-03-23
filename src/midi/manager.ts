@@ -30,6 +30,7 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   highwayRoadWidth: 'highway-road-width',
   highwayDaySpeed: 'highway-day-speed',
   sculptureZoom: 'sculpture-zoom',
+  waveformSpeed: 'waveform-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

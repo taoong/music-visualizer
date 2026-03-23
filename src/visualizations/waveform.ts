@@ -1,5 +1,9 @@
 /**
- * Waveform Slicer visualization — real-time oscilloscope with image tearing effect.
+ * Waveform visualization — scrolling EKG-style oscilloscope with image tearing effect.
+ *
+ * Maintains a circular history buffer of waveform samples. New samples are pushed each frame,
+ * creating continuous right-to-left scrolling (newest on right, oldest on left).
+ * Speed slider controls how many samples are ingested per frame.
  *
  * Without image: glowing oscilloscope line centered on screen, hue driven by spectral centroid.
  * With image: waveform acts as a cut line; top half shifts up, bottom half shifts down,
@@ -10,13 +14,33 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { getUserImage, hasUserImage } from './userImage';
 
-// Module-scoped state
+// Circular buffer state
+const BUFFER_CAPACITY = 2000;
+const buffer = new Float32Array(BUFFER_CAPACITY);
+let bufferLen = 0;
+let writePtr = 0;
+
+// Beat flash state
 let lastBeatIndex = -1;
 let beatFlash = 0;
 
 export function resetWaveform(): void {
+  buffer.fill(0);
+  bufferLen = 0;
+  writePtr = 0;
   lastBeatIndex = -1;
   beatFlash = 0;
+}
+
+/**
+ * Read from the circular buffer in oldest→newest order.
+ * Returns the sample at logical index i (0 = oldest, bufferLen-1 = newest).
+ */
+function readBuffer(i: number): number {
+  if (bufferLen < BUFFER_CAPACITY) {
+    return buffer[i];
+  }
+  return buffer[(writePtr + i) % BUFFER_CAPACITY];
 }
 
 export function drawWaveform(p: P5Instance, dt: number): void {
@@ -26,6 +50,20 @@ export function drawWaveform(p: P5Instance, dt: number): void {
   if (N === 0) return;
 
   const cy = p.height / 2;
+
+  // Push new samples into the circular buffer (frame-rate independent)
+  if (state.isPlaying) {
+    const samplesPerFrame = Math.max(1, Math.round(4 * config.waveformSpeed * dt));
+    const step = N / samplesPerFrame;
+    for (let s = 0; s < samplesPerFrame; s++) {
+      const srcIdx = Math.min(Math.floor(s * step), N - 1);
+      buffer[writePtr] = waveData[srcIdx];
+      writePtr = (writePtr + 1) % BUFFER_CAPACITY;
+      if (bufferLen < BUFFER_CAPACITY) bufferLen++;
+    }
+  }
+
+  if (bufferLen === 0) return;
 
   // Beat detection
   if (state.detectedBPM > 0 && state.isPlaying) {
@@ -57,6 +95,15 @@ export function drawWaveform(p: P5Instance, dt: number): void {
   (p as any).colorMode(p['HSB'], 360, 100, 100, 100);
   const hue = audioState.smoothedCentroid * 360;
 
+  // Pre-compute screen points from buffer
+  const points: { x: number; y: number }[] = new Array(bufferLen);
+  for (let i = 0; i < bufferLen; i++) {
+    points[i] = {
+      x: (i / (bufferLen - 1)) * p.width,
+      y: cy + readBuffer(i) * waveAmp,
+    };
+  }
+
   const img = hasUserImage() ? getUserImage() : null;
 
   if (img) {
@@ -86,12 +133,10 @@ export function drawWaveform(p: P5Instance, dt: number): void {
     ctx.moveTo(0, 0);
     ctx.lineTo(p.width, 0);
     // Walk right-to-left along the waveform upper boundary
-    for (let i = N - 1; i >= 0; i--) {
-      const x = (i / (N - 1)) * p.width;
-      const y = cy + waveData[i] * waveAmp - gap;
-      ctx.lineTo(x, y);
+    for (let i = bufferLen - 1; i >= 0; i--) {
+      ctx.lineTo(points[i].x, points[i].y - gap);
     }
-    ctx.closePath(); // closes from (0, waveY[0]-gap) back to (0, 0)
+    ctx.closePath();
     ctx.clip();
     ctx.drawImage(img.canvas, drawX, drawY - displace, drawW, drawH);
     ctx.restore();
@@ -102,12 +147,10 @@ export function drawWaveform(p: P5Instance, dt: number): void {
     ctx.moveTo(0, p.height);
     ctx.lineTo(p.width, p.height);
     // Walk right-to-left along the waveform lower boundary
-    for (let i = N - 1; i >= 0; i--) {
-      const x = (i / (N - 1)) * p.width;
-      const y = cy + waveData[i] * waveAmp + gap;
-      ctx.lineTo(x, y);
+    for (let i = bufferLen - 1; i >= 0; i--) {
+      ctx.lineTo(points[i].x, points[i].y + gap);
     }
-    ctx.closePath(); // closes from (0, waveY[0]+gap) back to (0, p.height)
+    ctx.closePath();
     ctx.clip();
     ctx.drawImage(img.canvas, drawX, drawY + displace, drawW, drawH);
     ctx.restore();
@@ -127,10 +170,8 @@ export function drawWaveform(p: P5Instance, dt: number): void {
     (p as any).stroke(hue, 70, 100, layer.alpha);
     p.strokeWeight(layer.weight);
     p.beginShape();
-    for (let i = 0; i < N; i++) {
-      const x = (i / (N - 1)) * p.width;
-      const y = cy + waveData[i] * waveAmp;
-      p.vertex(x, y);
+    for (let i = 0; i < bufferLen; i++) {
+      p.vertex(points[i].x, points[i].y);
     }
     p.endShape();
   }

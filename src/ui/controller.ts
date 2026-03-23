@@ -86,6 +86,7 @@ function bindVizSelector(): () => void {
   const textInputGroup = document.getElementById('text-input-group');
   const highwayControlsGroup = document.getElementById('highway-controls-group');
   const sculptureControlsGroup = document.getElementById('sculpture-controls-group');
+  const waveformControlsGroup = document.getElementById('waveform-controls-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
@@ -120,63 +121,63 @@ function bindVizSelector(): () => void {
       case 'circle':
         show(scaleGroup); show(decayRateGroup); show(rotationSpeedGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'spectrum':
       case 'cube':
         show(scaleGroup); show(decayRateGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'tunnel':
         hide(scaleGroup); show(decayRateGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'tetris':
         show(beatDivisionGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(ballsKickBoostGroup); hide(intensityGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'lasers':
         show(intensityGroup); show(beatDivisionGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'text':
         show(intensityGroup); show(beatDivisionGroup); show(textInputGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'highway':
         show(intensityGroup); show(highwayControlsGroup);
         if (intensityLabel) intensityLabel.textContent = 'Speed';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(sculptureControlsGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'liquidmetal':
         show(rotationSpeedGroup); show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Spin Chaos';
         hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'neon':
         show(rotationSpeedGroup); show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
         hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'imagegrid':
         show(rotationSpeedGroup); show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
         hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'waveform':
-        show(scaleGroup); show(decayRateGroup);
+        show(scaleGroup); show(decayRateGroup); show(waveformControlsGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
         break;
@@ -185,19 +186,19 @@ function bindVizSelector(): () => void {
         if (intensityLabel) intensityLabel.textContent = 'Color Boost';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
       case 'sculpture':
         show(rotationSpeedGroup); show(intensityGroup); show(sculptureControlsGroup);
         if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
         hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(waveformControlsGroup);
         break;
       case 'binary':
         show(scaleGroup); show(decayRateGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(waveformControlsGroup);
         break;
     }
   };
@@ -251,6 +252,10 @@ function bindRandomizeButton(): () => void {
 
     if (vizMode === 'lasers' || vizMode === 'text') {
       setSlider('viz-intensity', rand(0.5, 2.0));
+    }
+
+    if (vizMode === 'waveform') {
+      setSlider('waveform-speed', rand(0.5, 3.0));
     }
   };
 
