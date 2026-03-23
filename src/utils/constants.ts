@@ -186,8 +186,6 @@ export const DEFAULT_CONFIG = {
   highwayDaySpeed: 0.5,
   // Sculpture-specific
   sculptureZoom: 0.5,
-  // Waveform-specific
-  waveformSpeed: 5.0,
 };
 
 // FFT and decay constants

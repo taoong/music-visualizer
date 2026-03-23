@@ -12,7 +12,6 @@ export { drawHighway, resetHighway } from './highway';
 export { drawLiquidMetal, resetLiquidMetal, disposeLiquidMetal } from './liquidmetal';
 export { drawNeon, resetNeon, disposeNeon } from './neon';
 export { drawImageGrid, resetImageGrid, disposeImageGrid } from './imagegrid';
-export { drawWaveform, resetWaveform } from './waveform';
 export { drawColormap, resetColormap, disposeColormap } from './colormap';
 export { drawSculpture, resetSculpture, disposeSculpture } from './sculpture';
 export { drawBinary, resetBinary } from './binary';

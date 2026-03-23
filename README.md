@@ -67,7 +67,6 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `9` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
 | `N` | Neon Grid | Three.js synthwave terrain with audio-driven height displacement and bloom |
 | `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |
-| `W` | Waveform | Scrolling EKG-style oscilloscope; circular history buffer scrolls right-to-left; speed slider controls scroll rate; image tearing effect with bass-driven displacement |
 | `C` | Color Map | Pixel-level audio-reactive color modulation; user image (or rainbow gradient) with hue-mapped frequency band boosting |
 | `U` | Sculpture | 8 flat panels in a circle showing image strips; beat-synced camera orbit with audio-reactive tilt, glow, and spacing |
 | `B` | Binary | Matrix-style cascading binary/ASCII characters; columns mapped to frequency bands with beat-synced wave ripple |

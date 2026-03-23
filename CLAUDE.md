@@ -49,7 +49,6 @@ src/
 │   ├── colormap.ts            # Pixel-level audio-reactive color modulation; user image (or rainbow gradient) hue-mapped to 7 freq bands; band amplitude boosts saturation/brightness of matching pixels
 │   ├── sculpture.ts           # 8 flat panels in a circle showing image strips; beat-synced camera orbit; audio-reactive tilt/glow/spacing; Three.js WebGL overlay
 │   ├── binary.ts              # Matrix-style cascading binary/ASCII characters; columns mapped to 7 freq bands; beat-synced wave ripple; green-tinted with transient white flash
-│   ├── waveform.ts            # Scrolling EKG-style oscilloscope; circular history buffer (2000 samples) scrolls right-to-left; speed slider; image tearing with bass displacement
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode

@@ -51,8 +51,6 @@ import {
   drawImageGrid,
   resetImageGrid,
   disposeImageGrid,
-  drawWaveform,
-  resetWaveform,
   drawColormap,
   resetColormap,
   disposeColormap,
@@ -186,9 +184,6 @@ const sketch = (p: P5Instance) => {
       case 'imagegrid':
         drawImageGrid(p, dt);
         break;
-      case 'waveform':
-        drawWaveform(p, dt);
-        break;
       case 'colormap':
         drawColormap(p, dt);
         break;
@@ -223,8 +218,6 @@ const sketch = (p: P5Instance) => {
       resetNeon();
     } else if (store.state.vizMode === 'imagegrid') {
       resetImageGrid();
-    } else if (store.state.vizMode === 'waveform') {
-      resetWaveform();
     } else if (store.state.vizMode === 'colormap') {
       resetColormap();
     } else if (store.state.vizMode === 'sculpture') {
