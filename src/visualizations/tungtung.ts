@@ -94,6 +94,9 @@ let strongBeatCount = 0;
 // Glow
 let glowIntensity = 0;
 
+// Configurable display text
+let dancerText = 'Move those feet!';
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -434,8 +437,8 @@ export function drawTungTung(p: P5Instance, dt: number): void {
   }
   q.colorMode(q.RGB, 255);
 
-  // --- "TUNG TUNG" text flash ---
-  if (textFlashAlpha > 0.01) {
+  // --- Text flash ---
+  if (textFlashAlpha > 0.01 && dancerText) {
     textFlashScale += (1.8 - textFlashScale) * 0.15 * dt;
     textFlashAlpha *= Math.pow(0.92, dt);
 
@@ -449,14 +452,14 @@ export function drawTungTung(p: P5Instance, dt: number): void {
     ctx.save();
     ctx.shadowColor = `rgba(180, 140, 255, ${textFlashAlpha * 0.7})`;
     ctx.shadowBlur = 20;
-    p.text('TUNG TUNG', cx, baseY - scale * 0.65);
+    p.text(dancerText.toUpperCase(), cx, baseY - scale * 0.65);
     ctx.restore();
-
-    p.textSize(fontSize * 0.55);
-    q.fill(200, 200, 255, textFlashAlpha * 150);
-    p.text('SAHUR', cx, baseY - scale * 0.65 + fontSize * 0.6);
     p.pop();
   }
+}
+
+export function setDancerText(text: string): void {
+  dancerText = text || 'Move those feet!';
 }
 
 export function resetTungTung(): void {

@@ -3,7 +3,7 @@
  */
 import { store } from '../state/store';
 import { injectErrorStyles } from '../utils/errors';
-import { setVisualizerText } from '../visualizations';
+import { setVisualizerText, setDancerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
 import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, bindSplashKeyboard, initStemAvailability } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
@@ -195,15 +195,19 @@ function bindVizSelector(): () => void {
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
         break;
       case 'tungtung':
+        show(textInputGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
+        hide(highwayControlsGroup); hide(sculptureControlsGroup);
         break;
     }
   };
 
   const textHandler = () => {
-    if (textInput) setVisualizerText(textInput.value);
+    if (textInput) {
+      setVisualizerText(textInput.value);
+      setDancerText(textInput.value);
+    }
   };
 
   vizSelect.addEventListener('change', handler);

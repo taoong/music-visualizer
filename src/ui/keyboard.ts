@@ -33,7 +33,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('c', () => setVizMode('colormap'), 'Color Map visualization');
   defineShortcut('u', () => setVizMode('sculpture'), 'Sculpture visualization');
   defineShortcut('b', () => setVizMode('binary'), 'Binary visualization');
-  defineShortcut('t', () => setVizMode('tungtung'), 'Tung Tung Sahur visualization');
+  defineShortcut('t', () => setVizMode('tungtung'), 'Dancer visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

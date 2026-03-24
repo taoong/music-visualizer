@@ -15,5 +15,5 @@ export { drawImageGrid, resetImageGrid, disposeImageGrid } from './imagegrid';
 export { drawColormap, resetColormap, disposeColormap } from './colormap';
 export { drawSculpture, resetSculpture, disposeSculpture } from './sculpture';
 export { drawBinary, resetBinary } from './binary';
-export { drawTungTung, resetTungTung } from './tungtung';
+export { drawTungTung, resetTungTung, setDancerText } from './tungtung';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
