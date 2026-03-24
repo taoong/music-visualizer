@@ -61,6 +61,8 @@ import {
   resetBinary,
   drawTungTung,
   resetTungTung,
+  drawAurora,
+  resetAurora,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -198,6 +200,9 @@ const sketch = (p: P5Instance) => {
       case 'tungtung':
         drawTungTung(p, dt);
         break;
+      case 'aurora':
+        drawAurora(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -231,6 +236,8 @@ const sketch = (p: P5Instance) => {
       resetBinary();
     } else if (store.state.vizMode === 'tungtung') {
       resetTungTung();
+    } else if (store.state.vizMode === 'aurora') {
+      resetAurora();
     }
   };
 };

@@ -16,4 +16,5 @@ export { drawColormap, resetColormap, disposeColormap } from './colormap';
 export { drawSculpture, resetSculpture, disposeSculpture } from './sculpture';
 export { drawBinary, resetBinary } from './binary';
 export { drawTungTung, resetTungTung, setDancerText } from './tungtung';
+export { drawAurora, resetAurora } from './aurora';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
