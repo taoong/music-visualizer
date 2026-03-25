@@ -201,9 +201,9 @@ function bindVizSelector(): () => void {
         hide(highwayControlsGroup); hide(sculptureControlsGroup);
         break;
       case 'aurora':
-        show(intensityGroup);
+        show(intensityGroup); show(scaleGroup);
         if (intensityLabel) intensityLabel.textContent = 'Glow Strength';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
+        hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
         break;
