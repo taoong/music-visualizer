@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems' | 'mic';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats';
 
 // Frequency band definitions
 export interface FrequencyBand {

@@ -51,6 +51,7 @@ src/
 │   ├── binary.ts              # Matrix-style cascading binary/ASCII characters; columns mapped to 7 freq bands; beat-synced wave ripple; green-tinted with transient white flash
 │   ├── tungtung.ts            # Dancer: beat-synced dancing alien; pose interpolation; spotlight stage; disco floor; beat particles; configurable text flash (default "Move those feet!")
 │   ├── aurora.ts              # Neon Ring Tunnel: first-person flight through 36 neon polygon rings mapped to 7 freq bands (teal→magenta); beat zoom-punch/shake/shockwaves/flash; Perlin camera drift; hyperspace particles; centroid-shifted palette
+│   ├── bootsandcats.ts        # Boots & Cats: falling emoji visualization; 👢 on kick transients (sub/bass), 🐱 on snare (low-mid/mid), ➕ on hihats (upper-mid+); gravity, bounce, fade-out; max 50 active
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode

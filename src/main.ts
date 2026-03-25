@@ -63,6 +63,8 @@ import {
   resetTungTung,
   drawAurora,
   resetAurora,
+  drawBootsAndCats,
+  resetBootsAndCats,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -203,6 +205,9 @@ const sketch = (p: P5Instance) => {
       case 'aurora':
         drawAurora(p, dt);
         break;
+      case 'bootsandcats':
+        drawBootsAndCats(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -238,6 +243,8 @@ const sketch = (p: P5Instance) => {
       resetTungTung();
     } else if (store.state.vizMode === 'aurora') {
       resetAurora();
+    } else if (store.state.vizMode === 'bootsandcats') {
+      resetBootsAndCats();
     }
   };
 };

@@ -17,4 +17,5 @@ export { drawSculpture, resetSculpture, disposeSculpture } from './sculpture';
 export { drawBinary, resetBinary } from './binary';
 export { drawTungTung, resetTungTung, setDancerText } from './tungtung';
 export { drawAurora, resetAurora } from './aurora';
+export { drawBootsAndCats, resetBootsAndCats } from './bootsandcats';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

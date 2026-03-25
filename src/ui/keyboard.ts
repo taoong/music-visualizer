@@ -35,6 +35,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('b', () => setVizMode('binary'), 'Binary visualization');
   defineShortcut('t', () => setVizMode('tungtung'), 'Dancer visualization');
   defineShortcut('a', () => setVizMode('aurora'), 'Aurora visualization');
+  defineShortcut('k', () => setVizMode('bootsandcats'), 'Boots & Cats visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
