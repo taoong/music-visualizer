@@ -35,6 +35,8 @@
   },
   "homepage": "https://github.com/taoong/music-visualizer#readme",
   "dependencies": {
+    "@types/matter-js": "^0.20.2",
+    "matter-js": "^0.20.0",
     "three": "^0.170.0"
   },
   "devDependencies": {
