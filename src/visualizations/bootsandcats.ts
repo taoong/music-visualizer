@@ -14,6 +14,7 @@ interface FallingEmoji {
   grounded: boolean;
   groundedTime: number;
   wobbleOffset: number;
+  scale: number; // animated pop-in scale (0→1)
 }
 
 const MAX_EMOJIS = 50;
@@ -35,16 +36,20 @@ function spawnEmoji(emoji: string, intensity: number, p: P5Instance): void {
   }
 
   const size = 40 + (intensity - TRANSIENT_THRESHOLD) * 80;
+  // Spawn within center 40% of screen so emojis pile up visibly
+  const spread = p.width * 0.4;
+  const centerX = p.width / 2;
   emojis.push({
     emoji,
-    x: Math.random() * (p.width * 0.8) + p.width * 0.1,
+    x: centerX + (Math.random() - 0.5) * spread,
     y: -size,
-    vy: 0,
+    vy: 2, // initial downward velocity so the drop is immediately visible
     size: Math.min(Math.max(size, 40), 80),
     opacity: 255,
     grounded: false,
     groundedTime: 0,
     wobbleOffset: Math.random() * Math.PI * 2,
+    scale: 0,
   });
 }
 
@@ -95,6 +100,11 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
   for (let i = emojis.length - 1; i >= 0; i--) {
     const e = emojis[i];
 
+    // Animate pop-in scale
+    if (e.scale < 1) {
+      e.scale = Math.min(1, e.scale + 0.15 * dt);
+    }
+
     if (!e.grounded) {
       // Apply gravity
       e.vy += GRAVITY * dt;
@@ -103,9 +113,20 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
       // Horizontal wobble
       e.x += Math.sin(now * 0.003 + e.wobbleOffset) * 0.8 * dt;
 
-      // Check ground collision
-      if (e.y >= groundY - e.size * 0.3) {
-        e.y = groundY - e.size * 0.3;
+      // Check ground collision — stack on top of other grounded emojis
+      let landY = groundY;
+      for (let j = 0; j < emojis.length; j++) {
+        if (j === i || !emojis[j].grounded) continue;
+        const other = emojis[j];
+        const dx = Math.abs(e.x - other.x);
+        if (dx < e.size * 0.6) {
+          landY = Math.min(landY, other.y - e.size * 0.7);
+        }
+      }
+      const landThreshold = landY - e.size * 0.3;
+
+      if (e.y >= landThreshold) {
+        e.y = landThreshold;
         if (Math.abs(e.vy) > 2) {
           e.vy = -e.vy * BOUNCE_DAMPING;
         } else {
@@ -124,10 +145,22 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
       }
     }
 
-    // Draw emoji
-    p.push();
-    p.textSize(e.size);
+    // Draw emoji with scale animation
+    const drawSize = e.size * e.scale;
     const alpha = Math.round(e.opacity);
+
+    // Spawn flash — bright glow behind emoji when it first appears
+    if (e.scale < 0.8) {
+      p.push();
+      p.noStroke();
+      const flashAlpha = Math.round((1 - e.scale / 0.8) * 180);
+      (p as any).fill(255, 255, 255, flashAlpha);
+      p.ellipse(e.x, e.y, drawSize * 2.5, drawSize * 2.5);
+      p.pop();
+    }
+
+    p.push();
+    p.textSize(drawSize);
     (p as any).fill(255, 255, 255, alpha);
     p.noStroke();
     p.text(e.emoji, e.x, e.y);
