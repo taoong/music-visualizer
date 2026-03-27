@@ -31,9 +31,9 @@ const START_SIZE_MAX = 260;
 const END_SIZE = 10;
 
 // Onset detection constants
-const ONSET_RATIO = 1.4;        // spike must be 40% above running average
-const MIN_ENERGY = 0.0003;      // ignore silence/noise floor (~-70 dB)
-const AVG_ATTACK = 0.12;        // running average rises slowly (preserves transient gap)
+const ONSET_RATIO = 1.3;        // spike must be 30% above running average
+const MIN_ENERGY = 0.0002;      // ignore silence/noise floor (~-74 dB)
+const AVG_ATTACK = 0.08;        // running average rises slowly (preserves transient gap)
 const AVG_RELEASE = 0.25;       // running average falls fast (~130ms recovery)
 const GLOBAL_COOLDOWN_MS = 60;  // minimum ms between spawns
 
@@ -102,26 +102,22 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
     const highLoBin = Math.max(1, Math.floor(2000 / binHz));
     const highHiBin = Math.min(vals.length - 1, Math.ceil(20000 / binHz));
 
-    let lowSum = 0, lowCount = 0;
+    // Use peak (max) bin value per group — avoids diluting sparse energy
+    // (e.g. hihat in a few high-freq bins averaged over 200+ bins → nothing)
     for (let i = lowLoBin; i <= lowHiBin; i++) {
-      lowSum += Math.pow(10, vals[i] / 20);
-      lowCount++;
+      const lin = Math.pow(10, vals[i] / 20);
+      if (lin > lowEnergy) lowEnergy = lin;
     }
-    lowEnergy = lowCount > 0 ? lowSum / lowCount : 0;
 
-    let midSum = 0, midCount = 0;
     for (let i = midLoBin; i <= midHiBin; i++) {
-      midSum += Math.pow(10, vals[i] / 20);
-      midCount++;
+      const lin = Math.pow(10, vals[i] / 20);
+      if (lin > midEnergy) midEnergy = lin;
     }
-    midEnergy = midCount > 0 ? midSum / midCount : 0;
 
-    let highSum = 0, highCount = 0;
     for (let i = highLoBin; i <= highHiBin; i++) {
-      highSum += Math.pow(10, vals[i] / 20);
-      highCount++;
+      const lin = Math.pow(10, vals[i] / 20);
+      if (lin > highEnergy) highEnergy = lin;
     }
-    highEnergy = highCount > 0 ? highSum / highCount : 0;
   }
 
   // ── Step 2: Update per-group running averages with fast attack/release ──
