@@ -31,9 +31,9 @@ const START_SIZE_MAX = 260;
 const END_SIZE = 10;
 
 // Onset detection constants
-const ONSET_RATIO = 1.8;        // spike must be 80% above running average
-const MIN_ENERGY = 0.0005;      // ignore silence/noise floor (~-66 dB)
-const AVG_ATTACK = 0.3;         // running average rises fast
+const ONSET_RATIO = 1.4;        // spike must be 40% above running average
+const MIN_ENERGY = 0.0003;      // ignore silence/noise floor (~-70 dB)
+const AVG_ATTACK = 0.12;        // running average rises slowly (preserves transient gap)
 const AVG_RELEASE = 0.25;       // running average falls fast (~130ms recovery)
 const GLOBAL_COOLDOWN_MS = 60;  // minimum ms between spawns
 
