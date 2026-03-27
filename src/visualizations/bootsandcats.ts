@@ -2,12 +2,8 @@
  * Boots and Cats visualization — audio-reactive emojis with 3D perspective effect
  * 👢 for kicks (sub/bass), 🐱 for snares (low-mid/mid), ➕ for hihats (upper-mid/presence/brilliance)
  * Emojis spawn big at center and fly outward while shrinking, simulating depth
- *
- * Detection: reads raw FFT directly and does its own onset detection with fast release,
- * bypassing the shared smoothedBands/deltaValues pipeline for responsive triggering.
  */
 import { store } from '../state/store';
-import { audioEngine } from '../audio/engine';
 
 interface FallingEmoji {
   emoji: string;
@@ -23,29 +19,21 @@ interface FallingEmoji {
   spawnTime: number;
 }
 
-// Spawn/flight constants (unchanged)
 const MAX_EMOJIS = 50;
+const GLOBAL_COOLDOWN_MS = 250;
+const TRANSIENT_THRESHOLD = 1.4;
 const FLIGHT_DURATION_MS = 900;
 const START_SIZE_MIN = 180;
 const START_SIZE_MAX = 260;
 const END_SIZE = 10;
 
-// Onset detection constants
-const ONSET_RATIO = 1.3;        // spike must be 30% above running average
-const MIN_ENERGY = 0.0002;      // ignore silence/noise floor (~-74 dB)
-const AVG_ATTACK = 0.08;        // running average rises slowly (preserves transient gap)
-const AVG_RELEASE = 0.25;       // running average falls fast (~130ms recovery)
-const GLOBAL_COOLDOWN_MS = 60;  // minimum ms between spawns
-
 let emojis: FallingEmoji[] = [];
+let prevBoot = 0;
+let prevCat = 0;
+let prevPlus = 0;
 let lastSpawnTime = 0;
 
-// Per-group running averages for onset detection
-let lowAvg = 0;
-let midAvg = 0;
-let highAvg = 0;
-
-function spawnEmoji(emoji: string, totalEnergy: number, p: P5Instance): void {
+function spawnEmoji(emoji: string, intensity: number, p: P5Instance): void {
   if (emojis.length >= MAX_EMOJIS) {
     emojis.shift();
   }
@@ -53,12 +41,14 @@ function spawnEmoji(emoji: string, totalEnergy: number, p: P5Instance): void {
   const cx = p.width / 2;
   const cy = p.height / 2;
 
+  // Random angle for flight direction
   const angle = Math.random() * Math.PI * 2;
+  // Distance well beyond screen edge
   const dist = Math.max(p.width, p.height) * 0.9;
   const targetX = cx + Math.cos(angle) * dist;
   const targetY = cy + Math.sin(angle) * dist;
 
-  const sizeFactor = Math.min(totalEnergy * 2, 1);
+  const sizeFactor = Math.min((intensity - TRANSIENT_THRESHOLD) / 1.5, 1);
   const startSize = START_SIZE_MIN + sizeFactor * (START_SIZE_MAX - START_SIZE_MIN);
 
   emojis.push({
@@ -77,83 +67,37 @@ function spawnEmoji(emoji: string, totalEnergy: number, p: P5Instance): void {
 }
 
 export function drawBootsAndCats(p: P5Instance, dt: number): void {
+  const { audioState } = store;
   const now = performance.now();
 
-  // ── Step 1: Read raw FFT and compute 3 energy groups ──
-  const fft = audioEngine.getFreqFFT();
-  let lowEnergy = 0;
-  let midEnergy = 0;
-  let highEnergy = 0;
+  // Check transients and spawn emojis
+  const tv = audioState.transientValues;
 
-  if (fft) {
-    const vals = fft.getValue();
-    const sampleRate = Tone.context.sampleRate;
-    const fftSize = vals.length * 2;
-    const binHz = sampleRate / fftSize;
+  const bootIntensity = Math.max(tv[0], tv[1]);
+  const catIntensity = Math.max(tv[2], tv[3]);
+  const plusIntensity = Math.max(tv[4], tv[5], tv[6]);
 
-    // Frequency group boundaries (matching the 7-band definitions)
-    // Low: 20-250 Hz (Sub + Bass)
-    // Mid: 250-2000 Hz (Low-Mid + Mid)
-    // High: 2000-20000 Hz (Upper-Mid + Presence + Brilliance)
-    const lowLoBin = Math.max(1, Math.floor(20 / binHz));
-    const lowHiBin = Math.min(vals.length - 1, Math.ceil(250 / binHz));
-    const midLoBin = Math.max(1, Math.floor(250 / binHz));
-    const midHiBin = Math.min(vals.length - 1, Math.ceil(2000 / binHz));
-    const highLoBin = Math.max(1, Math.floor(2000 / binHz));
-    const highHiBin = Math.min(vals.length - 1, Math.ceil(20000 / binHz));
+  // Rising-edge detection: only trigger on upward threshold crossing
+  const bootFired = bootIntensity > TRANSIENT_THRESHOLD && prevBoot <= TRANSIENT_THRESHOLD;
+  const catFired = catIntensity > TRANSIENT_THRESHOLD && prevCat <= TRANSIENT_THRESHOLD;
+  const plusFired = plusIntensity > TRANSIENT_THRESHOLD && prevPlus <= TRANSIENT_THRESHOLD;
 
-    // Use peak (max) bin value per group — avoids diluting sparse energy
-    // (e.g. hihat in a few high-freq bins averaged over 200+ bins → nothing)
-    for (let i = lowLoBin; i <= lowHiBin; i++) {
-      const lin = Math.pow(10, vals[i] / 20);
-      if (lin > lowEnergy) lowEnergy = lin;
+  prevBoot = bootIntensity;
+  prevCat = catIntensity;
+  prevPlus = plusIntensity;
+
+  // Winner-takes-all + global cooldown
+  if (now - lastSpawnTime > GLOBAL_COOLDOWN_MS) {
+    let bestEmoji: string | null = null;
+    let bestIntensity = 0;
+    if (bootFired && bootIntensity > bestIntensity) { bestEmoji = '👢'; bestIntensity = bootIntensity; }
+    if (catFired && catIntensity > bestIntensity) { bestEmoji = '🐱'; bestIntensity = catIntensity; }
+    if (plusFired && plusIntensity > bestIntensity) { bestEmoji = '➕'; bestIntensity = plusIntensity; }
+
+    if (bestEmoji) {
+      spawnEmoji(bestEmoji, bestIntensity, p);
+      lastSpawnTime = now;
     }
-
-    for (let i = midLoBin; i <= midHiBin; i++) {
-      const lin = Math.pow(10, vals[i] / 20);
-      if (lin > midEnergy) midEnergy = lin;
-    }
-
-    for (let i = highLoBin; i <= highHiBin; i++) {
-      const lin = Math.pow(10, vals[i] / 20);
-      if (lin > highEnergy) highEnergy = lin;
-    }
-  }
-
-  // ── Step 2: Update per-group running averages with fast attack/release ──
-  const lowAlpha = lowEnergy > lowAvg ? AVG_ATTACK : AVG_RELEASE;
-  lowAvg += (lowEnergy - lowAvg) * lowAlpha;
-
-  const midAlpha = midEnergy > midAvg ? AVG_ATTACK : AVG_RELEASE;
-  midAvg += (midEnergy - midAvg) * midAlpha;
-
-  const highAlpha = highEnergy > highAvg ? AVG_ATTACK : AVG_RELEASE;
-  highAvg += (highEnergy - highAvg) * highAlpha;
-
-  // ── Step 3: Detect onset per group ──
-  const lowOnset = lowEnergy > lowAvg * ONSET_RATIO && lowAvg > MIN_ENERGY;
-  const midOnset = midEnergy > midAvg * ONSET_RATIO && midAvg > MIN_ENERGY;
-  const highOnset = highEnergy > highAvg * ONSET_RATIO && highAvg > MIN_ENERGY;
-
-  // ── Step 4: Classify by strongest onset group ──
-  if ((lowOnset || midOnset || highOnset) && now - lastSpawnTime > GLOBAL_COOLDOWN_MS) {
-    const lowStrength = lowOnset && lowAvg > 0 ? lowEnergy / lowAvg : 0;
-    const midStrength = midOnset && midAvg > 0 ? midEnergy / midAvg : 0;
-    const highStrength = highOnset && highAvg > 0 ? highEnergy / highAvg : 0;
-
-    let emoji: string;
-    if (lowStrength >= midStrength && lowStrength >= highStrength) {
-      emoji = '👢';
-    } else if (highStrength >= midStrength) {
-      emoji = '➕';
-    } else {
-      emoji = '🐱';
-    }
-
-    // ── Step 5: Size based on total energy ──
-    const totalEnergy = lowEnergy + midEnergy + highEnergy;
-    spawnEmoji(emoji, totalEnergy, p);
-    lastSpawnTime = now;
   }
 
   // Remove completed emojis (reverse loop for safe splice)
@@ -239,8 +183,8 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
 
 export function resetBootsAndCats(): void {
   emojis = [];
+  prevBoot = 0;
+  prevCat = 0;
+  prevPlus = 0;
   lastSpawnTime = 0;
-  lowAvg = 0;
-  midAvg = 0;
-  highAvg = 0;
 }
