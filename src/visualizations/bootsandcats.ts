@@ -145,16 +145,16 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
 
     const alpha = Math.round(e.opacity);
 
-    // Spawn flash: radial gradient that fades to transparent at edges
+    // Spawn flash: soft radial glow
     if (e.progress < 0.15) {
       p.push();
       p.noStroke();
-      const flashBase = (1 - e.progress / 0.15) * 120;
+      const flashBase = (1 - e.progress / 0.15) * 30;
       const radius = size * 0.9;
-      const rings = 10;
+      const rings = 30;
       for (let r = rings; r >= 1; r--) {
-        const t = r / rings; // 1 at edge, ~0 at center
-        const ringAlpha = Math.round(flashBase * (1 - t * t));
+        const t = r / rings;
+        const ringAlpha = flashBase * (1 - t) * (1 - t);
         (p as any).fill(255, 255, 255, ringAlpha);
         const d = radius * 2 * t;
         p.ellipse(e.x, e.y, d, d);
