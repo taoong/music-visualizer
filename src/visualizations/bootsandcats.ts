@@ -100,21 +100,23 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
     }
   }
 
-  // Update and draw emojis
+  // Remove completed emojis (reverse loop for safe splice)
+  for (let i = emojis.length - 1; i >= 0; i--) {
+    const elapsed = now - emojis[i].spawnTime;
+    if (elapsed >= FLIGHT_DURATION_MS) {
+      emojis.splice(i, 1);
+    }
+  }
+
+  // Draw oldest first so newest appears on top
   p.textAlign(p['CENTER'], p['CENTER']);
 
-  for (let i = emojis.length - 1; i >= 0; i--) {
+  for (let i = 0; i < emojis.length; i++) {
     const e = emojis[i];
 
     // Advance progress
     const elapsed = now - e.spawnTime;
     e.progress = Math.min(elapsed / FLIGHT_DURATION_MS, 1);
-
-    // Remove completed emojis
-    if (e.progress >= 1) {
-      emojis.splice(i, 1);
-      continue;
-    }
 
     // Configurable ease-in: higher exponent = more aggressive acceleration
     // Slider 0→1 maps to exponent 1.5→5 (gentle drift → explosive launch)
