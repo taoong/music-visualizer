@@ -23,7 +23,7 @@ interface FallingEmoji {
 }
 
 const MAX_EMOJIS = 50;
-const GLOBAL_COOLDOWN_MS = 250;
+const GLOBAL_COOLDOWN_MS = 80;
 const FLIGHT_DURATION_MS = 900;
 const START_SIZE_MIN = 180;
 const START_SIZE_MAX = 260;
