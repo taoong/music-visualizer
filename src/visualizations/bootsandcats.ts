@@ -2,6 +2,9 @@
  * Boots and Cats visualization — audio-reactive emojis with 3D perspective effect
  * 👢 for kicks (sub/bass), 🐱 for snares (low-mid/mid), ➕ for hihats (upper-mid/presence/brilliance)
  * Emojis spawn big at center and fly outward while shrinking, simulating depth
+ *
+ * Detection: uses spectral-shape classification — detect onset via deltaValues,
+ * then classify by which frequency region (low/mid/high) dominates in smoothedBands.
  */
 import { store } from '../state/store';
 
@@ -21,19 +24,25 @@ interface FallingEmoji {
 
 const MAX_EMOJIS = 50;
 const GLOBAL_COOLDOWN_MS = 250;
-const TRANSIENT_THRESHOLD = 1.4;
 const FLIGHT_DURATION_MS = 900;
 const START_SIZE_MIN = 180;
 const START_SIZE_MAX = 260;
 const END_SIZE = 10;
+const ONSET_THRESHOLD = 0.15;
 
 let emojis: FallingEmoji[] = [];
-let prevBoot = 0;
-let prevCat = 0;
-let prevPlus = 0;
+let prevTotalDelta = 0;
 let lastSpawnTime = 0;
 
-function spawnEmoji(emoji: string, intensity: number, p: P5Instance): void {
+/** Compute average amplitude across all spikes in a band */
+function bandAvg(bandIdx: number): number {
+  const bins = store.audioState.smoothedBands[bandIdx];
+  let sum = 0;
+  for (let i = 0; i < bins.length; i++) sum += bins[i];
+  return sum / bins.length;
+}
+
+function spawnEmoji(emoji: string, totalEnergy: number, p: P5Instance): void {
   if (emojis.length >= MAX_EMOJIS) {
     emojis.shift();
   }
@@ -41,14 +50,12 @@ function spawnEmoji(emoji: string, intensity: number, p: P5Instance): void {
   const cx = p.width / 2;
   const cy = p.height / 2;
 
-  // Random angle for flight direction
   const angle = Math.random() * Math.PI * 2;
-  // Distance well beyond screen edge
   const dist = Math.max(p.width, p.height) * 0.9;
   const targetX = cx + Math.cos(angle) * dist;
   const targetY = cy + Math.sin(angle) * dist;
 
-  const sizeFactor = Math.min((intensity - TRANSIENT_THRESHOLD) / 1.5, 1);
+  const sizeFactor = Math.min(totalEnergy * 2, 1);
   const startSize = START_SIZE_MIN + sizeFactor * (START_SIZE_MAX - START_SIZE_MIN);
 
   emojis.push({
@@ -69,33 +76,34 @@ function spawnEmoji(emoji: string, intensity: number, p: P5Instance): void {
 export function drawBootsAndCats(p: P5Instance, dt: number): void {
   const { audioState } = store;
   const now = performance.now();
+  const dv = audioState.deltaValues;
 
-  // Check transients and spawn emojis
-  const tv = audioState.transientValues;
+  // Sum all band deltas to detect any onset
+  let totalDelta = 0;
+  for (let b = 0; b < 7; b++) totalDelta += dv[b];
 
-  const bootIntensity = Math.max(tv[0], tv[1]);
-  const catIntensity = Math.max(tv[2], tv[3]);
-  const plusIntensity = Math.max(tv[4], tv[5], tv[6]);
+  // Rising-edge onset detection on total delta
+  const onsetFired = totalDelta > ONSET_THRESHOLD && prevTotalDelta <= ONSET_THRESHOLD;
+  prevTotalDelta = totalDelta;
 
-  // Rising-edge detection: only trigger on upward threshold crossing
-  const bootFired = bootIntensity > TRANSIENT_THRESHOLD && prevBoot <= TRANSIENT_THRESHOLD;
-  const catFired = catIntensity > TRANSIENT_THRESHOLD && prevCat <= TRANSIENT_THRESHOLD;
-  const plusFired = plusIntensity > TRANSIENT_THRESHOLD && prevPlus <= TRANSIENT_THRESHOLD;
+  if (onsetFired && now - lastSpawnTime > GLOBAL_COOLDOWN_MS) {
+    // Classify by spectral shape: which frequency region dominates?
+    const lowEnergy = bandAvg(0) + bandAvg(1);           // Sub + Bass
+    const midEnergy = bandAvg(2) + bandAvg(3);           // Low-Mid + Mid
+    const highEnergy = bandAvg(4) + bandAvg(5) + bandAvg(6); // Upper-Mid + Presence + Brilliance
+    const totalEnergy = lowEnergy + midEnergy + highEnergy;
 
-  prevBoot = bootIntensity;
-  prevCat = catIntensity;
-  prevPlus = plusIntensity;
+    if (totalEnergy > 0) {
+      let emoji: string;
+      if (lowEnergy >= midEnergy && lowEnergy >= highEnergy) {
+        emoji = '👢';
+      } else if (highEnergy >= midEnergy) {
+        emoji = '➕';
+      } else {
+        emoji = '🐱';
+      }
 
-  // Winner-takes-all + global cooldown
-  if (now - lastSpawnTime > GLOBAL_COOLDOWN_MS) {
-    let bestEmoji: string | null = null;
-    let bestIntensity = 0;
-    if (bootFired && bootIntensity > bestIntensity) { bestEmoji = '👢'; bestIntensity = bootIntensity; }
-    if (catFired && catIntensity > bestIntensity) { bestEmoji = '🐱'; bestIntensity = catIntensity; }
-    if (plusFired && plusIntensity > bestIntensity) { bestEmoji = '➕'; bestIntensity = plusIntensity; }
-
-    if (bestEmoji) {
-      spawnEmoji(bestEmoji, bestIntensity, p);
+      spawnEmoji(emoji, totalEnergy, p);
       lastSpawnTime = now;
     }
   }
@@ -183,8 +191,6 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
 
 export function resetBootsAndCats(): void {
   emojis = [];
-  prevBoot = 0;
-  prevCat = 0;
-  prevPlus = 0;
+  prevTotalDelta = 0;
   lastSpawnTime = 0;
 }
