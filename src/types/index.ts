@@ -58,6 +58,8 @@ export interface Config {
   highwayDaySpeed: number;
   // Sculpture-specific
   sculptureZoom: number;
+  // Circle-specific
+  circleImageRotation: number;
 }
 
 // Application state

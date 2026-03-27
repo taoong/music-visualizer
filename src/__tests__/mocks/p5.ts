@@ -9,6 +9,7 @@ export function createMockContext(): CanvasRenderingContext2D {
     beginPath: vi.fn(),
     arc: vi.fn(),
     clip: vi.fn(),
+    rotate: vi.fn(),
     drawImage: vi.fn(),
     moveTo: vi.fn(),
     lineTo: vi.fn(),

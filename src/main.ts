@@ -210,7 +210,7 @@ const sketch = (p: P5Instance) => {
         break;
       case 'circle':
       default:
-        drawSpikeCircle(p);
+        drawSpikeCircle(p, dt);
         break;
     }
   };

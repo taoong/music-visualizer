@@ -186,6 +186,8 @@ export const DEFAULT_CONFIG = {
   highwayDaySpeed: 0.5,
   // Sculpture-specific
   sculptureZoom: 0.5,
+  // Circle-specific
+  circleImageRotation: 0.5,
 };
 
 // FFT and decay constants

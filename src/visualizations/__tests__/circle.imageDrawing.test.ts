@@ -47,7 +47,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p);
+    drawSpikeCircle(p, 16.667);
 
     expect(ctx.drawImage).not.toHaveBeenCalled();
   });
@@ -58,7 +58,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p);
+    drawSpikeCircle(p, 16.667);
 
     expect(ctx.drawImage).toHaveBeenCalledTimes(1);
     expect(ctx.drawImage).toHaveBeenCalledWith(
@@ -70,19 +70,20 @@ describe('circle image drawing', () => {
     );
   });
 
-  test('call sequence: save → beginPath → arc → clip → drawImage → restore', () => {
+  test('call sequence: save → beginPath → arc → clip → rotate → drawImage → restore', () => {
     const userImg = createMockP5Image(200, 100);
     mockGetUserImage.mockReturnValue(userImg);
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p);
+    drawSpikeCircle(p, 16.667);
 
     expectCallSequence([
       { name: 'save', mock: ctx.save as ReturnType<typeof vi.fn> },
       { name: 'beginPath', mock: ctx.beginPath as ReturnType<typeof vi.fn> },
       { name: 'arc', mock: ctx.arc as ReturnType<typeof vi.fn> },
       { name: 'clip', mock: ctx.clip as ReturnType<typeof vi.fn> },
+      { name: 'rotate', mock: ctx.rotate as ReturnType<typeof vi.fn> },
       { name: 'drawImage', mock: ctx.drawImage as ReturnType<typeof vi.fn> },
       { name: 'restore', mock: ctx.restore as ReturnType<typeof vi.fn> },
     ]);
@@ -94,7 +95,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p);
+    drawSpikeCircle(p, 16.667);
 
     const [, , , drawW, drawH] = (ctx.drawImage as ReturnType<typeof vi.fn>).mock.calls[0];
     // Landscape: drawH = r*2, drawW = drawH * aspect
@@ -109,7 +110,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p);
+    drawSpikeCircle(p, 16.667);
 
     const [, , , drawW, drawH] = (ctx.drawImage as ReturnType<typeof vi.fn>).mock.calls[0];
     // Portrait: drawW = r*2, drawH = drawW / aspect

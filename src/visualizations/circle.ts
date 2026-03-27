@@ -22,6 +22,7 @@ let sampleW = 0;
 let sampleH = 0;
 let imageUnsub: (() => void) | null = null;
 let imageInitialized = false;
+let imageRotation = 0;
 
 function loadCircleImage(): void {
   if (!hasUserImage()) {
@@ -89,10 +90,14 @@ export function resetSpikeCircle(): void {
   sampleCtx = null;
   sampleImageData = null;
   imageInitialized = false;
+  imageRotation = 0;
 }
 
-export function drawSpikeCircle(p: P5Instance): void {
+export function drawSpikeCircle(p: P5Instance, dt: number): void {
   const { state, config, audioState } = store;
+
+  // Accumulate image rotation angle
+  imageRotation += (dt / 1000) * config.circleImageRotation;
 
   // Beat-reactive color: change hue on BPM grid (phase-aligned to first beat)
   if (state.detectedBPM > 0 && state.isPlaying) {
@@ -147,7 +152,7 @@ export function drawSpikeCircle(p: P5Instance): void {
     const outerR = baseRadius + spikeLen;
 
     // Color: sample from image if available, otherwise grayscale
-    const sampled = sampleImageColor(angle);
+    const sampled = sampleImageColor(angle - imageRotation);
     if (sampled) {
       const factor = 0.3 + Math.min(amp, 1.0) * 0.7;
       p.fill(sampled[0] * factor, sampled[1] * factor, sampled[2] * factor);
@@ -173,7 +178,7 @@ export function drawSpikeCircle(p: P5Instance): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (p as any).colorMode(p['RGB'], 255);
 
-  // Draw user image clipped to center circle
+  // Draw user image clipped to center circle (rotated)
   const userImg = getUserImage();
   if (userImg) {
     const ctx = p.drawingContext;
@@ -181,6 +186,7 @@ export function drawSpikeCircle(p: P5Instance): void {
     ctx.beginPath();
     ctx.arc(0, 0, baseRadius - 2, 0, Math.PI * 2);
     ctx.clip();
+    ctx.rotate(imageRotation);
 
     const r = baseRadius - 2;
     const imgAspect = userImg.width / userImg.height;
