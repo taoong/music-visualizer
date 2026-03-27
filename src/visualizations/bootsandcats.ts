@@ -20,12 +20,15 @@ interface FallingEmoji {
 const MAX_EMOJIS = 50;
 const GROUND_FRACTION = 0.85;
 const FADE_DURATION = 2000;
-const DEBOUNCE_MS = 120;
-const TRANSIENT_THRESHOLD = 1.3;
+const GLOBAL_COOLDOWN_MS = 250;
+const TRANSIENT_THRESHOLD = 1.4;
 const WALL_THICKNESS = 50;
 
 let emojis: FallingEmoji[] = [];
-let lastTrigger = { boot: 0, cat: 0, plus: 0 };
+let prevBoot = 0;
+let prevCat = 0;
+let prevPlus = 0;
+let lastSpawnTime = 0;
 let engine: Matter.Engine | null = null;
 let ground: Matter.Body | null = null;
 let wallLeft: Matter.Body | null = null;
@@ -135,25 +138,31 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
   // Check transients and spawn emojis
   const tv = audioState.transientValues;
 
-  // Boot: sub + bass
   const bootIntensity = Math.max(tv[0], tv[1]);
-  if (bootIntensity > TRANSIENT_THRESHOLD && now - lastTrigger.boot > DEBOUNCE_MS) {
-    spawnEmoji('👢', bootIntensity, p);
-    lastTrigger.boot = now;
-  }
-
-  // Cat: low-mid + mid
   const catIntensity = Math.max(tv[2], tv[3]);
-  if (catIntensity > TRANSIENT_THRESHOLD && now - lastTrigger.cat > DEBOUNCE_MS) {
-    spawnEmoji('🐱', catIntensity, p);
-    lastTrigger.cat = now;
-  }
-
-  // Plus: upper-mid + presence + brilliance
   const plusIntensity = Math.max(tv[4], tv[5], tv[6]);
-  if (plusIntensity > TRANSIENT_THRESHOLD && now - lastTrigger.plus > DEBOUNCE_MS) {
-    spawnEmoji('➕', plusIntensity, p);
-    lastTrigger.plus = now;
+
+  // Rising-edge detection: only trigger on upward threshold crossing
+  const bootFired = bootIntensity > TRANSIENT_THRESHOLD && prevBoot <= TRANSIENT_THRESHOLD;
+  const catFired = catIntensity > TRANSIENT_THRESHOLD && prevCat <= TRANSIENT_THRESHOLD;
+  const plusFired = plusIntensity > TRANSIENT_THRESHOLD && prevPlus <= TRANSIENT_THRESHOLD;
+
+  prevBoot = bootIntensity;
+  prevCat = catIntensity;
+  prevPlus = plusIntensity;
+
+  // Winner-takes-all + global cooldown
+  if (now - lastSpawnTime > GLOBAL_COOLDOWN_MS) {
+    let bestEmoji: string | null = null;
+    let bestIntensity = 0;
+    if (bootFired && bootIntensity > bestIntensity) { bestEmoji = '👢'; bestIntensity = bootIntensity; }
+    if (catFired && catIntensity > bestIntensity) { bestEmoji = '🐱'; bestIntensity = catIntensity; }
+    if (plusFired && plusIntensity > bestIntensity) { bestEmoji = '➕'; bestIntensity = plusIntensity; }
+
+    if (bestEmoji) {
+      spawnEmoji(bestEmoji, bestIntensity, p);
+      lastSpawnTime = now;
+    }
   }
 
   // Draw ground line with glow
@@ -252,7 +261,10 @@ export function resetBootsAndCats(): void {
   wallLeft = null;
   wallRight = null;
   emojis = [];
-  lastTrigger = { boot: 0, cat: 0, plus: 0 };
+  prevBoot = 0;
+  prevCat = 0;
+  prevPlus = 0;
+  lastSpawnTime = 0;
   lastWidth = 0;
   lastHeight = 0;
 }
