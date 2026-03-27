@@ -22,7 +22,7 @@ interface FallingEmoji {
 const MAX_EMOJIS = 50;
 const GLOBAL_COOLDOWN_MS = 250;
 const TRANSIENT_THRESHOLD = 1.4;
-const FLIGHT_DURATION_MS = 1800;
+const FLIGHT_DURATION_MS = 900;
 const START_SIZE_MIN = 180;
 const START_SIZE_MAX = 260;
 const END_SIZE = 10;
@@ -118,10 +118,9 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
     const elapsed = now - e.spawnTime;
     e.progress = Math.min(elapsed / FLIGHT_DURATION_MS, 1);
 
-    // Configurable ease-in: higher exponent = more aggressive acceleration
-    // Slider 0→1 maps to exponent 1.5→5 (gentle drift → explosive launch)
+    // Configurable ease-in: slider left = explosive, slider right = gentle
     const accelKnob = store.config.bootsAcceleration;
-    const exponent = 1.5 + accelKnob * 3.5;
+    const exponent = 5 - accelKnob * 3.5;
     const eased = Math.pow(e.progress, exponent);
 
     // Interpolate position
