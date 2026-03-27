@@ -47,7 +47,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p, 16.667);
+    drawSpikeCircle(p);
 
     expect(ctx.drawImage).not.toHaveBeenCalled();
   });
@@ -58,7 +58,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p, 16.667);
+    drawSpikeCircle(p);
 
     expect(ctx.drawImage).toHaveBeenCalledTimes(1);
     expect(ctx.drawImage).toHaveBeenCalledWith(
@@ -76,7 +76,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p, 16.667);
+    drawSpikeCircle(p);
 
     expectCallSequence([
       { name: 'save', mock: ctx.save as ReturnType<typeof vi.fn> },
@@ -95,7 +95,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p, 16.667);
+    drawSpikeCircle(p);
 
     const [, , , drawW, drawH] = (ctx.drawImage as ReturnType<typeof vi.fn>).mock.calls[0];
     // Landscape: drawH = r*2, drawW = drawH * aspect
@@ -110,7 +110,7 @@ describe('circle image drawing', () => {
     const ctx = createMockContext();
     const p = createMockP5(ctx);
 
-    drawSpikeCircle(p, 16.667);
+    drawSpikeCircle(p);
 
     const [, , , drawW, drawH] = (ctx.drawImage as ReturnType<typeof vi.fn>).mock.calls[0];
     // Portrait: drawW = r*2, drawH = drawW / aspect

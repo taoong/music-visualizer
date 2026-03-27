@@ -22,7 +22,6 @@ let sampleW = 0;
 let sampleH = 0;
 let imageUnsub: (() => void) | null = null;
 let imageInitialized = false;
-let imageRotation = 0;
 
 function loadCircleImage(): void {
   if (!hasUserImage()) {
@@ -90,14 +89,10 @@ export function resetSpikeCircle(): void {
   sampleCtx = null;
   sampleImageData = null;
   imageInitialized = false;
-  imageRotation = 0;
 }
 
-export function drawSpikeCircle(p: P5Instance, dt: number): void {
+export function drawSpikeCircle(p: P5Instance): void {
   const { state, config, audioState } = store;
-
-  // Accumulate independent image rotation offset
-  imageRotation += (dt / 1000) * config.circleImageRotation;
 
   // Beat-reactive color: change hue on BPM grid (phase-aligned to first beat)
   if (state.detectedBPM > 0 && state.isPlaying) {
@@ -122,6 +117,8 @@ export function drawSpikeCircle(p: P5Instance, dt: number): void {
 
   const angleStep = (Math.PI * 2) / totalSpikes;
   const rotation = (p.millis() / 1000.0) * config.rotationSpeed * 0.4;
+  // Image rotation: spike rotation scaled by slider (0 = static, 1 = matches spikes, >1 = faster)
+  const imgRotation = rotation * config.circleImageRotation;
 
   // Initialize image sampling on first frame
   initCircleImage();
@@ -152,8 +149,8 @@ export function drawSpikeCircle(p: P5Instance, dt: number): void {
     const outerR = baseRadius + spikeLen;
 
     // Color: sample from image if available, otherwise grayscale
-    // Subtract both spike rotation and image offset so colors stay locked to the image
-    const sampled = sampleImageColor(angle - rotation - imageRotation);
+    // Subtract image rotation so colors stay locked to the rotating image
+    const sampled = sampleImageColor(angle - imgRotation);
     if (sampled) {
       const factor = 0.3 + Math.min(amp, 1.0) * 0.7;
       p.fill(sampled[0] * factor, sampled[1] * factor, sampled[2] * factor);
@@ -187,7 +184,7 @@ export function drawSpikeCircle(p: P5Instance, dt: number): void {
     ctx.beginPath();
     ctx.arc(0, 0, baseRadius - 2, 0, Math.PI * 2);
     ctx.clip();
-    ctx.rotate(rotation + imageRotation);
+    ctx.rotate(imgRotation);
 
     const r = baseRadius - 2;
     const imgAspect = userImg.width / userImg.height;
