@@ -73,6 +73,7 @@ export function bindDisplaySliders(): () => void {
     { id: 'highway-day-speed', key: 'highwayDaySpeed' },
     { id: 'sculpture-zoom', key: 'sculptureZoom' },
     { id: 'circle-image-rotation', key: 'circleImageRotation' },
+    { id: 'boots-acceleration', key: 'bootsAcceleration' },
   ] as const;
 
   for (const { id, key } of configs) {

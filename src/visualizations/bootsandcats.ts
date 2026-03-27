@@ -23,9 +23,9 @@ const MAX_EMOJIS = 50;
 const GLOBAL_COOLDOWN_MS = 250;
 const TRANSIENT_THRESHOLD = 1.4;
 const FLIGHT_DURATION_MS = 1800;
-const START_SIZE_MIN = 120;
-const START_SIZE_MAX = 160;
-const END_SIZE = 15;
+const START_SIZE_MIN = 180;
+const START_SIZE_MAX = 260;
+const END_SIZE = 10;
 
 let emojis: FallingEmoji[] = [];
 let prevBoot = 0;
@@ -116,8 +116,11 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
       continue;
     }
 
-    // Quadratic ease-in: accelerate as they fly away
-    const eased = e.progress * e.progress;
+    // Configurable ease-in: higher exponent = more aggressive acceleration
+    // Slider 0→1 maps to exponent 1.5→5 (gentle drift → explosive launch)
+    const accelKnob = store.config.bootsAcceleration;
+    const exponent = 1.5 + accelKnob * 3.5;
+    const eased = Math.pow(e.progress, exponent);
 
     // Interpolate position
     const cx = p.width / 2;

@@ -31,6 +31,7 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   highwayDaySpeed: 'highway-day-speed',
   sculptureZoom: 'sculpture-zoom',
   circleImageRotation: 'circle-image-rotation',
+  bootsAcceleration: 'boots-acceleration',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

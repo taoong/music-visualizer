@@ -188,6 +188,8 @@ export const DEFAULT_CONFIG = {
   sculptureZoom: 0.5,
   // Circle-specific
   circleImageRotation: 0.5,
+  // Boots & Cats-specific
+  bootsAcceleration: 0.5,
 };
 
 // FFT and decay constants

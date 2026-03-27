@@ -60,6 +60,8 @@ export interface Config {
   sculptureZoom: number;
   // Circle-specific
   circleImageRotation: number;
+  // Boots & Cats-specific
+  bootsAcceleration: number;
 }
 
 // Application state
