@@ -10,7 +10,86 @@ import {
   DELTA_LENGTH_BOOST,
 } from '../utils/constants';
 import { getBandData } from './helpers';
-import { getUserImage } from './userImage';
+import { getUserImage, hasUserImage } from './userImage';
+
+// ── Image color sampling state ───────────────────────────────────────────────
+
+const SAMPLE_SIZE = 256;
+let sampleCanvas: HTMLCanvasElement | null = null;
+let sampleCtx: CanvasRenderingContext2D | null = null;
+let sampleImageData: ImageData | null = null;
+let sampleW = 0;
+let sampleH = 0;
+let imageUnsub: (() => void) | null = null;
+let imageInitialized = false;
+
+function loadCircleImage(): void {
+  if (!hasUserImage()) {
+    sampleImageData = null;
+    return;
+  }
+  const img = getUserImage();
+  if (!img) { sampleImageData = null; return; }
+
+  const iw = img.width as number;
+  const ih = img.height as number;
+  const scale = Math.min(1, SAMPLE_SIZE / Math.max(iw, ih));
+  const w = Math.round(iw * scale);
+  const h = Math.round(ih * scale);
+
+  if (!sampleCanvas || w !== sampleW || h !== sampleH) {
+    sampleCanvas = document.createElement('canvas');
+    sampleCanvas.width = w;
+    sampleCanvas.height = h;
+    sampleCtx = sampleCanvas.getContext('2d', { willReadFrequently: true })!;
+    sampleW = w;
+    sampleH = h;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const srcCanvas = (img as any).canvas || (img as any).elt;
+  if (srcCanvas) {
+    sampleCtx!.drawImage(srcCanvas, 0, 0, w, h);
+    sampleImageData = sampleCtx!.getImageData(0, 0, w, h);
+  }
+}
+
+function initCircleImage(): void {
+  if (imageInitialized) return;
+  loadCircleImage();
+  imageUnsub = store.on('imageChange', () => {
+    setTimeout(() => loadCircleImage(), 100);
+  });
+  imageInitialized = true;
+}
+
+function sampleImageColor(angle: number): [number, number, number] | null {
+  if (!sampleImageData) return null;
+  const w = sampleW;
+  const h = sampleH;
+  // Map angle to a point on the circular edge of the image (cover-fit)
+  const cx = w / 2;
+  const cy = h / 2;
+  const r = Math.min(cx, cy);
+  const px = Math.round(cx + r * Math.cos(angle));
+  const py = Math.round(cy + r * Math.sin(angle));
+  // Clamp to image bounds
+  const x = Math.max(0, Math.min(w - 1, px));
+  const y = Math.max(0, Math.min(h - 1, py));
+  const idx = (y * w + x) * 4;
+  return [sampleImageData.data[idx], sampleImageData.data[idx + 1], sampleImageData.data[idx + 2]];
+}
+
+export function resetSpikeCircle(): void {
+  if (imageUnsub) {
+    imageUnsub();
+    imageUnsub = null;
+  }
+  sampleCanvas = null;
+  sampleCtx = null;
+  sampleImageData = null;
+  imageInitialized = false;
+}
 
 export function drawSpikeCircle(p: P5Instance): void {
   const { state, config, audioState } = store;
@@ -39,6 +118,9 @@ export function drawSpikeCircle(p: P5Instance): void {
   const angleStep = (Math.PI * 2) / totalSpikes;
   const rotation = (p.millis() / 1000.0) * config.rotationSpeed * 0.4;
 
+  // Initialize image sampling on first frame
+  initCircleImage();
+
   p.push();
   p.translate(cx, cy + audioState.centroidYOffset);
 
@@ -64,9 +146,15 @@ export function drawSpikeCircle(p: P5Instance): void {
     const innerR = baseRadius;
     const outerR = baseRadius + spikeLen;
 
-    // Brightness scales with amplitude + delta boost
-    const brightness = 120 + Math.min(amp, 1.0) * 135 + delta * 30;
-    p.fill(brightness);
+    // Color: sample from image if available, otherwise grayscale
+    const sampled = sampleImageColor(angle);
+    if (sampled) {
+      const factor = 0.3 + Math.min(amp, 1.0) * 0.7;
+      p.fill(sampled[0] * factor, sampled[1] * factor, sampled[2] * factor);
+    } else {
+      const brightness = 120 + Math.min(amp, 1.0) * 135 + delta * 30;
+      p.fill(brightness);
+    }
 
     p.beginShape();
     p.vertex(Math.cos(angle - halfBase) * innerR, Math.sin(angle - halfBase) * innerR);

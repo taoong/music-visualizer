@@ -64,6 +64,7 @@ declare global {
 
     // Style
     fill(color: number | string): void;
+    fill(r: number, g: number, b: number, a?: number): void;
     noFill(): void;
     stroke(color: number | string, s?: number, b?: number): void;
     noStroke(): void;

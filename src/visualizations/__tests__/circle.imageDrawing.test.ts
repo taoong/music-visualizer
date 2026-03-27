@@ -5,12 +5,14 @@
 import { createMockP5, createMockP5Image, createMockContext } from '../../__tests__/mocks/p5';
 import { expectCallSequence } from '../../__tests__/helpers/callOrder';
 
-const { mockGetUserImage } = vi.hoisted(() => ({
+const { mockGetUserImage, mockHasUserImage } = vi.hoisted(() => ({
   mockGetUserImage: vi.fn<() => P5Image | null>(),
+  mockHasUserImage: vi.fn<() => boolean>(),
 }));
 
 vi.mock('../userImage', () => ({
   getUserImage: mockGetUserImage,
+  hasUserImage: mockHasUserImage,
 }));
 
 vi.mock('../../state/store', async () => {
@@ -30,11 +32,13 @@ vi.mock('../helpers', () => ({
   getBandData: vi.fn(() => ({ amp: 0.5, tMult: 1.0, delta: 0 })),
 }));
 
-import { drawSpikeCircle } from '../circle';
+import { drawSpikeCircle, resetSpikeCircle } from '../circle';
 
 beforeEach(() => {
   vi.clearAllMocks();
   mockGetUserImage.mockReturnValue(null);
+  mockHasUserImage.mockReturnValue(false);
+  resetSpikeCircle();
 });
 
 describe('circle image drawing', () => {

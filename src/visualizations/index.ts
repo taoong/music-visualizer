@@ -1,7 +1,7 @@
 /**
  * Visualization exports
  */
-export { drawSpikeCircle } from './circle';
+export { drawSpikeCircle, resetSpikeCircle } from './circle';
 export { drawSpectrum } from './spectrum';
 export { drawTunnel } from './tunnel';
 export { drawTetris, resetTetris } from './balls';
