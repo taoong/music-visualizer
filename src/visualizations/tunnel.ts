@@ -35,9 +35,9 @@ export function drawTunnel(p: P5Instance): void {
     const delta = audioState.octaveDeltaValues[o];
 
     const energy = amp * tMult;
-    // Boost inner rings (higher octaves) which naturally have less energy
-    // Outer ring (o=0) gets 1x, innermost ring (o=9) gets ~3x sensitivity
-    const innerBoost = 1.0 + (o / (OCTAVE_COUNT - 1)) * 2.0;
+    // Exponential boost for inner rings — higher octaves have much less energy
+    // o=0 → 1.5x, o=4 (mid) → ~4x, o=9 (inner) → ~12x
+    const innerBoost = 1.5 * Math.pow(1.0 + (o / (OCTAVE_COUNT - 1)) * 2.0, 2);
     const pulse = energy * innerBoost * TUNNEL_PULSE_SCALE * maxRadius * (1.0 + delta * DELTA_LENGTH_BOOST);
     const r = baseRadius + pulse;
 
