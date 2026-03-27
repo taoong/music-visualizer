@@ -103,7 +103,7 @@ function bindVizSelector(): () => void {
   const intensityLabel = intensityGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'cube' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats';
     store.setVizMode(mode);
 
     // Per-mode control visibility
@@ -113,7 +113,6 @@ function bindVizSelector(): () => void {
     // | spectrum |  show |  show |     hide |      hide |      hide |    hide |      hide |
     // | tunnel   |  hide |  show |     hide |      hide |      hide |    hide |      hide |
     // | balls    |  show |  show |     hide |      show |      hide |    hide |      hide |
-    // | cube     |  show |  show |     hide |      hide |      hide |    hide |      hide |
     // | lasers   |  hide |  hide |     hide |      hide |      show |    show |      hide |
     // | text     |  hide |  hide |     hide |      hide |      show |    show |      show |
     // | highway  |  hide |  hide |     hide |      hide |      show |    hide |      hide |
@@ -124,7 +123,6 @@ function bindVizSelector(): () => void {
         hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup);
         break;
       case 'spectrum':
-      case 'cube':
         show(scaleGroup); show(decayRateGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup);
@@ -252,7 +250,7 @@ function bindRandomizeButton(): () => void {
       setSlider('sens-other', rand(1.0, 3.0));
     }
 
-    const useScale = vizMode === 'circle' || vizMode === 'spectrum' || vizMode === 'cube';
+    const useScale = vizMode === 'circle' || vizMode === 'spectrum';
     const useDecay = vizMode !== 'lasers' && vizMode !== 'text' && vizMode !== 'tetris';
 
     if (useScale) setSlider('spike-scale', rand(0.5, 2.0));

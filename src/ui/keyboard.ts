@@ -23,11 +23,10 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('2', () => setVizMode('spectrum'), 'Spectrum visualization');
   defineShortcut('3', () => setVizMode('tunnel'), 'Tunnel visualization');
   defineShortcut('4', () => setVizMode('tetris'), 'Tetris visualization');
-  defineShortcut('5', () => setVizMode('cube'), '3D Cube visualization');
-  defineShortcut('6', () => setVizMode('lasers'), 'Lasers visualization');
-  defineShortcut('7', () => setVizMode('text'), 'Text visualization');
-  defineShortcut('8', () => setVizMode('highway'), 'Highway visualization');
-  defineShortcut('9', () => setVizMode('liquidmetal'), 'Liquid Metal visualization');
+  defineShortcut('5', () => setVizMode('lasers'), 'Lasers visualization');
+  defineShortcut('6', () => setVizMode('text'), 'Text visualization');
+  defineShortcut('7', () => setVizMode('highway'), 'Highway visualization');
+  defineShortcut('8', () => setVizMode('liquidmetal'), 'Liquid Metal visualization');
   defineShortcut('n', () => setVizMode('neon'), 'Neon Grid visualization');
   defineShortcut('g', () => setVizMode('imagegrid'), 'Image Grid visualization');
   defineShortcut('c', () => setVizMode('colormap'), 'Color Map visualization');
@@ -307,7 +306,7 @@ function cycleVizMode(direction: 1 | -1): void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
   const available: VizMode[] = vizSelect
     ? Array.from(vizSelect.options).filter(o => !o.disabled && !o.hidden).map(o => o.value as VizMode)
-    : ['circle', 'spectrum', 'tunnel', 'cube', 'lasers', 'text', 'highway', 'liquidmetal', 'neon', 'imagegrid', 'colormap', 'sculpture'];
+    : ['circle', 'spectrum', 'tunnel', 'lasers', 'text', 'highway', 'liquidmetal', 'neon', 'imagegrid', 'colormap', 'sculpture'];
 
   const current = store.state.vizMode;
   const idx = available.indexOf(current);

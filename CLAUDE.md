@@ -41,7 +41,6 @@ src/
 │   ├── spectrum.ts            # Horizontal bar chart
 │   ├── tunnel.ts              # Octave-based concentric rings with glow, optional center image
 │   ├── balls.ts               # Physics-based bouncing balls with kick boost
-│   ├── cube.ts                # 3D wireframe cube, beat-synced rotation, optional image on faces
 │   ├── text.ts                # Beat-synced text patterns (7 modes: zoom, diagonal, quad-mirror, crown, echo, reflect, kaleidoscope)
 │   ├── space.ts               # Third-person spaceship + asteroid field; asteroids spawn on beat, ship swerves to dodge, ~every 8 beats ship mis-swerves and gets hit
 │   ├── runners.ts             # Infinite side-scrolling marathon runners at 3 depth layers; beat → instant 7× speed burst 180 ms
@@ -145,7 +144,7 @@ Keep both this file and `README.md` up to date. After any change that adds/remov
 
 ## Conventions
 
-- Visualizations use module-scoped state (no classes), following the pattern in `cube.ts`.
+- Visualizations use module-scoped state (no classes), following the pattern in `circle.ts`.
 - p5.js constants accessed via bracket notation: `p['HSB']`, `p['CLOSE']`.
 - HSB color mode set per-viz with `(p as any).colorMode(p['HSB'], 360, 100, 100)`, reset to RGB at end.
 - Frame-rate independence: all animations multiply by `dt = deltaTime / 16.667`.

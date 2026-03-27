@@ -34,8 +34,6 @@ import {
   drawTunnel,
   drawTetris,
   resetTetris,
-  drawCube,
-  resetCube,
   drawLasers,
   resetLasers,
   drawText,
@@ -169,9 +167,6 @@ const sketch = (p: P5Instance) => {
       case 'tetris':
         drawTetris(p, dt);
         break;
-      case 'cube':
-        drawCube(p, dt);
-        break;
       case 'lasers':
         drawLasers(p, dt);
         break;
@@ -219,8 +214,6 @@ const sketch = (p: P5Instance) => {
     p.resizeCanvas(window.innerWidth, window.innerHeight);
     if (store.state.vizMode === 'tetris') {
       resetTetris();
-    } else if (store.state.vizMode === 'cube') {
-      resetCube();
     } else if (store.state.vizMode === 'lasers') {
       resetLasers();
     } else if (store.state.vizMode === 'text') {

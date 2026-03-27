@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **11 visualization modes** — Circle, Spectrum, Tunnel, Balls, 3D Cube, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Image Grid
+- **Visualization modes** — Circle, Spectrum, Tunnel, Balls, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Image Grid
 - **Three audio input modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
@@ -60,11 +60,10 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `2` | Spectrum | Horizontal bar chart of amplitudes |
 | `3` | Tunnel | Octave-based concentric rings with glow effect |
 | `4` | Balls | Physics-based bouncing balls with kick boost |
-| `5` | 3D Cube | Wireframe cube with beat-synced rotation |
-| `6` | Lasers | Concert laser light show with beat-synced beams |
-| `7` | Text | Beat-synced text in 7 cycling visual patterns |
-| `8` | Space | Third-person spaceship navigating an asteroid field; asteroids fly toward the viewer timed to song events |
-| `9` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
+| `5` | Lasers | Concert laser light show with beat-synced beams |
+| `6` | Text | Beat-synced text in 7 cycling visual patterns |
+| `7` | Space | Third-person spaceship navigating an asteroid field; asteroids fly toward the viewer timed to song events |
+| `8` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
 | `N` | Neon Grid | Three.js synthwave terrain with audio-driven height displacement and bloom |
 | `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |
 | `C` | Color Map | Pixel-level audio-reactive color modulation; user image (or rainbow gradient) with hue-mapped frequency band boosting |

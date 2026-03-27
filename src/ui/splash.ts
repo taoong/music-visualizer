@@ -319,7 +319,7 @@ async function handleMicModePlay(): Promise<void> {
     if (trackName) trackName.textContent = 'Microphone';
 
     // Hide beat-dependent visualizations in mic mode
-    const beatVizModes = ['tetris', 'cube', 'lasers', 'text', 'highway'];
+    const beatVizModes = ['tetris', 'lasers', 'text', 'highway'];
     const vizSelector = document.getElementById('viz-selector') as HTMLSelectElement | null;
     if (vizSelector) {
       for (const opt of Array.from(vizSelector.options)) {
