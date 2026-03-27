@@ -15,6 +15,11 @@ export function createMockContext(): CanvasRenderingContext2D {
     closePath: vi.fn(),
     fillRect: vi.fn(),
     fillStyle: '',
+    stroke: vi.fn(),
+    strokeStyle: '',
+    lineWidth: 0,
+    shadowColor: '',
+    shadowBlur: 0,
   } as unknown as CanvasRenderingContext2D;
 }
 

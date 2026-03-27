@@ -1,9 +1,8 @@
 /**
  * Tests for tunnel visualization image drawing
- * Verifies that ctx.drawImage receives userImg.canvas (not .elt)
+ * Verifies that image is drawn across all concentric rings
  */
 import { createMockP5, createMockP5Image, createMockContext } from '../../__tests__/mocks/p5';
-import { expectCallSequence } from '../../__tests__/helpers/callOrder';
 
 const { mockGetUserImage } = vi.hoisted(() => ({
   mockGetUserImage: vi.fn<() => P5Image | null>(),
@@ -19,10 +18,13 @@ vi.mock('../../state/store', async () => {
 });
 
 let drawTunnel: typeof import('../tunnel').drawTunnel;
+let OCTAVE_COUNT: number;
 
 beforeAll(async () => {
   const mod = await import('../tunnel');
   drawTunnel = mod.drawTunnel;
+  const constants = await import('../../utils/constants');
+  OCTAVE_COUNT = constants.OCTAVE_COUNT;
 });
 
 beforeEach(() => {
@@ -41,7 +43,7 @@ describe('tunnel image drawing', () => {
     expect(ctx.drawImage).not.toHaveBeenCalled();
   });
 
-  test('ctx.drawImage called with userImg.canvas', () => {
+  test('ctx.drawImage called once per octave ring with userImg.canvas', () => {
     const userImg = createMockP5Image(200, 100);
     mockGetUserImage.mockReturnValue(userImg);
     const ctx = createMockContext();
@@ -49,17 +51,14 @@ describe('tunnel image drawing', () => {
 
     drawTunnel(p);
 
-    expect(ctx.drawImage).toHaveBeenCalledTimes(1);
-    expect(ctx.drawImage).toHaveBeenCalledWith(
-      userImg.canvas,
-      expect.any(Number),
-      expect.any(Number),
-      expect.any(Number),
-      expect.any(Number),
-    );
+    expect(ctx.drawImage).toHaveBeenCalledTimes(OCTAVE_COUNT);
+    // Every call should use the image's canvas
+    for (const call of (ctx.drawImage as ReturnType<typeof vi.fn>).mock.calls) {
+      expect(call[0]).toBe(userImg.canvas);
+    }
   });
 
-  test('correct save/clip/drawImage/restore sequence', () => {
+  test('save/restore called once per ring', () => {
     const userImg = createMockP5Image(200, 100);
     mockGetUserImage.mockReturnValue(userImg);
     const ctx = createMockContext();
@@ -67,31 +66,19 @@ describe('tunnel image drawing', () => {
 
     drawTunnel(p);
 
-    expectCallSequence([
-      { name: 'save', mock: ctx.save as ReturnType<typeof vi.fn> },
-      { name: 'beginPath', mock: ctx.beginPath as ReturnType<typeof vi.fn> },
-      { name: 'arc', mock: ctx.arc as ReturnType<typeof vi.fn> },
-      { name: 'clip', mock: ctx.clip as ReturnType<typeof vi.fn> },
-      { name: 'drawImage', mock: ctx.drawImage as ReturnType<typeof vi.fn> },
-      { name: 'restore', mock: ctx.restore as ReturnType<typeof vi.fn> },
-    ]);
+    expect(ctx.save).toHaveBeenCalledTimes(OCTAVE_COUNT);
+    expect(ctx.restore).toHaveBeenCalledTimes(OCTAVE_COUNT);
+    expect(ctx.clip).toHaveBeenCalledTimes(OCTAVE_COUNT);
   });
 
-  test('clips to center radius (minDim * 0.06)', () => {
+  test('glow strokes drawn at ring boundaries', () => {
     const userImg = createMockP5Image(200, 100);
     mockGetUserImage.mockReturnValue(userImg);
     const ctx = createMockContext();
     const p = createMockP5(ctx);
-    // p.width=800, p.height=600 → minDim=600, centerRadius = 600 * 0.06 = 36
 
     drawTunnel(p);
 
-    expect(ctx.arc).toHaveBeenCalledWith(
-      0,
-      0,
-      36, // minDim * 0.06
-      0,
-      Math.PI * 2,
-    );
+    expect(ctx.stroke).toHaveBeenCalledTimes(OCTAVE_COUNT);
   });
 });

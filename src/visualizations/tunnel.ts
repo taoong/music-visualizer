@@ -23,13 +23,10 @@ export function drawTunnel(p: P5Instance): void {
   const minRadius = minDim * 0.03;
   const radiusRange = maxRadius - minRadius;
 
-  p.push();
-  p.translate(cx, cy);
-  p.noFill();
-
+  // Pre-compute all ring radii and energies
+  const rings: { r: number; energy: number; clampedBright: number }[] = [];
   for (let o = 0; o < OCTAVE_COUNT; o++) {
-    // Octave 0 = outermost (bass), octave 9 = innermost (treble)
-    const t = o / (OCTAVE_COUNT - 1); // 0 = outer, 1 = inner
+    const t = o / (OCTAVE_COUNT - 1);
     const perspT = Math.pow(t, TUNNEL_PERSPECTIVE_POWER);
     const baseRadius = maxRadius - perspT * radiusRange;
 
@@ -47,37 +44,76 @@ export function drawTunnel(p: P5Instance): void {
       delta * DELTA_BRIGHTNESS_BOOST;
     const clampedBright = Math.min(brightness, 255);
 
-    for (let passIdx = 0; passIdx < TUNNEL_GLOW_PASSES.length; passIdx++) {
-      const glowPass = TUNNEL_GLOW_PASSES[passIdx];
-      const sw = glowPass.widthMult * (1.5 + energy * 2.0);
-      const alpha = clampedBright * glowPass.alphaMult;
-      p.stroke(alpha);
-      p.strokeWeight(sw);
-      p.ellipse(0, 0, r * 2, r * 2);
-    }
+    rings.push({ r, energy, clampedBright });
   }
 
-  // Draw user image clipped to center
-  const userImg = getUserImage();
-  if (userImg) {
-    const centerRadius = minDim * 0.06;
-    const ctx = p.drawingContext;
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(0, 0, centerRadius, 0, Math.PI * 2);
-    ctx.clip();
+  p.push();
+  p.translate(cx, cy);
 
+  const userImg = getUserImage();
+
+  if (userImg) {
+    // Image mode: draw image warped across all concentric rings
+    const ctx = p.drawingContext;
     const imgAspect = userImg.width / userImg.height;
-    let drawW: number, drawH: number;
-    if (imgAspect > 1) {
-      drawH = centerRadius * 2;
-      drawW = drawH * imgAspect;
-    } else {
-      drawW = centerRadius * 2;
-      drawH = drawW / imgAspect;
+
+    // Draw from outermost ring inward so clipping layers stack correctly
+    for (let o = 0; o < OCTAVE_COUNT; o++) {
+      const outerR = rings[o].r;
+      const innerR = o < OCTAVE_COUNT - 1 ? rings[o + 1].r : 0;
+
+      ctx.save();
+
+      // Clip to annular region (outer circle minus inner circle)
+      ctx.beginPath();
+      ctx.arc(0, 0, outerR, 0, Math.PI * 2);
+      if (innerR > 0) {
+        // Cut out the inner circle using counter-clockwise winding
+        ctx.arc(0, 0, innerR, 0, Math.PI * 2, true);
+      }
+      ctx.clip();
+
+      // Draw image scaled to cover circle of outerR
+      // Each ring sees a different radial slice of the image
+      let drawW: number, drawH: number;
+      if (imgAspect > 1) {
+        drawH = outerR * 2;
+        drawW = drawH * imgAspect;
+      } else {
+        drawW = outerR * 2;
+        drawH = drawW / imgAspect;
+      }
+      ctx.drawImage(userImg.canvas, -drawW / 2, -drawH / 2, drawW, drawH);
+
+      // Glow stroke at ring boundary for neon tunnel aesthetic
+      const { energy, clampedBright } = rings[o];
+      ctx.beginPath();
+      ctx.arc(0, 0, outerR, 0, Math.PI * 2);
+      const glowAlpha = clampedBright * 0.4;
+      ctx.strokeStyle = `rgba(${clampedBright}, ${clampedBright}, ${Math.min(255, clampedBright + 40)}, ${glowAlpha / 255})`;
+      ctx.lineWidth = 1.5 + energy * 2.0;
+      ctx.shadowColor = `rgba(${clampedBright}, ${clampedBright}, 255, 0.6)`;
+      ctx.shadowBlur = 8 + energy * 12;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      ctx.restore();
     }
-    ctx.drawImage(userImg.canvas, -drawW / 2, -drawH / 2, drawW, drawH);
-    ctx.restore();
+  } else {
+    // No image: original glow-ring behavior
+    p.noFill();
+    for (let o = 0; o < OCTAVE_COUNT; o++) {
+      const { r, energy, clampedBright } = rings[o];
+
+      for (let passIdx = 0; passIdx < TUNNEL_GLOW_PASSES.length; passIdx++) {
+        const glowPass = TUNNEL_GLOW_PASSES[passIdx];
+        const sw = glowPass.widthMult * (1.5 + energy * 2.0);
+        const alpha = clampedBright * glowPass.alphaMult;
+        p.stroke(alpha);
+        p.strokeWeight(sw);
+        p.ellipse(0, 0, r * 2, r * 2);
+      }
+    }
   }
 
   p.pop();
