@@ -96,8 +96,8 @@ export function resetSpikeCircle(): void {
 export function drawSpikeCircle(p: P5Instance, dt: number): void {
   const { state, config, audioState } = store;
 
-  // Accumulate image rotation angle
-  imageRotation += (dt / 1000) * config.circleImageRotation;
+  // Accumulate image rotation angle (affected by both rotation speed and image rotation knobs)
+  imageRotation += (dt / 1000) * config.circleImageRotation * config.rotationSpeed;
 
   // Beat-reactive color: change hue on BPM grid (phase-aligned to first beat)
   if (state.detectedBPM > 0 && state.isPlaying) {
