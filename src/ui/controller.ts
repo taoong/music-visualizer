@@ -98,6 +98,28 @@ function bindVizSelector(): () => void {
     tetrisOption?.remove();
   }
 
+  // Visualizations that require beat/BPM tracking and don't work well with mic input
+  const micHiddenVizModes = ['liquidmetal', 'sculpture', 'tungtung', 'aurora'];
+
+  function updateMicVizVisibility(): void {
+    const isMic = store.isMicMode;
+    for (const mode of micHiddenVizModes) {
+      const option = vizSelect!.querySelector(`option[value="${mode}"]`) as HTMLOptionElement | null;
+      if (option) {
+        option.hidden = isMic;
+        option.disabled = isMic;
+      }
+    }
+    // If currently selected viz is now hidden, switch to circle
+    if (isMic && micHiddenVizModes.includes(vizSelect!.value)) {
+      vizSelect!.value = 'circle';
+      vizSelect!.dispatchEvent(new Event('change'));
+    }
+  }
+
+  updateMicVizVisibility();
+  const removeModeListener = store.on('modeChange', updateMicVizVisibility);
+
   function show(el: HTMLElement | null): void { el?.classList.remove('hidden'); }
   function hide(el: HTMLElement | null): void { el?.classList.add('hidden'); }
 
@@ -228,6 +250,7 @@ function bindVizSelector(): () => void {
   return () => {
     vizSelect.removeEventListener('change', handler);
     textInput?.removeEventListener('input', textHandler);
+    removeModeListener();
   };
 }
 
