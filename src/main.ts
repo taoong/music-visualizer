@@ -63,6 +63,8 @@ import {
   resetAurora,
   drawBootsAndCats,
   resetBootsAndCats,
+  drawRippleTank,
+  resetRippleTank,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -203,6 +205,9 @@ const sketch = (p: P5Instance) => {
       case 'bootsandcats':
         drawBootsAndCats(p, dt);
         break;
+      case 'rippletank':
+        drawRippleTank(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -238,6 +243,8 @@ const sketch = (p: P5Instance) => {
       resetAurora();
     } else if (store.state.vizMode === 'bootsandcats') {
       resetBootsAndCats();
+    } else if (store.state.vizMode === 'rippletank') {
+      resetRippleTank();
     }
   };
 };
