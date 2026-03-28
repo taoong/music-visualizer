@@ -87,26 +87,15 @@ export function drawBootsAndCats(p: P5Instance, dt: number): void {
   prevPlus = plusIntensity;
 
   // Winner-takes-all + global cooldown
-  // If multiple groups fire and no clear winner (within 20% of each other), spawn cat
   if (now - lastSpawnTime > GLOBAL_COOLDOWN_MS) {
-    const fired: { emoji: string; intensity: number }[] = [];
-    if (bootFired) fired.push({ emoji: '👢', intensity: bootIntensity });
-    if (catFired) fired.push({ emoji: '🐱', intensity: catIntensity });
-    if (plusFired) fired.push({ emoji: '➕', intensity: plusIntensity });
+    let bestEmoji: string | null = null;
+    let bestIntensity = 0;
+    if (bootFired && bootIntensity > bestIntensity) { bestEmoji = '👢'; bestIntensity = bootIntensity; }
+    if (catFired && catIntensity > bestIntensity) { bestEmoji = '🐱'; bestIntensity = catIntensity; }
+    if (plusFired && plusIntensity > bestIntensity) { bestEmoji = '➕'; bestIntensity = plusIntensity; }
 
-    if (fired.length > 0) {
-      fired.sort((a, b) => b.intensity - a.intensity);
-      const best = fired[0];
-
-      // If 2+ groups fired and the top two are close, it's a broad hit → cat
-      const noClearWinner = fired.length >= 2
-        && fired[1].intensity / best.intensity > 0.8;
-
-      if (noClearWinner) {
-        spawnEmoji('🐱', best.intensity, p);
-      } else {
-        spawnEmoji(best.emoji, best.intensity, p);
-      }
+    if (bestEmoji) {
+      spawnEmoji(bestEmoji, bestIntensity, p);
       lastSpawnTime = now;
     }
   }
