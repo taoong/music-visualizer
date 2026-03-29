@@ -65,8 +65,6 @@ import {
   resetBootsAndCats,
   drawRippleTank,
   resetRippleTank,
-  drawGravityWells,
-  resetGravityWells,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -210,9 +208,6 @@ const sketch = (p: P5Instance) => {
       case 'rippletank':
         drawRippleTank(p, dt);
         break;
-      case 'gravitywells':
-        drawGravityWells(p, dt);
-        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -250,8 +245,6 @@ const sketch = (p: P5Instance) => {
       resetBootsAndCats();
     } else if (store.state.vizMode === 'rippletank') {
       resetRippleTank();
-    } else if (store.state.vizMode === 'gravitywells') {
-      resetGravityWells();
     }
   };
 };

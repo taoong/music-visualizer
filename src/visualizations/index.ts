@@ -18,5 +18,4 @@ export { drawTungTung, resetTungTung, setDancerText } from './tungtung';
 export { drawAurora, resetAurora } from './aurora';
 export { drawBootsAndCats, resetBootsAndCats } from './bootsandcats';
 export { drawRippleTank, resetRippleTank } from './rippletank';
-export { drawGravityWells, resetGravityWells } from './gravitywells';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
