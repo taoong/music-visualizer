@@ -71,6 +71,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `B` | Binary | Matrix-style cascading binary/ASCII characters; columns mapped to frequency bands with beat-synced wave ripple |
 | `T` | Dancer | Beat-synced dancing alien with spotlight stage, disco floor, particles, and configurable text flash |
 | `W` | Ripple Tank | Physics-inspired wave interference; 7 freq-band point-sources emit circular waves with beat-triggered shockwaves |
+| `P` | Gravity Wells | Cosmic particle system; 7 freq-band gravitational attractors with orbiting particles, trail persistence, constellation lines, and beat-triggered bursts |
 
 ## Keyboard Shortcuts
 
@@ -83,6 +84,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `N` | Neon Grid visualization |
 | `G` | Image Grid visualization |
 | `W` | Ripple Tank visualization |
+| `P` | Gravity Wells visualization |
 | `C` | Color Map visualization |
 | `U` | Sculpture visualization |
 | `B` | Binary visualization |
