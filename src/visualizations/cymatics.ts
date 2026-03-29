@@ -4,6 +4,11 @@
  * Sand particles drift toward nodal lines of vibrating plate modes.
  * Each of 7 frequency bands excites a different standing wave mode (m,n).
  * Beats scatter particles; they reform into new patterns as amplitudes shift.
+ *
+ * Controls:
+ *   Sensitivity (spikeScale) — how much audio amplitude drives mode strength
+ *   Force (intensity)        — how strongly particles are pulled to nodal lines
+ *   Trail Length (decayRate)  — motion trail persistence (low = long trails)
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
@@ -95,12 +100,20 @@ export function drawCymatics(p: P5Instance, dt: number): void {
 
   // Audio data
   const { amps, transients } = getBandAverages(bandCount);
-  const scale = config.spikeScale;
+
+  // ── Read controls ──────────────────────────────────────────────────────────
+  // spikeScale [0.5–3.0] → sensitivity: how much audio drives mode amplitude
+  const sensitivity = config.spikeScale;
+  // intensity [0–2] → force multiplier: how strongly particles are pulled (0.02–0.5)
+  const forceMult = 0.02 + config.intensity * 0.24;
+  // decayRate [0.5–0.99] → trail alpha: low decay = long trails, high = short
+  // Map: 0.5→8 (long glowing trails), 0.99→80 (short trails, crisp)
+  const trailAlpha = Math.round(8 + ((config.decayRate - 0.5) / 0.49) * 72);
 
   // Weighted amplitudes (clamped)
   const wAmps = new Float64Array(7);
   for (let b = 0; b < Math.min(bandCount, 7); b++) {
-    wAmps[b] = Math.min(amps[b] * scale, 1.0);
+    wAmps[b] = Math.min(amps[b] * sensitivity, 1.0);
   }
 
   // Beat detection
@@ -131,7 +144,7 @@ export function drawCymatics(p: P5Instance, dt: number): void {
 
   // ── Physics step ───────────────────────────────────────────────────────────
   const damping = Math.pow(0.92, dt);
-  const forceScale = 0.15 * dt;
+  const forceScale = forceMult * dt;
   const speedClamp = 8.0;
   const w = canvasW;
   const h = canvasH;
@@ -191,9 +204,9 @@ export function drawCymatics(p: P5Instance, dt: number): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pAny = p as any;
 
-  // Semi-transparent black overlay for motion trails
+  // Semi-transparent black overlay for motion trails (controlled by decayRate)
   pAny.colorMode(p['RGB'], 255);
-  pAny.background(0, 0, 0, 30);
+  pAny.background(0, 0, 0, trailAlpha);
 
   pAny.colorMode(p['HSB'], 360, 100, 100, 100);
   p.noStroke();

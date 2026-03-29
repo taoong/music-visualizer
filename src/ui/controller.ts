@@ -242,9 +242,10 @@ function bindVizSelector(): () => void {
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup);
         break;
       case 'cymatics':
-        show(scaleGroup);
-        hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
+        show(scaleGroup); show(decayRateGroup); show(intensityGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Force';
+        hide(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup);
         break;
     }
