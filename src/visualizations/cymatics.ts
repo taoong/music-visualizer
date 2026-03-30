@@ -16,16 +16,19 @@ import { getBandAverages } from './helpers';
 import { BAND_COUNT } from '../utils/constants';
 import { isMobile } from '../utils/constants';
 
-// ── Chladni mode numbers per band ────────────────────────────────────────────
+// ── Chladni mode pool ────────────────────────────────────────────────────────
 // Z(x,y) = A * cos(m*π*x/W) * cos(n*π*y/H)
-const MODES: [number, number][] = [
-  [1, 1], // Sub
-  [2, 1], // Bass
-  [2, 2], // Low-Mid
-  [3, 2], // Mid
-  [3, 3], // Upper-Mid
-  [4, 3], // Presence
-  [5, 4], // Brilliance
+// Pool of distinct (m,n) pairs at varying complexity; 7 are active at a time.
+const MODE_POOL: [number, number][] = [
+  [1, 1], [1, 2], [2, 1], [2, 2], [2, 3],
+  [3, 1], [3, 2], [3, 3], [3, 4],
+  [4, 2], [4, 3], [4, 4],
+  [5, 3], [5, 4], [5, 5],
+];
+
+// Active modes assigned to the 7 bands — reshuffled each beat
+let activeModes: [number, number][] = [
+  [1, 1], [2, 1], [2, 2], [3, 2], [3, 3], [4, 3], [5, 4],
 ];
 
 // ── Color palette: blue (low freq dominant) → gold (high freq dominant) ──────
@@ -53,6 +56,28 @@ let lastBeatIndex = -1;
 let transientGlow = 0;
 let baseHue = 200;
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Pick 7 random modes from the pool (Fisher-Yates partial shuffle). */
+function shuffleActiveModes(): void {
+  const pool = MODE_POOL.slice(); // shallow copy
+  for (let i = pool.length - 1; i > pool.length - 8 && i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  for (let b = 0; b < 7; b++) {
+    activeModes[b] = pool[pool.length - 1 - b];
+  }
+}
+
+/** Recompute wavenumbers from activeModes for the current canvas size. */
+function recomputeWavenumbers(): void {
+  for (let b = 0; b < 7; b++) {
+    mPiOverW[b] = activeModes[b][0] * Math.PI / canvasW;
+    nPiOverH[b] = activeModes[b][1] * Math.PI / canvasH;
+  }
+}
+
 // ── Initialization ───────────────────────────────────────────────────────────
 
 function init(w: number, h: number): void {
@@ -62,10 +87,8 @@ function init(w: number, h: number): void {
   // Precompute wavenumbers
   mPiOverW = new Float64Array(7);
   nPiOverH = new Float64Array(7);
-  for (let b = 0; b < 7; b++) {
-    mPiOverW[b] = MODES[b][0] * Math.PI / w;
-    nPiOverH[b] = MODES[b][1] * Math.PI / h;
-  }
+  shuffleActiveModes();
+  recomputeWavenumbers();
 
   // Initialize particles randomly
   px = new Float32Array(PARTICLE_COUNT);
@@ -127,8 +150,10 @@ export function drawCymatics(p: P5Instance, dt: number): void {
       lastBeatIndex = currentBeatIndex;
       baseHue = (baseHue + 25) % 360;
 
-      // Scatter particles only on every Nth beat
+      // Scatter particles and reassign modes on every Nth beat
       if (currentBeatIndex % beatFreq === 0) {
+        shuffleActiveModes();
+        recomputeWavenumbers();
         for (let i = 0; i < PARTICLE_COUNT; i++) {
           const angle = Math.random() * Math.PI * 2;
           const speed = 2 + Math.random() * 4;
