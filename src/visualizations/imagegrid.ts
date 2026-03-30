@@ -284,7 +284,7 @@ export function drawImageGrid(_p: unknown, dt: number): void {
 
   // Bloom strength from intensity slider (UnrealBloomPass is at index 1)
   if (composer && composer.passes[1]) {
-    (composer.passes[1] as UnrealBloomPass).strength = 1.2 * store.config.intensity;
+    (composer.passes[1] as UnrealBloomPass).strength = 0.6 * store.config.intensity;
   }
 
   composer?.render();
