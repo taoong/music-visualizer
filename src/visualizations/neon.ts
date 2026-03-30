@@ -334,7 +334,10 @@ export function drawNeon(_p: unknown, dt: number): void {
 
   // Camera bob with bass
   if (camera) {
-    camera.position.y = 25 + (amps[1] ?? 0) * 5 * Math.sin(time * 2);
+    // decayRate slider (0.5–0.99) mapped to camera height (5–80)
+    const heightT = (store.config.decayRate - 0.5) / 0.49;
+    const baseY = 5 + heightT * 75;
+    camera.position.y = baseY + (amps[1] ?? 0) * 5 * Math.sin(time * 2);
 
     // Full orbit around terrain
     cameraTheta += dt * 0.0009 * store.config.rotationSpeed;
