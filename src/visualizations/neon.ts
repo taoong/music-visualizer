@@ -346,10 +346,10 @@ export function drawNeon(_p: unknown, dt: number): void {
 
   // Intensity controls bloom strength + terrain displacement
   const intensity = store.config.intensity;
-  uIntensity.value = 0.3 + intensity * 0.7;
+  uIntensity.value = 0.15 + intensity * 0.35;
   if (composer) {
     const bloomPass = composer.passes[1] as InstanceType<typeof UnrealBloomPass>;
-    if (bloomPass) bloomPass.strength = 0.4 + intensity * 0.8;
+    if (bloomPass) bloomPass.strength = 0.2 + intensity * 0.4;
   }
 
   if (composer) composer.render();
