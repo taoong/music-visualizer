@@ -104,8 +104,8 @@ export function drawCymatics(p: P5Instance, dt: number): void {
   // ── Read controls ──────────────────────────────────────────────────────────
   // cymaticsBeatFreq [1–4] — scatter on every Nth beat
   const beatFreq = Math.max(1, Math.round(config.cymaticsBeatFreq));
-  // cymaticsSandSize [0–1] → particle render size range 1–5px
-  const sandSize = 1 + config.cymaticsSandSize * 4;
+  // cymaticsSandSize [0–1] → particle render size range 1–9px
+  const sandSize = 1 + config.cymaticsSandSize * 8;
   // cymaticsSandSpeed [0–1] → force multiplier (0.02–0.5) and speed clamp (2–12)
   const forceMult = 0.02 + config.cymaticsSandSpeed * 0.48;
   const speedClamp = 2 + config.cymaticsSandSpeed * 10;
