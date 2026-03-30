@@ -74,6 +74,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'sculpture-zoom', key: 'sculptureZoom' },
     { id: 'circle-image-rotation', key: 'circleImageRotation' },
     { id: 'boots-acceleration', key: 'bootsAcceleration' },
+    { id: 'cymatics-beat-freq', key: 'cymaticsBeatFreq' },
+    { id: 'cymatics-sand-size', key: 'cymaticsSandSize' },
+    { id: 'cymatics-sand-speed', key: 'cymaticsSandSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

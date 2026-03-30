@@ -62,6 +62,10 @@ export interface Config {
   circleImageRotation: number;
   // Boots & Cats-specific
   bootsAcceleration: number;
+  // Cymatics-specific
+  cymaticsBeatFreq: number;
+  cymaticsSandSize: number;
+  cymaticsSandSpeed: number;
 }
 
 // Application state

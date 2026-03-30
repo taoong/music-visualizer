@@ -32,6 +32,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   sculptureZoom: 'sculpture-zoom',
   circleImageRotation: 'circle-image-rotation',
   bootsAcceleration: 'boots-acceleration',
+  cymaticsBeatFreq: 'cymatics-beat-freq',
+  cymaticsSandSize: 'cymatics-sand-size',
+  cymaticsSandSpeed: 'cymatics-sand-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

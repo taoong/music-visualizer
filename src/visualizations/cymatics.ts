@@ -6,9 +6,9 @@
  * Beats scatter particles; they reform into new patterns as amplitudes shift.
  *
  * Controls:
- *   Sensitivity (spikeScale) — how much audio amplitude drives mode strength
- *   Force (intensity)        — how strongly particles are pulled to nodal lines
- *   Trail Length (decayRate)  — motion trail persistence (low = long trails)
+ *   Beat Frequency (cymaticsBeatFreq)  — scatter on every Nth beat (1=every, 2=every 2nd, 4=every 4th)
+ *   Sand Size (cymaticsSandSize)        — particle render size (0–1 → 1–5px)
+ *   Sand Speed (cymaticsSandSpeed)      — force multiplier and speed clamp (0–1)
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
@@ -102,18 +102,20 @@ export function drawCymatics(p: P5Instance, dt: number): void {
   const { amps, transients } = getBandAverages(bandCount);
 
   // ── Read controls ──────────────────────────────────────────────────────────
-  // spikeScale [0.5–3.0] → sensitivity: how much audio drives mode amplitude
-  const sensitivity = config.spikeScale;
-  // intensity [0–2] → force multiplier: how strongly particles are pulled (0.02–0.5)
-  const forceMult = 0.02 + config.intensity * 0.24;
-  // decayRate [0.5–0.99] → trail alpha: low decay = long trails, high = short
-  // Map: 0.5→8 (long glowing trails), 0.99→80 (short trails, crisp)
-  const trailAlpha = Math.round(8 + ((config.decayRate - 0.5) / 0.49) * 72);
+  // cymaticsBeatFreq [1–4] — scatter on every Nth beat
+  const beatFreq = Math.max(1, Math.round(config.cymaticsBeatFreq));
+  // cymaticsSandSize [0–1] → particle render size range 1–5px
+  const sandSize = 1 + config.cymaticsSandSize * 4;
+  // cymaticsSandSpeed [0–1] → force multiplier (0.02–0.5) and speed clamp (2–12)
+  const forceMult = 0.02 + config.cymaticsSandSpeed * 0.48;
+  const speedClamp = 2 + config.cymaticsSandSpeed * 10;
+  // Fixed trail alpha
+  const trailAlpha = 30;
 
-  // Weighted amplitudes (clamped)
+  // Weighted amplitudes (clamped) — fixed sensitivity
   const wAmps = new Float64Array(7);
   for (let b = 0; b < Math.min(bandCount, 7); b++) {
-    wAmps[b] = Math.min(amps[b] * sensitivity, 1.0);
+    wAmps[b] = Math.min(amps[b] * 1.5, 1.0);
   }
 
   // Beat detection
@@ -125,12 +127,14 @@ export function drawCymatics(p: P5Instance, dt: number): void {
       lastBeatIndex = currentBeatIndex;
       baseHue = (baseHue + 25) % 360;
 
-      // Scatter particles with random velocity
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 2 + Math.random() * 4;
-        vx[i] += Math.cos(angle) * speed;
-        vy[i] += Math.sin(angle) * speed;
+      // Scatter particles only on every Nth beat
+      if (currentBeatIndex % beatFreq === 0) {
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 2 + Math.random() * 4;
+          vx[i] += Math.cos(angle) * speed;
+          vy[i] += Math.sin(angle) * speed;
+        }
       }
     }
   }
@@ -145,7 +149,6 @@ export function drawCymatics(p: P5Instance, dt: number): void {
   // ── Physics step ───────────────────────────────────────────────────────────
   const damping = Math.pow(0.92, dt);
   const forceScale = forceMult * dt;
-  const speedClamp = 8.0;
   const w = canvasW;
   const h = canvasH;
 
@@ -236,8 +239,8 @@ export function drawCymatics(p: P5Instance, dt: number): void {
     const brightness = 40 + settledBrightness * 55 + transientGlow * 30;
     const saturation = 60 + settledBrightness * 30;
 
-    // Particle size: slightly larger when settled
-    const size = 1.5 + settledBrightness * 1.5;
+    // Particle size: base from sandSize slider, slightly larger when settled
+    const size = sandSize * (0.6 + settledBrightness * 0.4);
     const alpha = 60 + settledBrightness * 35;
 
     pAny.fill(hue, saturation, Math.min(brightness, 100), alpha);
