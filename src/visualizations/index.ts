@@ -19,5 +19,4 @@ export { drawAurora, resetAurora } from './aurora';
 export { drawBootsAndCats, resetBootsAndCats } from './bootsandcats';
 export { drawRippleTank, resetRippleTank } from './rippletank';
 export { drawCymatics, resetCymatics } from './cymatics';
-export { drawPendulumWave, resetPendulumWave } from './pendulumwave';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
