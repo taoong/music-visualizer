@@ -72,6 +72,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `T` | Dancer | Beat-synced dancing alien with spotlight stage, disco floor, particles, and configurable text flash |
 | `W` | Ripple Tank | Physics-inspired wave interference; 7 freq-band point-sources emit circular waves with beat-triggered shockwaves |
 | `Y` | Cymatics | Chladni plate simulation; particles drift toward nodal lines of standing wave modes driven by frequency bands; beats scatter particles |
+| `P` | Pendulum Wave | Classic physics exhibit; 21 pendulums with incrementally different frequencies create traveling waves and interference patterns; audio drives swing amplitude; beats inject energy; HSB coloring blue→red by freq band |
 
 ## Keyboard Shortcuts
 
@@ -85,6 +86,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `G` | Image Grid visualization |
 | `W` | Ripple Tank visualization |
 | `Y` | Cymatics visualization |
+| `P` | Pendulum Wave visualization |
 | `C` | Color Map visualization |
 | `U` | Sculpture visualization |
 | `B` | Binary visualization |

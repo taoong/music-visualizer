@@ -37,6 +37,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('k', () => setVizMode('bootsandcats'), 'Boots & Cats visualization');
   defineShortcut('w', () => setVizMode('rippletank'), 'Ripple Tank visualization');
   defineShortcut('y', () => setVizMode('cymatics'), 'Cymatics visualization');
+  defineShortcut('p', () => setVizMode('pendulumwave'), 'Pendulum Wave visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
