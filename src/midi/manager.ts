@@ -32,6 +32,8 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   sculptureZoom: 'sculpture-zoom',
   circleImageRotation: 'circle-image-rotation',
   bootsAcceleration: 'boots-acceleration',
+  rippletankBeatFreq: 'rippletank-beat-freq',
+  rippletankWaterSpeed: 'rippletank-water-speed',
   cymaticsBeatFreq: 'cymatics-beat-freq',
   cymaticsSandSize: 'cymatics-sand-size',
   cymaticsSandSpeed: 'cymatics-sand-speed',

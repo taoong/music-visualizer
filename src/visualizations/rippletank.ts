@@ -142,6 +142,10 @@ export function drawRippleTank(p: P5Instance, dt: number): void {
   const { amps } = getBandAverages(bandCount);
   const scale = config.spikeScale;
 
+  // Config-driven controls
+  const beatFreq = Math.max(1, Math.round(config.rippletankBeatFreq)); // every Nth beat
+  const waterSpeed = 0.2 + config.rippletankWaterSpeed * 1.6; // 0.2–1.8 multiplier
+
   // Beat detection
   if (state.detectedBPM > 0 && state.isPlaying) {
     const pos = audioEngine.getPlaybackPosition();
@@ -149,24 +153,26 @@ export function drawRippleTank(p: P5Instance, dt: number): void {
     const currentBeatIndex = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
       lastBeatIndex = currentBeatIndex;
-      beatFlash = 1.0;
-      // Spawn shockwave from center
-      shockwaves.push({
-        cx: renderWidth / 2,
-        cy: renderHeight / 2,
-        radius: 0,
-        amplitude: 0.6,
-      });
+      // Spawn shockwave only on every Nth beat
+      if (currentBeatIndex % beatFreq === 0) {
+        beatFlash = 1.0;
+        shockwaves.push({
+          cx: renderWidth / 2,
+          cy: renderHeight / 2,
+          radius: 0,
+          amplitude: 0.6,
+        });
+      }
     }
   }
 
-  // Advance time
-  time += dt * 0.05;
+  // Advance time (scaled by water speed)
+  time += dt * 0.05 * waterSpeed;
 
   // Update shockwaves
   for (let i = shockwaves.length - 1; i >= 0; i--) {
     const sw = shockwaves[i];
-    sw.radius += dt * 4.0;
+    sw.radius += dt * 4.0 * waterSpeed;
     sw.amplitude *= Math.pow(0.97, dt);
     if (sw.amplitude < 0.01) {
       shockwaves.splice(i, 1);
@@ -253,21 +259,6 @@ export function drawRippleTank(p: P5Instance, dt: number): void {
   canvas.imageSmoothingEnabled = true;
   canvas.drawImage(offscreenCanvas!, 0, 0, p.width, p.height);
 
-  // Draw source position dots
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const pAny = p as any;
-  p.noStroke();
-  for (let b = 0; b < bandCount; b++) {
-    const brightness = 150 + Math.round(waveAmp[b] * 105);
-    pAny.fill(brightness, 230, 255, 180 + waveAmp[b] * 75);
-    const dotSize = 4 + waveAmp[b] * 6;
-    pAny.ellipse(
-      sourceX[b] * PIXEL_SCALE,
-      sourceY[b] * PIXEL_SCALE,
-      dotSize,
-      dotSize
-    );
-  }
 }
 
 // ── Reset ────────────────────────────────────────────────────────────────────

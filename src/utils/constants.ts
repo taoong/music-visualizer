@@ -190,6 +190,9 @@ export const DEFAULT_CONFIG = {
   circleImageRotation: 0.5,
   // Boots & Cats-specific
   bootsAcceleration: 0.5,
+  // Rippletank-specific
+  rippletankBeatFreq: 1,
+  rippletankWaterSpeed: 0.5,
   // Cymatics-specific
   cymaticsBeatFreq: 1,
   cymaticsSandSize: 0.5,

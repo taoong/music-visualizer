@@ -74,6 +74,8 @@ export function bindDisplaySliders(): () => void {
     { id: 'sculpture-zoom', key: 'sculptureZoom' },
     { id: 'circle-image-rotation', key: 'circleImageRotation' },
     { id: 'boots-acceleration', key: 'bootsAcceleration' },
+    { id: 'rippletank-beat-freq', key: 'rippletankBeatFreq' },
+    { id: 'rippletank-water-speed', key: 'rippletankWaterSpeed' },
     { id: 'cymatics-beat-freq', key: 'cymaticsBeatFreq' },
     { id: 'cymatics-sand-size', key: 'cymaticsSandSize' },
     { id: 'cymatics-sand-speed', key: 'cymaticsSandSpeed' },
