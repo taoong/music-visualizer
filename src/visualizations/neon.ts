@@ -39,6 +39,7 @@ const uBands: THREE.IUniform<number[]> = { value: new Array(7).fill(0) };
 const uBeatPulse: THREE.IUniform<number> = { value: 0.0 };
 const uBeatRadius: THREE.IUniform<number> = { value: 0.0 };
 const uCentroid: THREE.IUniform<number> = { value: 0.5 };
+const uIntensity: THREE.IUniform<number> = { value: 1.0 };
 
 // ── Shared vertex shader ──────────────────────────────────────────────────────
 
@@ -47,6 +48,7 @@ const VERTEX_SHADER = /* glsl */`
   uniform float uBands[7];
   uniform float uBeatPulse;
   uniform float uBeatRadius;
+  uniform float uIntensity;
   varying float vHeight;
   varying float vNormX;
 
@@ -67,7 +69,7 @@ const VERTEX_SHADER = /* glsl */`
     float dist     = length(vec2(position.x, position.z));
     float beatWave = uBeatPulse  * 12.0 * exp(-pow((dist - uBeatRadius) * 0.08, 2.0));
 
-    float y = mainWave + subLand + ripple + beatWave;
+    float y = (mainWave + subLand + ripple + beatWave) * uIntensity;
     vHeight = y;
     vNormX  = normX;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position.x, y, position.z, 1.0);
@@ -253,6 +255,7 @@ function setup(): void {
       uBeatPulse: uBeatPulse,
       uBeatRadius: uBeatRadius,
       uCentroid: uCentroid,
+      uIntensity: uIntensity,
     },
     transparent: true,
     depthWrite: false,
@@ -272,6 +275,7 @@ function setup(): void {
       uBeatPulse: uBeatPulse,
       uBeatRadius: uBeatRadius,
       uCentroid: uCentroid,
+      uIntensity: uIntensity,
     },
     transparent: true,
   });
@@ -336,6 +340,14 @@ export function drawNeon(_p: unknown, dt: number): void {
     cameraTheta += dt * 0.0003 * store.config.rotationSpeed;
     camera.position.x = Math.sin(cameraTheta) * 5;
     camera.lookAt(0, 0, -30);
+  }
+
+  // Intensity controls bloom strength + terrain displacement
+  const intensity = store.config.intensity;
+  uIntensity.value = 0.3 + intensity * 1.4;
+  if (composer) {
+    const bloomPass = composer.passes[1] as InstanceType<typeof UnrealBloomPass>;
+    if (bloomPass) bloomPass.strength = 0.4 + intensity * 1.6;
   }
 
   if (composer) composer.render();

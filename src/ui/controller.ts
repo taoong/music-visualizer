@@ -126,6 +126,7 @@ function bindVizSelector(): () => void {
   function hide(el: HTMLElement | null): void { el?.classList.add('hidden'); }
 
   const intensityLabel = intensityGroup?.querySelector('label');
+  const rotationLabel = rotationSpeedGroup?.querySelector('label');
 
   const handler = () => {
     const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics';
@@ -141,6 +142,7 @@ function bindVizSelector(): () => void {
     // | lasers   |  hide |  hide |     hide |      hide |      show |    show |      hide |
     // | text     |  hide |  hide |     hide |      hide |      show |    show |      show |
     // | highway  |  hide |  hide |     hide |      hide |      show |    hide |      hide |
+    if (rotationLabel) rotationLabel.textContent = 'Rotation Speed';
     switch (mode) {
       case 'circle':
         show(scaleGroup); show(decayRateGroup); show(rotationSpeedGroup); show(circleImageRotationGroup);
@@ -187,7 +189,8 @@ function bindVizSelector(): () => void {
         break;
       case 'neon':
         show(rotationSpeedGroup); show(intensityGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
+        if (rotationLabel) rotationLabel.textContent = 'Camera Rotation';
+        if (intensityLabel) intensityLabel.textContent = 'Intensity';
         hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup);
