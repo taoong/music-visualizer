@@ -144,7 +144,7 @@ export function drawRippleTank(p: P5Instance, dt: number): void {
 
   // Config-driven controls
   const beatFreq = Math.max(1, Math.round(config.rippletankBeatFreq)); // every Nth beat
-  const waterSpeed = 0.2 + config.rippletankWaterSpeed * 1.6; // 0.2–1.8 multiplier
+  const waterSpeed = 0.2 + config.rippletankWaterSpeed * 7.0; // 0.2–7.2 multiplier
 
   // Beat detection
   if (state.detectedBPM > 0 && state.isPlaying) {
