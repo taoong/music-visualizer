@@ -275,7 +275,7 @@ export function drawImageGrid(_p: unknown, dt: number): void {
 
   // Camera orbit — bird's-eye angle, slow rotation driven by rotationSpeed
   if (camera) {
-    cameraTheta         += dt * 0.0003 * store.config.rotationSpeed;
+    cameraTheta         += dt * 0.0009 * store.config.rotationSpeed;
     camera.position.x    = Math.sin(cameraTheta) * 50;
     camera.position.z    = Math.cos(cameraTheta) * 50 + 15;
     camera.position.y    = 90;
