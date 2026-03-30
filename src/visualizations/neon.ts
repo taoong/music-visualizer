@@ -336,18 +336,20 @@ export function drawNeon(_p: unknown, dt: number): void {
   if (camera) {
     camera.position.y = 25 + (amps[1] ?? 0) * 5 * Math.sin(time * 2);
 
-    // Slow orbit
+    // Full orbit around terrain
     cameraTheta += dt * 0.0003 * store.config.rotationSpeed;
-    camera.position.x = Math.sin(cameraTheta) * 5;
-    camera.lookAt(0, 0, -30);
+    const orbitRadius = 90;
+    camera.position.x = Math.sin(cameraTheta) * orbitRadius;
+    camera.position.z = Math.cos(cameraTheta) * orbitRadius;
+    camera.lookAt(0, 0, 0);
   }
 
   // Intensity controls bloom strength + terrain displacement
   const intensity = store.config.intensity;
-  uIntensity.value = 0.3 + intensity * 1.4;
+  uIntensity.value = 0.3 + intensity * 0.7;
   if (composer) {
     const bloomPass = composer.passes[1] as InstanceType<typeof UnrealBloomPass>;
-    if (bloomPass) bloomPass.strength = 0.4 + intensity * 1.6;
+    if (bloomPass) bloomPass.strength = 0.4 + intensity * 0.8;
   }
 
   if (composer) composer.render();
