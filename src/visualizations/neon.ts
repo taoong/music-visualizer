@@ -337,7 +337,7 @@ export function drawNeon(_p: unknown, dt: number): void {
     camera.position.y = 25 + (amps[1] ?? 0) * 5 * Math.sin(time * 2);
 
     // Full orbit around terrain
-    cameraTheta += dt * 0.0003 * store.config.rotationSpeed;
+    cameraTheta += dt * 0.0009 * store.config.rotationSpeed;
     const orbitRadius = 90;
     camera.position.x = Math.sin(cameraTheta) * orbitRadius;
     camera.position.z = Math.cos(cameraTheta) * orbitRadius;
