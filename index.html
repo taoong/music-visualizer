@@ -300,6 +300,7 @@
           <option value="rippletank">Ripple Tank</option>
           <option value="cymatics">Cymatics</option>
           <option value="cloudchamber">Cloud Chamber</option>
+          <option value="teslacoil">Tesla Coil</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -581,6 +582,32 @@
               step="0.01"
               value="0.5"
               aria-label="Speed burst strength on each beat"
+            />
+          </div>
+        </div>
+        <div id="teslacoil-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="tesla-voltage">Voltage</label>
+            <input
+              type="range"
+              id="tesla-voltage"
+              min="0.1"
+              max="2"
+              step="0.01"
+              value="1"
+              aria-label="Maximum arc reach scaling"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="tesla-branching">Branching</label>
+            <input
+              type="range"
+              id="tesla-branching"
+              min="0.1"
+              max="2"
+              step="0.01"
+              value="1"
+              aria-label="Fractal branch density per arc"
             />
           </div>
         </div>

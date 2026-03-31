@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **Visualization modes** — Circle, Spectrum, Tunnel, Balls, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Image Grid
+- **Visualization modes** — Circle, Spectrum, Tunnel, Balls, Lasers, Text, Space, Runners, Liquid Metal, Neon Grid, Image Grid, Tesla Coil
 - **Three audio input modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
@@ -72,6 +72,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `T` | Dancer | Beat-synced dancing alien with spotlight stage, disco floor, particles, and configurable text flash |
 | `W` | Ripple Tank | Physics-inspired wave interference; 7 freq-band point-sources emit circular waves with beat-triggered shockwaves |
 | `Y` | Cymatics | Chladni plate simulation; particles drift toward nodal lines of standing wave modes driven by frequency bands; beats scatter particles |
+| `E` | Tesla Coil | Fractal midpoint-displacement lightning from central electrode; 7 arcs mapped to frequency bands; 3-pass glow; beat discharge events |
 
 ## Keyboard Shortcuts
 
@@ -89,6 +90,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `U` | Sculpture visualization |
 | `B` | Binary visualization |
 | `T` | Dancer visualization |
+| `E` | Tesla Coil visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |
