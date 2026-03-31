@@ -53,6 +53,7 @@ src/
 │   ├── bootsandcats.ts        # Boots & Cats: falling emoji visualization; 👢 on kick transients (sub/bass), 🐱 on snare (low-mid/mid), ➕ on hihats (upper-mid+); gravity, bounce, fade-out; max 50 active
 │   ├── rippletank.ts          # Ripple Tank: 7 point-sources in a ring emit circular waves per freq band; wave superposition creates interference patterns; beats spawn expanding shockwave rings; offscreen pixel buffer at 1/4 res (1/6 mobile) with precomputed distance tables
 │   ├── cymatics.ts            # Cymatics: Chladni plate simulation; ~3000 particles (1500 mobile) drift toward nodal lines of 7 standing wave modes driven by freq bands; beat-triggered scatter/reform; HSB coloring by dominant band
+│   ├── cloudchamber.ts        # Cloud Chamber: particle physics simulation; 7 particle types (alpha/proton/muon/electron/positron/pion/gamma) mapped to freq bands; Lorentz force magnetic field curving; beat cosmic ray showers; pion decay kinks; gamma pair production; max 200 particles
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode

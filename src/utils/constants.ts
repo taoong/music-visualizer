@@ -197,6 +197,9 @@ export const DEFAULT_CONFIG = {
   cymaticsBeatFreq: 1,
   cymaticsSandSize: 0.5,
   cymaticsSandSpeed: 0.5,
+  // Cloud Chamber-specific
+  cloudMagneticField: 0.4,
+  cloudParticleLife: 0.5,
 };
 
 // FFT and decay constants

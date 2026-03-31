@@ -67,6 +67,8 @@ import {
   resetRippleTank,
   drawCymatics,
   resetCymatics,
+  drawCloudChamber,
+  resetCloudChamber,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -213,6 +215,9 @@ const sketch = (p: P5Instance) => {
       case 'cymatics':
         drawCymatics(p, dt);
         break;
+      case 'cloudchamber':
+        drawCloudChamber(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -252,6 +257,8 @@ const sketch = (p: P5Instance) => {
       resetRippleTank();
     } else if (store.state.vizMode === 'cymatics') {
       resetCymatics();
+    } else if (store.state.vizMode === 'cloudchamber') {
+      resetCloudChamber();
     }
   };
 };
