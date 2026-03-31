@@ -54,7 +54,6 @@ src/
 │   ├── rippletank.ts          # Ripple Tank: 7 point-sources in a ring emit circular waves per freq band; wave superposition creates interference patterns; beats spawn expanding shockwave rings; offscreen pixel buffer at 1/4 res (1/6 mobile) with precomputed distance tables
 │   ├── cymatics.ts            # Cymatics: Chladni plate simulation; ~3000 particles (1500 mobile) drift toward nodal lines of 7 standing wave modes driven by freq bands; beat-triggered scatter/reform; HSB coloring by dominant band
 │   ├── cloudchamber.ts        # Cloud Chamber: particle physics simulation; 7 particle types (alpha/proton/muon/electron/positron/pion/gamma) mapped to freq bands; Lorentz force magnetic field curving; beat cosmic ray showers; pion decay kinks; gamma pair production; max 200 particles
-│   ├── teslacoil.ts           # Tesla Coil: fractal midpoint-displacement lightning from central electrode; 7 arcs mapped to freq bands; 3-pass glow; beat discharge events; background sparks
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -65,7 +64,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/e letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

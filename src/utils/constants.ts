@@ -202,9 +202,6 @@ export const DEFAULT_CONFIG = {
   cloudParticleLife: 0.5,
   cloudBeatFreq: 1,
   cloudBeatBoost: 0.5,
-  // Tesla Coil-specific
-  teslaVoltage: 1.0,
-  teslaBranching: 1.0,
 };
 
 // FFT and decay constants

@@ -41,8 +41,6 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cloudParticleLife: 'cloud-particle-life',
   cloudBeatFreq: 'cloud-beat-freq',
   cloudBeatBoost: 'cloud-beat-boost',
-  teslaVoltage: 'tesla-voltage',
-  teslaBranching: 'tesla-branching',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

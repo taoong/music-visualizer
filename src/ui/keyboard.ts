@@ -38,7 +38,6 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('w', () => setVizMode('rippletank'), 'Ripple Tank visualization');
   defineShortcut('y', () => setVizMode('cymatics'), 'Cymatics visualization');
   defineShortcut('d', () => setVizMode('cloudchamber'), 'Cloud Chamber visualization');
-  defineShortcut('e', () => setVizMode('teslacoil'), 'Tesla Coil visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
