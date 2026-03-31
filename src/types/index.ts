@@ -73,6 +73,7 @@ export interface Config {
   cloudMagneticField: number;
   cloudParticleLife: number;
   cloudBeatFreq: number;
+  cloudBeatBoost: number;
 }
 
 // Application state

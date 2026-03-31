@@ -80,6 +80,7 @@ let initialized = false;
 let canvasW = 0;
 let canvasH = 0;
 let flashAlpha = 0;
+let beatBoost = 1.0; // speed multiplier, spikes on beat then decays
 
 // ── Public API ──────────────────────────────────────────────────────────────
 
@@ -91,7 +92,7 @@ export function drawCloudChamber(p: P5Instance, dt: number): void {
       particles = [];
       lastBeatIndex = -1;
       flashAlpha = 0;
-    
+      beatBoost = 1.0;
     }
     initialized = true;
   }
@@ -115,6 +116,10 @@ export function drawCloudChamber(p: P5Instance, dt: number): void {
   // Subtle grain noise
   drawGrain(p, dt);
 
+  // Decay beat boost back to 1.0
+  beatBoost = 1.0 + (beatBoost - 1.0) * Math.pow(0.85, dt);
+  if (beatBoost < 1.01) beatBoost = 1.0;
+
   // Beat flash
   if (flashAlpha > 0) {
     p.noStroke();
@@ -130,7 +135,7 @@ export function drawCloudChamber(p: P5Instance, dt: number): void {
     const part = particles[i];
 
     // Update physics
-    updateParticle(part, magneticField, dt);
+    updateParticle(part, magneticField, dt, beatBoost);
 
     // Render trail
     renderTrail(p, part);
@@ -150,7 +155,7 @@ export function resetCloudChamber(): void {
   lastBeatIndex = -1;
   initialized = false;
   flashAlpha = 0;
-
+  beatBoost = 1.0;
 }
 
 // ── Spawning ────────────────────────────────────────────────────────────────
@@ -182,6 +187,9 @@ function detectBeatShower(p: P5Instance, _amps: number[], maxLife: number): void
     const originX = Math.random() * canvasW;
     const originY = Math.random() * canvasH;
     flashAlpha = 40;
+    // Beat speed boost: multiply by 1 + boostStrength (slider 0–1 maps to 0–3× extra speed)
+    const boostStrength = store.config.cloudBeatBoost * 3.0;
+    beatBoost = 1.0 + boostStrength;
 
     for (let i = 0; i < count && particles.length < MAX_PARTICLES; i++) {
       const band = Math.floor(Math.random() * 7);
@@ -245,7 +253,7 @@ function createParticle(
 
 // ── Physics ─────────────────────────────────────────────────────────────────
 
-function updateParticle(p: Particle, B: number, dt: number): void {
+function updateParticle(p: Particle, B: number, dt: number, speedMult: number): void {
   p.lifetime -= dt;
 
   // Pion decay: kink mid-flight
@@ -313,8 +321,8 @@ function updateParticle(p: Particle, B: number, dt: number): void {
     p.vy += ay * dt;
   }
 
-  p.x += p.vx * dt;
-  p.y += p.vy * dt;
+  p.x += p.vx * dt * speedMult;
+  p.y += p.vy * dt * speedMult;
 
   // Store trail point
   p.trail.push({ x: p.x, y: p.y });

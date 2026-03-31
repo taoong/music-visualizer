@@ -201,6 +201,7 @@ export const DEFAULT_CONFIG = {
   cloudMagneticField: 0.4,
   cloudParticleLife: 0.5,
   cloudBeatFreq: 1,
+  cloudBeatBoost: 0.5,
 };
 
 // FFT and decay constants

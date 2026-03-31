@@ -40,6 +40,7 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cloudMagneticField: 'cloud-magnetic-field',
   cloudParticleLife: 'cloud-particle-life',
   cloudBeatFreq: 'cloud-beat-freq',
+  cloudBeatBoost: 'cloud-beat-boost',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
