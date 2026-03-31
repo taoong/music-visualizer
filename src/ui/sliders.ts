@@ -83,6 +83,8 @@ export function bindDisplaySliders(): () => void {
     { id: 'cloud-particle-life', key: 'cloudParticleLife' },
     { id: 'cloud-beat-freq', key: 'cloudBeatFreq' },
     { id: 'cloud-beat-boost', key: 'cloudBeatBoost' },
+    { id: 'field-density', key: 'fieldDensity' },
+    { id: 'field-reach', key: 'fieldReach' },
   ] as const;
 
   for (const { id, key } of configs) {

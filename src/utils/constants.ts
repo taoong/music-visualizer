@@ -202,6 +202,9 @@ export const DEFAULT_CONFIG = {
   cloudParticleLife: 0.5,
   cloudBeatFreq: 1,
   cloudBeatBoost: 0.5,
+  // Field Lines-specific
+  fieldDensity: 0.5,
+  fieldReach: 0.5,
 };
 
 // FFT and decay constants

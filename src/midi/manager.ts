@@ -41,6 +41,8 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cloudParticleLife: 'cloud-particle-life',
   cloudBeatFreq: 'cloud-beat-freq',
   cloudBeatBoost: 'cloud-beat-boost',
+  fieldDensity: 'field-density',
+  fieldReach: 'field-reach',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

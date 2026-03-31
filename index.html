@@ -300,6 +300,7 @@
           <option value="rippletank">Ripple Tank</option>
           <option value="cymatics">Cymatics</option>
           <option value="cloudchamber">Cloud Chamber</option>
+          <option value="fieldlines">Field Lines</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -581,6 +582,32 @@
               step="0.01"
               value="0.5"
               aria-label="Speed burst strength on each beat"
+            />
+          </div>
+        </div>
+        <div id="fieldlines-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="field-density">Field Density</label>
+            <input
+              type="range"
+              id="field-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Number of field lines traced per charge source"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="field-reach">Field Reach</label>
+            <input
+              type="range"
+              id="field-reach"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="How far field lines extend before terminating"
             />
           </div>
         </div>
