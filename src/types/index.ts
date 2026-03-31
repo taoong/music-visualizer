@@ -72,6 +72,7 @@ export interface Config {
   // Cloud Chamber-specific
   cloudMagneticField: number;
   cloudParticleLife: number;
+  cloudBeatFreq: number;
 }
 
 // Application state

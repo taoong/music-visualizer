@@ -39,6 +39,7 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cymaticsSandSpeed: 'cymatics-sand-speed',
   cloudMagneticField: 'cloud-magnetic-field',
   cloudParticleLife: 'cloud-particle-life',
+  cloudBeatFreq: 'cloud-beat-freq',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

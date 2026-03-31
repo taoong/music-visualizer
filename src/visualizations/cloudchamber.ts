@@ -175,7 +175,8 @@ function detectBeatShower(p: P5Instance, _amps: number[], maxLife: number): void
     : state.startOffset;
   const beatIndex = Math.floor((playbackPos - state.beatOffset) / state.beatIntervalSec);
 
-  if (beatIndex > lastBeatIndex && lastBeatIndex >= 0) {
+  const beatFreq = Math.max(1, Math.round(store.config.cloudBeatFreq));
+  if (beatIndex > lastBeatIndex && lastBeatIndex >= 0 && beatIndex % beatFreq === 0) {
     // Cosmic ray shower
     const count = SHOWER_MIN + Math.floor(Math.random() * (SHOWER_MAX - SHOWER_MIN + 1));
     const originX = Math.random() * canvasW;

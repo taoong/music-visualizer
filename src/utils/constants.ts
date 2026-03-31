@@ -200,6 +200,7 @@ export const DEFAULT_CONFIG = {
   // Cloud Chamber-specific
   cloudMagneticField: 0.4,
   cloudParticleLife: 0.5,
+  cloudBeatFreq: 1,
 };
 
 // FFT and decay constants

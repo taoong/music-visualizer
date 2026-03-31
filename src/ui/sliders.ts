@@ -81,6 +81,7 @@ export function bindDisplaySliders(): () => void {
     { id: 'cymatics-sand-speed', key: 'cymaticsSandSpeed' },
     { id: 'cloud-magnetic-field', key: 'cloudMagneticField' },
     { id: 'cloud-particle-life', key: 'cloudParticleLife' },
+    { id: 'cloud-beat-freq', key: 'cloudBeatFreq' },
   ] as const;
 
   for (const { id, key } of configs) {
