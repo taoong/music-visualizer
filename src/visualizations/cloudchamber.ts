@@ -116,9 +116,9 @@ export function drawCloudChamber(p: P5Instance, dt: number): void {
   // Subtle grain noise
   drawGrain(p, dt);
 
-  // Decay beat boost back to 1.0
-  beatBoost = 1.0 + (beatBoost - 1.0) * Math.pow(0.85, dt);
-  if (beatBoost < 1.01) beatBoost = 1.0;
+  // Decay beat boost back to 1.0 (~200ms duration at 60fps)
+  beatBoost = 1.0 + (beatBoost - 1.0) * Math.pow(0.82, dt);
+  if (beatBoost < 1.02) beatBoost = 1.0;
 
   // Beat flash
   if (flashAlpha > 0) {
@@ -181,19 +181,24 @@ function detectBeatShower(p: P5Instance, _amps: number[], maxLife: number): void
   const beatIndex = Math.floor((playbackPos - state.beatOffset) / state.beatIntervalSec);
 
   const beatFreq = Math.max(1, Math.round(store.config.cloudBeatFreq));
-  if (beatIndex > lastBeatIndex && lastBeatIndex >= 0 && beatIndex % beatFreq === 0) {
-    // Cosmic ray shower
-    const count = SHOWER_MIN + Math.floor(Math.random() * (SHOWER_MAX - SHOWER_MIN + 1));
-    const originX = Math.random() * canvasW;
-    const originY = Math.random() * canvasH;
-    flashAlpha = 40;
-    // Beat speed boost: multiply by 1 + boostStrength (slider 0–1 maps to 0–3× extra speed)
-    const boostStrength = store.config.cloudBeatBoost * 3.0;
-    beatBoost = 1.0 + boostStrength;
+  if (beatIndex > lastBeatIndex && lastBeatIndex >= 0) {
+    // Beat speed boost on every beat
+    const boostStrength = store.config.cloudBeatBoost * 4.0;
+    if (boostStrength > 0) {
+      beatBoost = 1.0 + boostStrength;
+    }
 
-    for (let i = 0; i < count && particles.length < MAX_PARTICLES; i++) {
-      const band = Math.floor(Math.random() * 7);
-      particles.push(createParticle(p, band, maxLife, { x: originX, y: originY }));
+    // Cosmic ray shower only on Nth beat
+    if (beatIndex % beatFreq === 0) {
+      const count = SHOWER_MIN + Math.floor(Math.random() * (SHOWER_MAX - SHOWER_MIN + 1));
+      const originX = Math.random() * canvasW;
+      const originY = Math.random() * canvasH;
+      flashAlpha = 40;
+
+      for (let i = 0; i < count && particles.length < MAX_PARTICLES; i++) {
+        const band = Math.floor(Math.random() * 7);
+        particles.push(createParticle(p, band, maxLife, { x: originX, y: originY }));
+      }
     }
   }
   lastBeatIndex = beatIndex;
@@ -254,6 +259,9 @@ function createParticle(
 // ── Physics ─────────────────────────────────────────────────────────────────
 
 function updateParticle(p: Particle, B: number, dt: number, speedMult: number): void {
+  // Apply beat boost: temporarily scale velocity
+  const boostedVx = p.vx * speedMult;
+  const boostedVy = p.vy * speedMult;
   p.lifetime -= dt;
 
   // Pion decay: kink mid-flight
@@ -315,14 +323,14 @@ function updateParticle(p: Particle, B: number, dt: number, speedMult: number): 
   // For 2D: ax = (q * B / m) * vy, ay = -(q * B / m) * vx
   if (p.charge !== 0 && p.mass > 0 && B > 0) {
     const qBm = (p.charge * B * 3.0) / p.mass; // scale B for visible effect
-    const ax = qBm * p.vy;
-    const ay = -qBm * p.vx;
+    const ax = qBm * boostedVy;
+    const ay = -qBm * boostedVx;
     p.vx += ax * dt;
     p.vy += ay * dt;
   }
 
-  p.x += p.vx * dt * speedMult;
-  p.y += p.vy * dt * speedMult;
+  p.x += boostedVx * dt;
+  p.y += boostedVy * dt;
 
   // Store trail point
   p.trail.push({ x: p.x, y: p.y });
