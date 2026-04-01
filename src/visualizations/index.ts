@@ -20,5 +20,4 @@ export { drawBootsAndCats, resetBootsAndCats } from './bootsandcats';
 export { drawRippleTank, resetRippleTank } from './rippletank';
 export { drawCymatics, resetCymatics } from './cymatics';
 export { drawCloudChamber, resetCloudChamber } from './cloudchamber';
-export { drawFieldLines, resetFieldLines } from './fieldlines';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
