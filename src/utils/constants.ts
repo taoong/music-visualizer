@@ -202,6 +202,9 @@ export const DEFAULT_CONFIG = {
   cloudParticleLife: 0.5,
   cloudBeatFreq: 1,
   cloudBeatBoost: 0.5,
+  // Attractor-specific
+  attractorChaos: 0.6,
+  attractorTrailLength: 0.5,
 };
 
 // FFT and decay constants

@@ -72,6 +72,8 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `T` | Dancer | Beat-synced dancing alien with spotlight stage, disco floor, particles, and configurable text flash |
 | `W` | Ripple Tank | Physics-inspired wave interference; 7 freq-band point-sources emit circular waves with beat-triggered shockwaves |
 | `Y` | Cymatics | Chladni plate simulation; particles drift toward nodal lines of standing wave modes driven by frequency bands; beats scatter particles |
+| `D` | Cloud Chamber | Particle physics simulation; 7 particle types with Lorentz force magnetic field curving; beat cosmic ray showers |
+| `J` | Strange Attractor | Lorenz attractor chaos theory; particles trace butterfly-shaped 3D paths; audio warps system parameters; beats jolt the attractor |
 
 ## Keyboard Shortcuts
 
@@ -89,6 +91,8 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `U` | Sculpture visualization |
 | `B` | Binary visualization |
 | `T` | Dancer visualization |
+| `D` | Cloud Chamber visualization |
+| `J` | Strange Attractor visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

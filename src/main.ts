@@ -69,6 +69,8 @@ import {
   resetCymatics,
   drawCloudChamber,
   resetCloudChamber,
+  drawAttractor,
+  resetAttractor,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -218,6 +220,9 @@ const sketch = (p: P5Instance) => {
       case 'cloudchamber':
         drawCloudChamber(p, dt);
         break;
+      case 'attractor':
+        drawAttractor(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -259,6 +264,8 @@ const sketch = (p: P5Instance) => {
       resetCymatics();
     } else if (store.state.vizMode === 'cloudchamber') {
       resetCloudChamber();
+    } else if (store.state.vizMode === 'attractor') {
+      resetAttractor();
     }
   };
 };
