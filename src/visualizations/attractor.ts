@@ -32,7 +32,8 @@ const BG_COLOR = '#06060e';
 const BASE_SIGMA = 10;
 const BASE_BETA = 8 / 3;
 const INTEGRATION_DT = 0.005;   // Lorenz integration timestep (fixed, not frame dt)
-const STEPS_PER_FRAME = isMobile ? 3 : 5;
+const BASE_STEPS = isMobile ? 1 : 1;        // slow crawl normally
+const BOOST_STEPS = isMobile ? 12 : 18;     // burst on beat
 // Band hues: sub→brilliance, warm→cool→warm
 const BAND_HUES = [300, 260, 200, 160, 50, 30, 350];
 
@@ -46,6 +47,7 @@ let lastBeatIndex = -1;
 let flashAlpha = 0;
 let camAngle = 0;        // slowly orbiting camera
 let rhoJolt = 0;         // beat-induced rho spike, decays
+let speedBoost = 0;      // 0–1, spikes on beat then decays fast (~200ms)
 
 // ── Public API ──────────────────────────────────────────────────────────────
 
@@ -59,6 +61,7 @@ export function drawAttractor(p: P5Instance, dt: number): void {
       flashAlpha = 0;
       camAngle = 0;
       rhoJolt = 0;
+      speedBoost = 0;
     }
     initialized = true;
   }
@@ -83,9 +86,10 @@ export function drawAttractor(p: P5Instance, dt: number): void {
   // Continuous spawning from audio bands
   spawnFromAudio(amps, dt, maxTrail);
 
-  // Integrate and build trails
+  // Integrate and build trails — slow crawl normally, burst on beat
+  const stepsThisFrame = Math.round(BASE_STEPS + speedBoost * (BOOST_STEPS - BASE_STEPS));
   for (const part of particles) {
-    for (let s = 0; s < STEPS_PER_FRAME; s++) {
+    for (let s = 0; s < stepsThisFrame; s++) {
       lorenzStep(part, sigma, rho, beta);
     }
     // Project 3D → 2D and add to trail
@@ -106,6 +110,10 @@ export function drawAttractor(p: P5Instance, dt: number): void {
   // Decay beat jolt
   rhoJolt *= Math.pow(0.9, dt);
   if (Math.abs(rhoJolt) < 0.05) rhoJolt = 0;
+
+  // Decay speed boost (~200ms at 60fps)
+  speedBoost *= Math.pow(0.78, dt);
+  if (speedBoost < 0.01) speedBoost = 0;
 
   // ── Render ────────────────────────────────────────────────────────────────
 
@@ -141,6 +149,7 @@ export function resetAttractor(): void {
   flashAlpha = 0;
   camAngle = 0;
   rhoJolt = 0;
+  speedBoost = 0;
 }
 
 // ── Spawning ────────────────────────────────────────────────────────────────
@@ -168,6 +177,7 @@ function detectBeat(_amps: number[]): void {
     // Jolt the rho parameter — shifts the attractor shape
     rhoJolt = 6 + Math.random() * 4;
     flashAlpha = 20;
+    speedBoost = 1.0;
 
     // Spawn burst of particles
     const burstCount = 3 + Math.floor(Math.random() * 5);
