@@ -43,6 +43,8 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cloudBeatBoost: 'cloud-beat-boost',
   attractorChaos: 'attractor-chaos',
   attractorTrailLength: 'attractor-trail-length',
+  prismDispersion: 'prism-dispersion',
+  prismBeamWidth: 'prism-beam-width',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

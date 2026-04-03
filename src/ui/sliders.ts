@@ -85,6 +85,8 @@ export function bindDisplaySliders(): () => void {
     { id: 'cloud-beat-boost', key: 'cloudBeatBoost' },
     { id: 'attractor-chaos', key: 'attractorChaos' },
     { id: 'attractor-trail-length', key: 'attractorTrailLength' },
+    { id: 'prism-dispersion', key: 'prismDispersion' },
+    { id: 'prism-beam-width', key: 'prismBeamWidth' },
   ] as const;
 
   for (const { id, key } of configs) {

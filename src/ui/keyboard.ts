@@ -39,6 +39,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('y', () => setVizMode('cymatics'), 'Cymatics visualization');
   defineShortcut('d', () => setVizMode('cloudchamber'), 'Cloud Chamber visualization');
   defineShortcut('j', () => setVizMode('attractor'), 'Strange Attractor visualization');
+  defineShortcut('p', () => setVizMode('prism'), 'Prism visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
