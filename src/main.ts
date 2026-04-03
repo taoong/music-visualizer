@@ -71,8 +71,6 @@ import {
   resetCloudChamber,
   drawAttractor,
   resetAttractor,
-  drawPrism,
-  resetPrism,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -225,9 +223,6 @@ const sketch = (p: P5Instance) => {
       case 'attractor':
         drawAttractor(p, dt);
         break;
-      case 'prism':
-        drawPrism(p, dt);
-        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -271,8 +266,6 @@ const sketch = (p: P5Instance) => {
       resetCloudChamber();
     } else if (store.state.vizMode === 'attractor') {
       resetAttractor();
-    } else if (store.state.vizMode === 'prism') {
-      resetPrism();
     }
   };
 };

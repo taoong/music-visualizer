@@ -205,9 +205,6 @@ export const DEFAULT_CONFIG = {
   // Attractor-specific
   attractorChaos: 0.6,
   attractorTrailLength: 0.5,
-  // Prism-specific
-  prismDispersion: 0.5,
-  prismBeamWidth: 0.5,
 };
 
 // FFT and decay constants

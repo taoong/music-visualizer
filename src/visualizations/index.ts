@@ -21,5 +21,4 @@ export { drawRippleTank, resetRippleTank } from './rippletank';
 export { drawCymatics, resetCymatics } from './cymatics';
 export { drawCloudChamber, resetCloudChamber } from './cloudchamber';
 export { drawAttractor, resetAttractor } from './attractor';
-export { drawPrism, resetPrism } from './prism';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

@@ -55,7 +55,6 @@ src/
 │   ├── cymatics.ts            # Cymatics: Chladni plate simulation; ~3000 particles (1500 mobile) drift toward nodal lines of 7 standing wave modes driven by freq bands; beat-triggered scatter/reform; HSB coloring by dominant band
 │   ├── cloudchamber.ts        # Cloud Chamber: particle physics simulation; 7 particle types (alpha/proton/muon/electron/positron/pion/gamma) mapped to freq bands; Lorentz force magnetic field curving; beat cosmic ray showers; pion decay kinks; gamma pair production; max 200 particles
 │   ├── attractor.ts           # Strange Attractor: Lorenz attractor chaos theory simulation; particles trace 3D butterfly-shaped paths; freq bands spawn colored groups; amplitude warps sigma/rho; beats jolt parameters; 3D→2D projection with orbiting camera; sliders: Chaos, Trail Length
-│   ├── prism.ts               # Prism: Newton's light dispersion; white beam enters triangular prism, splits into 7 ROYGBIV rays per freq band; amplitude drives ray brightness/width; beats widen dispersion angle; photon particles drift along rays; sliders: Dispersion, Beam Width
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -66,7 +65,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/p letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)
