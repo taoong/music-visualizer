@@ -76,6 +76,7 @@ export function bindDisplaySliders(): () => void {
     { id: 'boots-acceleration', key: 'bootsAcceleration' },
     { id: 'rippletank-beat-freq', key: 'rippletankBeatFreq' },
     { id: 'rippletank-water-speed', key: 'rippletankWaterSpeed' },
+    { id: 'rippletank-beat-surge', key: 'rippletankBeatSurge' },
     { id: 'cymatics-beat-freq', key: 'cymaticsBeatFreq' },
     { id: 'cymatics-sand-size', key: 'cymaticsSandSize' },
     { id: 'cymatics-sand-speed', key: 'cymaticsSandSpeed' },

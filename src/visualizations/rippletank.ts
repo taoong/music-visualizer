@@ -55,6 +55,7 @@ let initialized = false;
 let time = 0;
 let lastBeatIndex = -1;
 let beatFlash = 0;
+let beatSurge = 0;
 
 interface Shockwave {
   cx: number;  // center x in reduced coords
@@ -156,6 +157,7 @@ export function drawRippleTank(p: P5Instance, dt: number): void {
       // Spawn shockwave only on every Nth beat
       if (currentBeatIndex % beatFreq === 0) {
         beatFlash = 1.0;
+        beatSurge = 1.0;
         shockwaves.push({
           cx: renderWidth / 2,
           cy: renderHeight / 2,
@@ -166,13 +168,18 @@ export function drawRippleTank(p: P5Instance, dt: number): void {
     }
   }
 
-  // Advance time (scaled by water speed)
-  time += dt * 0.05 * waterSpeed;
+  // Beat surge: sharp speed boost that decays quickly
+  const surgeIntensity = config.rippletankBeatSurge;
+  beatSurge *= Math.pow(0.85, dt);
+  const effectiveSpeed = waterSpeed * (1 + beatSurge * surgeIntensity * 8.0);
+
+  // Advance time (scaled by effective speed)
+  time += dt * 0.05 * effectiveSpeed;
 
   // Update shockwaves
   for (let i = shockwaves.length - 1; i >= 0; i--) {
     const sw = shockwaves[i];
-    sw.radius += dt * 4.0 * waterSpeed;
+    sw.radius += dt * 4.0 * effectiveSpeed;
     sw.amplitude *= Math.pow(0.97, dt);
     if (sw.amplitude < 0.01) {
       shockwaves.splice(i, 1);
@@ -268,6 +275,7 @@ export function resetRippleTank(): void {
   time = 0;
   lastBeatIndex = -1;
   beatFlash = 0;
+  beatSurge = 0;
   shockwaves = [];
   sourceX = new Float64Array(0);
   sourceY = new Float64Array(0);

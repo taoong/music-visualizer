@@ -34,6 +34,7 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   bootsAcceleration: 'boots-acceleration',
   rippletankBeatFreq: 'rippletank-beat-freq',
   rippletankWaterSpeed: 'rippletank-water-speed',
+  rippletankBeatSurge: 'rippletank-beat-surge',
   cymaticsBeatFreq: 'cymatics-beat-freq',
   cymaticsSandSize: 'cymatics-sand-size',
   cymaticsSandSpeed: 'cymatics-sand-speed',

@@ -193,6 +193,7 @@ export const DEFAULT_CONFIG = {
   // Rippletank-specific
   rippletankBeatFreq: 1,
   rippletankWaterSpeed: 0.5,
+  rippletankBeatSurge: 0.5,
   // Cymatics-specific
   cymaticsBeatFreq: 1,
   cymaticsSandSize: 0.5,

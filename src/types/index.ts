@@ -65,6 +65,7 @@ export interface Config {
   // Rippletank-specific
   rippletankBeatFreq: number;
   rippletankWaterSpeed: number;
+  rippletankBeatSurge: number;
   // Cymatics-specific
   cymaticsBeatFreq: number;
   cymaticsSandSize: number;
