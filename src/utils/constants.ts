@@ -198,9 +198,6 @@ export const DEFAULT_CONFIG = {
   cymaticsBeatFreq: 1,
   cymaticsSandSize: 0.5,
   cymaticsSandSpeed: 0.5,
-  // Pendulum Wave-specific
-  pendulumGravity: 0.5,
-  pendulumSpread: 0.4,
   // Cloud Chamber-specific
   cloudMagneticField: 0.4,
   cloudParticleLife: 0.5,

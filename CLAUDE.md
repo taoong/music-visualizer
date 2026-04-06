@@ -55,7 +55,6 @@ src/
 │   ├── cymatics.ts            # Cymatics: Chladni plate simulation; ~3000 particles (1500 mobile) drift toward nodal lines of 7 standing wave modes driven by freq bands; beat-triggered scatter/reform; HSB coloring by dominant band
 │   ├── cloudchamber.ts        # Cloud Chamber: particle physics simulation; 7 particle types (alpha/proton/muon/electron/positron/pion/gamma) mapped to freq bands; Lorentz force magnetic field curving; beat cosmic ray showers; pion decay kinks; gamma pair production; max 200 particles
 │   ├── attractor.ts           # Strange Attractor: Lorenz attractor chaos theory simulation; particles trace 3D butterfly-shaped paths; freq bands spawn colored groups; amplitude warps sigma/rho; beats jolt parameters; 3D→2D projection with orbiting camera; sliders: Chaos, Trail Length
-│   ├── pendulumwave.ts        # Pendulum Wave: 24 pendulums with incrementally different lengths create wave patterns; beat kicks inject energy; freq bands modulate groups; simple pendulum physics with damping; bob trails + glow; sliders: Gravity, Spread
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -124,7 +123,7 @@ Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChang
 3. Export from `src/visualizations/index.ts`.
 4. Import + add `case` in `main.ts` draw switch and windowResized handler.
 5. Add `<option>` in `index.html` viz-selector dropdown.
-6. Add `'<name>'` to type cast in `src/ui/controller.ts` `bindVizSelector` and add switch case with show/hide logic.
+6. Add `'<name>'` to type cast in `src/ui/controller.ts` `bindVizSelector`.
 7. Add keyboard shortcut in `src/ui/keyboard.ts`.
 8. Add any missing p5.js methods to `src/types/globals.d.ts`.
 

@@ -42,8 +42,6 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cloudParticleLife: 'cloud-particle-life',
   cloudBeatFreq: 'cloud-beat-freq',
   cloudBeatBoost: 'cloud-beat-boost',
-  pendulumGravity: 'pendulum-gravity',
-  pendulumSpread: 'pendulum-spread',
   attractorChaos: 'attractor-chaos',
   attractorTrailLength: 'attractor-trail-length',
 };
