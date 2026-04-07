@@ -52,11 +52,11 @@ export function drawMandala(p: P5Instance, dt: number): void {
 
   // ── Update angles ───────────────────────────────────────────────────────
   const boostMultiplier = 1.0 + beatBoost * 3.0;
-  gridAngle   += config.mandalaGridSpeed   * 0.02 * dt * boostMultiplier;
-  hexAngle    += config.mandalaHexSpeed    * 0.03 * dt * boostMultiplier;
-  squareAngle += config.mandalaSquareSpeed * 0.025 * dt * boostMultiplier;
-  triAngle    += config.mandalaTriSpeed    * 0.035 * dt * boostMultiplier;
-  circleAngle += config.mandalaCircleSpeed * 0.03 * dt * boostMultiplier;
+  gridAngle   += config.mandalaGridSpeed   * 0.06 * dt * boostMultiplier;
+  hexAngle    += config.mandalaHexSpeed    * 0.09 * dt * boostMultiplier;
+  squareAngle += config.mandalaSquareSpeed * 0.075 * dt * boostMultiplier;
+  triAngle    += config.mandalaTriSpeed    * 0.105 * dt * boostMultiplier;
+  circleAngle += config.mandalaCircleSpeed * 0.09 * dt * boostMultiplier;
 
   // ── Overall audio energy for glow intensity ─────────────────────────────
   let energy = 0;
