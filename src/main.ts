@@ -71,6 +71,8 @@ import {
   resetCloudChamber,
   drawAttractor,
   resetAttractor,
+  drawMandala,
+  resetMandala,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -223,6 +225,9 @@ const sketch = (p: P5Instance) => {
       case 'attractor':
         drawAttractor(p, dt);
         break;
+      case 'mandala':
+        drawMandala(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -266,6 +271,8 @@ const sketch = (p: P5Instance) => {
       resetCloudChamber();
     } else if (store.state.vizMode === 'attractor') {
       resetAttractor();
+    } else if (store.state.vizMode === 'mandala') {
+      resetMandala();
     }
   };
 };

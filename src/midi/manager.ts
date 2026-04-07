@@ -44,6 +44,12 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cloudBeatBoost: 'cloud-beat-boost',
   attractorChaos: 'attractor-chaos',
   attractorTrailLength: 'attractor-trail-length',
+  mandalaBeatFreq: 'mandala-beat-freq',
+  mandalaGridSpeed: 'mandala-grid-speed',
+  mandalaHexSpeed: 'mandala-hex-speed',
+  mandalaSquareSpeed: 'mandala-square-speed',
+  mandalaTriSpeed: 'mandala-tri-speed',
+  mandalaCircleSpeed: 'mandala-circle-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

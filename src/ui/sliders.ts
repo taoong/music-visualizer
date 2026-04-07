@@ -86,6 +86,12 @@ export function bindDisplaySliders(): () => void {
     { id: 'cloud-beat-boost', key: 'cloudBeatBoost' },
     { id: 'attractor-chaos', key: 'attractorChaos' },
     { id: 'attractor-trail-length', key: 'attractorTrailLength' },
+    { id: 'mandala-beat-freq', key: 'mandalaBeatFreq' },
+    { id: 'mandala-grid-speed', key: 'mandalaGridSpeed' },
+    { id: 'mandala-hex-speed', key: 'mandalaHexSpeed' },
+    { id: 'mandala-square-speed', key: 'mandalaSquareSpeed' },
+    { id: 'mandala-tri-speed', key: 'mandalaTriSpeed' },
+    { id: 'mandala-circle-speed', key: 'mandalaCircleSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

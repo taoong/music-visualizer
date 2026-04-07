@@ -206,6 +206,13 @@ export const DEFAULT_CONFIG = {
   // Attractor-specific
   attractorChaos: 0.6,
   attractorTrailLength: 0.5,
+  // Mandala-specific
+  mandalaBeatFreq: 1,
+  mandalaGridSpeed: 0.3,
+  mandalaHexSpeed: 0.4,
+  mandalaSquareSpeed: 0.5,
+  mandalaTriSpeed: 0.6,
+  mandalaCircleSpeed: 0.5,
 };
 
 // FFT and decay constants
