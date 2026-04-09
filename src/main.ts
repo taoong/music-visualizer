@@ -77,6 +77,8 @@ import {
   resetSilk,
   drawKaleidoscope,
   resetKaleidoscope,
+  drawStringart,
+  resetStringart,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -238,6 +240,9 @@ const sketch = (p: P5Instance) => {
       case 'kaleidoscope':
         drawKaleidoscope(p, dt);
         break;
+      case 'stringart':
+        drawStringart(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -287,6 +292,8 @@ const sketch = (p: P5Instance) => {
       resetSilk();
     } else if (store.state.vizMode === 'kaleidoscope') {
       resetKaleidoscope();
+    } else if (store.state.vizMode === 'stringart') {
+      resetStringart();
     }
   };
 };

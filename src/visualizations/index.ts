@@ -24,4 +24,5 @@ export { drawAttractor, resetAttractor } from './attractor';
 export { drawMandala, resetMandala } from './mandala';
 export { drawSilk, resetSilk } from './silk';
 export { drawKaleidoscope, resetKaleidoscope } from './kaleidoscope';
+export { drawStringart, resetStringart } from './stringart';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

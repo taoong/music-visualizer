@@ -98,6 +98,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'kaleidoscope-segments', key: 'kaleidoscopeSegments' },
     { id: 'kaleidoscope-zoom', key: 'kaleidoscopeZoom' },
     { id: 'kaleidoscope-speed', key: 'kaleidoscopeSpeed' },
+    { id: 'stringart-pins', key: 'stringartPins' },
+    { id: 'stringart-multiplier', key: 'stringartMultiplier' },
+    { id: 'stringart-speed', key: 'stringartSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

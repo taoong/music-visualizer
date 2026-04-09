@@ -304,6 +304,7 @@
           <option value="mandala">Mandala</option>
           <option value="silk">Silk Flow</option>
           <option value="kaleidoscope">Kaleidoscope</option>
+          <option value="stringart">String Art</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -773,6 +774,44 @@
               step="0.01"
               value="0.5"
               aria-label="Rotation speed of the kaleidoscope"
+            />
+          </div>
+        </div>
+        <div id="stringart-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="stringart-pins">Pins</label>
+            <input
+              type="range"
+              id="stringart-pins"
+              min="20"
+              max="200"
+              step="1"
+              value="100"
+              aria-label="Number of pins around the circle"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="stringart-multiplier">Multiplier</label>
+            <input
+              type="range"
+              id="stringart-multiplier"
+              min="2"
+              max="20"
+              step="0.1"
+              value="3"
+              aria-label="Times-table multiplier (2=cardioid, 3=trefoil, etc.)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="stringart-speed">Drift Speed</label>
+            <input
+              type="range"
+              id="stringart-speed"
+              min="0"
+              max="3"
+              step="0.01"
+              value="1"
+              aria-label="Speed of multiplier drift and rotation"
             />
           </div>
         </div>

@@ -221,6 +221,10 @@ export const DEFAULT_CONFIG = {
   kaleidoscopeSegments: 8,
   kaleidoscopeZoom: 0.7,
   kaleidoscopeSpeed: 0.5,
+  // String Art-specific
+  stringartPins: 100,
+  stringartMultiplier: 3,
+  stringartSpeed: 1.0,
 };
 
 // FFT and decay constants
