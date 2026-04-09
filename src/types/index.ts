@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems' | 'mic';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'silk';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'silk' | 'kaleidoscope';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -89,6 +89,10 @@ export interface Config {
   silkWaveSpeed: number;
   silkRibbonWidth: number;
   silkGlow: number;
+  // Kaleidoscope-specific
+  kaleidoscopeSegments: number;
+  kaleidoscopeZoom: number;
+  kaleidoscopeSpeed: number;
 }
 
 // Application state

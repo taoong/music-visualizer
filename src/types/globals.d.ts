@@ -30,6 +30,8 @@ declare global {
     HSB: string;
     RGB: string;
     CLOSE: number;
+    PIE: number;
+    CHORD: number;
     CENTER: string;
     LEFT: string;
     RIGHT: string;
@@ -58,7 +60,7 @@ declare global {
     endShape(mode?: number): void;
     line(x1: number, y1: number, x2: number, y2: number): void;
     quad(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, x4: number, y4: number): void;
-    arc(x: number, y: number, w: number, h: number, start: number, stop: number): void;
+    arc(x: number, y: number, w: number, h: number, start: number, stop: number, mode?: number): void;
     point(x: number, y: number): void;
     curveVertex(x: number, y: number): void;
 

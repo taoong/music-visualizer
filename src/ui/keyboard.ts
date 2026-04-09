@@ -41,6 +41,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('j', () => setVizMode('attractor'), 'Strange Attractor visualization');
   defineShortcut('l', () => setVizMode('mandala'), 'Mandala visualization');
   defineShortcut('x', () => setVizMode('silk'), 'Silk Flow visualization');
+  defineShortcut('e', () => setVizMode('kaleidoscope'), 'Kaleidoscope visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

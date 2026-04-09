@@ -217,6 +217,10 @@ export const DEFAULT_CONFIG = {
   silkWaveSpeed: 0.6,
   silkRibbonWidth: 8,
   silkGlow: 0.6,
+  // Kaleidoscope-specific
+  kaleidoscopeSegments: 8,
+  kaleidoscopeZoom: 0.7,
+  kaleidoscopeSpeed: 0.5,
 };
 
 // FFT and decay constants

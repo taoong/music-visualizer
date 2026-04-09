@@ -53,6 +53,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   silkWaveSpeed: 'silk-wave-speed',
   silkRibbonWidth: 'silk-ribbon-width',
   silkGlow: 'silk-glow',
+  kaleidoscopeSegments: 'kaleidoscope-segments',
+  kaleidoscopeZoom: 'kaleidoscope-zoom',
+  kaleidoscopeSpeed: 'kaleidoscope-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -95,6 +95,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'silk-wave-speed', key: 'silkWaveSpeed' },
     { id: 'silk-ribbon-width', key: 'silkRibbonWidth' },
     { id: 'silk-glow', key: 'silkGlow' },
+    { id: 'kaleidoscope-segments', key: 'kaleidoscopeSegments' },
+    { id: 'kaleidoscope-zoom', key: 'kaleidoscopeZoom' },
+    { id: 'kaleidoscope-speed', key: 'kaleidoscopeSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {
