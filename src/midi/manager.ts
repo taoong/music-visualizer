@@ -50,6 +50,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   mandalaSquareSpeed: 'mandala-square-speed',
   mandalaTriSpeed: 'mandala-tri-speed',
   mandalaCircleSpeed: 'mandala-circle-speed',
+  silkWaveSpeed: 'silk-wave-speed',
+  silkRibbonWidth: 'silk-ribbon-width',
+  silkGlow: 'silk-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

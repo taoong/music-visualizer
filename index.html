@@ -302,6 +302,7 @@
           <option value="cloudchamber">Cloud Chamber</option>
           <option value="attractor">Strange Attractor</option>
           <option value="mandala">Mandala</option>
+          <option value="silk">Silk Flow</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -695,6 +696,44 @@
               step="0.01"
               value="0.5"
               aria-label="Circle rotation speed"
+            />
+          </div>
+        </div>
+        <div id="silk-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="silk-wave-speed">Wave Speed</label>
+            <input
+              type="range"
+              id="silk-wave-speed"
+              min="0"
+              max="2"
+              step="0.01"
+              value="0.6"
+              aria-label="Ribbon wave animation speed"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="silk-ribbon-width">Ribbon Width</label>
+            <input
+              type="range"
+              id="silk-ribbon-width"
+              min="2"
+              max="30"
+              step="1"
+              value="8"
+              aria-label="Width of each ribbon"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="silk-glow">Glow</label>
+            <input
+              type="range"
+              id="silk-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Ribbon glow intensity"
             />
           </div>
         </div>

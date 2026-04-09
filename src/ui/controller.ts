@@ -93,6 +93,7 @@ function bindVizSelector(): () => void {
   const cloudchamberControlsGroup = document.getElementById('cloudchamber-controls-group');
   const attractorControlsGroup = document.getElementById('attractor-controls-group');
   const mandalaControlsGroup = document.getElementById('mandala-controls-group');
+  const silkControlsGroup = document.getElementById('silk-controls-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
@@ -133,7 +134,7 @@ function bindVizSelector(): () => void {
   const decayRateLabel = decayRateGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'silk';
     store.setVizMode(mode);
 
     // Per-mode control visibility
@@ -152,45 +153,45 @@ function bindVizSelector(): () => void {
       case 'circle':
         show(scaleGroup); show(decayRateGroup); show(rotationSpeedGroup); show(circleImageRotationGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'spectrum':
         show(scaleGroup); show(decayRateGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'tunnel':
         hide(scaleGroup); show(decayRateGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'tetris':
         show(beatDivisionGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(ballsKickBoostGroup); hide(intensityGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'lasers':
         show(intensityGroup); show(beatDivisionGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'text':
         show(intensityGroup); show(beatDivisionGroup); show(textInputGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'highway':
         show(intensityGroup); show(highwayControlsGroup);
         if (intensityLabel) intensityLabel.textContent = 'Speed';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'liquidmetal':
         show(rotationSpeedGroup); show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Spin Chaos';
         hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'neon':
         show(rotationSpeedGroup); show(intensityGroup); show(decayRateGroup);
@@ -199,82 +200,88 @@ function bindVizSelector(): () => void {
         if (decayRateLabel) decayRateLabel.textContent = 'Camera Height';
         hide(scaleGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'imagegrid':
         show(rotationSpeedGroup); show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
         hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'colormap':
         show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Color Boost';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'sculpture':
         show(rotationSpeedGroup); show(intensityGroup); show(sculptureControlsGroup);
         if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
         hide(scaleGroup); hide(decayRateGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'binary':
         show(scaleGroup); show(decayRateGroup);
         if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'tungtung':
         show(textInputGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
-        hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'aurora':
         show(intensityGroup); show(scaleGroup);
         if (intensityLabel) intensityLabel.textContent = 'Glow Strength';
         hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'bootsandcats':
         show(bootsControlsGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'rippletank':
         show(scaleGroup); show(rippletankControlsGroup);
         hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'cymatics':
         show(cymaticsControlsGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'cloudchamber':
         show(cloudchamberControlsGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'attractor':
         show(attractorControlsGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(mandalaControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(mandalaControlsGroup); hide(silkControlsGroup);
         break;
       case 'mandala':
         show(mandalaControlsGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(silkControlsGroup);
+        break;
+      case 'silk':
+        show(silkControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup);
         break;
     }
   };

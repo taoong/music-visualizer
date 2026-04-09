@@ -73,6 +73,8 @@ import {
   resetAttractor,
   drawMandala,
   resetMandala,
+  drawSilk,
+  resetSilk,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -228,6 +230,9 @@ const sketch = (p: P5Instance) => {
       case 'mandala':
         drawMandala(p, dt);
         break;
+      case 'silk':
+        drawSilk(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -273,6 +278,8 @@ const sketch = (p: P5Instance) => {
       resetAttractor();
     } else if (store.state.vizMode === 'mandala') {
       resetMandala();
+    } else if (store.state.vizMode === 'silk') {
+      resetSilk();
     }
   };
 };

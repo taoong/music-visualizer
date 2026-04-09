@@ -92,6 +92,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'mandala-square-speed', key: 'mandalaSquareSpeed' },
     { id: 'mandala-tri-speed', key: 'mandalaTriSpeed' },
     { id: 'mandala-circle-speed', key: 'mandalaCircleSpeed' },
+    { id: 'silk-wave-speed', key: 'silkWaveSpeed' },
+    { id: 'silk-ribbon-width', key: 'silkRibbonWidth' },
+    { id: 'silk-glow', key: 'silkGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

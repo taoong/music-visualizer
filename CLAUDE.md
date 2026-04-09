@@ -56,6 +56,7 @@ src/
 │   ├── cloudchamber.ts        # Cloud Chamber: particle physics simulation; 7 particle types (alpha/proton/muon/electron/positron/pion/gamma) mapped to freq bands; Lorentz force magnetic field curving; beat cosmic ray showers; pion decay kinks; gamma pair production; max 200 particles
 │   ├── attractor.ts           # Strange Attractor: Lorenz attractor chaos theory simulation; particles trace 3D butterfly-shaped paths; freq bands spawn colored groups; amplitude warps sigma/rho; beats jolt parameters; 3D→2D projection with orbiting camera; sliders: Chaos, Trail Length
 │   ├── mandala.ts             # Mandala: 5 concentric rotating shapes (grid, hexagon, square, triangle, circle) from largest to smallest; each shape has independent rotation speed slider; beat hits temporarily spike all rotation speeds; HSB colors driven by freq band amplitudes; glow layers on shapes; sliders: Beat Frequency, Grid/Hex/Square/Triangle/Circle Speed
+│   ├── silk.ts                # Silk Flow: 7 neon ribbon-like sine waves flowing horizontally, one per freq band; each ribbon glows with multi-pass rendering (outer halo, mid glow, bright core); wave amplitude driven by band energy + transient multiplier; beat sends surge through all ribbons; per-ribbon phase speeds and wavelength variety; sliders: Wave Speed, Ribbon Width, Glow
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
