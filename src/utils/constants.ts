@@ -225,6 +225,10 @@ export const DEFAULT_CONFIG = {
   stringartPins: 100,
   stringartMultiplier: 3,
   stringartSpeed: 1.0,
+  // Constellation-specific
+  constellationStarCount: 0.5,
+  constellationConnRange: 0.4,
+  constellationDriftSpeed: 0.3,
 };
 
 // FFT and decay constants

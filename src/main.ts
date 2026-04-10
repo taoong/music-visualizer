@@ -79,6 +79,8 @@ import {
   resetKaleidoscope,
   drawStringart,
   resetStringart,
+  drawConstellation,
+  resetConstellation,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -243,6 +245,9 @@ const sketch = (p: P5Instance) => {
       case 'stringart':
         drawStringart(p, dt);
         break;
+      case 'constellation':
+        drawConstellation(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -294,6 +299,8 @@ const sketch = (p: P5Instance) => {
       resetKaleidoscope();
     } else if (store.state.vizMode === 'stringart') {
       resetStringart();
+    } else if (store.state.vizMode === 'constellation') {
+      resetConstellation();
     }
   };
 };

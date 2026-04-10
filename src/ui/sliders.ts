@@ -101,6 +101,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'stringart-pins', key: 'stringartPins' },
     { id: 'stringart-multiplier', key: 'stringartMultiplier' },
     { id: 'stringart-speed', key: 'stringartSpeed' },
+    { id: 'constellation-star-count', key: 'constellationStarCount' },
+    { id: 'constellation-conn-range', key: 'constellationConnRange' },
+    { id: 'constellation-drift-speed', key: 'constellationDriftSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {
