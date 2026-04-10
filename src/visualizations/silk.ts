@@ -44,6 +44,7 @@ export function resetSilk(): void {
 }
 
 export function drawSilk(p: P5Instance, dt: number): void {
+  if (phases.length === 0) resetSilk();
   const { state, config } = store;
 
   // ── Beat detection ────────────────────────────────────────────────────────
