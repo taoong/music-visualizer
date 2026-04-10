@@ -116,14 +116,25 @@ export function drawConstellation(p: P5Instance, dt: number): void {
   const cy = h / 2;
 
   for (let i = 0; i < starCount; i++) {
-    // Beat pulse: push stars outward from center
-    if (beatPulse > 0.5) {
+    // Beat pulse: one-frame impulse push outward from center
+    if (beatPulse > 0.95) {
       const dx = x[i] - cx;
       const dy = y[i] - cy;
       const dist = Math.sqrt(dx * dx + dy * dy) + 1;
-      const pushStrength = beatPulse * 2.0;
+      const pushStrength = 1.5;
       vx[i] += (dx / dist) * pushStrength;
       vy[i] += (dy / dist) * pushStrength;
+    }
+
+    // Gentle pull toward center to keep stars on screen
+    const dx = x[i] - cx;
+    const dy = y[i] - cy;
+    const dist = Math.sqrt(dx * dx + dy * dy) + 1;
+    const maxDist = Math.min(w, h) * 0.45;
+    if (dist > maxDist) {
+      const pullStrength = 0.02 * ((dist - maxDist) / maxDist);
+      vx[i] -= (dx / dist) * pullStrength * dt;
+      vy[i] -= (dy / dist) * pullStrength * dt;
     }
 
     // Apply drift
@@ -131,13 +142,13 @@ export function drawConstellation(p: P5Instance, dt: number): void {
     y[i] += vy[i] * driftSpeed * dt;
 
     // Dampen velocity
-    const dampen = Math.pow(0.97, dt);
+    const dampen = Math.pow(0.94, dt);
     vx[i] *= dampen;
     vy[i] *= dampen;
 
     // Add subtle random drift
-    vx[i] += (Math.random() - 0.5) * 0.05 * dt;
-    vy[i] += (Math.random() - 0.5) * 0.05 * dt;
+    vx[i] += (Math.random() - 0.5) * 0.04 * dt;
+    vy[i] += (Math.random() - 0.5) * 0.04 * dt;
 
     // Wrap around edges with margin
     const margin = 20;
