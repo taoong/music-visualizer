@@ -40,8 +40,6 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('d', () => setVizMode('cloudchamber'), 'Cloud Chamber visualization');
   defineShortcut('j', () => setVizMode('attractor'), 'Strange Attractor visualization');
   defineShortcut('l', () => setVizMode('mandala'), 'Mandala visualization');
-  defineShortcut('x', () => setVizMode('silk'), 'Silk Flow visualization');
-  defineShortcut('e', () => setVizMode('kaleidoscope'), 'Kaleidoscope visualization');
   defineShortcut('v', () => setVizMode('stringart'), 'String Art visualization');
   defineShortcut('o', () => setVizMode('constellation'), 'Constellation visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');

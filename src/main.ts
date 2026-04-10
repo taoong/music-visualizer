@@ -73,10 +73,6 @@ import {
   resetAttractor,
   drawMandala,
   resetMandala,
-  drawSilk,
-  resetSilk,
-  drawKaleidoscope,
-  resetKaleidoscope,
   drawStringart,
   resetStringart,
   drawConstellation,
@@ -236,12 +232,6 @@ const sketch = (p: P5Instance) => {
       case 'mandala':
         drawMandala(p, dt);
         break;
-      case 'silk':
-        drawSilk(p, dt);
-        break;
-      case 'kaleidoscope':
-        drawKaleidoscope(p, dt);
-        break;
       case 'stringart':
         drawStringart(p, dt);
         break;
@@ -293,10 +283,6 @@ const sketch = (p: P5Instance) => {
       resetAttractor();
     } else if (store.state.vizMode === 'mandala') {
       resetMandala();
-    } else if (store.state.vizMode === 'silk') {
-      resetSilk();
-    } else if (store.state.vizMode === 'kaleidoscope') {
-      resetKaleidoscope();
     } else if (store.state.vizMode === 'stringart') {
       resetStringart();
     } else if (store.state.vizMode === 'constellation') {

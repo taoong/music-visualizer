@@ -213,14 +213,6 @@ export const DEFAULT_CONFIG = {
   mandalaSquareSpeed: 0.5,
   mandalaTriSpeed: 0.6,
   mandalaCircleSpeed: 0.5,
-  // Silk Flow-specific
-  silkWaveSpeed: 0.6,
-  silkRibbonWidth: 8,
-  silkGlow: 0.6,
-  // Kaleidoscope-specific
-  kaleidoscopeSegments: 8,
-  kaleidoscopeZoom: 0.7,
-  kaleidoscopeSpeed: 0.5,
   // String Art-specific
   stringartPins: 100,
   stringartMultiplier: 3,
