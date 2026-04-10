@@ -116,39 +116,48 @@ export function drawConstellation(p: P5Instance, dt: number): void {
   const cy = h / 2;
 
   for (let i = 0; i < starCount; i++) {
-    // Beat pulse: one-frame impulse push outward from center
+    // Map star to frequency band based on horizontal position
+    const bandIdx = Math.min(6, Math.floor((x[i] / w) * 7));
+    const bandAmp = amps[Math.max(0, bandIdx)];
+
+    // Beat pulse: impulse push outward from center (single frame)
     if (beatPulse > 0.95) {
       const dx = x[i] - cx;
       const dy = y[i] - cy;
       const dist = Math.sqrt(dx * dx + dy * dy) + 1;
-      const pushStrength = 1.5;
+      const pushStrength = 3.0 + bandAmp * 4.0;
       vx[i] += (dx / dist) * pushStrength;
       vy[i] += (dy / dist) * pushStrength;
     }
+
+    // Amplitude-driven jitter: stars vibrate with their band's energy
+    vx[i] += (Math.random() - 0.5) * bandAmp * 1.2 * dt;
+    vy[i] += (Math.random() - 0.5) * bandAmp * 1.2 * dt;
 
     // Gentle pull toward center to keep stars on screen
     const dx = x[i] - cx;
     const dy = y[i] - cy;
     const dist = Math.sqrt(dx * dx + dy * dy) + 1;
-    const maxDist = Math.min(w, h) * 0.45;
-    if (dist > maxDist) {
-      const pullStrength = 0.02 * ((dist - maxDist) / maxDist);
-      vx[i] -= (dx / dist) * pullStrength * dt;
-      vy[i] -= (dy / dist) * pullStrength * dt;
-    }
+    const maxDist = Math.min(w, h) * 0.4;
+    // Always a slight pull, stronger past maxDist
+    const basePull = 0.003 * energy;
+    const edgePull = dist > maxDist ? 0.05 * ((dist - maxDist) / maxDist) : 0;
+    vx[i] -= (dx / dist) * (basePull + edgePull) * dt;
+    vy[i] -= (dy / dist) * (basePull + edgePull) * dt;
 
-    // Apply drift
-    x[i] += vx[i] * driftSpeed * dt;
-    y[i] += vy[i] * driftSpeed * dt;
+    // Apply drift — amplitude boosts movement speed
+    const ampBoost = 1.0 + bandAmp * 2.0 + beatPulse * 1.5;
+    x[i] += vx[i] * driftSpeed * ampBoost * dt;
+    y[i] += vy[i] * driftSpeed * ampBoost * dt;
 
     // Dampen velocity
-    const dampen = Math.pow(0.94, dt);
+    const dampen = Math.pow(0.96, dt);
     vx[i] *= dampen;
     vy[i] *= dampen;
 
     // Add subtle random drift
-    vx[i] += (Math.random() - 0.5) * 0.04 * dt;
-    vy[i] += (Math.random() - 0.5) * 0.04 * dt;
+    vx[i] += (Math.random() - 0.5) * 0.05 * dt;
+    vy[i] += (Math.random() - 0.5) * 0.05 * dt;
 
     // Wrap around edges with margin
     const margin = 20;
@@ -157,12 +166,8 @@ export function drawConstellation(p: P5Instance, dt: number): void {
     if (y[i] < -margin) y[i] += h + margin * 2;
     if (y[i] > h + margin) y[i] -= h + margin * 2;
 
-    // Map star to frequency band based on horizontal position
-    const bandIdx = Math.min(6, Math.floor((x[i] / w) * 7));
-    const bandAmp = amps[Math.max(0, bandIdx)];
-
     // Audio-reactive size and hue
-    size[i] = 1.5 + bandAmp * 5 + beatPulse * 2;
+    size[i] = 1.5 + bandAmp * 8 + beatPulse * 4;
     hue[i] = (bandIdx * 51 + bandAmp * 30 + energy * 20) % 360;
   }
 
@@ -192,8 +197,8 @@ export function drawConstellation(p: P5Instance, dt: number): void {
   (p as any).noStroke();
   for (let i = 0; i < starCount; i++) {
     const s = size[i];
-    const bright = 60 + energy * 30 + beatPulse * 10;
-    const alpha = 70 + energy * 25;
+    const bright = 50 + energy * 40 + beatPulse * 10;
+    const alpha = 60 + energy * 35;
 
     // Glow layer
     (p as any).fill(hue[i], 50, bright, alpha * 0.3);
