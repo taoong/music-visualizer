@@ -56,6 +56,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   constellationStarCount: 'constellation-star-count',
   constellationConnRange: 'constellation-conn-range',
   constellationDriftSpeed: 'constellation-drift-speed',
+  petalsPetalCount: 'petals-petal-count',
+  petalsBloomScale: 'petals-bloom-scale',
+  petalsSpinSpeed: 'petals-spin-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

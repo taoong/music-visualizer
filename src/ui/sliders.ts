@@ -98,6 +98,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'constellation-star-count', key: 'constellationStarCount' },
     { id: 'constellation-conn-range', key: 'constellationConnRange' },
     { id: 'constellation-drift-speed', key: 'constellationDriftSpeed' },
+    { id: 'petals-petal-count', key: 'petalsPetalCount' },
+    { id: 'petals-bloom-scale', key: 'petalsBloomScale' },
+    { id: 'petals-spin-speed', key: 'petalsSpinSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

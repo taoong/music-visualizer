@@ -77,6 +77,8 @@ import {
   resetStringart,
   drawConstellation,
   resetConstellation,
+  drawPetals,
+  resetPetals,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -238,6 +240,9 @@ const sketch = (p: P5Instance) => {
       case 'constellation':
         drawConstellation(p, dt);
         break;
+      case 'petals':
+        drawPetals(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -287,6 +292,8 @@ const sketch = (p: P5Instance) => {
       resetStringart();
     } else if (store.state.vizMode === 'constellation') {
       resetConstellation();
+    } else if (store.state.vizMode === 'petals') {
+      resetPetals();
     }
   };
 };

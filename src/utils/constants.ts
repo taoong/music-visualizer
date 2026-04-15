@@ -221,6 +221,10 @@ export const DEFAULT_CONFIG = {
   constellationStarCount: 0.5,
   constellationConnRange: 0.4,
   constellationDriftSpeed: 0.3,
+  // Petal Bloom-specific
+  petalsPetalCount: 6,
+  petalsBloomScale: 0.8,
+  petalsSpinSpeed: 0.5,
 };
 
 // FFT and decay constants

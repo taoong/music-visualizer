@@ -24,4 +24,5 @@ export { drawAttractor, resetAttractor } from './attractor';
 export { drawMandala, resetMandala } from './mandala';
 export { drawStringart, resetStringart } from './stringart';
 export { drawConstellation, resetConstellation } from './constellation';
+export { drawPetals, resetPetals } from './petals';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

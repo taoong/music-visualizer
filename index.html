@@ -304,6 +304,7 @@
           <option value="mandala">Mandala</option>
           <option value="stringart">String Art</option>
           <option value="constellation">Constellation</option>
+          <option value="petals">Petal Bloom</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -773,6 +774,44 @@
               step="0.01"
               value="0.3"
               aria-label="How fast stars drift around"
+            />
+          </div>
+        </div>
+        <div id="petals-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="petals-petal-count">Petal Count</label>
+            <input
+              type="range"
+              id="petals-petal-count"
+              min="3"
+              max="16"
+              step="1"
+              value="6"
+              aria-label="Number of petals per ring"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="petals-bloom-scale">Bloom Scale</label>
+            <input
+              type="range"
+              id="petals-bloom-scale"
+              min="0.1"
+              max="2"
+              step="0.01"
+              value="0.8"
+              aria-label="How much petals grow with audio amplitude"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="petals-spin-speed">Spin Speed</label>
+            <input
+              type="range"
+              id="petals-spin-speed"
+              min="0"
+              max="3"
+              step="0.01"
+              value="0.5"
+              aria-label="Rotation speed of the petal rings"
             />
           </div>
         </div>

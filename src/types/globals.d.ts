@@ -56,6 +56,7 @@ declare global {
     rect(x: number, y: number, w: number, h?: number, tl?: number, tr?: number, br?: number, bl?: number): void;
     triangle(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): void;
     vertex(x: number, y: number): void;
+    bezierVertex(cx1: number, cy1: number, cx2: number, cy2: number, x: number, y: number): void;
     beginShape(): void;
     endShape(mode?: number): void;
     line(x1: number, y1: number, x2: number, y2: number): void;
@@ -69,6 +70,7 @@ declare global {
     fill(r: number, g: number, b: number, a?: number): void;
     noFill(): void;
     stroke(color: number | string, s?: number, b?: number): void;
+    stroke(r: number, g: number, b: number, a: number): void;
     noStroke(): void;
     strokeWeight(weight: number): void;
     strokeCap(cap: string | number): void;
