@@ -59,6 +59,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   petalsPetalCount: 'petals-petal-count',
   petalsBloomScale: 'petals-bloom-scale',
   petalsSpinSpeed: 'petals-spin-speed',
+  waterfallScrollSpeed: 'waterfall-scroll-speed',
+  waterfallGain: 'waterfall-gain',
+  waterfallHue: 'waterfall-hue',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

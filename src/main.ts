@@ -79,6 +79,8 @@ import {
   resetConstellation,
   drawPetals,
   resetPetals,
+  drawWaterfall,
+  resetWaterfall,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -243,6 +245,9 @@ const sketch = (p: P5Instance) => {
       case 'petals':
         drawPetals(p, dt);
         break;
+      case 'waterfall':
+        drawWaterfall(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -294,6 +299,8 @@ const sketch = (p: P5Instance) => {
       resetConstellation();
     } else if (store.state.vizMode === 'petals') {
       resetPetals();
+    } else if (store.state.vizMode === 'waterfall') {
+      resetWaterfall();
     }
   };
 };

@@ -101,6 +101,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'petals-petal-count', key: 'petalsPetalCount' },
     { id: 'petals-bloom-scale', key: 'petalsBloomScale' },
     { id: 'petals-spin-speed', key: 'petalsSpinSpeed' },
+    { id: 'waterfall-scroll-speed', key: 'waterfallScrollSpeed' },
+    { id: 'waterfall-gain', key: 'waterfallGain' },
+    { id: 'waterfall-hue', key: 'waterfallHue' },
   ] as const;
 
   for (const { id, key } of configs) {

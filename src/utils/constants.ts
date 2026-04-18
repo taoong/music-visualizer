@@ -225,6 +225,10 @@ export const DEFAULT_CONFIG = {
   petalsPetalCount: 6,
   petalsBloomScale: 0.8,
   petalsSpinSpeed: 0.5,
+  // Waterfall-specific
+  waterfallScrollSpeed: 0.4,
+  waterfallGain: 0.5,
+  waterfallHue: 0.7,
 };
 
 // FFT and decay constants

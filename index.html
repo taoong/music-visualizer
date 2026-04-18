@@ -305,6 +305,7 @@
           <option value="stringart">String Art</option>
           <option value="constellation">Constellation</option>
           <option value="petals">Petal Bloom</option>
+          <option value="waterfall">Waterfall</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -812,6 +813,44 @@
               step="0.01"
               value="0.5"
               aria-label="Rotation speed of the petal rings"
+            />
+          </div>
+        </div>
+        <div id="waterfall-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="waterfall-scroll-speed">Scroll Speed</label>
+            <input
+              type="range"
+              id="waterfall-scroll-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="How fast the spectrogram scrolls"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="waterfall-gain">Brightness</label>
+            <input
+              type="range"
+              id="waterfall-gain"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Amplitude-to-color gain"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="waterfall-hue">Palette Hue</label>
+            <input
+              type="range"
+              id="waterfall-hue"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.7"
+              aria-label="Base hue of the color palette"
             />
           </div>
         </div>
