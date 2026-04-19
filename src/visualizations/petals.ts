@@ -15,7 +15,6 @@ import { store } from '../state/store';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT } from '../utils/constants';
 import { audioEngine } from '../audio/engine';
-import type { P5Instance } from '../types';
 
 // ── module-scoped state ──────────────────────────────────────────────────────
 let lastBeatIndex = -1;
