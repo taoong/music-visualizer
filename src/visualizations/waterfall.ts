@@ -134,12 +134,12 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
   if (snapshotCount === 0) return;
 
   const gain = 0.5 + config.waterfallGain * 3.5;
-  const baseY = h * 0.82;
-  const horizonY = h * 0.2;
-  const frontCenterX = w * 0.38;      // newest ribbon sits left-of-center
-  const backCenterX = w * 0.68;       // oldest ribbon drifts up-and-right
-  const plotWidthNear = w * 0.78;
-  const perspectiveScale = 0.3;
+  const baseY = h * 0.85;
+  const horizonY = h * 0.22;
+  const frontCenterX = w * 0.28;      // newest ribbon anchors lower-left
+  const backCenterX = w * 0.86;       // oldest ribbon drifts to upper-right
+  const plotWidthNear = w * 0.66;
+  const perspectiveScale = 0.28;
   const ampHeightNear = h * 0.32;
 
   // Painter's-algorithm back-to-front.
