@@ -135,8 +135,10 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
 
   const gain = 0.5 + config.waterfallGain * 3.5;
   const baseY = h * 0.82;
-  const horizonY = h * 0.18;
-  const plotWidthNear = w * 0.92;
+  const horizonY = h * 0.2;
+  const frontCenterX = w * 0.38;      // newest ribbon sits left-of-center
+  const backCenterX = w * 0.68;       // oldest ribbon drifts up-and-right
+  const plotWidthNear = w * 0.78;
   const perspectiveScale = 0.3;
   const ampHeightNear = h * 0.32;
 
@@ -148,8 +150,9 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
 
     const scale = 1 - depth * (1 - perspectiveScale);
     const rowY = baseY + (horizonY - baseY) * depth;
+    const centerX = frontCenterX + (backCenterX - frontCenterX) * depth;
     const plotWidth = plotWidthNear * scale;
-    const xStart = (w - plotWidth) / 2;
+    const xStart = centerX - plotWidth / 2;
     const ampHeight = ampHeightNear * scale;
     const foreground = 1 - depth;
 
