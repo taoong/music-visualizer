@@ -2,9 +2,9 @@
  * Waterfall — 3D scrolling spectrogram.
  *
  * A ring buffer of recent spectrum snapshots is rendered as stacked ribbons
- * in oblique projection: the newest snapshot sits in front at full size,
- * older ones recede up-and-back with depth scaling. Amplitude becomes the
- * ribbon's height; a plasma palette colors each bin across the x axis.
+ * in oblique projection: newest in front at full size, older ones recede
+ * up-and-back with perspective scaling. Amplitude becomes ribbon height;
+ * a plasma palette colors each bin along the ridge.
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
@@ -12,7 +12,12 @@ import { getBandData } from './helpers';
 import { BAND_COUNT, SPIKES_PER_BAND, isMobile } from '../utils/constants';
 
 // ── Snapshot ring buffer ────────────────────────────────────────────────────
-const MAX_SNAPSHOTS = isMobile ? 32 : 56;
+// Count & per-ribbon sampling are the two biggest perf levers. A 3D
+// waterfall reads well with fewer-but-clearer ribbons than a dense stack.
+const MAX_SNAPSHOTS = isMobile ? 16 : 26;
+const RIBBON_POINTS = isMobile ? 48 : 72;
+const GRAD_STOPS = 6;
+
 let snapshots: Float32Array[] = [];
 let snapshotHead = 0;   // index of oldest entry
 let snapshotCount = 0;
@@ -20,6 +25,10 @@ let captureAccum = 0;
 
 let lastBeatIndex = -1;
 let beatFlash = 0;
+
+// Per-ribbon scratch buffers — reused every frame to avoid allocations.
+const scratchX = new Float32Array(RIBBON_POINTS);
+const scratchY = new Float32Array(RIBBON_POINTS);
 
 // ── Color LUT (256 × RGB) ────────────────────────────────────────────────────
 const COLOR_LUT = new Uint8Array(256 * 3);
@@ -77,7 +86,6 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
 
   if (currentHueShift !== config.waterfallHue) buildLUT(config.waterfallHue);
 
-  // Beat tracking — tick on index advance, decay each frame.
   if (state.detectedBPM > 0 && state.isPlaying) {
     const pos = audioEngine.getPlaybackPosition();
     const adjusted = pos - state.beatOffset;
@@ -90,8 +98,6 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
   beatFlash *= Math.pow(0.85, dt);
   if (beatFlash < 0.001) beatFlash = 0;
 
-  // Capture a new snapshot at a rate set by scroll-speed slider.
-  // captureInterval is in frames; 1 = every frame, 5 = every 5 frames.
   const captureInterval = Math.max(1, 5 - config.waterfallScrollSpeed * 4);
   captureAccum += dt;
 
@@ -99,14 +105,19 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
   const bandCount = isFreqMode ? BAND_COUNT : 5;
   const totalBins = bandCount * SPIKES_PER_BAND;
 
+  // Capture only at the source resolution we actually render — RIBBON_POINTS
+  // samples. Saves memory and skips the per-draw resampling pass.
   if (captureAccum >= captureInterval) {
     captureAccum = 0;
-    const snap = new Float32Array(totalBins);
-    for (let b = 0; b < bandCount; b++) {
-      for (let i = 0; i < SPIKES_PER_BAND; i++) {
-        const { amp, tMult, delta } = getBandData(b, i);
-        snap[b * SPIKES_PER_BAND + i] = amp * tMult + delta * 0.15;
-      }
+    const snap = new Float32Array(RIBBON_POINTS);
+    const span = totalBins - 1;
+    for (let k = 0; k < RIBBON_POINTS; k++) {
+      const t = k / (RIBBON_POINTS - 1);
+      const binIdx = Math.round(t * span);
+      const b = Math.min(bandCount - 1, Math.floor(binIdx / SPIKES_PER_BAND));
+      const i = binIdx - b * SPIKES_PER_BAND;
+      const { amp, tMult, delta } = getBandData(b, i);
+      snap[k] = amp * tMult + delta * 0.15;
     }
     pushSnapshot(snap);
   }
@@ -118,19 +129,17 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
 
   if (snapshotCount === 0) return;
 
-  // ── Projection parameters ────────────────────────────────────────────────
   const gain = 0.5 + config.waterfallGain * 3.5;
-  const baseY = h * 0.82;                // front row baseline
-  const horizonY = h * 0.18;              // back row baseline
+  const baseY = h * 0.82;
+  const horizonY = h * 0.18;
   const plotWidthNear = w * 0.92;
-  const perspectiveScale = 0.28;          // back row this fraction of front
+  const perspectiveScale = 0.3;
   const ampHeightNear = h * 0.32;
 
-  // Draw painter's-algorithm back-to-front.
+  // Painter's-algorithm back-to-front.
   for (let s = 0; s < snapshotCount; s++) {
     const realIdx = (snapshotHead + s) % MAX_SNAPSHOTS;
     const snap = snapshots[realIdx];
-    // depth = 0 at newest (front), 1 at oldest (back)
     const depth = snapshotCount > 1 ? (snapshotCount - 1 - s) / (snapshotCount - 1) : 0;
 
     const scale = 1 - depth * (1 - perspectiveScale);
@@ -138,55 +147,48 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
     const plotWidth = plotWidthNear * scale;
     const xStart = (w - plotWidth) / 2;
     const ampHeight = ampHeightNear * scale;
-
-    // Opacity + line weight fall off with depth for atmospheric haze.
     const foreground = 1 - depth;
-    const fillAlpha = 0.55 + foreground * 0.3;
-    const strokeAlpha = 0.35 + foreground * 0.6;
-    const lineWidth = 0.6 + foreground * 1.6;
 
-    // Build the ribbon polygon (under-curve area).
+    // Compute ridge points once, stash in scratch buffers.
+    const span = RIBBON_POINTS - 1;
+    for (let k = 0; k < RIBBON_POINTS; k++) {
+      const amp = snap[k] * gain;
+      const a = amp < 0 ? 0 : amp > 1 ? 1 : amp;
+      scratchX[k] = xStart + (k / span) * plotWidth;
+      scratchY[k] = rowY - a * ampHeight;
+    }
+
+    // Filled polygon (ridge → down to baseline corners) for occlusion.
     ctx.beginPath();
     ctx.moveTo(xStart, rowY);
-    const span = totalBins - 1;
-    for (let i = 0; i < totalBins; i++) {
-      const x = xStart + (i / span) * plotWidth;
-      const amp = Math.min(1, snap[i] * gain);
-      ctx.lineTo(x, rowY - amp * ampHeight);
-    }
+    for (let k = 0; k < RIBBON_POINTS; k++) ctx.lineTo(scratchX[k], scratchY[k]);
     ctx.lineTo(xStart + plotWidth, rowY);
     ctx.closePath();
-
-    // Occlusion fill — darker in back, slightly lifted in front.
-    const bgShade = Math.round(8 + foreground * 14);
-    ctx.fillStyle = `rgba(${bgShade},${bgShade},${bgShade + 6},${fillAlpha})`;
+    const bgShade = 8 + foreground * 14;
+    ctx.fillStyle = `rgba(${bgShade | 0},${bgShade | 0},${(bgShade + 6) | 0},${0.6 + foreground * 0.3})`;
     ctx.fill();
 
-    // Stroke the top edge in per-bin color via a horizontal gradient.
-    const stops = Math.min(24, totalBins);
+    // Ridge stroke with a sparse horizontal gradient — front ribbons get
+    // coloring, back ribbons stay subtle.
+    const strokeAlpha = 0.35 + foreground * 0.6;
     const grad = ctx.createLinearGradient(xStart, 0, xStart + plotWidth, 0);
-    for (let k = 0; k <= stops; k++) {
-      const binIdx = Math.min(totalBins - 1, Math.round((k / stops) * span));
-      const amp = Math.min(1, snap[binIdx] * gain);
-      const o = Math.min(255, Math.round(amp * 255)) * 3;
-      grad.addColorStop(k / stops, `rgba(${COLOR_LUT[o]},${COLOR_LUT[o + 1]},${COLOR_LUT[o + 2]},${strokeAlpha})`);
+    for (let k = 0; k <= GRAD_STOPS; k++) {
+      const t = k / GRAD_STOPS;
+      const idx = Math.min(RIBBON_POINTS - 1, Math.round(t * span));
+      const amp = snap[idx] * gain;
+      const a = amp < 0 ? 0 : amp > 1 ? 1 : amp;
+      const o = ((a * 255) | 0) * 3;
+      grad.addColorStop(t, `rgba(${COLOR_LUT[o]},${COLOR_LUT[o + 1]},${COLOR_LUT[o + 2]},${strokeAlpha})`);
     }
 
-    // Trace just the top outline (not the baseline) so we get a colored ridge.
     ctx.beginPath();
-    for (let i = 0; i < totalBins; i++) {
-      const x = xStart + (i / span) * plotWidth;
-      const amp = Math.min(1, snap[i] * gain);
-      const y = rowY - amp * ampHeight;
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.lineWidth = lineWidth;
+    ctx.moveTo(scratchX[0], scratchY[0]);
+    for (let k = 1; k < RIBBON_POINTS; k++) ctx.lineTo(scratchX[k], scratchY[k]);
+    ctx.lineWidth = 0.6 + foreground * 1.6;
     ctx.strokeStyle = grad;
     ctx.stroke();
   }
 
-  // Beat flash glazes the whole scene.
   if (beatFlash > 0.1) {
     ctx.fillStyle = `rgba(255,255,255,${beatFlash * 0.12})`;
     ctx.fillRect(0, 0, w, h);
