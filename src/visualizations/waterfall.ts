@@ -15,7 +15,7 @@ import { BAND_COUNT, SPIKES_PER_BAND, isMobile } from '../utils/constants';
 // Count & per-ribbon sampling are the two biggest perf levers. A 3D
 // waterfall reads well with fewer-but-clearer ribbons than a dense stack.
 const MAX_SNAPSHOTS = isMobile ? 16 : 26;
-const RIBBON_POINTS = isMobile ? 48 : 72;
+const RIBBON_POINTS = isMobile ? 84 : 140;
 const GRAD_STOPS = 6;
 
 let snapshots: Float32Array[] = [];
@@ -26,7 +26,6 @@ let captureAccum = 0;
 let lastBeatIndex = -1;
 let beatFlash = 0;
 
-// Per-ribbon scratch buffers — reused every frame to avoid allocations.
 const scratchX = new Float32Array(RIBBON_POINTS);
 const scratchY = new Float32Array(RIBBON_POINTS);
 
@@ -105,19 +104,24 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
   const bandCount = isFreqMode ? BAND_COUNT : 5;
   const totalBins = bandCount * SPIKES_PER_BAND;
 
-  // Capture only at the source resolution we actually render — RIBBON_POINTS
-  // samples. Saves memory and skips the per-draw resampling pass.
+  // Downsample source bins → RIBBON_POINTS via max-pool. Point sampling
+  // would drop spikes that don't land on a sample index; max-pool keeps
+  // peaks, so the ridge stays spiky instead of flattening to an envelope.
   if (captureAccum >= captureInterval) {
     captureAccum = 0;
     const snap = new Float32Array(RIBBON_POINTS);
-    const span = totalBins - 1;
     for (let k = 0; k < RIBBON_POINTS; k++) {
-      const t = k / (RIBBON_POINTS - 1);
-      const binIdx = Math.round(t * span);
-      const b = Math.min(bandCount - 1, Math.floor(binIdx / SPIKES_PER_BAND));
-      const i = binIdx - b * SPIKES_PER_BAND;
-      const { amp, tMult, delta } = getBandData(b, i);
-      snap[k] = amp * tMult + delta * 0.15;
+      const i0 = Math.floor((k * totalBins) / RIBBON_POINTS);
+      const i1 = Math.max(i0 + 1, Math.floor(((k + 1) * totalBins) / RIBBON_POINTS));
+      let peak = 0;
+      for (let i = i0; i < i1; i++) {
+        const b = Math.min(bandCount - 1, Math.floor(i / SPIKES_PER_BAND));
+        const j = i - b * SPIKES_PER_BAND;
+        const { amp, tMult, delta } = getBandData(b, j);
+        const v = amp * tMult + delta * 0.15;
+        if (v > peak) peak = v;
+      }
+      snap[k] = peak;
     }
     pushSnapshot(snap);
   }
