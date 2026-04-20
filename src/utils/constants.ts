@@ -227,7 +227,7 @@ export const DEFAULT_CONFIG = {
   petalsSpinSpeed: 0.5,
   // Waterfall-specific
   waterfallScrollSpeed: 0.4,
-  waterfallGain: 0.5,
+  waterfallGain: 0.125,
   waterfallHue: 0.7,
 };
 
