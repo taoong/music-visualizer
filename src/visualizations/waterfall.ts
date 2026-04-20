@@ -1,21 +1,22 @@
 /**
- * Waterfall — Scrolling spectrogram.
+ * Waterfall — 3D scrolling spectrogram.
  *
- * Each frame's spectrum becomes a thin vertical strip painted on the right
- * edge of an offscreen buffer; the buffer is shifted left each frame so
- * older frames trail away. Sustained tones form horizontal streaks;
- * transients form bright vertical bursts.
+ * A ring buffer of recent spectrum snapshots is rendered as stacked ribbons
+ * in oblique projection: the newest snapshot sits in front at full size,
+ * older ones recede up-and-back with depth scaling. Amplitude becomes the
+ * ribbon's height; a plasma palette colors each bin across the x axis.
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { getBandData } from './helpers';
-import { BAND_COUNT, SPIKES_PER_BAND } from '../utils/constants';
+import { BAND_COUNT, SPIKES_PER_BAND, isMobile } from '../utils/constants';
 
-// ── Buffer state ─────────────────────────────────────────────────────────────
-let offscreenCanvas: HTMLCanvasElement | null = null;
-let offscreenCtx: CanvasRenderingContext2D | null = null;
-let bufWidth = 0;
-let bufHeight = 0;
+// ── Snapshot ring buffer ────────────────────────────────────────────────────
+const MAX_SNAPSHOTS = isMobile ? 32 : 56;
+let snapshots: Float32Array[] = [];
+let snapshotHead = 0;   // index of oldest entry
+let snapshotCount = 0;
+let captureAccum = 0;
 
 let lastBeatIndex = -1;
 let beatFlash = 0;
@@ -44,14 +45,12 @@ function hslToRgb(h: number, s: number, l: number): [number, number, number] {
 }
 
 function buildLUT(hueShift: number): void {
-  // Hue sweeps 210° downward from baseHue as amplitude climbs — low amp sits
-  // near purple/blue, high amp pushes toward yellow-white.
   const baseHue = (270 + hueShift * 360) % 360;
   for (let i = 0; i < 256; i++) {
     const t = i / 255;
     const hue = ((baseHue - t * 210) % 360 + 360) % 360;
     const sat = 0.6 + t * 0.4;
-    const light = t * t * 0.55 + t * 0.05;
+    const light = t * t * 0.55 + t * 0.1;
     const [r, g, b] = hslToRgb(hue, sat, light);
     COLOR_LUT[i * 3] = r;
     COLOR_LUT[i * 3 + 1] = g;
@@ -60,19 +59,14 @@ function buildLUT(hueShift: number): void {
   currentHueShift = hueShift;
 }
 
-// ── Buffer lifecycle ─────────────────────────────────────────────────────────
-function ensureBuffer(w: number, h: number): void {
-  if (offscreenCanvas && bufWidth === w && bufHeight === h) return;
-  offscreenCanvas = document.createElement('canvas');
-  offscreenCanvas.width = w;
-  offscreenCanvas.height = h;
-  offscreenCtx = offscreenCanvas.getContext('2d');
-  if (offscreenCtx) {
-    offscreenCtx.fillStyle = '#000000';
-    offscreenCtx.fillRect(0, 0, w, h);
+function pushSnapshot(snap: Float32Array): void {
+  if (snapshotCount < MAX_SNAPSHOTS) {
+    snapshots.push(snap);
+    snapshotCount++;
+  } else {
+    snapshots[snapshotHead] = snap;
+    snapshotHead = (snapshotHead + 1) % MAX_SNAPSHOTS;
   }
-  bufWidth = w;
-  bufHeight = h;
 }
 
 // ── Draw ─────────────────────────────────────────────────────────────────────
@@ -81,22 +75,9 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
   const w = p.width;
   const h = p.height;
 
-  ensureBuffer(w, h);
-  if (!offscreenCtx || !offscreenCanvas) return;
+  if (currentHueShift !== config.waterfallHue) buildLUT(config.waterfallHue);
 
-  if (currentHueShift !== config.waterfallHue) {
-    buildLUT(config.waterfallHue);
-  }
-
-  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
-  const bandCount = isFreqMode ? BAND_COUNT : 5;
-  const totalBins = bandCount * SPIKES_PER_BAND;
-  const binHeight = h / totalBins;
-
-  const scrollPx = Math.max(1, Math.round(1 + config.waterfallScrollSpeed * 5));
-  const gain = 0.5 + config.waterfallGain * 3.5;
-
-  // Beat tracking — tick the beat accent when the index advances.
+  // Beat tracking — tick on index advance, decay each frame.
   if (state.detectedBPM > 0 && state.isPlaying) {
     const pos = audioEngine.getPlaybackPosition();
     const adjusted = pos - state.beatOffset;
@@ -109,47 +90,114 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
   beatFlash *= Math.pow(0.85, dt);
   if (beatFlash < 0.001) beatFlash = 0;
 
-  // Shift the buffer left. drawImage from a canvas onto itself is spec-defined
-  // via an implicit temp buffer, so source/dest overlap is handled correctly.
-  offscreenCtx.drawImage(offscreenCanvas, -scrollPx, 0);
+  // Capture a new snapshot at a rate set by scroll-speed slider.
+  // captureInterval is in frames; 1 = every frame, 5 = every 5 frames.
+  const captureInterval = Math.max(1, 5 - config.waterfallScrollSpeed * 4);
+  captureAccum += dt;
 
-  // Clear and repaint the right edge column with the current spectrum.
-  const xCol = w - scrollPx;
-  offscreenCtx.fillStyle = '#000000';
-  offscreenCtx.fillRect(xCol, 0, scrollPx, h);
+  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
+  const bandCount = isFreqMode ? BAND_COUNT : 5;
+  const totalBins = bandCount * SPIKES_PER_BAND;
 
-  const binDrawH = Math.ceil(binHeight) + 1;
-  for (let b = 0; b < bandCount; b++) {
-    for (let i = 0; i < SPIKES_PER_BAND; i++) {
-      const { amp, tMult, delta } = getBandData(b, i);
-      const boosted = amp * tMult * gain + delta * 0.15;
-      const intensity = Math.max(0, Math.min(1, boosted));
-      if (intensity < 0.01) continue;
-
-      const lutOff = Math.min(255, Math.round(intensity * 255)) * 3;
-      offscreenCtx.fillStyle = `rgb(${COLOR_LUT[lutOff]},${COLOR_LUT[lutOff + 1]},${COLOR_LUT[lutOff + 2]})`;
-
-      const binIdx = b * SPIKES_PER_BAND + i;
-      const y = h - (binIdx + 1) * binHeight;
-      offscreenCtx.fillRect(xCol, y, scrollPx, binDrawH);
+  if (captureAccum >= captureInterval) {
+    captureAccum = 0;
+    const snap = new Float32Array(totalBins);
+    for (let b = 0; b < bandCount; b++) {
+      for (let i = 0; i < SPIKES_PER_BAND; i++) {
+        const { amp, tMult, delta } = getBandData(b, i);
+        snap[b * SPIKES_PER_BAND + i] = amp * tMult + delta * 0.15;
+      }
     }
-  }
-
-  if (beatFlash > 0.1) {
-    offscreenCtx.fillStyle = `rgba(255, 255, 255, ${beatFlash * 0.25})`;
-    offscreenCtx.fillRect(xCol, 0, scrollPx, h);
+    pushSnapshot(snap);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mainCtx = (p as any).drawingContext as CanvasRenderingContext2D;
-  mainCtx.drawImage(offscreenCanvas, 0, 0);
+  const ctx = (p as any).drawingContext as CanvasRenderingContext2D;
+  ctx.fillStyle = '#02020a';
+  ctx.fillRect(0, 0, w, h);
+
+  if (snapshotCount === 0) return;
+
+  // ── Projection parameters ────────────────────────────────────────────────
+  const gain = 0.5 + config.waterfallGain * 3.5;
+  const baseY = h * 0.82;                // front row baseline
+  const horizonY = h * 0.18;              // back row baseline
+  const plotWidthNear = w * 0.92;
+  const perspectiveScale = 0.28;          // back row this fraction of front
+  const ampHeightNear = h * 0.32;
+
+  // Draw painter's-algorithm back-to-front.
+  for (let s = 0; s < snapshotCount; s++) {
+    const realIdx = (snapshotHead + s) % MAX_SNAPSHOTS;
+    const snap = snapshots[realIdx];
+    // depth = 0 at newest (front), 1 at oldest (back)
+    const depth = snapshotCount > 1 ? (snapshotCount - 1 - s) / (snapshotCount - 1) : 0;
+
+    const scale = 1 - depth * (1 - perspectiveScale);
+    const rowY = baseY + (horizonY - baseY) * depth;
+    const plotWidth = plotWidthNear * scale;
+    const xStart = (w - plotWidth) / 2;
+    const ampHeight = ampHeightNear * scale;
+
+    // Opacity + line weight fall off with depth for atmospheric haze.
+    const foreground = 1 - depth;
+    const fillAlpha = 0.55 + foreground * 0.3;
+    const strokeAlpha = 0.35 + foreground * 0.6;
+    const lineWidth = 0.6 + foreground * 1.6;
+
+    // Build the ribbon polygon (under-curve area).
+    ctx.beginPath();
+    ctx.moveTo(xStart, rowY);
+    const span = totalBins - 1;
+    for (let i = 0; i < totalBins; i++) {
+      const x = xStart + (i / span) * plotWidth;
+      const amp = Math.min(1, snap[i] * gain);
+      ctx.lineTo(x, rowY - amp * ampHeight);
+    }
+    ctx.lineTo(xStart + plotWidth, rowY);
+    ctx.closePath();
+
+    // Occlusion fill — darker in back, slightly lifted in front.
+    const bgShade = Math.round(8 + foreground * 14);
+    ctx.fillStyle = `rgba(${bgShade},${bgShade},${bgShade + 6},${fillAlpha})`;
+    ctx.fill();
+
+    // Stroke the top edge in per-bin color via a horizontal gradient.
+    const stops = Math.min(24, totalBins);
+    const grad = ctx.createLinearGradient(xStart, 0, xStart + plotWidth, 0);
+    for (let k = 0; k <= stops; k++) {
+      const binIdx = Math.min(totalBins - 1, Math.round((k / stops) * span));
+      const amp = Math.min(1, snap[binIdx] * gain);
+      const o = Math.min(255, Math.round(amp * 255)) * 3;
+      grad.addColorStop(k / stops, `rgba(${COLOR_LUT[o]},${COLOR_LUT[o + 1]},${COLOR_LUT[o + 2]},${strokeAlpha})`);
+    }
+
+    // Trace just the top outline (not the baseline) so we get a colored ridge.
+    ctx.beginPath();
+    for (let i = 0; i < totalBins; i++) {
+      const x = xStart + (i / span) * plotWidth;
+      const amp = Math.min(1, snap[i] * gain);
+      const y = rowY - amp * ampHeight;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.lineWidth = lineWidth;
+    ctx.strokeStyle = grad;
+    ctx.stroke();
+  }
+
+  // Beat flash glazes the whole scene.
+  if (beatFlash > 0.1) {
+    ctx.fillStyle = `rgba(255,255,255,${beatFlash * 0.12})`;
+    ctx.fillRect(0, 0, w, h);
+  }
 }
 
 export function resetWaterfall(): void {
-  offscreenCanvas = null;
-  offscreenCtx = null;
-  bufWidth = 0;
-  bufHeight = 0;
+  snapshots = [];
+  snapshotHead = 0;
+  snapshotCount = 0;
+  captureAccum = 0;
   lastBeatIndex = -1;
   beatFlash = 0;
 }
