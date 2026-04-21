@@ -229,6 +229,10 @@ export const DEFAULT_CONFIG = {
   waterfallScrollSpeed: 0.4,
   waterfallGain: 0.125,
   waterfallHue: 0.7,
+  // Kaleido-specific
+  kaleidoSegments: 6,
+  kaleidoTrail: 0.4,
+  kaleidoSmear: 0.25,
 };
 
 // FFT and decay constants

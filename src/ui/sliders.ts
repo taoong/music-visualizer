@@ -104,6 +104,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'waterfall-scroll-speed', key: 'waterfallScrollSpeed' },
     { id: 'waterfall-gain', key: 'waterfallGain' },
     { id: 'waterfall-hue', key: 'waterfallHue' },
+    { id: 'kaleido-segments', key: 'kaleidoSegments' },
+    { id: 'kaleido-trail', key: 'kaleidoTrail' },
+    { id: 'kaleido-smear', key: 'kaleidoSmear' },
   ] as const;
 
   for (const { id, key } of configs) {
