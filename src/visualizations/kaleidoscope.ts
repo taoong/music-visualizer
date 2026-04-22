@@ -100,7 +100,7 @@ export function drawKaleidoscope(p: P5Instance, dt: number): void {
 // Each curve oscillates at frequency (b+1), so it always closes smoothly at r=maxR.
 function drawWedge(
   p: P5Instance,
-  amps: Float32Array,
+  amps: number[],
   maxR: number,
   halfAngle: number,
   complexity: number,

@@ -85,7 +85,6 @@ export function drawKaleido(p: P5Instance, dt: number): void {
   const audioRange = outerR - baseR; // amplitude maps into this range
 
   const STEPS = 256; // vertices around the full circle
-  const segAngle = (Math.PI * 2) / N;
 
   // ── precompute radii ──────────────────────────────────────────────────────
   // For each angle step, fold into one symmetry segment, mirror within it,
