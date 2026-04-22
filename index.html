@@ -306,6 +306,7 @@
           <option value="constellation">Constellation</option>
           <option value="petals">Petal Bloom</option>
           <option value="waterfall">Waterfall</option>
+          <option value="kaleidoscope">Kaleidoscope</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -851,6 +852,44 @@
               step="0.01"
               value="0.7"
               aria-label="Base hue of the color palette"
+            />
+          </div>
+        </div>
+        <div id="kaleidoscope-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="kaleidoscope-segments">Segments</label>
+            <input
+              type="range"
+              id="kaleidoscope-segments"
+              min="3"
+              max="12"
+              step="1"
+              value="6"
+              aria-label="Number of symmetry wedges (visual fold = 2×)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="kaleidoscope-complexity">Complexity</label>
+            <input
+              type="range"
+              id="kaleidoscope-complexity"
+              min="1"
+              max="4"
+              step="1"
+              value="2"
+              aria-label="Harmonic layers per wedge"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="kaleidoscope-spin-speed">Spin Speed</label>
+            <input
+              type="range"
+              id="kaleidoscope-spin-speed"
+              min="0"
+              max="3"
+              step="0.01"
+              value="0.5"
+              aria-label="Rotation speed of the kaleidoscope pattern"
             />
           </div>
         </div>

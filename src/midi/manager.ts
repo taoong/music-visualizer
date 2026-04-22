@@ -62,6 +62,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   waterfallScrollSpeed: 'waterfall-scroll-speed',
   waterfallGain: 'waterfall-gain',
   waterfallHue: 'waterfall-hue',
+  kaleidoscopeSegments: 'kaleidoscope-segments',
+  kaleidoscopeComplexity: 'kaleidoscope-complexity',
+  kaleidoscopeSpinSpeed: 'kaleidoscope-spin-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

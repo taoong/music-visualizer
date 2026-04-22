@@ -26,4 +26,5 @@ export { drawStringart, resetStringart } from './stringart';
 export { drawConstellation, resetConstellation } from './constellation';
 export { drawPetals, resetPetals } from './petals';
 export { drawWaterfall, resetWaterfall } from './waterfall';
+export { drawKaleidoscope, resetKaleidoscope } from './kaleidoscope';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

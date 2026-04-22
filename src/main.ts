@@ -81,6 +81,8 @@ import {
   resetPetals,
   drawWaterfall,
   resetWaterfall,
+  drawKaleidoscope,
+  resetKaleidoscope,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -248,6 +250,9 @@ const sketch = (p: P5Instance) => {
       case 'waterfall':
         drawWaterfall(p, dt);
         break;
+      case 'kaleidoscope':
+        drawKaleidoscope(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -301,6 +306,8 @@ const sketch = (p: P5Instance) => {
       resetPetals();
     } else if (store.state.vizMode === 'waterfall') {
       resetWaterfall();
+    } else if (store.state.vizMode === 'kaleidoscope') {
+      resetKaleidoscope();
     }
   };
 };
