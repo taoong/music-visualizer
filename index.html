@@ -306,6 +306,7 @@
           <option value="constellation">Constellation</option>
           <option value="petals">Petal Bloom</option>
           <option value="waterfall">Waterfall</option>
+          <option value="kaleido">Kaleido</option>
           <option value="kaleidoscope">Kaleidoscope</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
@@ -831,14 +832,14 @@
             />
           </div>
           <div class="slider-group">
-            <label for="waterfall-gain">Brightness</label>
+            <label for="waterfall-gain">Intensity</label>
             <input
               type="range"
               id="waterfall-gain"
               min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
+              max="0.25"
+              step="0.005"
+              value="0.125"
               aria-label="Amplitude-to-color gain"
             />
           </div>
@@ -852,6 +853,44 @@
               step="0.01"
               value="0.7"
               aria-label="Base hue of the color palette"
+            />
+          </div>
+        </div>
+        <div id="kaleido-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="kaleido-segments">Segments</label>
+            <input
+              type="range"
+              id="kaleido-segments"
+              min="2"
+              max="12"
+              step="1"
+              value="6"
+              aria-label="Number of mirror-symmetry segments (2=bilateral, 6=hexagonal, 12=complex)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="kaleido-trail">Trail</label>
+            <input
+              type="range"
+              id="kaleido-trail"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Motion trail persistence (0=instant clear, 1=long layered mandala)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="kaleido-smear">Organic</label>
+            <input
+              type="range"
+              id="kaleido-smear"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.25"
+              aria-label="Organic harmonic distortion (0=crystal symmetry, 1=fluid chaos)"
             />
           </div>
         </div>

@@ -81,6 +81,8 @@ import {
   resetPetals,
   drawWaterfall,
   resetWaterfall,
+  drawKaleido,
+  resetKaleido,
   drawKaleidoscope,
   resetKaleidoscope,
   loadUserImage,
@@ -250,6 +252,9 @@ const sketch = (p: P5Instance) => {
       case 'waterfall':
         drawWaterfall(p, dt);
         break;
+      case 'kaleido':
+        drawKaleido(p, dt);
+        break;
       case 'kaleidoscope':
         drawKaleidoscope(p, dt);
         break;
@@ -306,6 +311,8 @@ const sketch = (p: P5Instance) => {
       resetPetals();
     } else if (store.state.vizMode === 'waterfall') {
       resetWaterfall();
+    } else if (store.state.vizMode === 'kaleido') {
+      resetKaleido();
     } else if (store.state.vizMode === 'kaleidoscope') {
       resetKaleidoscope();
     }
