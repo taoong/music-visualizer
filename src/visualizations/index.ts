@@ -28,4 +28,5 @@ export { drawPetals, resetPetals } from './petals';
 export { drawWaterfall, resetWaterfall } from './waterfall';
 export { drawKaleido, resetKaleido } from './kaleido';
 export { drawKaleidoscope, resetKaleidoscope } from './kaleidoscope';
+export { drawRibbons, resetRibbons } from './ribbons';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

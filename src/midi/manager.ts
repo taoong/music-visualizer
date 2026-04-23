@@ -68,6 +68,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   kaleidoscopeSegments: 'kaleidoscope-segments',
   kaleidoscopeComplexity: 'kaleidoscope-complexity',
   kaleidoscopeSpinSpeed: 'kaleidoscope-spin-speed',
+  ribbonsCount: 'ribbons-count',
+  ribbonsWaveSpeed: 'ribbons-wave-speed',
+  ribbonsBend: 'ribbons-bend',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

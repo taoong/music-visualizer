@@ -85,6 +85,8 @@ import {
   resetKaleido,
   drawKaleidoscope,
   resetKaleidoscope,
+  drawRibbons,
+  resetRibbons,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -258,6 +260,9 @@ const sketch = (p: P5Instance) => {
       case 'kaleidoscope':
         drawKaleidoscope(p, dt);
         break;
+      case 'ribbons':
+        drawRibbons(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -315,6 +320,8 @@ const sketch = (p: P5Instance) => {
       resetKaleido();
     } else if (store.state.vizMode === 'kaleidoscope') {
       resetKaleidoscope();
+    } else if (store.state.vizMode === 'ribbons') {
+      resetRibbons();
     }
   };
 };

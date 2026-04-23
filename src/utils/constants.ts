@@ -237,6 +237,10 @@ export const DEFAULT_CONFIG = {
   kaleidoscopeSegments: 6,
   kaleidoscopeComplexity: 2,
   kaleidoscopeSpinSpeed: 0.5,
+  // Ribbons-specific
+  ribbonsCount: 7,
+  ribbonsWaveSpeed: 1.0,
+  ribbonsBend: 2.0,
 };
 
 // FFT and decay constants
