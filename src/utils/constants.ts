@@ -241,6 +241,10 @@ export const DEFAULT_CONFIG = {
   ribbonsCount: 7,
   ribbonsWaveSpeed: 1.0,
   ribbonsBend: 2.0,
+  // Liquify-specific
+  liquifyFlow: 0.5,
+  liquifyPersistence: 0.7,
+  liquifyBeatSurge: 0.5,
 };
 
 // FFT and decay constants

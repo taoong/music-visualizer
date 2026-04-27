@@ -71,6 +71,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   ribbonsCount: 'ribbons-count',
   ribbonsWaveSpeed: 'ribbons-wave-speed',
   ribbonsBend: 'ribbons-bend',
+  liquifyFlow: 'liquify-flow',
+  liquifyPersistence: 'liquify-persistence',
+  liquifyBeatSurge: 'liquify-beat-surge',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -35,6 +35,8 @@ declare global {
     CENTER: string;
     LEFT: string;
     RIGHT: string;
+    ADD: number;
+    BLEND: number;
 
     // Setup/Lifecycle
     createCanvas(w: number, h: number): { parent(id: string): void };
@@ -44,6 +46,8 @@ declare global {
 
     // Drawing
     background(color: number | string): void;
+    background(r: number, g: number, b: number, a?: number): void;
+    blendMode(mode: number): void;
     push(): void;
     pop(): void;
     translate(x: number, y: number): void;

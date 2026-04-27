@@ -113,6 +113,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'ribbons-count', key: 'ribbonsCount' },
     { id: 'ribbons-wave-speed', key: 'ribbonsWaveSpeed' },
     { id: 'ribbons-bend', key: 'ribbonsBend' },
+    { id: 'liquify-flow', key: 'liquifyFlow' },
+    { id: 'liquify-persistence', key: 'liquifyPersistence' },
+    { id: 'liquify-beat-surge', key: 'liquifyBeatSurge' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -309,6 +309,7 @@
           <option value="kaleido">Kaleido</option>
           <option value="kaleidoscope">Kaleidoscope</option>
           <option value="ribbons">Ribbons</option>
+          <option value="liquify">Liquify</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -982,6 +983,44 @@
               step="0.1"
               value="2"
               aria-label="Number of full wave cycles visible across the screen"
+            />
+          </div>
+        </div>
+        <div id="liquify-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="liquify-flow">Flow</label>
+            <input
+              type="range"
+              id="liquify-flow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Overall warp strength"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="liquify-persistence">Persistence</label>
+            <input
+              type="range"
+              id="liquify-persistence"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.7"
+              aria-label="Feedback retention; high = long melted trails"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="liquify-beat-surge">Beat Surge</label>
+            <input
+              type="range"
+              id="liquify-beat-surge"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Strength of the beat shockwave"
             />
           </div>
         </div>

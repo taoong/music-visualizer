@@ -87,6 +87,9 @@ import {
   resetKaleidoscope,
   drawRibbons,
   resetRibbons,
+  drawLiquify,
+  resetLiquify,
+  disposeLiquify,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -151,6 +154,7 @@ const sketch = (p: P5Instance) => {
       disposeImageGrid();
       disposeColormap();
       disposeSculpture();
+      disposeLiquify();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -263,6 +267,9 @@ const sketch = (p: P5Instance) => {
       case 'ribbons':
         drawRibbons(p, dt);
         break;
+      case 'liquify':
+        drawLiquify(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -322,6 +329,8 @@ const sketch = (p: P5Instance) => {
       resetKaleidoscope();
     } else if (store.state.vizMode === 'ribbons') {
       resetRibbons();
+    } else if (store.state.vizMode === 'liquify') {
+      resetLiquify();
     }
   };
 };
