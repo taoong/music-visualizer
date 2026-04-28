@@ -245,6 +245,10 @@ export const DEFAULT_CONFIG = {
   liquifyFlow: 0.5,
   liquifyPersistence: 0.7,
   liquifyBeatSurge: 0.5,
+  // Paint-specific
+  paintStrokeWidth: 6,
+  paintFade: 0.15,
+  paintSpeed: 1.0,
 };
 
 // FFT and decay constants

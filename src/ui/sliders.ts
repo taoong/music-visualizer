@@ -116,6 +116,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'liquify-flow', key: 'liquifyFlow' },
     { id: 'liquify-persistence', key: 'liquifyPersistence' },
     { id: 'liquify-beat-surge', key: 'liquifyBeatSurge' },
+    { id: 'paint-stroke-width', key: 'paintStrokeWidth' },
+    { id: 'paint-fade', key: 'paintFade' },
+    { id: 'paint-speed', key: 'paintSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

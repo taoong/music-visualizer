@@ -74,6 +74,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   liquifyFlow: 'liquify-flow',
   liquifyPersistence: 'liquify-persistence',
   liquifyBeatSurge: 'liquify-beat-surge',
+  paintStrokeWidth: 'paint-stroke-width',
+  paintFade: 'paint-fade',
+  paintSpeed: 'paint-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

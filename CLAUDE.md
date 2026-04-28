@@ -64,6 +64,7 @@ src/
 │   ├── kaleidoscope.ts        # Kaleidoscope: 7 oscillating polar curves (one per freq band) drawn in a source wedge and mirrored 2×N times around the canvas; each curve oscillates at integer frequency (b+1) so it closes seamlessly at the outer edge; beat snaps hue palette and widens oscillations; HSB colors per band drift over time; central glow; sliders: Segments (3–12), Complexity (1–4 layers), Spin Speed
 │   ├── ribbons.ts             # Ribbons: horizontal sinusoidal wave ribbons stacked across the screen; each ribbon interpolates across 7 freq bands with golden-ratio phase offsets for organic non-repeating patterns; 3-layer glow (outer/mid/core) via ADD blendMode; beat pulse bursts wave amplitude; hue slowly drifts over time; sliders: Count (2–12 ribbons), Wave Speed, Bend (wave cycles)
 │   ├── liquify.ts             # Liquify: feedback-warp image distortion; user image (or rainbow gradient) continuously melts through 7 wandering swirl centers (one per freq band) that rotate pixels around themselves; bass radial breath, treble jitter, beats trigger random-origin shockwaves + small hue shift; ping-pong canvas buffers at 320×180 (192×108 mobile) bilinear-resampled per pixel with manual alpha blend back to source; sliders: Flow, Persistence, Beat Surge
+│   ├── paint.ts               # Paint: abstract expressionist brushstrokes; 7 painters (one per freq band) wander the canvas driven by Perlin noise + audio amplitude; each leaves coloured stroke trails in an off-screen p5.Graphics buffer; semi-transparent overlay fades older strokes at a configurable rate; beat pulses scatter all painters outward from centre; sliders: Stroke Width, Fade, Speed
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -74,7 +75,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/'/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

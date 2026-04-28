@@ -30,4 +30,5 @@ export { drawKaleido, resetKaleido } from './kaleido';
 export { drawKaleidoscope, resetKaleidoscope } from './kaleidoscope';
 export { drawRibbons, resetRibbons } from './ribbons';
 export { drawLiquify, resetLiquify, disposeLiquify } from './liquify';
+export { drawPaint, resetPaint } from './paint';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

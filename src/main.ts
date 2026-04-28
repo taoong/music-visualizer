@@ -90,6 +90,8 @@ import {
   drawLiquify,
   resetLiquify,
   disposeLiquify,
+  drawPaint,
+  resetPaint,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -270,6 +272,9 @@ const sketch = (p: P5Instance) => {
       case 'liquify':
         drawLiquify(p, dt);
         break;
+      case 'paint':
+        drawPaint(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -331,6 +336,8 @@ const sketch = (p: P5Instance) => {
       resetRibbons();
     } else if (store.state.vizMode === 'liquify') {
       resetLiquify();
+    } else if (store.state.vizMode === 'paint') {
+      resetPaint();
     }
   };
 };
