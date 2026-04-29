@@ -31,4 +31,5 @@ export { drawKaleidoscope, resetKaleidoscope } from './kaleidoscope';
 export { drawRibbons, resetRibbons } from './ribbons';
 export { drawLiquify, resetLiquify, disposeLiquify } from './liquify';
 export { drawPaint, resetPaint } from './paint';
+export { drawNoodles, resetNoodles } from './noodles';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

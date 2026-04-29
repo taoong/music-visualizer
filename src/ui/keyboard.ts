@@ -48,6 +48,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('x', () => setVizMode('kaleidoscope'), 'Kaleidoscope visualization');
   defineShortcut('z', () => setVizMode('ribbons'), 'Ribbons visualization');
   defineShortcut("'", () => setVizMode('paint'), 'Paint visualization');
+  defineShortcut('9', () => setVizMode('noodles'), 'Noodles visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

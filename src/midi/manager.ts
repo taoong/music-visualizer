@@ -77,6 +77,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   paintStrokeWidth: 'paint-stroke-width',
   paintFade: 'paint-fade',
   paintSpeed: 'paint-speed',
+  noodlesLength: 'noodles-length',
+  noodlesSpeed: 'noodles-speed',
+  noodlesThickness: 'noodles-thickness',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

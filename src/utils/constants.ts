@@ -249,6 +249,10 @@ export const DEFAULT_CONFIG = {
   paintStrokeWidth: 6,
   paintFade: 0.15,
   paintSpeed: 1.0,
+  // Noodles-specific
+  noodlesLength: 60,
+  noodlesSpeed: 1.0,
+  noodlesThickness: 1.0,
 };
 
 // FFT and decay constants

@@ -119,6 +119,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'paint-stroke-width', key: 'paintStrokeWidth' },
     { id: 'paint-fade', key: 'paintFade' },
     { id: 'paint-speed', key: 'paintSpeed' },
+    { id: 'noodles-length', key: 'noodlesLength' },
+    { id: 'noodles-speed', key: 'noodlesSpeed' },
+    { id: 'noodles-thickness', key: 'noodlesThickness' },
   ] as const;
 
   for (const { id, key } of configs) {

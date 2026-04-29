@@ -92,6 +92,8 @@ import {
   disposeLiquify,
   drawPaint,
   resetPaint,
+  drawNoodles,
+  resetNoodles,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -275,6 +277,9 @@ const sketch = (p: P5Instance) => {
       case 'paint':
         drawPaint(p, dt);
         break;
+      case 'noodles':
+        drawNoodles(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -338,6 +343,8 @@ const sketch = (p: P5Instance) => {
       resetLiquify();
     } else if (store.state.vizMode === 'paint') {
       resetPaint();
+    } else if (store.state.vizMode === 'noodles') {
+      resetNoodles();
     }
   };
 };
