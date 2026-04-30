@@ -80,6 +80,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   noodlesLength: 'noodles-length',
   noodlesSpeed: 'noodles-speed',
   noodlesThickness: 'noodles-thickness',
+  weaveThreads: 'weave-threads',
+  weaveGlow: 'weave-glow',
+  weavePulse: 'weave-pulse',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -94,6 +94,8 @@ import {
   resetPaint,
   drawNoodles,
   resetNoodles,
+  drawWeave,
+  resetWeave,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -280,6 +282,9 @@ const sketch = (p: P5Instance) => {
       case 'noodles':
         drawNoodles(p, dt);
         break;
+      case 'weave':
+        drawWeave(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -345,6 +350,8 @@ const sketch = (p: P5Instance) => {
       resetPaint();
     } else if (store.state.vizMode === 'noodles') {
       resetNoodles();
+    } else if (store.state.vizMode === 'weave') {
+      resetWeave();
     }
   };
 };

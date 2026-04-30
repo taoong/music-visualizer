@@ -253,6 +253,10 @@ export const DEFAULT_CONFIG = {
   noodlesLength: 60,
   noodlesSpeed: 1.0,
   noodlesThickness: 1.0,
+  // Weave-specific
+  weaveThreads: 12,
+  weaveGlow: 1.0,
+  weavePulse: 1.0,
 };
 
 // FFT and decay constants

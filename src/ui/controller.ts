@@ -103,6 +103,7 @@ function bindVizSelector(): () => void {
   const liquifyControlsGroup = document.getElementById('liquify-controls-group');
   const paintControlsGroup = document.getElementById('paint-controls-group');
   const noodlesControlsGroup = document.getElementById('noodles-controls-group');
+  const weaveControlsGroup = document.getElementById('weave-controls-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
@@ -143,8 +144,11 @@ function bindVizSelector(): () => void {
   const decayRateLabel = decayRateGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'ribbons' | 'liquify' | 'paint' | 'noodles';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'ribbons' | 'liquify' | 'paint' | 'noodles' | 'weave';
     store.setVizMode(mode);
+
+    // Always hide weave controls; the weave case below re-shows them.
+    hide(weaveControlsGroup);
 
     // Per-mode control visibility
     // | Mode     | scale | decay | rotation | kickBoost | intensity | beatDiv | textInput |
@@ -345,6 +349,12 @@ function bindVizSelector(): () => void {
         hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup); hide(ribbonsControlsGroup); hide(liquifyControlsGroup); hide(paintControlsGroup);
+        break;
+      case 'weave':
+        show(weaveControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup); hide(ribbonsControlsGroup); hide(liquifyControlsGroup); hide(paintControlsGroup); hide(noodlesControlsGroup);
         break;
     }
   };

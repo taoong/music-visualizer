@@ -122,6 +122,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'noodles-length', key: 'noodlesLength' },
     { id: 'noodles-speed', key: 'noodlesSpeed' },
     { id: 'noodles-thickness', key: 'noodlesThickness' },
+    { id: 'weave-threads', key: 'weaveThreads' },
+    { id: 'weave-glow', key: 'weaveGlow' },
+    { id: 'weave-pulse', key: 'weavePulse' },
   ] as const;
 
   for (const { id, key } of configs) {

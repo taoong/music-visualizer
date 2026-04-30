@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems' | 'mic';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'ribbons' | 'liquify' | 'paint' | 'noodles';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'ribbons' | 'liquify' | 'paint' | 'noodles' | 'weave';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -125,6 +125,10 @@ export interface Config {
   noodlesLength: number;
   noodlesSpeed: number;
   noodlesThickness: number;
+  // Weave-specific
+  weaveThreads: number;
+  weaveGlow: number;
+  weavePulse: number;
 }
 
 // Application state
