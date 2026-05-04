@@ -96,6 +96,9 @@ import {
   resetNoodles,
   drawWeave,
   resetWeave,
+  drawFisheye,
+  resetFisheye,
+  disposeFisheye,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -161,6 +164,7 @@ const sketch = (p: P5Instance) => {
       disposeColormap();
       disposeSculpture();
       disposeLiquify();
+      disposeFisheye();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -285,6 +289,9 @@ const sketch = (p: P5Instance) => {
       case 'weave':
         drawWeave(p, dt);
         break;
+      case 'fisheye':
+        drawFisheye(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -352,6 +359,8 @@ const sketch = (p: P5Instance) => {
       resetNoodles();
     } else if (store.state.vizMode === 'weave') {
       resetWeave();
+    } else if (store.state.vizMode === 'fisheye') {
+      resetFisheye();
     }
   };
 };

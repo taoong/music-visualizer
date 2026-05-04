@@ -50,6 +50,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut("'", () => setVizMode('paint'), 'Paint visualization');
   defineShortcut('9', () => setVizMode('noodles'), 'Noodles visualization');
   defineShortcut('0', () => setVizMode('weave'), 'Weave visualization');
+  defineShortcut(',', () => setVizMode('fisheye'), 'Fisheye Pulse visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

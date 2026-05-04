@@ -313,6 +313,7 @@
           <option value="paint">Paint</option>
           <option value="noodles">Noodles</option>
           <option value="weave">Weave</option>
+          <option value="fisheye">Fisheye Pulse</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1138,6 +1139,45 @@
               step="0.05"
               value="1"
               aria-label="Beat shockwave intensity — gentle ripple to explosive radial burst"
+            />
+          </div>
+        </div>
+
+        <div id="fisheye-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="fisheye-strength">Lens</label>
+            <input
+              type="range"
+              id="fisheye-strength"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.3"
+              aria-label="Base fisheye lens strength — subtle bulge to extreme barrel distortion"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="fisheye-beat-pulse">Beat Pulse</label>
+            <input
+              type="range"
+              id="fisheye-beat-pulse"
+              min="0"
+              max="2"
+              step="0.05"
+              value="1"
+              aria-label="Beat pulse intensity — gentle lens bump to extreme on-beat bulge"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="fisheye-chromatic">Chromatic</label>
+            <input
+              type="range"
+              id="fisheye-chromatic"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Chromatic aberration — colour fringing that intensifies on beat hits"
             />
           </div>
         </div>

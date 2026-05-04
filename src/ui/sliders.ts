@@ -125,6 +125,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'weave-threads', key: 'weaveThreads' },
     { id: 'weave-glow', key: 'weaveGlow' },
     { id: 'weave-pulse', key: 'weavePulse' },
+    { id: 'fisheye-strength', key: 'fisheyeStrength' },
+    { id: 'fisheye-beat-pulse', key: 'fisheyeBeatPulse' },
+    { id: 'fisheye-chromatic', key: 'fisheyeChromatic' },
   ] as const;
 
   for (const { id, key } of configs) {
