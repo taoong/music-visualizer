@@ -257,6 +257,10 @@ export const DEFAULT_CONFIG = {
   weaveThreads: 12,
   weaveGlow: 1.0,
   weavePulse: 1.0,
+  // Stained Glass-specific
+  stainedglassShards: 30,
+  stainedglassGlow: 2.0,
+  stainedglassDrift: 0.5,
 };
 
 // FFT and decay constants

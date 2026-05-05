@@ -33,4 +33,5 @@ export { drawLiquify, resetLiquify, disposeLiquify } from './liquify';
 export { drawPaint, resetPaint } from './paint';
 export { drawNoodles, resetNoodles } from './noodles';
 export { drawWeave, resetWeave } from './weave';
+export { drawStainedGlass, resetStainedGlass } from './stainedglass';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

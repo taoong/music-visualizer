@@ -96,6 +96,8 @@ import {
   resetNoodles,
   drawWeave,
   resetWeave,
+  drawStainedGlass,
+  resetStainedGlass,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -285,6 +287,9 @@ const sketch = (p: P5Instance) => {
       case 'weave':
         drawWeave(p, dt);
         break;
+      case 'stainedglass':
+        drawStainedGlass(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -352,6 +357,8 @@ const sketch = (p: P5Instance) => {
       resetNoodles();
     } else if (store.state.vizMode === 'weave') {
       resetWeave();
+    } else if (store.state.vizMode === 'stainedglass') {
+      resetStainedGlass();
     }
   };
 };

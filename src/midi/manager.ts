@@ -83,6 +83,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   weaveThreads: 'weave-threads',
   weaveGlow: 'weave-glow',
   weavePulse: 'weave-pulse',
+  stainedglassShards: 'stainedglass-shards',
+  stainedglassGlow: 'stainedglass-glow',
+  stainedglassDrift: 'stainedglass-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

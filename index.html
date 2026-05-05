@@ -313,6 +313,7 @@
           <option value="paint">Paint</option>
           <option value="noodles">Noodles</option>
           <option value="weave">Weave</option>
+          <option value="stainedglass">Stained Glass</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -986,6 +987,44 @@
               step="0.1"
               value="2"
               aria-label="Number of full wave cycles visible across the screen"
+            />
+          </div>
+        </div>
+        <div id="stainedglass-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="stainedglass-shards">Shards</label>
+            <input
+              type="range"
+              id="stainedglass-shards"
+              min="8"
+              max="64"
+              step="1"
+              value="30"
+              aria-label="Number of glass panels (8=few large, 64=many small)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="stainedglass-glow">Edge Glow</label>
+            <input
+              type="range"
+              id="stainedglass-glow"
+              min="0"
+              max="5"
+              step="0.1"
+              value="2"
+              aria-label="Thickness and intensity of glowing lead-line edges"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="stainedglass-drift">Color Drift</label>
+            <input
+              type="range"
+              id="stainedglass-drift"
+              min="0"
+              max="3"
+              step="0.05"
+              value="0.5"
+              aria-label="Speed of hue rotation over time"
             />
           </div>
         </div>

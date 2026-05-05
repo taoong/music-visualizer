@@ -125,6 +125,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'weave-threads', key: 'weaveThreads' },
     { id: 'weave-glow', key: 'weaveGlow' },
     { id: 'weave-pulse', key: 'weavePulse' },
+    { id: 'stainedglass-shards', key: 'stainedglassShards' },
+    { id: 'stainedglass-glow', key: 'stainedglassGlow' },
+    { id: 'stainedglass-drift', key: 'stainedglassDrift' },
   ] as const;
 
   for (const { id, key } of configs) {
