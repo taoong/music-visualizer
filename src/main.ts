@@ -98,6 +98,8 @@ import {
   resetWeave,
   drawStainedGlass,
   resetStainedGlass,
+  drawSynthwave,
+  resetSynthwave,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -290,6 +292,9 @@ const sketch = (p: P5Instance) => {
       case 'stainedglass':
         drawStainedGlass(p, dt);
         break;
+      case 'synthwave':
+        drawSynthwave(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -359,6 +364,8 @@ const sketch = (p: P5Instance) => {
       resetWeave();
     } else if (store.state.vizMode === 'stainedglass') {
       resetStainedGlass();
+    } else if (store.state.vizMode === 'synthwave') {
+      resetSynthwave();
     }
   };
 };

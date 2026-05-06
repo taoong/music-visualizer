@@ -261,6 +261,10 @@ export const DEFAULT_CONFIG = {
   stainedglassShards: 30,
   stainedglassGlow: 2.0,
   stainedglassDrift: 0.5,
+  // Synthwave-specific
+  synthwaveSpeed: 1.0,
+  synthwaveHorizon: 0.42,
+  synthwaveGlow: 1.5,
 };
 
 // FFT and decay constants

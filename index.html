@@ -314,6 +314,7 @@
           <option value="noodles">Noodles</option>
           <option value="weave">Weave</option>
           <option value="stainedglass">Stained Glass</option>
+          <option value="synthwave">Synthwave</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1177,6 +1178,44 @@
               step="0.05"
               value="1"
               aria-label="Beat shockwave intensity — gentle ripple to explosive radial burst"
+            />
+          </div>
+        </div>
+        <div id="synthwave-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="synthwave-speed">Speed</label>
+            <input
+              type="range"
+              id="synthwave-speed"
+              min="0.1"
+              max="3"
+              step="0.05"
+              value="1"
+              aria-label="Grid scroll speed — slow meditative drift to fast racing rush"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="synthwave-horizon">Horizon</label>
+            <input
+              type="range"
+              id="synthwave-horizon"
+              min="0.2"
+              max="0.65"
+              step="0.01"
+              value="0.42"
+              aria-label="Horizon height — low for more grid, high for more sky and mountains"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="synthwave-glow">Glow</label>
+            <input
+              type="range"
+              id="synthwave-glow"
+              min="0.3"
+              max="3"
+              step="0.05"
+              value="1.5"
+              aria-label="Neon glow intensity — subtle shimmer to blazing neon overload"
             />
           </div>
         </div>

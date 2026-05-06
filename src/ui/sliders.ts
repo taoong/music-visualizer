@@ -128,6 +128,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'stainedglass-shards', key: 'stainedglassShards' },
     { id: 'stainedglass-glow', key: 'stainedglassGlow' },
     { id: 'stainedglass-drift', key: 'stainedglassDrift' },
+    { id: 'synthwave-speed', key: 'synthwaveSpeed' },
+    { id: 'synthwave-horizon', key: 'synthwaveHorizon' },
+    { id: 'synthwave-glow', key: 'synthwaveGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

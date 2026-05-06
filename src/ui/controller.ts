@@ -105,6 +105,7 @@ function bindVizSelector(): () => void {
   const noodlesControlsGroup = document.getElementById('noodles-controls-group');
   const weaveControlsGroup = document.getElementById('weave-controls-group');
   const stainedglassControlsGroup = document.getElementById('stainedglass-controls-group');
+  const synthwaveControlsGroup = document.getElementById('synthwave-controls-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
@@ -145,11 +146,12 @@ function bindVizSelector(): () => void {
   const decayRateLabel = decayRateGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'ribbons' | 'liquify' | 'paint' | 'noodles' | 'weave' | 'stainedglass';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'ribbons' | 'liquify' | 'paint' | 'noodles' | 'weave' | 'stainedglass' | 'synthwave';
     store.setVizMode(mode);
 
-    // Always hide weave controls; the weave case below re-shows them.
+    // Always hide weave/synthwave controls; each respective case re-shows them.
     hide(weaveControlsGroup);
+    hide(synthwaveControlsGroup);
 
     // Per-mode control visibility
     // | Mode     | scale | decay | rotation | kickBoost | intensity | beatDiv | textInput |
@@ -362,6 +364,12 @@ function bindVizSelector(): () => void {
         hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup); hide(ribbonsControlsGroup); hide(liquifyControlsGroup); hide(paintControlsGroup); hide(noodlesControlsGroup);
+        break;
+      case 'synthwave':
+        show(synthwaveControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup); hide(ribbonsControlsGroup); hide(liquifyControlsGroup); hide(paintControlsGroup); hide(noodlesControlsGroup); hide(stainedglassControlsGroup);
         break;
     }
   };

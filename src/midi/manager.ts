@@ -86,6 +86,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   stainedglassShards: 'stainedglass-shards',
   stainedglassGlow: 'stainedglass-glow',
   stainedglassDrift: 'stainedglass-drift',
+  synthwaveSpeed: 'synthwave-speed',
+  synthwaveHorizon: 'synthwave-horizon',
+  synthwaveGlow: 'synthwave-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
