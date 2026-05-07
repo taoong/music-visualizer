@@ -265,6 +265,10 @@ export const DEFAULT_CONFIG = {
   synthwaveSpeed: 1.0,
   synthwaveHorizon: 0.42,
   synthwaveGlow: 1.5,
+  // Bloom-specific
+  bloomDensity: 0.5,
+  bloomLifespan: 0.5,
+  bloomSpread: 0.5,
 };
 
 // FFT and decay constants

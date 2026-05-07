@@ -131,6 +131,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'synthwave-speed', key: 'synthwaveSpeed' },
     { id: 'synthwave-horizon', key: 'synthwaveHorizon' },
     { id: 'synthwave-glow', key: 'synthwaveGlow' },
+    { id: 'bloom-density', key: 'bloomDensity' },
+    { id: 'bloom-lifespan', key: 'bloomLifespan' },
+    { id: 'bloom-spread', key: 'bloomSpread' },
   ] as const;
 
   for (const { id, key } of configs) {

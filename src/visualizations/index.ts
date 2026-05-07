@@ -35,4 +35,5 @@ export { drawNoodles, resetNoodles } from './noodles';
 export { drawWeave, resetWeave } from './weave';
 export { drawStainedGlass, resetStainedGlass } from './stainedglass';
 export { drawSynthwave, resetSynthwave } from './synthwave';
+export { drawBloom, resetBloom } from './bloom';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

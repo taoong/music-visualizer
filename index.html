@@ -315,6 +315,7 @@
           <option value="weave">Weave</option>
           <option value="stainedglass">Stained Glass</option>
           <option value="synthwave">Synthwave</option>
+          <option value="bloom">Bloom</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1216,6 +1217,44 @@
               step="0.05"
               value="1.5"
               aria-label="Neon glow intensity — subtle shimmer to blazing neon overload"
+            />
+          </div>
+        </div>
+        <div id="bloom-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="bloom-density">Density</label>
+            <input
+              type="range"
+              id="bloom-density"
+              min="0.1"
+              max="1"
+              step="0.05"
+              value="0.5"
+              aria-label="Branch density — sparse tendrils to dense tangled growth"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="bloom-lifespan">Lifespan</label>
+            <input
+              type="range"
+              id="bloom-lifespan"
+              min="0.1"
+              max="1"
+              step="0.05"
+              value="0.5"
+              aria-label="Trail persistence — ephemeral sparks to long glowing memory"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="bloom-spread">Spread</label>
+            <input
+              type="range"
+              id="bloom-spread"
+              min="0.1"
+              max="1"
+              step="0.05"
+              value="0.5"
+              aria-label="Branch deviation angle — tight laser beams to wild explosion"
             />
           </div>
         </div>

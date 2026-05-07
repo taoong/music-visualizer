@@ -89,6 +89,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   synthwaveSpeed: 'synthwave-speed',
   synthwaveHorizon: 'synthwave-horizon',
   synthwaveGlow: 'synthwave-glow',
+  bloomDensity: 'bloom-density',
+  bloomLifespan: 'bloom-lifespan',
+  bloomSpread: 'bloom-spread',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

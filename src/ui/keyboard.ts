@@ -52,6 +52,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('0', () => setVizMode('weave'), 'Weave visualization');
   defineShortcut('`', () => setVizMode('stainedglass'), 'Stained Glass visualization');
   defineShortcut('[', () => setVizMode('synthwave'), 'Synthwave visualization');
+  defineShortcut(']', () => setVizMode('bloom'), 'Bloom visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
