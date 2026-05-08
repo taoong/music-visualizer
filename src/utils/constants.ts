@@ -237,30 +237,10 @@ export const DEFAULT_CONFIG = {
   kaleidoscopeSegments: 6,
   kaleidoscopeComplexity: 2,
   kaleidoscopeSpinSpeed: 0.5,
-  // Ribbons-specific
-  ribbonsCount: 7,
-  ribbonsWaveSpeed: 1.0,
-  ribbonsBend: 2.0,
-  // Liquify-specific
-  liquifyFlow: 0.5,
-  liquifyPersistence: 0.7,
-  liquifyBeatSurge: 0.5,
-  // Paint-specific
-  paintStrokeWidth: 6,
-  paintFade: 0.15,
-  paintSpeed: 1.0,
-  // Noodles-specific
-  noodlesLength: 60,
-  noodlesSpeed: 1.0,
-  noodlesThickness: 1.0,
   // Weave-specific
   weaveThreads: 12,
   weaveGlow: 1.0,
   weavePulse: 1.0,
-  // Stained Glass-specific
-  stainedglassShards: 30,
-  stainedglassGlow: 2.0,
-  stainedglassDrift: 0.5,
   // Synthwave-specific
   synthwaveSpeed: 1.0,
   synthwaveHorizon: 0.42,

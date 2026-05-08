@@ -46,11 +46,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('e', () => setVizMode('waterfall'), 'Waterfall visualization');
   defineShortcut('q', () => setVizMode('kaleido'), 'Kaleido visualization');
   defineShortcut('x', () => setVizMode('kaleidoscope'), 'Kaleidoscope visualization');
-  defineShortcut('z', () => setVizMode('ribbons'), 'Ribbons visualization');
-  defineShortcut("'", () => setVizMode('paint'), 'Paint visualization');
-  defineShortcut('9', () => setVizMode('noodles'), 'Noodles visualization');
   defineShortcut('0', () => setVizMode('weave'), 'Weave visualization');
-  defineShortcut('`', () => setVizMode('stainedglass'), 'Stained Glass visualization');
   defineShortcut('[', () => setVizMode('synthwave'), 'Synthwave visualization');
   defineShortcut(']', () => setVizMode('bloom'), 'Bloom visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');

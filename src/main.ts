@@ -85,19 +85,8 @@ import {
   resetKaleido,
   drawKaleidoscope,
   resetKaleidoscope,
-  drawRibbons,
-  resetRibbons,
-  drawLiquify,
-  resetLiquify,
-  disposeLiquify,
-  drawPaint,
-  resetPaint,
-  drawNoodles,
-  resetNoodles,
   drawWeave,
   resetWeave,
-  drawStainedGlass,
-  resetStainedGlass,
   drawSynthwave,
   resetSynthwave,
   drawBloom,
@@ -166,7 +155,6 @@ const sketch = (p: P5Instance) => {
       disposeImageGrid();
       disposeColormap();
       disposeSculpture();
-      disposeLiquify();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -276,23 +264,8 @@ const sketch = (p: P5Instance) => {
       case 'kaleidoscope':
         drawKaleidoscope(p, dt);
         break;
-      case 'ribbons':
-        drawRibbons(p, dt);
-        break;
-      case 'liquify':
-        drawLiquify(p, dt);
-        break;
-      case 'paint':
-        drawPaint(p, dt);
-        break;
-      case 'noodles':
-        drawNoodles(p, dt);
-        break;
       case 'weave':
         drawWeave(p, dt);
-        break;
-      case 'stainedglass':
-        drawStainedGlass(p, dt);
         break;
       case 'synthwave':
         drawSynthwave(p, dt);
@@ -357,18 +330,8 @@ const sketch = (p: P5Instance) => {
       resetKaleido();
     } else if (store.state.vizMode === 'kaleidoscope') {
       resetKaleidoscope();
-    } else if (store.state.vizMode === 'ribbons') {
-      resetRibbons();
-    } else if (store.state.vizMode === 'liquify') {
-      resetLiquify();
-    } else if (store.state.vizMode === 'paint') {
-      resetPaint();
-    } else if (store.state.vizMode === 'noodles') {
-      resetNoodles();
     } else if (store.state.vizMode === 'weave') {
       resetWeave();
-    } else if (store.state.vizMode === 'stainedglass') {
-      resetStainedGlass();
     } else if (store.state.vizMode === 'synthwave') {
       resetSynthwave();
     } else if (store.state.vizMode === 'bloom') {

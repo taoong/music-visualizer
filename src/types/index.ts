@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems' | 'mic';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'ribbons' | 'liquify' | 'paint' | 'noodles' | 'weave' | 'stainedglass' | 'synthwave' | 'bloom';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -109,30 +109,10 @@ export interface Config {
   kaleidoscopeSegments: number;
   kaleidoscopeComplexity: number;
   kaleidoscopeSpinSpeed: number;
-  // Ribbons-specific
-  ribbonsCount: number;
-  ribbonsWaveSpeed: number;
-  ribbonsBend: number;
-  // Liquify-specific
-  liquifyFlow: number;
-  liquifyPersistence: number;
-  liquifyBeatSurge: number;
-  // Paint-specific
-  paintStrokeWidth: number;
-  paintFade: number;
-  paintSpeed: number;
-  // Noodles-specific
-  noodlesLength: number;
-  noodlesSpeed: number;
-  noodlesThickness: number;
   // Weave-specific
   weaveThreads: number;
   weaveGlow: number;
   weavePulse: number;
-  // Stained Glass-specific
-  stainedglassShards: number;
-  stainedglassGlow: number;
-  stainedglassDrift: number;
   // Synthwave-specific
   synthwaveSpeed: number;
   synthwaveHorizon: number;
