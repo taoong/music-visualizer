@@ -19,17 +19,20 @@ import { audioEngine } from '../audio/engine';
 // ── constants ────────────────────────────────────────────────────────────────
 const CURVE_STEPS = isMobile ? 16 : 28;
 
+// Royal indigo + gold palette. Even bands → indigo, odd bands → gold.
+// Hue is locked; layers and beats only modulate sat/brightness.
+const HUE_INDIGO = 260;
+const HUE_GOLD = 45;
+
 // ── module-scoped state ──────────────────────────────────────────────────────
 let lastBeatIndex = -1;
 let beatPulse = 0;
-let hueShift = 0;
 let spinAngle = 0;
 
 // ── reset ────────────────────────────────────────────────────────────────────
 export function resetKaleidoscope(): void {
   lastBeatIndex = -1;
   beatPulse = 0;
-  hueShift = 0;
   spinAngle = 0;
 }
 
@@ -46,13 +49,11 @@ export function drawKaleidoscope(p: P5Instance, dt: number): void {
     if (idx >= 0 && idx !== lastBeatIndex) {
       lastBeatIndex = idx;
       beatPulse = 1.0;
-      hueShift = (hueShift + 30) % 360;
+      // Beats only pulse brightness/saturation — palette stays locked.
     }
   }
   beatPulse *= Math.pow(0.88, dt);
   if (beatPulse < 0.001) beatPulse = 0;
-
-  hueShift = (hueShift + 0.045 * dt) % 360;
 
   const numSeg = Math.max(3, Math.round(config.kaleidoscopeSegments));
   const complexity = isMobile
@@ -77,13 +78,14 @@ export function drawKaleidoscope(p: P5Instance, dt: number): void {
     p.translate(cx, cy);
     p.rotate(spinAngle + i * halfAngle);
     if (i % 2 === 1) (p as any).scale(1, -1); // mirror odd segments
-    drawWedge(p, amps, maxR, halfAngle, complexity, hueShift, beatPulse);
+    drawWedge(p, amps, maxR, halfAngle, complexity, beatPulse);
     p.pop();
   }
 
   // ── central glow pulsates with sub + bass ─────────────────────────────────
+  // The hub is always gold — the warm centre against the indigo body.
   const centerAmp = amps[0] * 0.6 + amps[1] * 0.4;
-  const centerHue = (hueShift + 180) % 360;
+  const centerHue = HUE_GOLD;
   for (let layer = 5; layer >= 1; layer--) {
     const r = layer * (4 + centerAmp * 16 + beatPulse * 12);
     const a = (6 - layer) * 11 + centerAmp * 14 + beatPulse * 10;
@@ -104,12 +106,14 @@ function drawWedge(
   maxR: number,
   halfAngle: number,
   complexity: number,
-  hueShift: number,
   beatPulse: number
 ): void {
   for (let layer = 0; layer < complexity; layer++) {
     const phaseOffset = layer * (Math.PI / Math.max(complexity, 1));
-    const layerHueShift = layer * (360 / Math.max(complexity, 2));
+    // Layers shift brightness/saturation only — never hue. Inner layer is
+    // most vivid, outer layers fade so the duo-tone identity stays clean.
+    const layerSatBoost = layer === 0 ? 0 : -10 * layer;
+    const layerBriDrop = layer * 6;
 
     for (let b = 0; b < BAND_COUNT; b++) {
       const amp = amps[b];
@@ -118,9 +122,10 @@ function drawWedge(
       // Oscillation: freq=(b+1) ensures sin(freq*PI)=0 → seamless at outer edge
       const freq = b + 1;
       const oscAmp = halfAngle * (0.22 + amp * 0.78 + beatPulse * 0.18);
-      const hue = (hueShift + b * 51 + layerHueShift) % 360;
-      const sat = 72 + amp * 28;
-      const bri = 52 + amp * 48;
+      // Two-tone palette: even bands indigo, odd bands gold.
+      const hue = b % 2 === 0 ? HUE_INDIGO : HUE_GOLD;
+      const sat = Math.max(40, 72 + amp * 28 + layerSatBoost);
+      const bri = Math.max(20, 52 + amp * 48 - layerBriDrop + beatPulse * 14);
 
       // ── glow pass (thick, translucent) ─────────────────────────────────
       p.noFill();

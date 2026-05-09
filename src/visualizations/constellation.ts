@@ -15,6 +15,11 @@ import { BAND_COUNT } from '../utils/constants';
 const MAX_STARS = 400;
 const MIN_STARS = 40;
 
+// ── Palette: cold star field — deep cyan-white field, gold beat-flash accent ─
+const STAR_HUE_BASE = 210; // deep cyan-blue
+const STAR_HUE_JITTER = 14; // per-star tiny variation, stays in cool family
+const FLASH_HUE = 45; // gold accent on beat
+
 // ── Star data (SoA for cache friendliness) ──────────────────────────────────
 let x: Float32Array;
 let y: Float32Array;
@@ -22,6 +27,7 @@ let vx: Float32Array;
 let vy: Float32Array;
 let size: Float32Array;
 let hue: Float32Array;
+let flashGold: Float32Array; // per-star gold flash, decays each frame
 let starCount = 0;
 
 let lastBeatIndex = -1;
@@ -40,6 +46,7 @@ function initStars(w: number, h: number, count: number): void {
   vy = new Float32Array(MAX_STARS);
   size = new Float32Array(MAX_STARS);
   hue = new Float32Array(MAX_STARS);
+  flashGold = new Float32Array(MAX_STARS);
 
   for (let i = 0; i < starCount; i++) {
     x[i] = Math.random() * w;
@@ -47,7 +54,8 @@ function initStars(w: number, h: number, count: number): void {
     vx[i] = (Math.random() - 0.5) * 0.8;
     vy[i] = (Math.random() - 0.5) * 0.8;
     size[i] = 1.5 + Math.random() * 3;
-    hue[i] = Math.random() * 360;
+    hue[i] = STAR_HUE_BASE + (Math.random() - 0.5) * 2 * STAR_HUE_JITTER;
+    flashGold[i] = 0;
   }
 
   prevWidth = w;
@@ -83,7 +91,8 @@ export function drawConstellation(p: P5Instance, dt: number): void {
       vx[i] = (Math.random() - 0.5) * 0.8;
       vy[i] = (Math.random() - 0.5) * 0.8;
       size[i] = 1.5 + Math.random() * 3;
-      hue[i] = Math.random() * 360;
+      hue[i] = STAR_HUE_BASE + (Math.random() - 0.5) * 2 * STAR_HUE_JITTER;
+      flashGold[i] = 0;
     }
     starCount += add;
   } else if (targetCount < starCount) {
@@ -99,6 +108,11 @@ export function drawConstellation(p: P5Instance, dt: number): void {
     if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
       lastBeatIndex = currentBeatIndex;
       beatPulse = 1.0;
+      // Light up a random subset of stars with a brief gold flash
+      const flashCount = Math.max(3, Math.floor(starCount * 0.18));
+      for (let k = 0; k < flashCount; k++) {
+        flashGold[Math.floor(Math.random() * starCount)] = 1.0;
+      }
     }
   }
 
@@ -166,9 +180,13 @@ export function drawConstellation(p: P5Instance, dt: number): void {
     if (y[i] < -margin) y[i] += h + margin * 2;
     if (y[i] > h + margin) y[i] -= h + margin * 2;
 
-    // Audio-reactive size and hue
+    // Audio-reactive size only — hue stays in the cool-blue family,
+    // beats blend in a brief gold flash (decayed per-frame below).
     size[i] = 1.5 + bandAmp * 8 + beatPulse * 4;
-    hue[i] = (bandIdx * 51 + bandAmp * 30 + energy * 20) % 360;
+
+    // Decay each star's gold flash. Fast decay keeps the accent brief.
+    flashGold[i] *= Math.pow(0.82, dt);
+    if (flashGold[i] < 0.01) flashGold[i] = 0;
   }
 
   // ── Render ────────────────────────────────────────────────────────────
@@ -185,8 +203,9 @@ export function drawConstellation(p: P5Instance, dt: number): void {
       if (distSq < connRangeSq) {
         const dist = Math.sqrt(distSq);
         const alpha = (1 - dist / connRange) * (20 + energy * 40 + beatPulse * 20);
+        // Connections stay icy-blue with low sat — never tinted gold.
         const lineHue = (hue[i] + hue[j]) / 2;
-        (p as any).stroke(lineHue, 60, 70 + energy * 30, alpha);
+        (p as any).stroke(lineHue, 25, 88 + energy * 12, alpha);
         p.strokeWeight(0.5 + energy * 1.5 + beatPulse);
         p.line(x[i], y[i], x[j], y[j]);
       }
@@ -200,12 +219,21 @@ export function drawConstellation(p: P5Instance, dt: number): void {
     const bright = 50 + energy * 40 + beatPulse * 10;
     const alpha = 60 + energy * 35;
 
+    // Blend each star's resting cool-blue toward gold on flash. Hue lerp
+    // is short-path (210°→45° goes through 360/0), so subtract 360 from
+    // the blue endpoint when blending toward gold.
+    const f = flashGold[i];
+    const blueHue = hue[i] - 360; // pulls into negative so 45° lerp is short-path
+    const flashHue = ((1 - f) * blueHue + f * FLASH_HUE + 360) % 360;
+    const flashSat = 28 + f * 70; // resting cool stars are low-sat; flash is vivid
+    const flashBright = bright + f * 30;
+
     // Glow layer
-    (p as any).fill(hue[i], 50, bright, alpha * 0.3);
+    (p as any).fill(flashHue, flashSat, flashBright, alpha * 0.3);
     p.ellipse(x[i], y[i], s * 3, s * 3);
 
     // Core
-    (p as any).fill(hue[i], 40, Math.min(100, bright + 20), alpha);
+    (p as any).fill(flashHue, flashSat * 0.85, Math.min(100, flashBright + 20), alpha);
     p.ellipse(x[i], y[i], s, s);
   }
 

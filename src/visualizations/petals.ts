@@ -16,17 +16,19 @@ import { getBandAverages } from './helpers';
 import { BAND_COUNT } from '../utils/constants';
 import { audioEngine } from '../audio/engine';
 
+// ── palette: cherry blossom — single pink hue, per-ring brightness ladder ───
+const PETAL_HUE = 340; // cherry pink
+const PETAL_HUE_RANGE = 8; // tiny per-ring variation 332–348°
+
 // ── module-scoped state ──────────────────────────────────────────────────────
 let lastBeatIndex = -1;
 let beatPulse = 0;
-let hueShift = 0; // slowly-drifting global hue offset (degrees)
 const ringRotations: number[] = new Array(BAND_COUNT).fill(0);
 
 // ── reset ────────────────────────────────────────────────────────────────────
 export function resetPetals(): void {
   lastBeatIndex = -1;
   beatPulse = 0;
-  hueShift = 0;
   for (let i = 0; i < BAND_COUNT; i++) ringRotations[i] = 0;
 }
 
@@ -50,9 +52,6 @@ export function drawPetals(p: P5Instance, dt: number): void {
   beatPulse *= Math.pow(0.88, dt);
   if (beatPulse < 0.001) beatPulse = 0;
 
-  // Slowly drift global hue (one full cycle ~2000 frames at 60fps)
-  hueShift = (hueShift + 0.03 * dt) % 360;
-
   // ── layout ────────────────────────────────────────────────────────────────
   const cx = p.width / 2;
   const cy = p.height / 2;
@@ -72,10 +71,13 @@ export function drawPetals(p: P5Instance, dt: number): void {
     const t = band / (BAND_COUNT - 1);
     const ringRadius = maxDim * (0.09 + t * 0.37);
     const bloomed = ringRadius * (1.0 + amp * bloomScale * 0.35 + beatPulse * 0.1);
-    const hue = (hueShift * 60 + band * 51) % 360;
+    // Inner rings warmer/redder pink (~334°); outer rings cooler pink (~346°).
+    const hue = PETAL_HUE + (t - 0.5) * 2 * PETAL_HUE_RANGE;
+    // Inner rings (low band index) brightest; outer rings dim more.
+    const haloBri = 100 - t * 12;
 
     p.noFill();
-    p.stroke(hue, 65, 100, amp * 28 + beatPulse * 18);
+    p.stroke(hue, 55 + amp * 35, haloBri, amp * 28 + beatPulse * 18);
     p.strokeWeight(4 + amp * 14 + beatPulse * 10);
     p.ellipse(cx, cy, bloomed * 2, bloomed * 2);
   }
@@ -98,10 +100,13 @@ export function drawPetals(p: P5Instance, dt: number): void {
     const petalLen = bloomed * (0.27 + amp * bloomScale * 0.22 + beatPulse * 0.08);
     const petalW = petalLen * 0.42;
 
-    // HSB colour — each band owns a slice of the hue wheel, slowly rotating
-    const hue = (hueShift * 60 + band * 51) % 360;
-    const sat = 68 + amp * 32;
-    const bri = 48 + amp * 52;
+    // Single-hue cherry-pink palette. Brightness ladder: inner rings (band=0)
+    // glow brightest, outer rings stay softer — a depth gradient instead of
+    // a hue gradient. Amplitude/beat drive sat+brightness, never hue.
+    const hue = PETAL_HUE + (t - 0.5) * 2 * PETAL_HUE_RANGE;
+    const innerBoost = 1 - t; // 1 at innermost ring, 0 at outermost
+    const sat = 38 + amp * 50 + beatPulse * 12; // pastel resting, vivid on hits
+    const bri = 60 + innerBoost * 30 + amp * 12 + beatPulse * 8;
     const fillA = 52 + amp * 48;
     const strokeA = 78 + amp * 22;
 
@@ -146,14 +151,15 @@ export function drawPetals(p: P5Instance, dt: number): void {
   }
 
   // ── central glow pulsates with sub + bass ─────────────────────────────────
+  // Stays in the same pink family — innermost-warm shade, near-white core.
   const centerAmp = amps[0] * 0.6 + amps[1] * 0.4;
-  const centerHue = (hueShift * 60 + 180) % 360;
+  const centerHue = PETAL_HUE - PETAL_HUE_RANGE; // warmest pink
 
   for (let layer = 5; layer >= 1; layer--) {
     const r = layer * (5 + centerAmp * 16 + beatPulse * 14);
     const a = (6 - layer) * 11 + centerAmp * 14 + beatPulse * 10;
     p.noStroke();
-    p.fill(centerHue, 48, 100, a);
+    p.fill(centerHue, 30 + centerAmp * 40, 100, a);
     p.ellipse(cx, cy, r * 2, r * 2);
   }
 

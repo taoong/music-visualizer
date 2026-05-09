@@ -52,13 +52,22 @@ function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   ];
 }
 
+// Aqua-depths LUT — single hue family, no rainbow sweep. Amplitude maps
+// to a sat/lightness ladder: navy-black → aqua → bright aqua-white.
+// `hueShift` rotates the family within cool waters only (teal ↔ cobalt),
+// so the slider still does something meaningful without breaking identity.
 function buildLUT(hueShift: number): void {
-  const baseHue = (270 + hueShift * 360) % 360;
+  const baseHue = 175 + (hueShift - 0.5) * 90; // 130°..220°: teal → cyan → cobalt
   for (let i = 0; i < 256; i++) {
     const t = i / 255;
-    const hue = ((baseHue - t * 210) % 360 + 360) % 360;
-    const sat = 0.6 + t * 0.4;
-    const light = t * t * 0.55 + t * 0.1;
+    // Slight hue micro-drift toward white (less saturated cyan) at the
+    // high end, but never crosses out of the cool family.
+    const hue = ((baseHue + (t - 0.5) * 12) % 360 + 360) % 360;
+    // Sat peaks in the mid-amplitude register (deep aqua) and falls off
+    // at the very top so peaks read as bright aqua-white.
+    const sat = 0.4 + 0.55 * Math.sin(Math.min(1, t * 1.2) * Math.PI);
+    // Light ramps quickly off black, then plateaus into a glowy near-white.
+    const light = 0.02 + Math.pow(t, 0.7) * 0.78;
     const [r, g, b] = hslToRgb(hue, sat, light);
     COLOR_LUT[i * 3] = r;
     COLOR_LUT[i * 3 + 1] = g;

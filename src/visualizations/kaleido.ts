@@ -21,18 +21,20 @@ const HARMONICS = [2, 3, 4, 5, 7, 9, 11];
 // Phase drift rates (radians per dt unit, higher bands drift faster)
 const PHASE_RATES = [0.0009, 0.0013, 0.0018, 0.0023, 0.0029, 0.0035, 0.0042];
 
+// Stained-glass triad — wedges cycle through these three hues only.
+// Beats no longer rotate hue; they drive brightness/saturation pulses.
+const TRIAD_HUES = [0, 45, 180]; // deep red, gold, teal
+
 // ── module-scoped state ──────────────────────────────────────────────────────
 const phases = new Float32Array(BAND_COUNT); // per-band phase offsets for smear
 let lastBeatIndex = -1;
 let beatPulse = 0; // 1.0 on beat → decays to 0
-let globalHue = 200; // slowly drifting base hue (degrees)
 
 // ── reset ────────────────────────────────────────────────────────────────────
 export function resetKaleido(): void {
   phases.fill(0);
   lastBeatIndex = -1;
   beatPulse = 0;
-  globalHue = 200;
 }
 
 // ── draw ─────────────────────────────────────────────────────────────────────
@@ -53,15 +55,12 @@ export function drawKaleido(p: P5Instance, dt: number): void {
     if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
       lastBeatIndex = currentBeatIndex;
       beatPulse = 1.0;
-      // Jump hue on beat for visual drama
-      globalHue = (globalHue + 35 + Math.random() * 25) % 360;
+      // No hue jump — beats drive brightness/saturation only, so the
+      // stained-glass identity stays stable across hits.
     }
   }
   beatPulse *= Math.pow(0.82, dt);
   if (beatPulse < 0.001) beatPulse = 0;
-
-  // Slowly drift hue between beats
-  globalHue = (globalHue + 0.05 * dt) % 360;
 
   // Evolve phase offsets for the organic-smear effect
   for (let i = 0; i < BAND_COUNT; i++) {
@@ -128,15 +127,16 @@ export function drawKaleido(p: P5Instance, dt: number): void {
     if (amps[b] > maxAmp) { maxAmp = amps[b]; domBand = b; }
   }
 
-  // Draw N rainbow-tinted wedge fills (one per segment) for color variety
+  // Draw N stained-glass wedge fills cycling through the fixed triad.
+  // Hue stays locked; beats and amplitude only modulate sat/brightness.
   p.noStroke();
   for (let seg = 0; seg < N; seg++) {
     const startStep = Math.floor(seg * STEPS / N);
     const endStep = Math.floor((seg + 1) * STEPS / N);
-    const segHue = (globalHue + (seg / N) * 360) % 360;
-    const sat = 68 + maxAmp * 22;
-    const bri = 38 + maxAmp * 30 + beatPulse * 12;
-    const alpha = 28 + maxAmp * 20 + beatPulse * 12;
+    const segHue = TRIAD_HUES[seg % 3];
+    const sat = 72 + maxAmp * 22 + beatPulse * 6;
+    const bri = 34 + maxAmp * 32 + beatPulse * 22;
+    const alpha = 28 + maxAmp * 20 + beatPulse * 18;
 
     p.fill(segHue, sat, bri, alpha);
     p.beginShape();
@@ -148,9 +148,10 @@ export function drawKaleido(p: P5Instance, dt: number): void {
     p.endShape(p['CLOSE']);
   }
 
-  // Glow layer 1 — wide outer halo
+  // Glow layer 1 — wide outer halo. Outline picks one triad slot driven
+  // by the dominant band, so the family stays consistent but reacts to mix.
   p.noFill();
-  const coreHue = (globalHue + domBand * 30) % 360;
+  const coreHue = TRIAD_HUES[domBand % 3];
   p.stroke(coreHue, 70, 80, 14 + beatPulse * 8);
   p.strokeWeight(8);
   p.beginShape();
@@ -170,8 +171,9 @@ export function drawKaleido(p: P5Instance, dt: number): void {
   }
   p.endShape(p['CLOSE']);
 
-  // Glow layer 3 — sharp bright core
-  p.stroke((coreHue + 18) % 360, 82, 98, 80 + beatPulse * 20);
+  // Glow layer 3 — sharp bright core. Tiny ±10° drift keeps it within
+  // the same family rather than jumping into a new colour on every beat.
+  p.stroke((coreHue + 8) % 360, 82, 98, 80 + beatPulse * 20);
   p.strokeWeight(1.2);
   p.beginShape();
   for (let step = 0; step <= STEPS; step++) {
@@ -180,10 +182,10 @@ export function drawKaleido(p: P5Instance, dt: number): void {
   }
   p.endShape(p['CLOSE']);
 
-  // Central hub — glows with sub + bass energy and beat
+  // Central hub — always gold, the warm centre of the stained-glass piece.
   const hubEnergy = amps[0] * 0.55 + amps[1] * 0.45;
   const hubR = baseR * (0.9 + hubEnergy * 1.0 + beatPulse * 0.5);
-  const hubHue = (coreHue + 40) % 360;
+  const hubHue = TRIAD_HUES[1]; // gold
   for (let layer = 5; layer >= 1; layer--) {
     const r = hubR * layer * 0.52;
     const alpha = (6 - layer) * 10 + hubEnergy * 18 + beatPulse * 20;

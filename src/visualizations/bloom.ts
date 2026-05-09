@@ -17,8 +17,10 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
-// Hue per frequency band: sub=red/warm → brilliance=violet/cool
-const BAND_HUES = [0, 28, 58, 120, 175, 215, 270];
+// Single-hue magenta bloom. Generation depth (not band) drives the colour
+// ladder: deep dark magenta at the roots, near-white pink at the finest
+// tips. Audio amplitude/beats only affect brightness/saturation, never hue.
+const BLOOM_HUE = 320;
 
 interface Tip {
   x: number;
@@ -28,7 +30,6 @@ interface Tip {
   maxLife: number;
   thickness: number;
   band: number;
-  hue: number;
   noiseT: number;
   speed: number;
   forkTimer: number;
@@ -123,17 +124,28 @@ export function drawBloom(p: P5Instance, dt: number): void {
     const lifeFrac = tip.life / tip.maxLife;
     const coreAlpha = lifeFrac * 80 + 10;
 
+    // Depth-driven colour ladder: depth01=0 → deep magenta root, =1 → tip.
+    const depth01 = Math.min(1, tip.depth / (BAND_COUNT - 1));
+    // Sat falls with depth so finest tips read as warm-white, not pink.
+    const haloSat = 80 - depth01 * 60;
+    const midSat = 90 - depth01 * 70;
+    const coreSat = 50 - depth01 * 40;
+    // Brightness rises with depth so the canopy glows brighter than the trunk.
+    const haloBri = 70 + depth01 * 30;
+    const midBri = 78 + depth01 * 22;
+    const coreBri = 88 + depth01 * 12;
+
     // 3-pass glow: outer halo → mid → bright core
     pg.strokeWeight(tip.thickness * 5.5);
-    pg.stroke(tip.hue, 65, 100, coreAlpha * 0.22);
+    pg.stroke(BLOOM_HUE, haloSat, haloBri, coreAlpha * 0.22);
     pg.line(prevX, prevY, tip.x, tip.y);
 
     pg.strokeWeight(tip.thickness * 2.2);
-    pg.stroke(tip.hue, 80, 100, coreAlpha * 0.55);
+    pg.stroke(BLOOM_HUE, midSat, midBri, coreAlpha * 0.55);
     pg.line(prevX, prevY, tip.x, tip.y);
 
     pg.strokeWeight(tip.thickness);
-    pg.stroke(tip.hue, 40, 100, coreAlpha);
+    pg.stroke(BLOOM_HUE, coreSat, coreBri, coreAlpha);
     pg.line(prevX, prevY, tip.x, tip.y);
 
     // Forking
@@ -163,7 +175,6 @@ export function drawBloom(p: P5Instance, dt: number): void {
               maxLife: childLife,
               thickness: tip.thickness * 0.62,
               band: childBand,
-              hue: BAND_HUES[childBand],
               noiseT: Math.random() * 1000,
               speed: tip.speed * 0.78 + Math.random() * 0.6,
               forkTimer: 6 + Math.random() * 9,
@@ -208,7 +219,6 @@ function spawnRootBurst(p: P5Instance, amps: ArrayLike<number>, density: number)
       maxLife,
       thickness: 2.5 + (BAND_COUNT - band) * 0.65,
       band,
-      hue: BAND_HUES[band],
       noiseT: Math.random() * 1000,
       speed: 1.8 + amp * 3.5 + density * 1.5,
       forkTimer: 4 + Math.random() * 9,

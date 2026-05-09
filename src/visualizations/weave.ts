@@ -20,7 +20,12 @@ import { getBandAverages } from './helpers';
 import { BAND_COUNT } from '../utils/constants';
 import { audioEngine } from '../audio/engine';
 
-const BAND_HUES = [0, 30, 65, 140, 195, 240, 280];
+// Persian-tapestry palette — two opinionated colour families plus a rare
+// gold accent at intersection nodes. Hue stays locked; beat/amplitude
+// only modulate brightness/saturation so the tapestry identity holds.
+const WARP_HUES = [0, 6, 12, 18, 24, 14, 8];        // burgundy → rust spread
+const WEFT_HUES = [200, 208, 215, 222, 230, 218, 205]; // navy → teal spread
+const NODE_HUE = 45;                                  // gold accent
 
 // Glow pass descriptors (outermost → core)
 const THREAD_PASSES = [
@@ -35,7 +40,6 @@ const CURVE_SAMPLES = 10; // sample points per wavy thread
 let lastBeatIndex = -1;
 let beatPulse = 0;   // 1 on beat, decays to 0
 let wavePhase = 0;   // wave-front radius expressed as fraction of maxR (0→1.4)
-let hueShift = 0;    // drifts on each beat
 let time = 0;        // ever-increasing, drives thread oscillation
 
 // ── reset ────────────────────────────────────────────────────────────────────
@@ -43,7 +47,6 @@ export function resetWeave(): void {
   lastBeatIndex = -1;
   beatPulse = 0;
   wavePhase = 0;
-  hueShift = 0;
   time = 0;
 }
 
@@ -61,7 +64,7 @@ export function drawWeave(p: P5Instance, dt: number): void {
       lastBeatIndex = beat;
       beatPulse = 1.0;
       wavePhase = 0;
-      hueShift = (hueShift + 28 + Math.random() * 35) % 360;
+      // No hue jump — the warp/weft families stay locked. Beat = brightness.
     }
   }
 
@@ -98,8 +101,9 @@ export function drawWeave(p: P5Instance, dt: number): void {
     const yCen = (i + 1) * cellH;
     const bandIdx = i % BAND_COUNT;
     const amp = amps[bandIdx];
-    const hue = (BAND_HUES[bandIdx] + hueShift) % 360;
-    const sat = 72 + amp * 28;
+    const hue = WARP_HUES[bandIdx];
+    // Burgundy/rust threads — sat range 50–85% keeps them earthy, not neon.
+    const sat = 50 + amp * 35;
 
     // Wave gain: peaks when this thread's y-distance from centre ≈ waveFront
     const dy = Math.abs(yCen - cy);
@@ -135,9 +139,9 @@ export function drawWeave(p: P5Instance, dt: number): void {
     // Offset band mapping so the same band doesn't dominate both axes
     const bandIdx = (j + Math.floor(BAND_COUNT / 2)) % BAND_COUNT;
     const amp = amps[bandIdx];
-    // Shift hue by 130° for pleasing contrast with warp threads
-    const hue = (BAND_HUES[bandIdx] + hueShift + 130) % 360;
-    const sat = 72 + amp * 28;
+    const hue = WEFT_HUES[bandIdx];
+    // Navy/teal weft — slightly higher sat for visual depth against the warp.
+    const sat = 55 + amp * 35;
 
     const dx = Math.abs(xCen - cx);
     const waveGain =
@@ -185,10 +189,9 @@ export function drawWeave(p: P5Instance, dt: number): void {
           ? beatPulse * pulse * Math.exp(-((dist - waveFront) ** 2) / waveSigma2)
           : 0;
 
-      const hueH = (BAND_HUES[bH] + hueShift) % 360;
-      const hueV = (BAND_HUES[bV] + hueShift + 130) % 360;
-      const blendHue = ((hueH + hueV) / 2) % 360;
-
+      // Intersection nodes are always gold — this is the only place a third
+      // colour appears in the tapestry, and it's *earned*: nodes only light
+      // up when both the warp band AND weft band crossing here are loud.
       const nodeBri = Math.min(100, 62 + nodePower * 38 + waveGain * 22);
       const nodeR = Math.max(1.5, (2.5 + nodePower * 9 + waveGain * 5.5) * glow);
       const nodeAlpha = Math.min(100, 42 + nodePower * 58 + waveGain * 38);
@@ -196,15 +199,15 @@ export function drawWeave(p: P5Instance, dt: number): void {
       p.noStroke();
 
       // Outer halo
-      p.fill(blendHue, 52, nodeBri, nodeAlpha * 0.22);
+      p.fill(NODE_HUE, 70, nodeBri, nodeAlpha * 0.22);
       p.ellipse(xCen, yCen, nodeR * 4.5, nodeR * 4.5);
 
       // Mid ring
-      p.fill(blendHue, 68, nodeBri, nodeAlpha * 0.52);
+      p.fill(NODE_HUE, 82, nodeBri, nodeAlpha * 0.52);
       p.ellipse(xCen, yCen, nodeR * 2.0, nodeR * 2.0);
 
-      // Bright core
-      p.fill(blendHue, 18, 100, nodeAlpha * 0.88);
+      // Bright core — desaturated so the centre reads as warm white.
+      p.fill(NODE_HUE, 25, 100, nodeAlpha * 0.88);
       p.ellipse(xCen, yCen, nodeR * 0.65, nodeR * 0.65);
     }
   }
