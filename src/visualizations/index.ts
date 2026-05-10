@@ -31,4 +31,5 @@ export { drawKaleidoscope, resetKaleidoscope } from './kaleidoscope';
 export { drawWeave, resetWeave } from './weave';
 export { drawSynthwave, resetSynthwave } from './synthwave';
 export { drawBloom, resetBloom } from './bloom';
+export { drawMonolith, resetMonolith, disposeMonolith } from './monolith';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

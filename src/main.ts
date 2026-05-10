@@ -91,6 +91,9 @@ import {
   resetSynthwave,
   drawBloom,
   resetBloom,
+  drawMonolith,
+  resetMonolith,
+  disposeMonolith,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -155,6 +158,7 @@ const sketch = (p: P5Instance) => {
       disposeImageGrid();
       disposeColormap();
       disposeSculpture();
+      disposeMonolith();
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -273,6 +277,9 @@ const sketch = (p: P5Instance) => {
       case 'bloom':
         drawBloom(p, dt);
         break;
+      case 'monolith':
+        drawMonolith(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -336,6 +343,8 @@ const sketch = (p: P5Instance) => {
       resetSynthwave();
     } else if (store.state.vizMode === 'bloom') {
       resetBloom();
+    } else if (store.state.vizMode === 'monolith') {
+      resetMonolith();
     }
   };
 };

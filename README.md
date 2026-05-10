@@ -75,6 +75,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `D` | Cloud Chamber | Particle physics simulation; 7 particle types with Lorentz force magnetic field curving; beat cosmic ray showers |
 | `J` | Strange Attractor | Lorenz attractor chaos theory; particles trace butterfly-shaped 3D paths; audio warps system parameters; beats jolt the attractor |
 | `E` | Waterfall | 3D scrolling spectrogram: stacked ribbons of recent spectra receding into the distance; newest snapshot in front, older ones fade back with perspective and haze |
+| `Z` | Monolith | Tall faceted crystal obelisk; cinematic camera choreography (orbit, crash-zoom, Hitchcock dolly, snap-cut, top-down / worm's-eye, barrel rolls) all locked to the beat |
 
 ## Keyboard Shortcuts
 
@@ -95,6 +96,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `D` | Cloud Chamber visualization |
 | `J` | Strange Attractor visualization |
 | `E` | Waterfall visualization |
+| `Z` | Monolith visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

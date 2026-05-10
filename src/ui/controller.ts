@@ -113,7 +113,7 @@ function bindVizSelector(): () => void {
   }
 
   // Visualizations that require beat/BPM tracking and don't work well with mic input
-  const micHiddenVizModes = ['liquidmetal', 'sculpture', 'tungtung', 'aurora'];
+  const micHiddenVizModes = ['liquidmetal', 'sculpture', 'tungtung', 'aurora', 'monolith'];
 
   function updateMicVizVisibility(): void {
     const isMic = store.isMicMode;
@@ -142,7 +142,7 @@ function bindVizSelector(): () => void {
   const decayRateLabel = decayRateGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom' | 'monolith';
     store.setVizMode(mode);
 
     // Always hide weave/synthwave/bloom controls; each respective case re-shows them.
@@ -312,6 +312,12 @@ function bindVizSelector(): () => void {
       case 'bloom':
         show(bloomControlsGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
+      case 'monolith':
+        show(intensityGroup);
+        if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
+        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
     }

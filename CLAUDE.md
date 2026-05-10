@@ -65,6 +65,7 @@ src/
 │   ├── weave.ts               # Weave: audio-reactive tapestry; N horizontal warp threads + N vertical weft threads cross the canvas in a grid; each thread mapped to a freq band (weft offset by ½ BAND_COUNT for hue contrast); threads vibrate sinusoidally (amplitude scales with band energy); 3-pass glow per thread; intersection nodes light up proportional to product of both crossing bands' amplitudes — only bright where both are simultaneously active; beat fires an expanding radial shockwave ring from canvas centre; hue shifts on each beat; sliders: Threads (4–32 per axis), Glow (stroke/halo size), Pulse (shockwave intensity)
 │   ├── synthwave.ts           # Synthwave: retro 80s perspective grid; cyan horizontal lines scroll toward viewer via t² perspective bunching; magenta vertical fan lines converge to vanishing point; striped glowing sun (yellow→pink) sits on horizon; 7 freq bands drive audio-reactive mountain silhouette heights; beats pulse sun + flash screen pink; ADD blendMode neon glow on all elements; sliders: Speed (scroll rate), Horizon (horizon height 0.2–0.65), Glow (neon intensity)
 │   ├── bloom.ts               # Bloom: generative neon branching growth; tips radiate from canvas centre, steered by Perlin noise; sub-bass spawns thick warm-red roots that fork hierarchically up through orange→yellow→green→teal→blue→violet at finest tips (one hue per freq band); 3-pass glow (outer/mid/core) rendered to offscreen buffer with configurable fade rate; beats trigger root burst; amplitude drives continuous forking; sliders: Density (fork rate), Lifespan (trail persistence), Spread (branch deviation angle)
+│   ├── monolith.ts            # Monolith: tall faceted crystal obelisk (stretched icosahedron, 80 facets grouped into 7 freq bands) sits at world origin; camera is the protagonist with choreographed beat-driven moves — continuous orbit baseline, crash-zoom punch on every beat, Hitchcock dolly-zoom every 16 beats, sustained-bass pull-back, occasional snap-cuts, top-down/worm's-eye phases every 32 beats, barrel rolls on hi-hat transients, frame-rate-independent decay; Three.js WebGL overlay with UnrealBloomPass
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -75,7 +76,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/'/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/'/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)
