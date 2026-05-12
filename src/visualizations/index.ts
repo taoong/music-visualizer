@@ -32,4 +32,5 @@ export { drawWeave, resetWeave } from './weave';
 export { drawSynthwave, resetSynthwave } from './synthwave';
 export { drawBloom, resetBloom } from './bloom';
 export { drawMonolith, resetMonolith, disposeMonolith } from './monolith';
+export { drawHive, resetHive } from './hive';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

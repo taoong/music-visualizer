@@ -249,6 +249,10 @@ export const DEFAULT_CONFIG = {
   bloomDensity: 0.5,
   bloomLifespan: 0.5,
   bloomSpread: 0.5,
+  // Hive-specific
+  hiveHexSize: 0.45,
+  hiveGlow: 0.5,
+  hiveRipple: 0.5,
 };
 
 // FFT and decay constants
