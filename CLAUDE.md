@@ -50,7 +50,7 @@ src/
 │   ├── binary.ts              # Matrix-style cascading binary/ASCII characters; columns mapped to 7 freq bands; beat-synced wave ripple; green-tinted with transient white flash
 │   ├── tungtung.ts            # Dancer: beat-synced dancing alien; pose interpolation; spotlight stage; disco floor; beat particles; configurable text flash (default "Move those feet!")
 │   ├── aurora.ts              # Neon Ring Tunnel: first-person flight through 36 neon polygon rings mapped to 7 freq bands (teal→magenta); beat zoom-punch/shake/shockwaves/flash; Perlin camera drift; hyperspace particles; centroid-shifted palette
-│   ├── bootsandcats.ts        # Boots & Cats: falling emoji visualization; 👢 on kick transients (sub/bass), 🐱 on snare (low-mid/mid), ➕ on hihats (upper-mid+); gravity, bounce, fade-out; max 50 active
+│   ├── bootsandcats.ts        # Boots & Cats: falling emoji visualization; 🥾 on kick transients (sub/bass), 🐱 on snare (low-mid/mid), ➕ on hihats (upper-mid+); gravity, bounce, fade-out; max 50 active
 │   ├── rippletank.ts          # Ripple Tank: 7 point-sources in a ring emit circular waves per freq band; wave superposition creates interference patterns; beats spawn expanding shockwave rings; beat surge speeds up water on hits; offscreen pixel buffer at 1/4 res (1/6 mobile) with precomputed distance tables; sliders: Beat Frequency, Water Speed, Beat Surge
 │   ├── cymatics.ts            # Cymatics: Chladni plate simulation; ~3000 particles (1500 mobile) drift toward nodal lines of 7 standing wave modes driven by freq bands; beat-triggered scatter/reform; HSB coloring by dominant band
 │   ├── cloudchamber.ts        # Cloud Chamber: particle physics simulation; 7 particle types (alpha/proton/muon/electron/positron/pion/gamma) mapped to freq bands; Lorentz force magnetic field curving; beat cosmic ray showers; pion decay kinks; gamma pair production; max 200 particles
@@ -66,6 +66,7 @@ src/
 │   ├── synthwave.ts           # Synthwave: retro 80s perspective grid; cyan horizontal lines scroll toward viewer via t² perspective bunching; magenta vertical fan lines converge to vanishing point; striped glowing sun (yellow→pink) sits on horizon; 7 freq bands drive audio-reactive mountain silhouette heights; beats pulse sun + flash screen pink; ADD blendMode neon glow on all elements; sliders: Speed (scroll rate), Horizon (horizon height 0.2–0.65), Glow (neon intensity)
 │   ├── bloom.ts               # Bloom: generative neon branching growth; tips radiate from canvas centre, steered by Perlin noise; sub-bass spawns thick warm-red roots that fork hierarchically up through orange→yellow→green→teal→blue→violet at finest tips (one hue per freq band); 3-pass glow (outer/mid/core) rendered to offscreen buffer with configurable fade rate; beats trigger root burst; amplitude drives continuous forking; sliders: Density (fork rate), Lifespan (trail persistence), Spread (branch deviation angle)
 │   ├── monolith.ts            # Monolith: tall faceted crystal obelisk (stretched icosahedron, 80 facets grouped into 7 freq bands) sits at world origin; camera is the protagonist with choreographed beat-driven moves — continuous orbit baseline, crash-zoom punch on every beat, Hitchcock dolly-zoom every 16 beats, sustained-bass pull-back, occasional snap-cuts, top-down/worm's-eye phases every 32 beats, barrel rolls on hi-hat transients, frame-rate-independent decay; Three.js WebGL overlay with UnrealBloomPass
+│   ├── hive.ts                # Hive: full-canvas flat-top hexagonal honeycomb grid; 7 concentric radial zones each mapped to one freq band (sub-bass at centre → brilliance at edge); hex brightness driven by band amplitude; beat-triggered expanding ripple ring sweeps outward and nudges global hue palette; bloom glow ellipses behind each active hex; sliders: Hex Size (grid density), Glow (bloom intensity), Ripple (beat ripple strength)
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -76,7 +77,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/'/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

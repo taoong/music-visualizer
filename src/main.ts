@@ -94,6 +94,8 @@ import {
   drawMonolith,
   resetMonolith,
   disposeMonolith,
+  drawHive,
+  resetHive,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -280,6 +282,9 @@ const sketch = (p: P5Instance) => {
       case 'monolith':
         drawMonolith(p, dt);
         break;
+      case 'hive':
+        drawHive(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -345,6 +350,8 @@ const sketch = (p: P5Instance) => {
       resetBloom();
     } else if (store.state.vizMode === 'monolith') {
       resetMonolith();
+    } else if (store.state.vizMode === 'hive') {
+      resetHive();
     }
   };
 };
