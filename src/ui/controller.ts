@@ -102,6 +102,7 @@ function bindVizSelector(): () => void {
   const weaveControlsGroup = document.getElementById('weave-controls-group');
   const synthwaveControlsGroup = document.getElementById('synthwave-controls-group');
   const bloomControlsGroup = document.getElementById('bloom-controls-group');
+  const hiveControlsGroup = document.getElementById('hive-controls-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
@@ -142,24 +143,16 @@ function bindVizSelector(): () => void {
   const decayRateLabel = decayRateGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom' | 'monolith';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom' | 'monolith' | 'hive';
     store.setVizMode(mode);
 
-    // Always hide weave/synthwave/bloom controls; each respective case re-shows them.
+    // Always hide weave/synthwave/bloom/hive controls; each respective case re-shows them.
     hide(weaveControlsGroup);
     hide(synthwaveControlsGroup);
     hide(bloomControlsGroup);
+    hide(hiveControlsGroup);
 
     // Per-mode control visibility
-    // | Mode     | scale | decay | rotation | kickBoost | intensity | beatDiv | textInput |
-    // |----------|:-----:|:-----:|:--------:|:---------:|:---------:|:-------:|:---------:|
-    // | circle   |  show |  show |     show |      hide |      hide |    hide |      hide |
-    // | spectrum |  show |  show |     hide |      hide |      hide |    hide |      hide |
-    // | tunnel   |  hide |  show |     hide |      hide |      hide |    hide |      hide |
-    // | balls    |  show |  show |     hide |      show |      hide |    hide |      hide |
-    // | lasers   |  hide |  hide |     hide |      hide |      show |    show |      hide |
-    // | text     |  hide |  hide |     hide |      hide |      show |    show |      show |
-    // | highway  |  hide |  hide |     hide |      hide |      show |    hide |      hide |
     if (rotationLabel) rotationLabel.textContent = 'Rotation Speed';
     if (decayRateLabel) decayRateLabel.textContent = 'Decay Rate';
     switch (mode) {
@@ -318,6 +311,11 @@ function bindVizSelector(): () => void {
         show(intensityGroup);
         if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
         hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
+      case 'hive':
+        show(hiveControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
     }
