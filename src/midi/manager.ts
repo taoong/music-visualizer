@@ -77,6 +77,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   bloomDensity: 'bloom-density',
   bloomLifespan: 'bloom-lifespan',
   bloomSpread: 'bloom-spread',
+  hiveHexSize: 'hive-hex-size',
+  hiveGlow: 'hive-glow',
+  hiveRipple: 'hive-ripple',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

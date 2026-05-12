@@ -46,10 +46,11 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('e', () => setVizMode('waterfall'), 'Waterfall visualization');
   defineShortcut('q', () => setVizMode('kaleido'), 'Kaleido visualization');
   defineShortcut('x', () => setVizMode('kaleidoscope'), 'Kaleidoscope visualization');
-  defineShortcut('0', () => setVizMode('weave'), 'Weave visualization');
-  defineShortcut('[', () => setVizMode('synthwave'), 'Synthwave visualization');
-  defineShortcut(']', () => setVizMode('bloom'), 'Bloom visualization');
-  defineShortcut('z', () => setVizMode('monolith'), 'Monolith visualization');
+  defineShortcut('z', () => setVizMode('weave'), 'Weave visualization');
+  defineShortcut("'", () => setVizMode('synthwave'), 'Synthwave visualization');
+  defineShortcut('9', () => setVizMode('hive'), 'Hive visualization');
+  defineShortcut('0', () => setVizMode('bloom'), 'Bloom visualization');
+  defineShortcut('`', () => setVizMode('monolith'), 'Monolith visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
