@@ -312,6 +312,7 @@
           <option value="synthwave">Synthwave</option>
           <option value="bloom">Bloom</option>
           <option value="monolith">Monolith</option>
+          <option value="hive">Hive</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1023,6 +1024,44 @@
               step="0.05"
               value="1.5"
               aria-label="Neon glow intensity — subtle shimmer to blazing neon overload"
+            />
+          </div>
+        </div>
+        <div id="hive-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="hive-hex-size">Hex Size</label>
+            <input
+              type="range"
+              id="hive-hex-size"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Hexagon radius — small = dense fine grid, large = coarse bold honeycomb"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="hive-glow">Glow</label>
+            <input
+              type="range"
+              id="hive-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Bloom intensity around each hexagon — subtle shimmer to blazing neon halos"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="hive-ripple">Ripple</label>
+            <input
+              type="range"
+              id="hive-ripple"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Beat ripple intensity — gentle pulse to explosive expanding ring"
             />
           </div>
         </div>
