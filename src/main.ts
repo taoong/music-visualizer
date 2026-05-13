@@ -96,6 +96,8 @@ import {
   disposeMonolith,
   drawHive,
   resetHive,
+  drawMarbling,
+  resetMarbling,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -285,6 +287,9 @@ const sketch = (p: P5Instance) => {
       case 'hive':
         drawHive(p, dt);
         break;
+      case 'marbling':
+        drawMarbling(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -352,6 +357,8 @@ const sketch = (p: P5Instance) => {
       resetMonolith();
     } else if (store.state.vizMode === 'hive') {
       resetHive();
+    } else if (store.state.vizMode === 'marbling') {
+      resetMarbling();
     }
   };
 };
