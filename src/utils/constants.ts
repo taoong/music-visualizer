@@ -253,6 +253,10 @@ export const DEFAULT_CONFIG = {
   hiveHexSize: 0.45,
   hiveGlow: 0.5,
   hiveRipple: 0.5,
+  // Marbling-specific
+  marblingHue: 0.0,
+  marblingZoom: 0.35,
+  marblingSpeed: 0.4,
 };
 
 // FFT and decay constants

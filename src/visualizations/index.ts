@@ -33,4 +33,5 @@ export { drawSynthwave, resetSynthwave } from './synthwave';
 export { drawBloom, resetBloom } from './bloom';
 export { drawMonolith, resetMonolith, disposeMonolith } from './monolith';
 export { drawHive, resetHive } from './hive';
+export { drawMarbling, resetMarbling } from './marbling';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
