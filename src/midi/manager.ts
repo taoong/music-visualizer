@@ -80,6 +80,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   hiveHexSize: 'hive-hex-size',
   hiveGlow: 'hive-glow',
   hiveRipple: 'hive-ripple',
+  marblingHue: 'marbling-hue',
+  marblingZoom: 'marbling-zoom',
+  marblingSpeed: 'marbling-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
@@ -137,7 +140,7 @@ function handleMidiMessage(event: MIDIMessageEvent): void {
   if (!data || data.length < 3) return;
 
   const statusByte = data[0];
-  // Only handle CC messages (0xB0–0xBF)
+  // Only handle CC messages (0xB0– 0xBF)
   if ((statusByte & 0xf0) !== 0xb0) return;
 
   const channel = (statusByte & 0x0f) + 1;
