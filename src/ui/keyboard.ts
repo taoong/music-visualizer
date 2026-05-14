@@ -52,6 +52,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('0', () => setVizMode('bloom'), 'Bloom visualization');
   defineShortcut('`', () => setVizMode('monolith'), 'Monolith visualization');
   defineShortcut(';', () => setVizMode('marbling'), 'Marbling visualization');
+  defineShortcut('[', () => setVizMode('flowfield'), 'Flow Field visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

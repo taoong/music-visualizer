@@ -98,6 +98,8 @@ import {
   resetHive,
   drawMarbling,
   resetMarbling,
+  drawFlowField,
+  resetFlowField,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -290,6 +292,9 @@ const sketch = (p: P5Instance) => {
       case 'marbling':
         drawMarbling(p, dt);
         break;
+      case 'flowfield':
+        drawFlowField(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -359,6 +364,8 @@ const sketch = (p: P5Instance) => {
       resetHive();
     } else if (store.state.vizMode === 'marbling') {
       resetMarbling();
+    } else if (store.state.vizMode === 'flowfield') {
+      resetFlowField();
     }
   };
 };

@@ -68,6 +68,7 @@ src/
 │   ├── monolith.ts            # Monolith: tall faceted crystal obelisk (stretched icosahedron, 80 facets grouped into 7 freq bands) sits at world origin; camera is the protagonist with choreographed beat-driven moves — continuous orbit baseline, crash-zoom punch on every beat, Hitchcock dolly-zoom every 16 beats, sustained-bass pull-back, occasional snap-cuts, top-down/worm's-eye phases every 32 beats, barrel rolls on hi-hat transients, frame-rate-independent decay; Three.js WebGL overlay with UnrealBloomPass
 │   ├── hive.ts                # Hive: full-canvas flat-top hexagonal honeycomb grid; 7 concentric radial zones each mapped to one freq band (sub-bass at centre → brilliance at edge); hex brightness driven by band amplitude; beat-triggered expanding ripple ring sweeps outward and nudges global hue palette; bloom glow ellipses behind each active hex; sliders: Hex Size (grid density), Glow (bloom intensity), Ripple (beat ripple strength)
 │   ├── marbling.ts            # Marbling: full-screen psychedelic plasma/marble-paper colour field; 3 base sinusoidal waves + 7 audio-reactive band waves superpose into a continuous value field; value → HSV hue → pixel colour via offscreen pixel buffer at ¼ res (⅛ mobile); beat triggers hue-phase jump and brightness flash; sliders: Hue Shift (palette rotation 0–1), Zoom (pattern density 0–1), Speed (animation rate 0–1)
+│   ├── flowfield.ts           # Flow Field: Perlin-noise vector field guiding colored brushstroke ribbons (inspired by Tyler Hobbs' "Fidenza" 2021); 7 bands mapped to distinct hues (violet→blue→teal→green→yellow→orange→magenta); amplitude drives ribbon speed, stroke weight, and brightness; sub-bass bends field spatially; beats burst fresh ribbons from canvas edges; 3-pass ADD glow per ribbon; offscreen trail buffer; sliders: Turbulence (laminar→chaotic), Trail (fade rate), Width (stroke weight)
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -78,7 +79,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive, ;→marbling)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive, ;→marbling, [→flowfield)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

@@ -83,6 +83,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   marblingHue: 'marbling-hue',
   marblingZoom: 'marbling-zoom',
   marblingSpeed: 'marbling-speed',
+  flowfieldTurbulence: 'flowfield-turbulence',
+  flowfieldTrail: 'flowfield-trail',
+  flowfieldWidth: 'flowfield-width',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

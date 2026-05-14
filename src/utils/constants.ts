@@ -257,6 +257,10 @@ export const DEFAULT_CONFIG = {
   marblingHue: 0.0,
   marblingZoom: 0.35,
   marblingSpeed: 0.4,
+  // Flow Field-specific
+  flowfieldTurbulence: 0.4,
+  flowfieldTrail: 0.55,
+  flowfieldWidth: 0.5,
 };
 
 // FFT and decay constants

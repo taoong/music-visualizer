@@ -119,6 +119,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'marbling-hue', key: 'marblingHue' },
     { id: 'marbling-zoom', key: 'marblingZoom' },
     { id: 'marbling-speed', key: 'marblingSpeed' },
+    { id: 'flowfield-turbulence', key: 'flowfieldTurbulence' },
+    { id: 'flowfield-trail', key: 'flowfieldTrail' },
+    { id: 'flowfield-width', key: 'flowfieldWidth' },
   ] as const;
 
   for (const { id, key } of configs) {

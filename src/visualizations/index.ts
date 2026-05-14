@@ -34,4 +34,5 @@ export { drawBloom, resetBloom } from './bloom';
 export { drawMonolith, resetMonolith, disposeMonolith } from './monolith';
 export { drawHive, resetHive } from './hive';
 export { drawMarbling, resetMarbling } from './marbling';
+export { drawFlowField, resetFlowField } from './flowfield';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
