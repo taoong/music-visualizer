@@ -122,6 +122,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'flowfield-turbulence', key: 'flowfieldTurbulence' },
     { id: 'flowfield-trail', key: 'flowfieldTrail' },
     { id: 'flowfield-width', key: 'flowfieldWidth' },
+    { id: 'lissajous-curves', key: 'lissajousCurves' },
+    { id: 'lissajous-glow', key: 'lissajousGlow' },
+    { id: 'lissajous-drift', key: 'lissajousDrift' },
   ] as const;
 
   for (const { id, key } of configs) {

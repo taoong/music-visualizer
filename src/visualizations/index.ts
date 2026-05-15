@@ -35,4 +35,5 @@ export { drawMonolith, resetMonolith, disposeMonolith } from './monolith';
 export { drawHive, resetHive } from './hive';
 export { drawMarbling, resetMarbling } from './marbling';
 export { drawFlowField, resetFlowField } from './flowfield';
+export { drawLissajous, resetLissajous } from './lissajous';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

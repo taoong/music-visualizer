@@ -100,6 +100,8 @@ import {
   resetMarbling,
   drawFlowField,
   resetFlowField,
+  drawLissajous,
+  resetLissajous,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -295,6 +297,9 @@ const sketch = (p: P5Instance) => {
       case 'flowfield':
         drawFlowField(p, dt);
         break;
+      case 'lissajous':
+        drawLissajous(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -366,6 +371,8 @@ const sketch = (p: P5Instance) => {
       resetMarbling();
     } else if (store.state.vizMode === 'flowfield') {
       resetFlowField();
+    } else if (store.state.vizMode === 'lissajous') {
+      resetLissajous();
     }
   };
 };

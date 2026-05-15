@@ -315,6 +315,7 @@
           <option value="hive">Hive</option>
           <option value="marbling">Marbling</option>
           <option value="flowfield">Flow Field</option>
+          <option value="lissajous">Lissajous</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1178,6 +1179,44 @@
               step="0.01"
               value="0.5"
               aria-label="Ribbon stroke width — hairline threads to broad brushstrokes"
+            />
+          </div>
+        </div>
+        <div id="lissajous-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="lissajous-curves">Curves</label>
+            <input
+              type="range"
+              id="lissajous-curves"
+              min="1"
+              max="7"
+              step="1"
+              value="5"
+              aria-label="Number of Lissajous curves shown (1 = ellipse only, 7 = all shapes)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lissajous-glow">Glow</label>
+            <input
+              type="range"
+              id="lissajous-glow"
+              min="0.1"
+              max="3"
+              step="0.05"
+              value="1.2"
+              aria-label="Phosphor glow halo intensity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lissajous-drift">Drift</label>
+            <input
+              type="range"
+              id="lissajous-drift"
+              min="0"
+              max="2"
+              step="0.01"
+              value="0.4"
+              aria-label="Phase drift speed — slow morphing to fast spin"
             />
           </div>
         </div>

@@ -261,6 +261,10 @@ export const DEFAULT_CONFIG = {
   flowfieldTurbulence: 0.4,
   flowfieldTrail: 0.55,
   flowfieldWidth: 0.5,
+  // Lissajous-specific
+  lissajousCurves: 5,
+  lissajousGlow: 1.2,
+  lissajousDrift: 0.4,
 };
 
 // FFT and decay constants

@@ -86,6 +86,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   flowfieldTurbulence: 'flowfield-turbulence',
   flowfieldTrail: 'flowfield-trail',
   flowfieldWidth: 'flowfield-width',
+  lissajousCurves: 'lissajous-curves',
+  lissajousGlow: 'lissajous-glow',
+  lissajousDrift: 'lissajous-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
