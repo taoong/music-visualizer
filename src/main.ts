@@ -102,6 +102,8 @@ import {
   resetFlowField,
   drawLissajous,
   resetLissajous,
+  drawTruchet,
+  resetTruchet,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -300,6 +302,9 @@ const sketch = (p: P5Instance) => {
       case 'lissajous':
         drawLissajous(p, dt);
         break;
+      case 'truchet':
+        drawTruchet(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -373,6 +378,8 @@ const sketch = (p: P5Instance) => {
       resetFlowField();
     } else if (store.state.vizMode === 'lissajous') {
       resetLissajous();
+    } else if (store.state.vizMode === 'truchet') {
+      resetTruchet();
     }
   };
 };

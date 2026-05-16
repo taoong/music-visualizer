@@ -70,6 +70,7 @@ src/
 │   ├── marbling.ts            # Marbling: full-screen psychedelic plasma/marble-paper colour field; 3 base sinusoidal waves + 7 audio-reactive band waves superpose into a continuous value field; value → HSV hue → pixel colour via offscreen pixel buffer at ¼ res (⅛ mobile); beat triggers hue-phase jump and brightness flash; sliders: Hue Shift (palette rotation 0–1), Zoom (pattern density 0–1), Speed (animation rate 0–1)
 │   ├── flowfield.ts           # Flow Field: Perlin-noise vector field guiding colored brushstroke ribbons (inspired by Tyler Hobbs' "Fidenza" 2021); 7 bands mapped to distinct hues (violet→blue→teal→green→yellow→orange→magenta); amplitude drives ribbon speed, stroke weight, and brightness; sub-bass bends field spatially; beats burst fresh ribbons from canvas edges; 3-pass ADD glow per ribbon; offscreen trail buffer; sliders: Turbulence (laminar→chaotic), Trail (fade rate), Width (stroke weight)
 │   ├── lissajous.ts           # Lissajous: 7 oscilloscope-style parametric curves (one per freq band) using coprime integer ratios 1:1→5:6 (ellipse, figure-8, three-lobe, etc.); inspired by Jerobeam Fenderson's oscilloscope music (creativeapplications.net); amplitude drives curve size; phases drift at configurable speed, snap on beats; 3-pass phosphor glow (green→cyan→blue→violet→magenta→amber palette); offscreen trail buffer; sliders: Curves (1–7 visible), Glow (phosphor brightness), Drift (phase speed)
+│   ├── truchet.ts             # Truchet Tile Maze: audio-reactive Truchet quarter-circle arc grid inspired by Manolo Gamboa Naon (Manoloide) "88 Allegories" series; 7 freq bands drive color zones (column bands) and tile orientation morph speed (violet→cyan→teal→lime→gold→orange→magenta palette); beat triggers mass orientation shuffle + hue palette jump; brilliance drives continuous sparkle perturbations; 2-pass glow (wide outer halo + bright core); sub-bass boosts stroke weight; sliders: Grid (tile density 0=large→1=small), Speed (morph rate), Glow (arc weight/halo)
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -80,7 +81,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive, ;→marbling, [→flowfield, ]→lissajous)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive, ;→marbling, [→flowfield, ]→lissajous, \→truchet)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

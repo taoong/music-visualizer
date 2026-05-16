@@ -36,4 +36,5 @@ export { drawHive, resetHive } from './hive';
 export { drawMarbling, resetMarbling } from './marbling';
 export { drawFlowField, resetFlowField } from './flowfield';
 export { drawLissajous, resetLissajous } from './lissajous';
+export { drawTruchet, resetTruchet } from './truchet';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

@@ -125,6 +125,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'lissajous-curves', key: 'lissajousCurves' },
     { id: 'lissajous-glow', key: 'lissajousGlow' },
     { id: 'lissajous-drift', key: 'lissajousDrift' },
+    { id: 'truchet-grid', key: 'truchetGrid' },
+    { id: 'truchet-speed', key: 'truchetSpeed' },
+    { id: 'truchet-glow', key: 'truchetGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

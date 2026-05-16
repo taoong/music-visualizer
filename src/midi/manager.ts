@@ -89,6 +89,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   lissajousCurves: 'lissajous-curves',
   lissajousGlow: 'lissajous-glow',
   lissajousDrift: 'lissajous-drift',
+  truchetGrid: 'truchet-grid',
+  truchetSpeed: 'truchet-speed',
+  truchetGlow: 'truchet-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -316,6 +316,7 @@
           <option value="marbling">Marbling</option>
           <option value="flowfield">Flow Field</option>
           <option value="lissajous">Lissajous</option>
+          <option value="truchet">Truchet</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1217,6 +1218,45 @@
               step="0.01"
               value="0.4"
               aria-label="Phase drift speed — slow morphing to fast spin"
+            />
+          </div>
+        </div>
+
+        <div id="truchet-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="truchet-grid">Grid</label>
+            <input
+              type="range"
+              id="truchet-grid"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Tile density — 0 = large sparse tiles, 1 = small dense tiles"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="truchet-speed">Speed</label>
+            <input
+              type="range"
+              id="truchet-speed"
+              min="0"
+              max="2"
+              step="0.01"
+              value="0.6"
+              aria-label="Tile morph speed — how fast tiles flip between orientations"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="truchet-glow">Glow</label>
+            <input
+              type="range"
+              id="truchet-glow"
+              min="0.2"
+              max="3"
+              step="0.05"
+              value="1"
+              aria-label="Arc stroke weight and glow intensity"
             />
           </div>
         </div>

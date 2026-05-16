@@ -265,6 +265,10 @@ export const DEFAULT_CONFIG = {
   lissajousCurves: 5,
   lissajousGlow: 1.2,
   lissajousDrift: 0.4,
+  // Truchet-specific
+  truchetGrid: 0.35,
+  truchetSpeed: 0.6,
+  truchetGlow: 1.0,
 };
 
 // FFT and decay constants
