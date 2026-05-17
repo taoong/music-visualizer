@@ -92,6 +92,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   truchetGrid: 'truchet-grid',
   truchetSpeed: 'truchet-speed',
   truchetGlow: 'truchet-glow',
+  topographyResolution: 'topography-resolution',
+  topographyLevels: 'topography-levels',
+  topographySpeed: 'topography-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

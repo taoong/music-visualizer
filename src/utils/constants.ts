@@ -269,6 +269,10 @@ export const DEFAULT_CONFIG = {
   truchetGrid: 0.35,
   truchetSpeed: 0.6,
   truchetGlow: 1.0,
+  // Topography-specific
+  topographyResolution: 35,
+  topographyLevels: 7,
+  topographySpeed: 0.5,
 };
 
 // FFT and decay constants

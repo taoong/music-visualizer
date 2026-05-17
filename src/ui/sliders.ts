@@ -128,6 +128,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'truchet-grid', key: 'truchetGrid' },
     { id: 'truchet-speed', key: 'truchetSpeed' },
     { id: 'truchet-glow', key: 'truchetGlow' },
+    { id: 'topography-resolution', key: 'topographyResolution' },
+    { id: 'topography-levels', key: 'topographyLevels' },
+    { id: 'topography-speed', key: 'topographySpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

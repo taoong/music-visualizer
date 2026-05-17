@@ -30,7 +30,6 @@ const MAX_TILE = 110;
 let tileAngle: Float32Array | null = null;
 let tileTarget: Float32Array | null = null;
 let cols = 0;
-let rows = 0;
 let tileCount = 0;
 let lastTileSize = -1;
 let huePalette = 0;
@@ -40,7 +39,6 @@ export function resetTruchet(): void {
   tileAngle = null;
   tileTarget = null;
   cols = 0;
-  rows = 0;
   tileCount = 0;
   lastTileSize = -1;
   huePalette = 0;
@@ -65,7 +63,6 @@ export function drawTruchet(p: P5Instance, dt: number): void {
 
   if (newCount !== tileCount || lastTileSize !== tileSize) {
     cols = newCols;
-    rows = newRows;
     tileCount = newCount;
     lastTileSize = tileSize;
     tileAngle = new Float32Array(tileCount);

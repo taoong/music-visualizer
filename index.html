@@ -317,6 +317,7 @@
           <option value="flowfield">Flow Field</option>
           <option value="lissajous">Lissajous</option>
           <option value="truchet">Truchet</option>
+          <option value="topography">Topography</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1257,6 +1258,45 @@
               step="0.05"
               value="1"
               aria-label="Arc stroke weight and glow intensity"
+            />
+          </div>
+        </div>
+
+        <div id="topography-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="topography-resolution">Resolution</label>
+            <input
+              type="range"
+              id="topography-resolution"
+              min="10"
+              max="60"
+              step="1"
+              value="35"
+              aria-label="Grid density — low = coarse undulating contours, high = fine detailed map"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="topography-levels">Levels</label>
+            <input
+              type="range"
+              id="topography-levels"
+              min="3"
+              max="15"
+              step="1"
+              value="7"
+              aria-label="Contour elevation levels — few = bold bands, many = dense hairline map"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="topography-speed">Speed</label>
+            <input
+              type="range"
+              id="topography-speed"
+              min="0"
+              max="2"
+              step="0.01"
+              value="0.5"
+              aria-label="Terrain animation rate — slow organic drift to fast flowing terrain"
             />
           </div>
         </div>

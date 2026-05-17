@@ -107,6 +107,7 @@ function bindVizSelector(): () => void {
   const flowfieldControlsGroup = document.getElementById('flowfield-controls-group');
   const lissajousControlsGroup = document.getElementById('lissajous-controls-group');
   const truchetControlsGroup = document.getElementById('truchet-controls-group');
+  const topographyControlsGroup = document.getElementById('topography-controls-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
@@ -147,7 +148,7 @@ function bindVizSelector(): () => void {
   const decayRateLabel = decayRateGroup?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom' | 'monolith' | 'hive' | 'marbling' | 'flowfield' | 'lissajous' | 'truchet';
+    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom' | 'monolith' | 'hive' | 'marbling' | 'flowfield' | 'lissajous' | 'truchet' | 'topography';
     store.setVizMode(mode);
 
     // Always hide weave/synthwave/bloom/hive/marbling/flowfield/lissajous/truchet controls; each respective case re-shows them.
@@ -159,6 +160,7 @@ function bindVizSelector(): () => void {
     hide(flowfieldControlsGroup);
     hide(lissajousControlsGroup);
     hide(truchetControlsGroup);
+    hide(topographyControlsGroup);
 
     // Per-mode control visibility
     if (rotationLabel) rotationLabel.textContent = 'Rotation Speed';
@@ -346,6 +348,12 @@ function bindVizSelector(): () => void {
         break;
       case 'truchet':
         show(truchetControlsGroup);
+        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
+        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
+        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);
+        break;
+      case 'topography':
+        show(topographyControlsGroup);
         hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
         hide(ballsKickBoostGroup); hide(beatDivisionGroup);
         hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);

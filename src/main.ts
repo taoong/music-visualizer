@@ -104,6 +104,8 @@ import {
   resetLissajous,
   drawTruchet,
   resetTruchet,
+  drawTopography,
+  resetTopography,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -305,6 +307,9 @@ const sketch = (p: P5Instance) => {
       case 'truchet':
         drawTruchet(p, dt);
         break;
+      case 'topography':
+        drawTopography(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -380,6 +385,8 @@ const sketch = (p: P5Instance) => {
       resetLissajous();
     } else if (store.state.vizMode === 'truchet') {
       resetTruchet();
+    } else if (store.state.vizMode === 'topography') {
+      resetTopography();
     }
   };
 };
