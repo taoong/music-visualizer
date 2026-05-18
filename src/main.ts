@@ -106,6 +106,8 @@ import {
   resetTruchet,
   drawTopography,
   resetTopography,
+  drawInterference,
+  resetInterference,
   loadUserImage,
 } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
@@ -310,6 +312,9 @@ const sketch = (p: P5Instance) => {
       case 'topography':
         drawTopography(p, dt);
         break;
+      case 'interference':
+        drawInterference(p, dt);
+        break;
       case 'circle':
       default:
         drawSpikeCircle(p);
@@ -387,6 +392,8 @@ const sketch = (p: P5Instance) => {
       resetTruchet();
     } else if (store.state.vizMode === 'topography') {
       resetTopography();
+    } else if (store.state.vizMode === 'interference') {
+      resetInterference();
     }
   };
 };

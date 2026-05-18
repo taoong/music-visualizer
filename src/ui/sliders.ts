@@ -131,6 +131,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'topography-resolution', key: 'topographyResolution' },
     { id: 'topography-levels', key: 'topographyLevels' },
     { id: 'topography-speed', key: 'topographySpeed' },
+    { id: 'interference-frequency', key: 'interferenceFrequency' },
+    { id: 'interference-twist', key: 'interferenceTwist' },
+    { id: 'interference-drift', key: 'interferenceDrift' },
   ] as const;
 
   for (const { id, key } of configs) {

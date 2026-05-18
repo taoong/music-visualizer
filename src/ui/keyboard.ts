@@ -56,6 +56,7 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut(']', () => setVizMode('lissajous'), 'Lissajous visualization');
   defineShortcut('\\', () => setVizMode('truchet'), 'Truchet Tile Maze visualization');
   defineShortcut('-', () => setVizMode('topography'), 'Topography visualization');
+  defineShortcut('=', () => setVizMode('interference'), 'Interference visualization');
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

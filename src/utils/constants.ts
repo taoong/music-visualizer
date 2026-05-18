@@ -273,6 +273,10 @@ export const DEFAULT_CONFIG = {
   topographyResolution: 35,
   topographyLevels: 7,
   topographySpeed: 0.5,
+  // Interference-specific
+  interferenceFrequency: 0.35,
+  interferenceTwist: 0.5,
+  interferenceDrift: 0.35,
 };
 
 // FFT and decay constants

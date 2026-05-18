@@ -95,6 +95,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   topographyResolution: 'topography-resolution',
   topographyLevels: 'topography-levels',
   topographySpeed: 'topography-speed',
+  interferenceFrequency: 'interference-frequency',
+  interferenceTwist: 'interference-twist',
+  interferenceDrift: 'interference-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
