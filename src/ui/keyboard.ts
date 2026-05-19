@@ -4,6 +4,7 @@
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { hasUserImage, clearUserImage } from '../visualizations/userImage';
+import { VIZ_REGISTRY } from '../visualizations/registry';
 import type { VizMode } from '../types';
 
 // Keyboard shortcut map
@@ -19,44 +20,10 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('ArrowRight', () => cycleVizMode(1), 'Next visualization');
   defineShortcut('ArrowUp', () => adjustVolume(0.05), 'Volume up');
   defineShortcut('ArrowDown', () => adjustVolume(-0.05), 'Volume down');
-  defineShortcut('1', () => setVizMode('circle'), 'Circle visualization');
-  defineShortcut('2', () => setVizMode('spectrum'), 'Spectrum visualization');
-  defineShortcut('3', () => setVizMode('tunnel'), 'Tunnel visualization');
-  defineShortcut('4', () => setVizMode('tetris'), 'Tetris visualization');
-  defineShortcut('5', () => setVizMode('lasers'), 'Lasers visualization');
-  defineShortcut('6', () => setVizMode('text'), 'Text visualization');
-  defineShortcut('7', () => setVizMode('highway'), 'Highway visualization');
-  defineShortcut('8', () => setVizMode('liquidmetal'), 'Liquid Metal visualization');
-  defineShortcut('n', () => setVizMode('neon'), 'Neon Grid visualization');
-  defineShortcut('g', () => setVizMode('imagegrid'), 'Image Grid visualization');
-  defineShortcut('c', () => setVizMode('colormap'), 'Color Map visualization');
-  defineShortcut('u', () => setVizMode('sculpture'), 'Sculpture visualization');
-  defineShortcut('b', () => setVizMode('binary'), 'Binary visualization');
-  defineShortcut('t', () => setVizMode('tungtung'), 'Dancer visualization');
-  defineShortcut('a', () => setVizMode('aurora'), 'Aurora visualization');
-  defineShortcut('k', () => setVizMode('bootsandcats'), 'Boots & Cats visualization');
-  defineShortcut('w', () => setVizMode('rippletank'), 'Ripple Tank visualization');
-  defineShortcut('y', () => setVizMode('cymatics'), 'Cymatics visualization');
-  defineShortcut('d', () => setVizMode('cloudchamber'), 'Cloud Chamber visualization');
-  defineShortcut('j', () => setVizMode('attractor'), 'Strange Attractor visualization');
-  defineShortcut('l', () => setVizMode('mandala'), 'Mandala visualization');
-  defineShortcut('v', () => setVizMode('stringart'), 'String Art visualization');
-  defineShortcut('o', () => setVizMode('constellation'), 'Constellation visualization');
-  defineShortcut('p', () => setVizMode('petals'), 'Petal Bloom visualization');
-  defineShortcut('e', () => setVizMode('waterfall'), 'Waterfall visualization');
-  defineShortcut('q', () => setVizMode('kaleido'), 'Kaleido visualization');
-  defineShortcut('x', () => setVizMode('kaleidoscope'), 'Kaleidoscope visualization');
-  defineShortcut('z', () => setVizMode('weave'), 'Weave visualization');
-  defineShortcut("'", () => setVizMode('synthwave'), 'Synthwave visualization');
-  defineShortcut('9', () => setVizMode('hive'), 'Hive visualization');
-  defineShortcut('0', () => setVizMode('bloom'), 'Bloom visualization');
-  defineShortcut('`', () => setVizMode('monolith'), 'Monolith visualization');
-  defineShortcut(';', () => setVizMode('marbling'), 'Marbling visualization');
-  defineShortcut('[', () => setVizMode('flowfield'), 'Flow Field visualization');
-  defineShortcut(']', () => setVizMode('lissajous'), 'Lissajous visualization');
-  defineShortcut('\\', () => setVizMode('truchet'), 'Truchet Tile Maze visualization');
-  defineShortcut('-', () => setVizMode('topography'), 'Topography visualization');
-  defineShortcut('=', () => setVizMode('interference'), 'Interference visualization');
+  // Register viz shortcuts from the registry
+  for (const [mode, entry] of Object.entries(VIZ_REGISTRY) as [VizMode, (typeof VIZ_REGISTRY)[VizMode]][]) {
+    defineShortcut(entry.key, () => setVizMode(mode), `${entry.label} visualization`);
+  }
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

@@ -139,11 +139,9 @@ Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChang
 1. Create `src/visualizations/<name>.ts` exporting `draw<Name>(p: P5Instance, dt: number)` and `reset<Name>()`.
 2. Add `'<name>'` to the `VizMode` union in `src/types/index.ts`.
 3. Export from `src/visualizations/index.ts`.
-4. Import + add `case` in `main.ts` draw switch and windowResized handler.
+4. Add an entry to `src/visualizations/registry.ts` — `draw`, optional `reset`/`dispose`, `key` (keyboard shortcut), and `label`. This replaces the old per-viz changes to `main.ts`, `keyboard.ts`, and `controller.ts`.
 5. Add `<option>` in `index.html` viz-selector dropdown.
-6. Add `'<name>'` to type cast in `src/ui/controller.ts` `bindVizSelector`.
-7. Add keyboard shortcut in `src/ui/keyboard.ts`.
-8. Add any missing p5.js methods to `src/types/globals.d.ts`.
+6. Add any missing p5.js methods to `src/types/globals.d.ts`.
 
 ### External libraries
 

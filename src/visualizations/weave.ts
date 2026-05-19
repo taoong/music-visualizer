@@ -17,7 +17,7 @@
  */
 import { store } from '../state/store';
 import { getBandAverages } from './helpers';
-import { BAND_COUNT } from '../utils/constants';
+import { BAND_COUNT, isMobile } from '../utils/constants';
 import { audioEngine } from '../audio/engine';
 
 // Persian-tapestry palette — two opinionated colour families plus a rare
@@ -79,7 +79,7 @@ export function drawWeave(p: P5Instance, dt: number): void {
 
   time += 0.022 * dt;
 
-  const N = Math.max(4, Math.min(32, Math.round(config.weaveThreads)));
+  const N = Math.max(4, Math.min(isMobile ? 16 : 32, Math.round(config.weaveThreads)));
   const glow = config.weaveGlow;
   const pulse = config.weavePulse;
 

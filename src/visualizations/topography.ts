@@ -20,7 +20,7 @@
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
-import { BAND_COUNT } from '../utils/constants';
+import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // Hue per band: blue→cyan→teal→green→yellow→orange→red (altitude-map palette)
 const BAND_HUES = [240, 200, 160, 120, 80, 40, 0];
@@ -76,7 +76,7 @@ export function drawTopography(p: P5Instance, dt: number): void {
   const { state, config } = store;
   const { amps } = getBandAverages(BAND_COUNT);
 
-  const cols = Math.round(config.topographyResolution);
+  const cols = Math.min(Math.round(config.topographyResolution), isMobile ? 25 : 60);
   const levels = Math.round(config.topographyLevels);
   const speed = config.topographySpeed;
 

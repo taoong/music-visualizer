@@ -28,88 +28,7 @@ import {
   decayStemBands,
   smoothBandBins,
 } from './audio/pipeline';
-import {
-  drawSpikeCircle,
-  drawSpectrum,
-  drawTunnel,
-  drawTetris,
-  resetTetris,
-  drawLasers,
-  resetLasers,
-  drawText,
-  resetText,
-  drawHighway,
-  resetHighway,
-  drawLiquidMetal,
-  resetLiquidMetal,
-  disposeLiquidMetal,
-  drawNeon,
-  resetNeon,
-  disposeNeon,
-  drawImageGrid,
-  resetImageGrid,
-  disposeImageGrid,
-  drawColormap,
-  resetColormap,
-  disposeColormap,
-  drawSculpture,
-  resetSculpture,
-  disposeSculpture,
-  drawBinary,
-  resetBinary,
-  drawTungTung,
-  resetTungTung,
-  drawAurora,
-  resetAurora,
-  drawBootsAndCats,
-  resetBootsAndCats,
-  drawRippleTank,
-  resetRippleTank,
-  drawCymatics,
-  resetCymatics,
-  drawCloudChamber,
-  resetCloudChamber,
-  drawAttractor,
-  resetAttractor,
-  drawMandala,
-  resetMandala,
-  drawStringart,
-  resetStringart,
-  drawConstellation,
-  resetConstellation,
-  drawPetals,
-  resetPetals,
-  drawWaterfall,
-  resetWaterfall,
-  drawKaleido,
-  resetKaleido,
-  drawKaleidoscope,
-  resetKaleidoscope,
-  drawWeave,
-  resetWeave,
-  drawSynthwave,
-  resetSynthwave,
-  drawBloom,
-  resetBloom,
-  drawMonolith,
-  resetMonolith,
-  disposeMonolith,
-  drawHive,
-  resetHive,
-  drawMarbling,
-  resetMarbling,
-  drawFlowField,
-  resetFlowField,
-  drawLissajous,
-  resetLissajous,
-  drawTruchet,
-  resetTruchet,
-  drawTopography,
-  resetTopography,
-  drawInterference,
-  resetInterference,
-  loadUserImage,
-} from './visualizations';
+import { VIZ_REGISTRY, loadUserImage } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
 import { initKeyboardShortcuts, initSwipeGestures, announceToScreenReader } from './ui/keyboard';
 import { showError } from './utils/errors';
@@ -157,7 +76,7 @@ const sketch = (p: P5Instance) => {
 
     // Reset highway state when a new track is loaded
     const unsubAudioReady = store.on('audioReady', () => {
-      resetHighway();
+      VIZ_REGISTRY.highway.reset?.();
     });
 
     // Cleanup on page unload
@@ -167,12 +86,7 @@ const sketch = (p: P5Instance) => {
       cleanupKeyboard();
       cleanupSwipe();
       audioEngine.disposeAll();
-      disposeLiquidMetal();
-      disposeNeon();
-      disposeImageGrid();
-      disposeColormap();
-      disposeSculpture();
-      disposeMonolith();
+      Object.values(VIZ_REGISTRY).forEach(entry => entry.dispose?.());
     });
 
     // Load pending image if uploaded on splash before p5 was ready
@@ -203,198 +117,17 @@ const sketch = (p: P5Instance) => {
     updateScrubberUI();
 
     // Render visualization
-    switch (store.state.vizMode) {
-      case 'tunnel':
-        drawTunnel(p);
-        break;
-      case 'spectrum':
-        drawSpectrum(p);
-        break;
-      case 'tetris':
-        drawTetris(p, dt);
-        break;
-      case 'lasers':
-        drawLasers(p, dt);
-        break;
-      case 'text':
-        drawText(p, dt);
-        break;
-      case 'highway':
-        drawHighway(p, dt);
-        break;
-      case 'liquidmetal':
-        drawLiquidMetal(p, dt);
-        break;
-      case 'neon':
-        drawNeon(p, dt);
-        break;
-      case 'imagegrid':
-        drawImageGrid(p, dt);
-        break;
-      case 'colormap':
-        drawColormap(p, dt);
-        break;
-      case 'sculpture':
-        drawSculpture(p, dt);
-        break;
-      case 'binary':
-        drawBinary(p, dt);
-        break;
-      case 'tungtung':
-        drawTungTung(p, dt);
-        break;
-      case 'aurora':
-        drawAurora(p, dt);
-        break;
-      case 'bootsandcats':
-        drawBootsAndCats(p, dt);
-        break;
-      case 'rippletank':
-        drawRippleTank(p, dt);
-        break;
-      case 'cymatics':
-        drawCymatics(p, dt);
-        break;
-      case 'cloudchamber':
-        drawCloudChamber(p, dt);
-        break;
-      case 'attractor':
-        drawAttractor(p, dt);
-        break;
-      case 'mandala':
-        drawMandala(p, dt);
-        break;
-      case 'stringart':
-        drawStringart(p, dt);
-        break;
-      case 'constellation':
-        drawConstellation(p, dt);
-        break;
-      case 'petals':
-        drawPetals(p, dt);
-        break;
-      case 'waterfall':
-        drawWaterfall(p, dt);
-        break;
-      case 'kaleido':
-        drawKaleido(p, dt);
-        break;
-      case 'kaleidoscope':
-        drawKaleidoscope(p, dt);
-        break;
-      case 'weave':
-        drawWeave(p, dt);
-        break;
-      case 'synthwave':
-        drawSynthwave(p, dt);
-        break;
-      case 'bloom':
-        drawBloom(p, dt);
-        break;
-      case 'monolith':
-        drawMonolith(p, dt);
-        break;
-      case 'hive':
-        drawHive(p, dt);
-        break;
-      case 'marbling':
-        drawMarbling(p, dt);
-        break;
-      case 'flowfield':
-        drawFlowField(p, dt);
-        break;
-      case 'lissajous':
-        drawLissajous(p, dt);
-        break;
-      case 'truchet':
-        drawTruchet(p, dt);
-        break;
-      case 'topography':
-        drawTopography(p, dt);
-        break;
-      case 'interference':
-        drawInterference(p, dt);
-        break;
-      case 'circle':
-      default:
-        drawSpikeCircle(p);
-        break;
+    try {
+      VIZ_REGISTRY[store.state.vizMode].draw(p, dt);
+    } catch (err) {
+      console.error(`Visualization "${store.state.vizMode}" crashed:`, err);
+      store.setVizMode('circle');
     }
   };
 
   p.windowResized = () => {
     p.resizeCanvas(window.innerWidth, window.innerHeight);
-    if (store.state.vizMode === 'tetris') {
-      resetTetris();
-    } else if (store.state.vizMode === 'lasers') {
-      resetLasers();
-    } else if (store.state.vizMode === 'text') {
-      resetText();
-    } else if (store.state.vizMode === 'highway') {
-      resetHighway();
-    } else if (store.state.vizMode === 'liquidmetal') {
-      resetLiquidMetal();
-    } else if (store.state.vizMode === 'neon') {
-      resetNeon();
-    } else if (store.state.vizMode === 'imagegrid') {
-      resetImageGrid();
-    } else if (store.state.vizMode === 'colormap') {
-      resetColormap();
-    } else if (store.state.vizMode === 'sculpture') {
-      resetSculpture();
-    } else if (store.state.vizMode === 'binary') {
-      resetBinary();
-    } else if (store.state.vizMode === 'tungtung') {
-      resetTungTung();
-    } else if (store.state.vizMode === 'aurora') {
-      resetAurora();
-    } else if (store.state.vizMode === 'bootsandcats') {
-      resetBootsAndCats();
-    } else if (store.state.vizMode === 'rippletank') {
-      resetRippleTank();
-    } else if (store.state.vizMode === 'cymatics') {
-      resetCymatics();
-    } else if (store.state.vizMode === 'cloudchamber') {
-      resetCloudChamber();
-    } else if (store.state.vizMode === 'attractor') {
-      resetAttractor();
-    } else if (store.state.vizMode === 'mandala') {
-      resetMandala();
-    } else if (store.state.vizMode === 'stringart') {
-      resetStringart();
-    } else if (store.state.vizMode === 'constellation') {
-      resetConstellation();
-    } else if (store.state.vizMode === 'petals') {
-      resetPetals();
-    } else if (store.state.vizMode === 'waterfall') {
-      resetWaterfall();
-    } else if (store.state.vizMode === 'kaleido') {
-      resetKaleido();
-    } else if (store.state.vizMode === 'kaleidoscope') {
-      resetKaleidoscope();
-    } else if (store.state.vizMode === 'weave') {
-      resetWeave();
-    } else if (store.state.vizMode === 'synthwave') {
-      resetSynthwave();
-    } else if (store.state.vizMode === 'bloom') {
-      resetBloom();
-    } else if (store.state.vizMode === 'monolith') {
-      resetMonolith();
-    } else if (store.state.vizMode === 'hive') {
-      resetHive();
-    } else if (store.state.vizMode === 'marbling') {
-      resetMarbling();
-    } else if (store.state.vizMode === 'flowfield') {
-      resetFlowField();
-    } else if (store.state.vizMode === 'lissajous') {
-      resetLissajous();
-    } else if (store.state.vizMode === 'truchet') {
-      resetTruchet();
-    } else if (store.state.vizMode === 'topography') {
-      resetTopography();
-    } else if (store.state.vizMode === 'interference') {
-      resetInterference();
-    }
+    VIZ_REGISTRY[store.state.vizMode].reset?.();
   };
 };
 

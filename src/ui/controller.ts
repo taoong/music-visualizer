@@ -2,6 +2,7 @@
  * UI Controller — thin orchestrator that wires all UI modules
  */
 import { store } from '../state/store';
+import type { VizMode } from '../types';
 import { injectErrorStyles } from '../utils/errors';
 import { setVisualizerText, setDancerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
@@ -75,40 +76,67 @@ function bindSidebarToggle(): () => void {
   return () => toggleBtn.removeEventListener('click', handler);
 }
 
+// All toggleable sidebar control group IDs
+const ALL_CONTROL_IDS = [
+  'scale-group', 'decay-rate-group', 'rotation-speed-group', 'balls-kick-boost-group',
+  'intensity-group', 'beat-division-group', 'text-input-group',
+  'highway-controls-group', 'sculpture-controls-group', 'circle-image-rotation-group',
+  'boots-controls-group', 'rippletank-controls-group', 'cymatics-controls-group',
+  'cloudchamber-controls-group', 'attractor-controls-group', 'mandala-controls-group',
+  'stringart-controls-group', 'constellation-controls-group', 'petals-controls-group',
+  'waterfall-controls-group', 'kaleido-controls-group', 'kaleidoscope-controls-group',
+  'weave-controls-group', 'synthwave-controls-group', 'bloom-controls-group',
+  'hive-controls-group', 'marbling-controls-group', 'flowfield-controls-group',
+  'lissajous-controls-group', 'truchet-controls-group', 'topography-controls-group',
+  'interference-controls-group',
+] as const;
+
+type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
+type VizControlsConfig = { show: readonly string[]; labels?: LabelOverrides };
+
+const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
+  circle:        { show: ['scale-group', 'decay-rate-group', 'rotation-speed-group', 'circle-image-rotation-group'] },
+  spectrum:      { show: ['scale-group', 'decay-rate-group'] },
+  tunnel:        { show: ['decay-rate-group'] },
+  tetris:        { show: ['beat-division-group'] },
+  lasers:        { show: ['intensity-group', 'beat-division-group'] },
+  text:          { show: ['intensity-group', 'beat-division-group', 'text-input-group'] },
+  highway:       { show: ['intensity-group', 'highway-controls-group'],                           labels: { intensity: 'Speed' } },
+  liquidmetal:   { show: ['rotation-speed-group', 'intensity-group'],                             labels: { intensity: 'Spin Chaos' } },
+  neon:          { show: ['rotation-speed-group', 'intensity-group', 'decay-rate-group'],          labels: { rotation: 'Camera Rotation', intensity: 'Intensity', decayRate: 'Camera Height' } },
+  imagegrid:     { show: ['rotation-speed-group', 'intensity-group'],                             labels: { intensity: 'Bloom Strength' } },
+  colormap:      { show: ['intensity-group'],                                                      labels: { intensity: 'Color Boost' } },
+  sculpture:     { show: ['rotation-speed-group', 'intensity-group', 'sculpture-controls-group'], labels: { intensity: 'Bloom Strength' } },
+  binary:        { show: ['scale-group', 'decay-rate-group'] },
+  tungtung:      { show: ['text-input-group'] },
+  aurora:        { show: ['intensity-group', 'scale-group'],                                      labels: { intensity: 'Glow Strength' } },
+  bootsandcats:  { show: ['boots-controls-group'] },
+  rippletank:    { show: ['scale-group', 'rippletank-controls-group'] },
+  cymatics:      { show: ['cymatics-controls-group'] },
+  cloudchamber:  { show: ['cloudchamber-controls-group'] },
+  attractor:     { show: ['attractor-controls-group'] },
+  mandala:       { show: ['mandala-controls-group'] },
+  stringart:     { show: ['stringart-controls-group'] },
+  constellation: { show: ['constellation-controls-group'] },
+  petals:        { show: ['petals-controls-group'] },
+  waterfall:     { show: ['waterfall-controls-group'] },
+  kaleido:       { show: ['kaleido-controls-group'] },
+  kaleidoscope:  { show: ['kaleidoscope-controls-group'] },
+  weave:         { show: ['weave-controls-group'] },
+  synthwave:     { show: ['synthwave-controls-group'] },
+  bloom:         { show: ['bloom-controls-group'] },
+  monolith:      { show: ['intensity-group'],                                                      labels: { intensity: 'Bloom Strength' } },
+  hive:          { show: ['hive-controls-group'] },
+  marbling:      { show: ['marbling-controls-group'] },
+  flowfield:     { show: ['flowfield-controls-group'] },
+  lissajous:     { show: ['lissajous-controls-group'] },
+  truchet:       { show: ['truchet-controls-group'] },
+  topography:    { show: ['topography-controls-group'] },
+  interference:  { show: ['interference-controls-group'] },
+};
+
 function bindVizSelector(): () => void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
-  const scaleGroup = document.getElementById('scale-group');
-  const decayRateGroup = document.getElementById('decay-rate-group');
-  const rotationSpeedGroup = document.getElementById('rotation-speed-group');
-  const ballsKickBoostGroup = document.getElementById('balls-kick-boost-group');
-  const intensityGroup = document.getElementById('intensity-group');
-  const beatDivisionGroup = document.getElementById('beat-division-group');
-  const textInputGroup = document.getElementById('text-input-group');
-  const highwayControlsGroup = document.getElementById('highway-controls-group');
-  const sculptureControlsGroup = document.getElementById('sculpture-controls-group');
-  const circleImageRotationGroup = document.getElementById('circle-image-rotation-group');
-  const bootsControlsGroup = document.getElementById('boots-controls-group');
-  const rippletankControlsGroup = document.getElementById('rippletank-controls-group');
-  const cymaticsControlsGroup = document.getElementById('cymatics-controls-group');
-  const cloudchamberControlsGroup = document.getElementById('cloudchamber-controls-group');
-  const attractorControlsGroup = document.getElementById('attractor-controls-group');
-  const mandalaControlsGroup = document.getElementById('mandala-controls-group');
-  const stringartControlsGroup = document.getElementById('stringart-controls-group');
-  const constellationControlsGroup = document.getElementById('constellation-controls-group');
-  const petalsControlsGroup = document.getElementById('petals-controls-group');
-  const waterfallControlsGroup = document.getElementById('waterfall-controls-group');
-  const kaleidoControlsGroup = document.getElementById('kaleido-controls-group');
-  const kaleidoscopeControlsGroup = document.getElementById('kaleidoscope-controls-group');
-  const weaveControlsGroup = document.getElementById('weave-controls-group');
-  const synthwaveControlsGroup = document.getElementById('synthwave-controls-group');
-  const bloomControlsGroup = document.getElementById('bloom-controls-group');
-  const hiveControlsGroup = document.getElementById('hive-controls-group');
-  const marblingControlsGroup = document.getElementById('marbling-controls-group');
-  const flowfieldControlsGroup = document.getElementById('flowfield-controls-group');
-  const lissajousControlsGroup = document.getElementById('lissajous-controls-group');
-  const truchetControlsGroup = document.getElementById('truchet-controls-group');
-  const topographyControlsGroup = document.getElementById('topography-controls-group');
-  const interferenceControlsGroup = document.getElementById('interference-controls-group');
   const textInput = document.getElementById('viz-text-input') as HTMLInputElement | null;
 
   if (!vizSelect) return () => {};
@@ -141,233 +169,32 @@ function bindVizSelector(): () => void {
   updateMicVizVisibility();
   const removeModeListener = store.on('modeChange', updateMicVizVisibility);
 
-  function show(el: HTMLElement | null): void { el?.classList.remove('hidden'); }
-  function hide(el: HTMLElement | null): void { el?.classList.add('hidden'); }
-
-  const intensityLabel = intensityGroup?.querySelector('label');
-  const rotationLabel = rotationSpeedGroup?.querySelector('label');
-  const decayRateLabel = decayRateGroup?.querySelector('label');
+  const intensityLabel = document.getElementById('intensity-group')?.querySelector('label');
+  const rotationLabel = document.getElementById('rotation-speed-group')?.querySelector('label');
+  const decayRateLabel = document.getElementById('decay-rate-group')?.querySelector('label');
 
   const handler = () => {
-    const mode = vizSelect.value as 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom' | 'monolith' | 'hive' | 'marbling' | 'flowfield' | 'lissajous' | 'truchet' | 'topography' | 'interference';
+    const mode = vizSelect.value as VizMode;
     store.setVizMode(mode);
 
-    // Always hide weave/synthwave/bloom/hive/marbling/flowfield/lissajous/truchet controls; each respective case re-shows them.
-    hide(weaveControlsGroup);
-    hide(synthwaveControlsGroup);
-    hide(bloomControlsGroup);
-    hide(hiveControlsGroup);
-    hide(marblingControlsGroup);
-    hide(flowfieldControlsGroup);
-    hide(lissajousControlsGroup);
-    hide(truchetControlsGroup);
-    hide(topographyControlsGroup);
-    hide(interferenceControlsGroup);
-
-    // Per-mode control visibility
+    // Reset label defaults
+    if (intensityLabel) intensityLabel.textContent = 'Intensity';
     if (rotationLabel) rotationLabel.textContent = 'Rotation Speed';
     if (decayRateLabel) decayRateLabel.textContent = 'Decay Rate';
-    switch (mode) {
-      case 'circle':
-        show(scaleGroup); show(decayRateGroup); show(rotationSpeedGroup); show(circleImageRotationGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'spectrum':
-        show(scaleGroup); show(decayRateGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'tunnel':
-        hide(scaleGroup); show(decayRateGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'tetris':
-        show(beatDivisionGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'lasers':
-        show(intensityGroup); show(beatDivisionGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'text':
-        show(intensityGroup); show(beatDivisionGroup); show(textInputGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'highway':
-        show(intensityGroup); show(highwayControlsGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Speed';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'liquidmetal':
-        show(rotationSpeedGroup); show(intensityGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Spin Chaos';
-        hide(scaleGroup); hide(decayRateGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'neon':
-        show(rotationSpeedGroup); show(intensityGroup); show(decayRateGroup);
-        if (rotationLabel) rotationLabel.textContent = 'Camera Rotation';
-        if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        if (decayRateLabel) decayRateLabel.textContent = 'Camera Height';
-        hide(scaleGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'imagegrid':
-        show(rotationSpeedGroup); show(intensityGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
-        hide(scaleGroup); hide(decayRateGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'colormap':
-        show(intensityGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Color Boost';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'sculpture':
-        show(rotationSpeedGroup); show(intensityGroup); show(sculptureControlsGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
-        hide(scaleGroup); hide(decayRateGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'binary':
-        show(scaleGroup); show(decayRateGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Intensity';
-        hide(rotationSpeedGroup); hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup); hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'tungtung':
-        show(textInputGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
-        hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'aurora':
-        show(intensityGroup); show(scaleGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Glow Strength';
-        hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'bootsandcats':
-        show(bootsControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'rippletank':
-        show(scaleGroup); show(rippletankControlsGroup);
-        hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'cymatics':
-        show(cymaticsControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'cloudchamber':
-        show(cloudchamberControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'attractor':
-        show(attractorControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'mandala':
-        show(mandalaControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'stringart':
-        show(stringartControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(intensityGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'constellation':
-        show(constellationControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'petals':
-        show(petalsControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'waterfall':
-        show(waterfallControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'kaleido':
-        show(kaleidoControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'kaleidoscope':
-        show(kaleidoscopeControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup);        break;
-      case 'weave':
-        show(weaveControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'synthwave':
-        show(synthwaveControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'bloom':
-        show(bloomControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'monolith':
-        show(intensityGroup);
-        if (intensityLabel) intensityLabel.textContent = 'Bloom Strength';
-        hide(scaleGroup); hide(decayRateGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'hive':
-        show(hiveControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);        break;
-      case 'marbling':
-        show(marblingControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);
-        break;
-      case 'flowfield':
-        show(flowfieldControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);
-        break;
-      case 'lissajous':
-        show(lissajousControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);
-        break;
-      case 'truchet':
-        show(truchetControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);
-        break;
-      case 'topography':
-        show(topographyControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);
-        break;
-      case 'interference':
-        show(interferenceControlsGroup);
-        hide(scaleGroup); hide(decayRateGroup); hide(intensityGroup); hide(rotationSpeedGroup);
-        hide(ballsKickBoostGroup); hide(beatDivisionGroup);
-        hide(textInputGroup); hide(highwayControlsGroup); hide(sculptureControlsGroup); hide(circleImageRotationGroup); hide(bootsControlsGroup); hide(rippletankControlsGroup); hide(cymaticsControlsGroup); hide(cloudchamberControlsGroup); hide(attractorControlsGroup); hide(mandalaControlsGroup); hide(stringartControlsGroup); hide(constellationControlsGroup); hide(petalsControlsGroup); hide(waterfallControlsGroup); hide(kaleidoControlsGroup); hide(kaleidoscopeControlsGroup);
-        break;
+
+    // Hide all control groups, then show only the ones for the active mode
+    for (const id of ALL_CONTROL_IDS) {
+      document.getElementById(id)?.classList.add('hidden');
     }
+    const ctrl = VIZ_CONTROLS[mode];
+    for (const id of ctrl.show) {
+      document.getElementById(id)?.classList.remove('hidden');
+    }
+    if (ctrl.labels?.intensity && intensityLabel) intensityLabel.textContent = ctrl.labels.intensity;
+    if (ctrl.labels?.rotation && rotationLabel) rotationLabel.textContent = ctrl.labels.rotation;
+    if (ctrl.labels?.decayRate && decayRateLabel) decayRateLabel.textContent = ctrl.labels.decayRate;
   };
+
 
   const textHandler = () => {
     if (textInput) {

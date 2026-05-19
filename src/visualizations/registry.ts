@@ -1,0 +1,120 @@
+/**
+ * Visualization registry — single source of truth for dispatch, reset, dispose, and keyboard shortcuts.
+ *
+ * Importing directly from each viz file (not from ./index) avoids a circular dependency:
+ *   index.ts → registry.ts → <viz>.ts is fine;
+ *   registry.ts → index.ts → registry.ts would not be.
+ */
+import type { VizMode } from '../types';
+import { drawSpikeCircle, resetSpikeCircle } from './circle';
+import { drawSpectrum } from './spectrum';
+import { drawTunnel } from './tunnel';
+import { drawTetris, resetTetris } from './balls';
+import { drawLasers, resetLasers } from './lasers';
+import { drawText, resetText } from './text';
+import { drawHighway, resetHighway } from './highway';
+import { drawColormap, resetColormap, disposeColormap } from './colormap';
+import { drawBinary, resetBinary } from './binary';
+import { drawTungTung, resetTungTung } from './tungtung';
+import { drawAurora, resetAurora } from './aurora';
+import { drawBootsAndCats, resetBootsAndCats } from './bootsandcats';
+import { drawRippleTank, resetRippleTank } from './rippletank';
+import { drawCymatics, resetCymatics } from './cymatics';
+import { drawCloudChamber, resetCloudChamber } from './cloudchamber';
+import { drawAttractor, resetAttractor } from './attractor';
+import { drawMandala, resetMandala } from './mandala';
+import { drawStringart, resetStringart } from './stringart';
+import { drawConstellation, resetConstellation } from './constellation';
+import { drawPetals, resetPetals } from './petals';
+import { drawWaterfall, resetWaterfall } from './waterfall';
+import { drawKaleido, resetKaleido } from './kaleido';
+import { drawKaleidoscope, resetKaleidoscope } from './kaleidoscope';
+import { drawWeave, resetWeave } from './weave';
+import { drawSynthwave, resetSynthwave } from './synthwave';
+import { drawBloom, resetBloom } from './bloom';
+import { drawHive, resetHive } from './hive';
+import { drawMarbling, resetMarbling } from './marbling';
+import { drawFlowField, resetFlowField } from './flowfield';
+import { drawLissajous, resetLissajous } from './lissajous';
+import { drawTruchet, resetTruchet } from './truchet';
+import { drawTopography, resetTopography } from './topography';
+import { drawInterference, resetInterference } from './interference';
+
+/**
+ * Wraps a dynamically-imported visualization so Three.js is only loaded when
+ * the user actually switches to that mode, keeping it out of the main bundle.
+ */
+function lazyViz(
+  loader: () => Promise<{ draw: (p: P5Instance, dt: number) => void; reset?: () => void; dispose?: () => void }>,
+  key: string,
+  label: string,
+): VizEntry {
+  type Mod = Awaited<ReturnType<typeof loader>>;
+  let mod: Mod | null = null;
+  let pending = false;
+
+  function ensureLoaded() {
+    if (!mod && !pending) {
+      pending = true;
+      loader().then(m => { mod = m; pending = false; }).catch(console.error);
+    }
+  }
+
+  return {
+    key,
+    label,
+    draw:    (p, dt) => { ensureLoaded(); mod?.draw(p, dt); },
+    reset:   ()      => { ensureLoaded(); mod?.reset?.(); },
+    dispose: ()      => mod?.dispose?.(),
+  };
+}
+
+export type VizEntry = {
+  draw: (p: P5Instance, dt: number) => void;
+  reset?: () => void;
+  dispose?: () => void;
+  /** Keyboard shortcut character (single key). */
+  key: string;
+  label: string;
+};
+
+export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
+  circle:        { draw: drawSpikeCircle,   reset: resetSpikeCircle,   key: '1',  label: 'Circle' },
+  spectrum:      { draw: drawSpectrum,                                  key: '2',  label: 'Spectrum' },
+  tunnel:        { draw: drawTunnel,                                    key: '3',  label: 'Tunnel' },
+  tetris:        { draw: drawTetris,         reset: resetTetris,        key: '4',  label: 'Tetris' },
+  lasers:        { draw: drawLasers,         reset: resetLasers,        key: '5',  label: 'Lasers' },
+  text:          { draw: drawText,           reset: resetText,          key: '6',  label: 'Text' },
+  highway:       { draw: drawHighway,        reset: resetHighway,       key: '7',  label: 'Highway' },
+  liquidmetal:   lazyViz(async () => { const { drawLiquidMetal: draw, resetLiquidMetal: reset, disposeLiquidMetal: dispose } = await import('./liquidmetal'); return { draw, reset, dispose }; }, '8', 'Liquid Metal'),
+  neon:          lazyViz(async () => { const { drawNeon: draw, resetNeon: reset, disposeNeon: dispose } = await import('./neon'); return { draw, reset, dispose }; }, 'n', 'Neon Grid'),
+  imagegrid:     lazyViz(async () => { const { drawImageGrid: draw, resetImageGrid: reset, disposeImageGrid: dispose } = await import('./imagegrid'); return { draw, reset, dispose }; }, 'g', 'Image Grid'),
+  colormap:      { draw: drawColormap,       reset: resetColormap,      key: 'c',  label: 'Color Map',     dispose: disposeColormap },
+  sculpture:     lazyViz(async () => { const { drawSculpture: draw, resetSculpture: reset, disposeSculpture: dispose } = await import('./sculpture'); return { draw, reset, dispose }; }, 'u', 'Sculpture'),
+  binary:        { draw: drawBinary,         reset: resetBinary,        key: 'b',  label: 'Binary' },
+  tungtung:      { draw: drawTungTung,       reset: resetTungTung,      key: 't',  label: 'Dancer' },
+  aurora:        { draw: drawAurora,         reset: resetAurora,        key: 'a',  label: 'Aurora' },
+  bootsandcats:  { draw: drawBootsAndCats,   reset: resetBootsAndCats,  key: 'k',  label: 'Boots & Cats' },
+  rippletank:    { draw: drawRippleTank,     reset: resetRippleTank,    key: 'w',  label: 'Ripple Tank' },
+  cymatics:      { draw: drawCymatics,       reset: resetCymatics,      key: 'y',  label: 'Cymatics' },
+  cloudchamber:  { draw: drawCloudChamber,   reset: resetCloudChamber,  key: 'd',  label: 'Cloud Chamber' },
+  attractor:     { draw: drawAttractor,      reset: resetAttractor,     key: 'j',  label: 'Attractor' },
+  mandala:       { draw: drawMandala,        reset: resetMandala,       key: 'l',  label: 'Mandala' },
+  stringart:     { draw: drawStringart,      reset: resetStringart,     key: 'v',  label: 'String Art' },
+  constellation: { draw: drawConstellation,  reset: resetConstellation, key: 'o',  label: 'Constellation' },
+  petals:        { draw: drawPetals,         reset: resetPetals,        key: 'p',  label: 'Petals' },
+  waterfall:     { draw: drawWaterfall,      reset: resetWaterfall,     key: 'e',  label: 'Waterfall' },
+  kaleido:       { draw: drawKaleido,        reset: resetKaleido,       key: 'q',  label: 'Kaleido' },
+  kaleidoscope:  { draw: drawKaleidoscope,   reset: resetKaleidoscope,  key: 'x',  label: 'Kaleidoscope' },
+  weave:         { draw: drawWeave,          reset: resetWeave,         key: 'z',  label: 'Weave' },
+  synthwave:     { draw: drawSynthwave,      reset: resetSynthwave,     key: "'",  label: 'Synthwave' },
+  bloom:         { draw: drawBloom,          reset: resetBloom,         key: '0',  label: 'Bloom' },
+  monolith:      lazyViz(async () => { const { drawMonolith: draw, resetMonolith: reset, disposeMonolith: dispose } = await import('./monolith'); return { draw, reset, dispose }; }, '`', 'Monolith'),
+  hive:          { draw: drawHive,           reset: resetHive,          key: '9',  label: 'Hive' },
+  marbling:      { draw: drawMarbling,       reset: resetMarbling,      key: ';',  label: 'Marbling' },
+  flowfield:     { draw: drawFlowField,      reset: resetFlowField,     key: '[',  label: 'Flow Field' },
+  lissajous:     { draw: drawLissajous,      reset: resetLissajous,     key: ']',  label: 'Lissajous' },
+  truchet:       { draw: drawTruchet,        reset: resetTruchet,       key: '\\', label: 'Truchet' },
+  topography:    { draw: drawTopography,     reset: resetTopography,    key: '-',  label: 'Topography' },
+  interference:  { draw: drawInterference,   reset: resetInterference,  key: '=',  label: 'Interference' },
+};

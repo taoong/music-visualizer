@@ -12,7 +12,7 @@
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
-import { BAND_COUNT } from '../utils/constants';
+import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // --- Module-scoped state ---
 let hueOffset = 0;
@@ -43,7 +43,7 @@ export function drawStringart(p: P5Instance, dt: number): void {
   beatPulse *= Math.pow(0.80, dt);
   if (beatPulse < 0.005) beatPulse = 0;
 
-  const N = Math.max(20, Math.min(200, Math.round(config.stringartPins)));
+  const N = Math.max(20, Math.min(isMobile ? 80 : 200, Math.round(config.stringartPins)));
   const speed = config.stringartSpeed;
 
   // --- Animate multiplier ---

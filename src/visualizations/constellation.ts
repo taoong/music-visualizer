@@ -9,10 +9,10 @@
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
-import { BAND_COUNT } from '../utils/constants';
+import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // ── Constants ───────────────────────────────────────────────────────────────
-const MAX_STARS = 400;
+const MAX_STARS = isMobile ? 200 : 400;
 const MIN_STARS = 40;
 
 // ── Palette: cold star field — deep cyan-white field, gold beat-flash accent ─
