@@ -8,10 +8,10 @@
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
-import { BAND_COUNT } from '../utils/constants';
+import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // --- Ring tunnel ---
-const RING_COUNT = 36;
+const RING_COUNT = isMobile ? 18 : 36;
 const MAX_Z = 1800;
 const FOCAL_LENGTH = 400;
 
@@ -57,7 +57,7 @@ interface Particle {
   maxLife: number;
   size: number;
 }
-const MAX_PARTICLES = 150;
+const MAX_PARTICLES = isMobile ? 60 : 150;
 let particles: Particle[] = [];
 
 // --- Palette ---

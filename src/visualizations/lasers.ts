@@ -4,6 +4,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
+import { isMobile } from '../utils/constants';
 
 interface LaserBeam {
   srcX: number;
@@ -117,7 +118,7 @@ function makeDualFan(w: number, h: number): LaserBeam[] {
 
 function makeRadialBurst(w: number, h: number): LaserBeam[] {
   const beams: LaserBeam[] = [];
-  const counts = [8, 10, 12, 16];
+  const counts = isMobile ? [4, 5, 6, 8] : [8, 10, 12, 16];
   const count = counts[Math.floor(Math.random() * counts.length)];
   for (let i = 0; i < count; i++) {
     beams.push({
@@ -136,7 +137,7 @@ function makeParallelSlash(w: number, h: number): LaserBeam[] {
   const beams: LaserBeam[] = [];
   const angles = [30, 45, 60, 120, 135, 150].map(a => (a * Math.PI) / 180);
   const angle = angles[Math.floor(Math.random() * angles.length)];
-  const count = Math.floor(rand(4, 9)); // 4–8 lines
+  const count = Math.floor(rand(isMobile ? 2 : 4, isMobile ? 5 : 9)); // lines per direction
   const perpAngle = angle + Math.PI / 2;
   const spacing = Math.min(w, h) / (count + 1);
   for (let i = 0; i < count; i++) {

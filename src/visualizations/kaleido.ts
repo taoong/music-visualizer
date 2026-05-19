@@ -13,7 +13,7 @@
  */
 import { store } from '../state/store';
 import { getBandAverages } from './helpers';
-import { BAND_COUNT } from '../utils/constants';
+import { BAND_COUNT, isMobile } from '../utils/constants';
 import { audioEngine } from '../audio/engine';
 
 // Harmonic multiplier per band for the organic-smear effect
@@ -42,7 +42,7 @@ export function drawKaleido(p: P5Instance, dt: number): void {
   const { state, config } = store;
   const { amps } = getBandAverages(BAND_COUNT);
 
-  const N = Math.max(2, Math.round(config.kaleidoSegments));
+  const N = Math.max(2, Math.min(isMobile ? 6 : 12, Math.round(config.kaleidoSegments)));
   const trail = config.kaleidoTrail;
   const smear = config.kaleidoSmear;
 
