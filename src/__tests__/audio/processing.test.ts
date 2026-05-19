@@ -9,7 +9,7 @@ import {
   computeDelta,
   smoothBins,
 } from '../../audio/processing';
-import { AUTO_GAIN_FLOOR, TRANSIENT_BOOST, TRANSIENT_THRESHOLD } from '../../utils/constants';
+import { AUTO_GAIN_FLOOR, TRANSIENT_BOOST } from '../../utils/constants';
 
 // ---------------------------------------------------------------------------
 // Helpers

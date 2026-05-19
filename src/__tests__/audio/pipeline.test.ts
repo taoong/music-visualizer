@@ -29,7 +29,6 @@ import {
   decayOctaveState,
 } from '../../audio/pipeline';
 import {
-  TRANSIENT_DECAY,
   DELTA_RELEASE,
   SPIKES_PER_BAND,
   BAND_COUNT,
