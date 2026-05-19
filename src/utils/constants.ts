@@ -277,6 +277,10 @@ export const DEFAULT_CONFIG = {
   interferenceFrequency: 0.35,
   interferenceTwist: 0.5,
   interferenceDrift: 0.35,
+  // Voronoi Stained Glass-specific
+  voronoiCells: 35,
+  voronoiGlow: 1.0,
+  voronoiShatter: 0.5,
 };
 
 // FFT and decay constants

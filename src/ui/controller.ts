@@ -88,7 +88,7 @@ const ALL_CONTROL_IDS = [
   'weave-controls-group', 'synthwave-controls-group', 'bloom-controls-group',
   'hive-controls-group', 'marbling-controls-group', 'flowfield-controls-group',
   'lissajous-controls-group', 'truchet-controls-group', 'topography-controls-group',
-  'interference-controls-group',
+  'interference-controls-group', 'voronoi-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -133,6 +133,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   truchet:       { show: ['truchet-controls-group'] },
   topography:    { show: ['topography-controls-group'] },
   interference:  { show: ['interference-controls-group'] },
+  voronoi:       { show: ['voronoi-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

@@ -98,6 +98,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   interferenceFrequency: 'interference-frequency',
   interferenceTwist: 'interference-twist',
   interferenceDrift: 'interference-drift',
+  voronoiCells: 'voronoi-cells',
+  voronoiGlow: 'voronoi-glow',
+  voronoiShatter: 'voronoi-shatter',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

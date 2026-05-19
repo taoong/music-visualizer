@@ -41,4 +41,5 @@ export { drawLissajous, resetLissajous } from './lissajous';
 export { drawTruchet, resetTruchet } from './truchet';
 export { drawTopography, resetTopography } from './topography';
 export { drawInterference, resetInterference } from './interference';
+export { drawVoronoi, resetVoronoi } from './voronoi';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

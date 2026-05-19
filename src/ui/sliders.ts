@@ -134,6 +134,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'interference-frequency', key: 'interferenceFrequency' },
     { id: 'interference-twist', key: 'interferenceTwist' },
     { id: 'interference-drift', key: 'interferenceDrift' },
+    { id: 'voronoi-cells', key: 'voronoiCells' },
+    { id: 'voronoi-glow', key: 'voronoiGlow' },
+    { id: 'voronoi-shatter', key: 'voronoiShatter' },
   ] as const;
 
   for (const { id, key } of configs) {
