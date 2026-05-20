@@ -281,6 +281,10 @@ export const DEFAULT_CONFIG = {
   voronoiCells: 35,
   voronoiGlow: 1.0,
   voronoiShatter: 0.5,
+  // Lattice-specific
+  latticeGrid: 12,
+  latticeWarp: 0.8,
+  latticeGlow: 1.5,
 };
 
 // FFT and decay constants

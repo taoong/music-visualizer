@@ -101,6 +101,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   voronoiCells: 'voronoi-cells',
   voronoiGlow: 'voronoi-glow',
   voronoiShatter: 'voronoi-shatter',
+  latticeGrid: 'lattice-grid',
+  latticeWarp: 'lattice-warp',
+  latticeGlow: 'lattice-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

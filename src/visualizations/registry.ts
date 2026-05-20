@@ -40,6 +40,7 @@ import { drawTruchet, resetTruchet } from './truchet';
 import { drawTopography, resetTopography } from './topography';
 import { drawInterference, resetInterference } from './interference';
 import { drawVoronoi, resetVoronoi } from './voronoi';
+import { drawLattice, resetLattice } from './lattice';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -119,4 +120,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   topography:    { draw: drawTopography,     reset: resetTopography,    key: '-',  label: 'Topography' },
   interference:  { draw: drawInterference,   reset: resetInterference,  key: '=',  label: 'Interference' },
   voronoi:       { draw: drawVoronoi,        reset: resetVoronoi,       key: '.',  label: 'Stained Glass' },
+  lattice:       { draw: drawLattice,        reset: resetLattice,       key: ',',  label: 'Lattice' },
 };

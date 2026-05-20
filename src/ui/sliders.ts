@@ -137,6 +137,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'voronoi-cells', key: 'voronoiCells' },
     { id: 'voronoi-glow', key: 'voronoiGlow' },
     { id: 'voronoi-shatter', key: 'voronoiShatter' },
+    { id: 'lattice-grid', key: 'latticeGrid' },
+    { id: 'lattice-warp', key: 'latticeWarp' },
+    { id: 'lattice-glow', key: 'latticeGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

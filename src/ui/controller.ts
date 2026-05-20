@@ -89,6 +89,7 @@ const ALL_CONTROL_IDS = [
   'hive-controls-group', 'marbling-controls-group', 'flowfield-controls-group',
   'lissajous-controls-group', 'truchet-controls-group', 'topography-controls-group',
   'interference-controls-group', 'voronoi-controls-group',
+  'lattice-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -134,6 +135,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   topography:    { show: ['topography-controls-group'] },
   interference:  { show: ['interference-controls-group'] },
   voronoi:       { show: ['voronoi-controls-group'] },
+  lattice:       { show: ['lattice-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

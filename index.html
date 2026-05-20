@@ -320,6 +320,7 @@
           <option value="topography">Topography</option>
           <option value="interference">Interference</option>
           <option value="voronoi">Stained Glass</option>
+          <option value="lattice">Lattice</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1377,6 +1378,45 @@
               step="0.1"
               value="0.5"
               aria-label="Beat-scatter magnitude — 0 = stable window, 2 = chaotic reorganisation on every beat"
+            />
+          </div>
+        </div>
+
+        <div id="lattice-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="lattice-grid">Grid Size</label>
+            <input
+              type="range"
+              id="lattice-grid"
+              min="5"
+              max="24"
+              step="1"
+              value="12"
+              aria-label="Grid columns — low = coarse mesh with big cells, high = fine mesh with many small cells"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lattice-warp">Warp</label>
+            <input
+              type="range"
+              id="lattice-warp"
+              min="0"
+              max="2"
+              step="0.05"
+              value="0.8"
+              aria-label="Audio displacement amplitude — 0 = still grid, 2 = wildly thrashing mesh"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lattice-glow">Glow</label>
+            <input
+              type="range"
+              id="lattice-glow"
+              min="0.5"
+              max="3"
+              step="0.1"
+              value="1.5"
+              aria-label="Neon glow brightness and halo size multiplier"
             />
           </div>
         </div>

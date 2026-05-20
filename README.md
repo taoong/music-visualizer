@@ -77,6 +77,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `E` | Waterfall | 3D scrolling spectrogram: stacked ribbons of recent spectra receding into the distance; newest snapshot in front, older ones fade back with perspective and haze |
 | `Z` | Monolith | Tall faceted crystal obelisk; cinematic camera choreography (orbit, crash-zoom, Hitchcock dolly, snap-cut, top-down / worm's-eye, barrel rolls) all locked to the beat |
 | `.` | Stained Glass | Voronoi tessellation lit as a jewel-tone stained glass window; cells glow amethyst→ruby across 7 frequency bands; lead lines between panes; beat fires a warm flash and optionally shatters the mosaic |
+| `,` | Lattice | Rectangular neon grid elastically warped by audio; row stripes map to 7 frequency bands driving sinusoidal displacement; Perlin noise adds organic drift; beats fire a radial ripple wave; 3-pass jewel-tone glow (violet→magenta) |
 
 ## Keyboard Shortcuts
 
