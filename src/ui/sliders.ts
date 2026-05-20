@@ -140,6 +140,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'blobs-viscosity', key: 'blobsViscosity' },
     { id: 'blobs-drift', key: 'blobsDrift' },
     { id: 'blobs-glow', key: 'blobsGlow' },
+    { id: 'grayscott-feed', key: 'grayscottFeed' },
+    { id: 'grayscott-kill', key: 'grayscottKill' },
+    { id: 'grayscott-speed', key: 'grayscottSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

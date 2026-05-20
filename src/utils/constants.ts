@@ -285,6 +285,10 @@ export const DEFAULT_CONFIG = {
   blobsViscosity: 0.4,
   blobsDrift: 0.4,
   blobsGlow: 0.5,
+  // Gray-Scott-specific
+  grayscottFeed: 0.45,
+  grayscottKill: 0.60,
+  grayscottSpeed: 0.33,
 };
 
 // FFT and decay constants

@@ -43,4 +43,5 @@ export { drawTopography, resetTopography } from './topography';
 export { drawInterference, resetInterference } from './interference';
 export { drawVoronoi, resetVoronoi } from './voronoi';
 export { drawBlobs, resetBlobs } from './blobs';
+export { drawGrayscott, resetGrayscott } from './grayscott';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

@@ -104,6 +104,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   blobsViscosity: 'blobs-viscosity',
   blobsDrift: 'blobs-drift',
   blobsGlow: 'blobs-glow',
+  grayscottFeed: 'grayscott-feed',
+  grayscottKill: 'grayscott-kill',
+  grayscottSpeed: 'grayscott-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

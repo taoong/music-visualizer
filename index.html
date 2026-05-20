@@ -321,6 +321,7 @@
           <option value="interference">Interference</option>
           <option value="voronoi">Stained Glass</option>
           <option value="blobs">Blobs</option>
+          <option value="grayscott">Gray-Scott</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1417,6 +1418,45 @@
               step="0.01"
               value="0.5"
               aria-label="Edge glow radius and intensity — none to wide luminous halo"
+            />
+          </div>
+        </div>
+
+        <div id="grayscott-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="grayscott-feed">Feed</label>
+            <input
+              type="range"
+              id="grayscott-feed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Feed rate F ∈ [0.010, 0.095] — low = sparse spots, high = dense whorls and maze patterns"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="grayscott-kill">Kill</label>
+            <input
+              type="range"
+              id="grayscott-kill"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.60"
+              aria-label="Kill rate K ∈ [0.040, 0.075] — low = large blobs, high = fine coral-like branching"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="grayscott-speed">Speed</label>
+            <input
+              type="range"
+              id="grayscott-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.33"
+              aria-label="Simulation steps per frame (1–6, capped at 2 on mobile) — higher values evolve patterns faster"
             />
           </div>
         </div>
