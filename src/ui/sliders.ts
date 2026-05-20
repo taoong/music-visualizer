@@ -137,6 +137,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'voronoi-cells', key: 'voronoiCells' },
     { id: 'voronoi-glow', key: 'voronoiGlow' },
     { id: 'voronoi-shatter', key: 'voronoiShatter' },
+    { id: 'blobs-viscosity', key: 'blobsViscosity' },
+    { id: 'blobs-drift', key: 'blobsDrift' },
+    { id: 'blobs-glow', key: 'blobsGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

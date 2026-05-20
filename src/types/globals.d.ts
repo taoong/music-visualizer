@@ -15,6 +15,16 @@ declare global {
     canvas: HTMLCanvasElement;
   }
 
+  interface P5Graphics {
+    width: number;
+    height: number;
+    pixels: Uint8ClampedArray;
+    loadPixels(): void;
+    updatePixels(): void;
+    noSmooth(): void;
+    remove(): void;
+  }
+
   interface P5Instance {
     // Core properties
     width: number;
@@ -43,6 +53,12 @@ declare global {
     resizeCanvas(w: number, h: number): void;
     pixelDensity(d: number): void;
     frameRate(fps: number): void;
+    frameCount: number;
+    createGraphics(w: number, h: number): P5Graphics;
+    noSmooth(): void;
+    smooth(): void;
+    noise(x: number, y?: number, z?: number): number;
+    noiseSeed(seed: number): void;
 
     // Drawing
     background(color: number | string): void;

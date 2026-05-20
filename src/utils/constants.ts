@@ -281,6 +281,10 @@ export const DEFAULT_CONFIG = {
   voronoiCells: 35,
   voronoiGlow: 1.0,
   voronoiShatter: 0.5,
+  // Blobs-specific
+  blobsViscosity: 0.4,
+  blobsDrift: 0.4,
+  blobsGlow: 0.5,
 };
 
 // FFT and decay constants
