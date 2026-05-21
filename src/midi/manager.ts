@@ -107,6 +107,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   grayscottFeed: 'grayscott-feed',
   grayscottKill: 'grayscott-kill',
   grayscottSpeed: 'grayscott-speed',
+  growthSpeed: 'growth-speed',
+  growthTension: 'growth-tension',
+  growthRepulsion: 'growth-repulsion',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

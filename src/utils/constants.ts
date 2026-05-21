@@ -289,6 +289,10 @@ export const DEFAULT_CONFIG = {
   grayscottFeed: 0.45,
   grayscottKill: 0.60,
   grayscottSpeed: 0.33,
+  // Growth-specific
+  growthSpeed: 0.5,
+  growthTension: 0.5,
+  growthRepulsion: 0.5,
 };
 
 // FFT and decay constants

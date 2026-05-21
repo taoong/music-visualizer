@@ -42,6 +42,7 @@ import { drawInterference, resetInterference } from './interference';
 import { drawVoronoi, resetVoronoi } from './voronoi';
 import { drawBlobs, resetBlobs } from './blobs';
 import { drawGrayscott, resetGrayscott } from './grayscott';
+import { drawGrowth, resetGrowth } from './growth';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -123,4 +124,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   voronoi:       { draw: drawVoronoi,        reset: resetVoronoi,       key: '.',  label: 'Stained Glass' },
   blobs:         { draw: drawBlobs,          reset: resetBlobs,         key: ',',  label: 'Blobs' },
   grayscott:     { draw: drawGrayscott,      reset: resetGrayscott,     key: '/',  label: 'Gray-Scott' },
+  growth:        { draw: drawGrowth,         reset: resetGrowth,        key: '~',  label: 'Growth' },
 };

@@ -79,6 +79,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `.` | Stained Glass | Voronoi tessellation lit as a jewel-tone stained glass window; cells glow amethyst→ruby across 7 frequency bands; lead lines between panes; beat fires a warm flash and optionally shatters the mosaic |
 | `,` | Blobs | Audio-reactive metaball field; 7 biomorphic orbs (one per freq band) drift via Perlin noise and fuse organically when amplitudes rise; beat bursts them outward |
 | `/` | Gray-Scott | Gray-Scott reaction-diffusion chemical simulation; Turing patterns (spots, stripes, mazes) driven by feed/kill parameters; sub-bass seeds activator, beats inject central pulse and rotate hue palette |
+| `~` | Growth | Differential growth simulation; 7 closed curves grow by node insertion, fold like coral and brain sulci via spatial-hash repulsion; amplitude drives glow and growth speed |
 
 ## Keyboard Shortcuts
 
@@ -103,6 +104,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `.` | Stained Glass visualization |
 | `,` | Blobs visualization |
 | `/` | Gray-Scott visualization |
+| `~` | Growth visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

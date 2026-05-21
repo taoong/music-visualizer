@@ -322,6 +322,7 @@
           <option value="voronoi">Stained Glass</option>
           <option value="blobs">Blobs</option>
           <option value="grayscott">Gray-Scott</option>
+          <option value="growth">Growth</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1457,6 +1458,45 @@
               step="0.01"
               value="0.33"
               aria-label="Simulation steps per frame (1–6, capped at 2 on mobile) — higher values evolve patterns faster"
+            />
+          </div>
+        </div>
+
+        <div id="growth-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="growth-speed">Growth</label>
+            <input
+              type="range"
+              id="growth-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Growth rate — how quickly curves acquire new nodes and grow in complexity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="growth-tension">Tension</label>
+            <input
+              type="range"
+              id="growth-tension"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Spring stiffness — high tension produces tight, compact folds; low tension lets curves spread loosely"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="growth-repulsion">Repulsion</label>
+            <input
+              type="range"
+              id="growth-repulsion"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Repulsion radius — high values push curves far apart; low values allow dense overlapping"
             />
           </div>
         </div>

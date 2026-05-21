@@ -76,6 +76,7 @@ src/
 │   ├── voronoi.ts             # Voronoi Stained Glass: N Voronoi cells mapped to 7 freq bands; each cell glows with jewel-tone hue (amethyst→sapphire→aquamarine→emerald→topaz→amber→ruby) at band amplitude; dark lead lines between cells; beat fires warm flash + Shatter scatters seeds then eases them home for kaleidoscope-click reorganisation; offscreen pixel buffer at ¼ res (⅛ mobile); sliders: Cells (10–80), Glow (light intensity), Shatter (beat scatter)
 │   ├── grayscott.ts           # Gray-Scott: continuous A/B reaction-diffusion chemical simulation; Du=1.0/Dv=0.5 diffusion with per-cell feed/kill kinetics; ping-pong Float32Array buffers; sub-bass nudges feed rate, brilliance nudges kill rate, transients inject random activator seeds, beats inject central blob + hue jump; B concentration → HSB color; offscreen pixel buffer at ¼ res (⅙ mobile); sliders: Feed (F ∈ 0.010–0.095), Kill (K ∈ 0.040–0.075), Speed (steps/frame 1–6)
 │   ├── blobs.ts               # Blobs: audio-reactive metaball field inspired by Zachary Lieberman's "Circles, Blobs, Ripples" (Unit London, 2024); 7 metaballs (one per freq band) drift via Perlin noise, each ball's charge driven by its band's amplitude; classic 1/r² scalar field thresholded to produce organic fusion; blobs merge into one heaving mass at high amplitude and scatter as separate orbs when quiet; beat bursts all blobs radially outward; offscreen pixel buffer at ¼ res (⅙ mobile); sliders: Viscosity (fusion threshold), Drift (animation speed), Glow (edge halo intensity)
+│   ├── growth.ts              # Growth: differential growth simulation inspired by Nervous System's Floraform (2014); 7 closed curves (one per freq band) start as small circles and grow by inserting midpoint nodes on long edges; spatial-hash repulsion between all nodes causes curves to fold like coral, brain sulci, and leaf margins; amplitude drives growth speed and neon glow; beats sprout new seed organisms; 3-pass glow rendering; sliders: Growth (edge-split rate), Tension (spring stiffness), Repulsion (repulsion radius)
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -86,7 +87,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive, ;→marbling, [→flowfield, ]→lissajous, \→truchet, -→topography, =→interference)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive, ;→marbling, [→flowfield, ]→lissajous, \→truchet, -→topography, =→interference, ~→growth)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

@@ -143,6 +143,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'grayscott-feed', key: 'grayscottFeed' },
     { id: 'grayscott-kill', key: 'grayscottKill' },
     { id: 'grayscott-speed', key: 'grayscottSpeed' },
+    { id: 'growth-speed', key: 'growthSpeed' },
+    { id: 'growth-tension', key: 'growthTension' },
+    { id: 'growth-repulsion', key: 'growthRepulsion' },
   ] as const;
 
   for (const { id, key } of configs) {
