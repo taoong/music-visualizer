@@ -293,6 +293,10 @@ export const DEFAULT_CONFIG = {
   growthSpeed: 0.5,
   growthTension: 0.5,
   growthRepulsion: 0.5,
+  // Pixel Sort-specific
+  pixelsortThreshold: 0.45,
+  pixelsortSpan: 0.40,
+  pixelsortHue: 0.0,
 };
 
 // FFT and decay constants

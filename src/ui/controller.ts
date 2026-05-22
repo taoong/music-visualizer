@@ -90,6 +90,7 @@ const ALL_CONTROL_IDS = [
   'lissajous-controls-group', 'truchet-controls-group', 'topography-controls-group',
   'interference-controls-group', 'voronoi-controls-group',
   'blobs-controls-group', 'grayscott-controls-group', 'growth-controls-group',
+  'pixelsort-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -138,6 +139,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   blobs:         { show: ['blobs-controls-group'] },
   grayscott:     { show: ['grayscott-controls-group'] },
   growth:        { show: ['growth-controls-group'] },
+  pixelsort:     { show: ['pixelsort-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

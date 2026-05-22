@@ -146,6 +146,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'growth-speed', key: 'growthSpeed' },
     { id: 'growth-tension', key: 'growthTension' },
     { id: 'growth-repulsion', key: 'growthRepulsion' },
+    { id: 'pixelsort-threshold', key: 'pixelsortThreshold' },
+    { id: 'pixelsort-span', key: 'pixelsortSpan' },
+    { id: 'pixelsort-hue', key: 'pixelsortHue' },
   ] as const;
 
   for (const { id, key } of configs) {

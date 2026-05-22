@@ -110,6 +110,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   growthSpeed: 'growth-speed',
   growthTension: 'growth-tension',
   growthRepulsion: 'growth-repulsion',
+  pixelsortThreshold: 'pixelsort-threshold',
+  pixelsortSpan: 'pixelsort-span',
+  pixelsortHue: 'pixelsort-hue',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
