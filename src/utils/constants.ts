@@ -297,6 +297,10 @@ export const DEFAULT_CONFIG = {
   pixelsortThreshold: 0.45,
   pixelsortSpan: 0.40,
   pixelsortHue: 0.0,
+  // Echoes-specific
+  echoesDepth: 60,
+  echoesTwist: 0.2,
+  echoesScale: 0.6,
 };
 
 // FFT and decay constants

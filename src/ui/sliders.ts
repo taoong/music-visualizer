@@ -149,6 +149,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'pixelsort-threshold', key: 'pixelsortThreshold' },
     { id: 'pixelsort-span', key: 'pixelsortSpan' },
     { id: 'pixelsort-hue', key: 'pixelsortHue' },
+    { id: 'echoes-depth', key: 'echoesDepth' },
+    { id: 'echoes-twist', key: 'echoesTwist' },
+    { id: 'echoes-scale', key: 'echoesScale' },
   ] as const;
 
   for (const { id, key } of configs) {

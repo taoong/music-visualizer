@@ -81,6 +81,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `/` | Gray-Scott | Gray-Scott reaction-diffusion chemical simulation; Turing patterns (spots, stripes, mazes) driven by feed/kill parameters; sub-bass seeds activator, beats inject central pulse and rotate hue palette |
 | `~` | Growth | Differential growth simulation; 7 closed curves grow by node insertion, fold like coral and brain sulci via spatial-hash repulsion; amplitude drives glow and growth speed |
 | `@` | Pixel Sort | Glitch-art column pixel sorting inspired by Kim Asendorf's "Mountain Tour"; synthetic plasma field (7 freq-band hue zones) sorted by luminance; bass lowers sort threshold; beats inject a sort surge |
+| `#` | Echoes | Polar slit-scan temporal mandala; each audio frame stored as an annular ring; rings radiate outward (newest innermost, oldest outermost); Twist morphs from concentric mandala to tight spiral; beat shifts 7-band hue palette |
 
 ## Keyboard Shortcuts
 
@@ -107,6 +108,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `/` | Gray-Scott visualization |
 | `~` | Growth visualization |
 | `@` | Pixel Sort visualization |
+| `#` | Echoes visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

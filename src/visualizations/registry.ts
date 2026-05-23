@@ -44,6 +44,7 @@ import { drawBlobs, resetBlobs } from './blobs';
 import { drawGrayscott, resetGrayscott } from './grayscott';
 import { drawGrowth, resetGrowth } from './growth';
 import { drawPixelsort, resetPixelsort } from './pixelsort';
+import { drawEchoes, resetEchoes } from './echoes';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -127,4 +128,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   grayscott:     { draw: drawGrayscott,      reset: resetGrayscott,     key: '/',  label: 'Gray-Scott' },
   growth:        { draw: drawGrowth,         reset: resetGrowth,        key: '~',  label: 'Growth' },
   pixelsort:     { draw: drawPixelsort,      reset: resetPixelsort,     key: '@',  label: 'Pixel Sort' },
+  echoes:        { draw: drawEchoes,         reset: resetEchoes,        key: '#',  label: 'Echoes' },
 };

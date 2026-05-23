@@ -78,6 +78,7 @@ src/
 │   ├── blobs.ts               # Blobs: audio-reactive metaball field inspired by Zachary Lieberman's "Circles, Blobs, Ripples" (Unit London, 2024); 7 metaballs (one per freq band) drift via Perlin noise, each ball's charge driven by its band's amplitude; classic 1/r² scalar field thresholded to produce organic fusion; blobs merge into one heaving mass at high amplitude and scatter as separate orbs when quiet; beat bursts all blobs radially outward; offscreen pixel buffer at ¼ res (⅙ mobile); sliders: Viscosity (fusion threshold), Drift (animation speed), Glow (edge halo intensity)
 │   ├── growth.ts              # Growth: differential growth simulation inspired by Nervous System's Floraform (2014); 7 closed curves (one per freq band) start as small circles and grow by inserting midpoint nodes on long edges; spatial-hash repulsion between all nodes causes curves to fold like coral, brain sulci, and leaf margins; amplitude drives growth speed and neon glow; beats sprout new seed organisms; 3-pass glow rendering; sliders: Growth (edge-split rate), Tension (spring stiffness), Repulsion (repulsion radius)
 │   ├── pixelsort.ts           # Pixel Sort: glitch-art column pixel sorting inspired by Kim Asendorf's "Mountain Tour" (2010); synthetic plasma field (7 freq-band hue zones) sorted column-by-column by luminance; bass lowers sort threshold for more chaos; beat transients inject a sort surge; offscreen pixel buffer at ⅓ res (⅙ mobile); sliders: Threshold (sort luminance cutoff), Span (max sorted run length), Hue (palette rotation)
+│   └── echoes.ts              # Echoes: polar slit-scan temporal mandala inspired by Golan Levin's slit-scan video-art catalog (flong.com); each audio frame captured as an annular ring in a rolling buffer; rings radiate outward (newest at centre, oldest at edge); Twist morphs from concentric mandala to tight spiral; beat shifts hue palette + flash; 7 band hues cycle violet→red; sliders: Depth (ring history 20–150), Twist (rotation/ring, 0=mandala→1=spiral), Scale (amplitude-to-radius)
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -88,7 +89,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive, ;→marbling, [→flowfield, ]→lissajous, \→truchet, -→topography, =→interference, ~→growth, @→pixelsort)
+│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, n/p/g/w/c/b/u/j/z/letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; 9→hive, ;→marbling, [→flowfield, ]→lissajous, \→truchet, -→topography, =→interference, ~→growth, @→pixelsort, #→echoes)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

@@ -113,6 +113,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   pixelsortThreshold: 'pixelsort-threshold',
   pixelsortSpan: 'pixelsort-span',
   pixelsortHue: 'pixelsort-hue',
+  echoesDepth: 'echoes-depth',
+  echoesTwist: 'echoes-twist',
+  echoesScale: 'echoes-scale',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

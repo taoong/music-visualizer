@@ -324,6 +324,7 @@
           <option value="grayscott">Gray-Scott</option>
           <option value="growth">Growth</option>
           <option value="pixelsort">Pixel Sort</option>
+          <option value="echoes">Echoes</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1537,6 +1538,45 @@
               step="0.01"
               value="0"
               aria-label="Palette rotation — shifts all 7 frequency-band hue zones around the colour wheel"
+            />
+          </div>
+        </div>
+
+        <div id="echoes-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="echoes-depth">Depth</label>
+            <input
+              type="range"
+              id="echoes-depth"
+              min="20"
+              max="150"
+              step="1"
+              value="60"
+              aria-label="Ring history depth — number of past audio frames shown as concentric rings; low = tight core, high = full spiral bloom"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="echoes-twist">Twist</label>
+            <input
+              type="range"
+              id="echoes-twist"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.2"
+              aria-label="Rotation per ring — 0 = concentric mandala rings, 1 = tight double-helix spiral"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="echoes-scale">Scale</label>
+            <input
+              type="range"
+              id="echoes-scale"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Amplitude-to-radius scale — 0 = flat perfect circles, 1 = dramatic frequency spikes"
             />
           </div>
         </div>

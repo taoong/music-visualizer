@@ -46,4 +46,5 @@ export { drawBlobs, resetBlobs } from './blobs';
 export { drawGrayscott, resetGrayscott } from './grayscott';
 export { drawGrowth, resetGrowth } from './growth';
 export { drawPixelsort, resetPixelsort } from './pixelsort';
+export { drawEchoes, resetEchoes } from './echoes';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
