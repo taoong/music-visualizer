@@ -116,6 +116,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   echoesDepth: 'echoes-depth',
   echoesTwist: 'echoes-twist',
   echoesScale: 'echoes-scale',
+  physarumAgents: 'physarum-agents',
+  physarumEvaporation: 'physarum-evaporation',
+  physarumSensor: 'physarum-sensor',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

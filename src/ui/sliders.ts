@@ -152,6 +152,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'echoes-depth', key: 'echoesDepth' },
     { id: 'echoes-twist', key: 'echoesTwist' },
     { id: 'echoes-scale', key: 'echoesScale' },
+    { id: 'physarum-agents', key: 'physarumAgents' },
+    { id: 'physarum-evaporation', key: 'physarumEvaporation' },
+    { id: 'physarum-sensor', key: 'physarumSensor' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -82,6 +82,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `~` | Growth | Differential growth simulation; 7 closed curves grow by node insertion, fold like coral and brain sulci via spatial-hash repulsion; amplitude drives glow and growth speed |
 | `@` | Pixel Sort | Glitch-art column pixel sorting inspired by Kim Asendorf's "Mountain Tour"; synthetic plasma field (7 freq-band hue zones) sorted by luminance; bass lowers sort threshold; beats inject a sort surge |
 | `#` | Echoes | Polar slit-scan temporal mandala; each audio frame stored as an annular ring; rings radiate outward (newest innermost, oldest outermost); Twist morphs from concentric mandala to tight spiral; beat shifts 7-band hue palette |
+| `$` | Physarum | Slime-mold agent-network simulation (Jeff Jones algorithm, Zach Lieberman 2025); agents sense pheromone trails and steer toward highest concentration; emergent self-organising mycelial web; beat scatters agents + hue jump; bass drives deposit rate; dominant band colours hue |
 
 ## Keyboard Shortcuts
 

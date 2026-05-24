@@ -301,6 +301,10 @@ export const DEFAULT_CONFIG = {
   echoesDepth: 60,
   echoesTwist: 0.2,
   echoesScale: 0.6,
+  // Physarum-specific
+  physarumAgents: 1500,
+  physarumEvaporation: 0.65,
+  physarumSensor: 30,
 };
 
 // FFT and decay constants
