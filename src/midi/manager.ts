@@ -119,6 +119,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   physarumAgents: 'physarum-agents',
   physarumEvaporation: 'physarum-evaporation',
   physarumSensor: 'physarum-sensor',
+  opticalGrid: 'optical-grid',
+  opticalBulge: 'optical-bulge',
+  opticalColor: 'optical-color',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

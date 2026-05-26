@@ -46,6 +46,7 @@ import { drawGrowth, resetGrowth } from './growth';
 import { drawPixelsort, resetPixelsort } from './pixelsort';
 import { drawEchoes, resetEchoes } from './echoes';
 import { drawPhysarum, resetPhysarum } from './physarum';
+import { drawOptical, resetOptical } from './optical';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -131,4 +132,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   pixelsort:     { draw: drawPixelsort,      reset: resetPixelsort,     key: '@',  label: 'Pixel Sort' },
   echoes:        { draw: drawEchoes,         reset: resetEchoes,        key: '#',  label: 'Echoes' },
   physarum:      { draw: drawPhysarum,       reset: resetPhysarum,      key: '$',  label: 'Physarum' },
+  optical:       { draw: drawOptical,        reset: resetOptical,       key: '%',  label: 'Op-Art' },
 };

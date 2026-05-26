@@ -155,6 +155,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'physarum-agents', key: 'physarumAgents' },
     { id: 'physarum-evaporation', key: 'physarumEvaporation' },
     { id: 'physarum-sensor', key: 'physarumSensor' },
+    { id: 'optical-grid', key: 'opticalGrid' },
+    { id: 'optical-bulge', key: 'opticalBulge' },
+    { id: 'optical-color', key: 'opticalColor' },
   ] as const;
 
   for (const { id, key } of configs) {

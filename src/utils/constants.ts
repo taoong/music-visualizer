@@ -305,6 +305,10 @@ export const DEFAULT_CONFIG = {
   physarumAgents: 1500,
   physarumEvaporation: 0.65,
   physarumSensor: 30,
+  // Optical (Op-Art)-specific
+  opticalGrid: 0.4,
+  opticalBulge: 0.6,
+  opticalColor: 0.5,
 };
 
 // FFT and decay constants

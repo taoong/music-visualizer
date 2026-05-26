@@ -83,6 +83,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `@` | Pixel Sort | Glitch-art column pixel sorting inspired by Kim Asendorf's "Mountain Tour"; synthetic plasma field (7 freq-band hue zones) sorted by luminance; bass lowers sort threshold; beats inject a sort surge |
 | `#` | Echoes | Polar slit-scan temporal mandala; each audio frame stored as an annular ring; rings radiate outward (newest innermost, oldest outermost); Twist morphs from concentric mandala to tight spiral; beat shifts 7-band hue palette |
 | `$` | Physarum | Slime-mold agent-network simulation (Jeff Jones algorithm, Zach Lieberman 2025); agents sense pheromone trails and steer toward highest concentration; emergent self-organising mycelial web; beat scatters agents + hue jump; bass drives deposit rate; dominant band colours hue |
+| `%` | Op-Art | Audio-reactive Op-Art grid inspired by Victor Vasarely's "Vega-Nor" series (1969); NxN circles modulated by 7 per-band sinusoidal standing waves at increasing spatial frequencies plus a central Vasarely dome illusion; beat fires an expanding radial shockwave; Color slider morphs from black/white monochrome to full chromatic HSB |
 
 ## Keyboard Shortcuts
 

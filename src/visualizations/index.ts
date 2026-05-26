@@ -48,4 +48,5 @@ export { drawGrowth, resetGrowth } from './growth';
 export { drawPixelsort, resetPixelsort } from './pixelsort';
 export { drawEchoes, resetEchoes } from './echoes';
 export { drawPhysarum, resetPhysarum } from './physarum';
+export { drawOptical, resetOptical } from './optical';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
