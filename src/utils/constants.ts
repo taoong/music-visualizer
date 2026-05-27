@@ -309,6 +309,10 @@ export const DEFAULT_CONFIG = {
   opticalGrid: 0.4,
   opticalBulge: 0.6,
   opticalColor: 0.5,
+  // Geodesic-specific
+  geodesicShells: 3,
+  geodesicSpin: 1.0,
+  geodesicGlow: 1.5,
 };
 
 // FFT and decay constants

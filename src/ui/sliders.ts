@@ -158,6 +158,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'optical-grid', key: 'opticalGrid' },
     { id: 'optical-bulge', key: 'opticalBulge' },
     { id: 'optical-color', key: 'opticalColor' },
+    { id: 'geodesic-shells', key: 'geodesicShells' },
+    { id: 'geodesic-spin', key: 'geodesicSpin' },
+    { id: 'geodesic-glow', key: 'geodesicGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

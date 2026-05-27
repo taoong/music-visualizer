@@ -91,7 +91,7 @@ const ALL_CONTROL_IDS = [
   'interference-controls-group', 'voronoi-controls-group',
   'blobs-controls-group', 'grayscott-controls-group', 'growth-controls-group',
   'pixelsort-controls-group', 'echoes-controls-group', 'physarum-controls-group',
-  'optical-controls-group',
+  'optical-controls-group', 'geodesic-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -144,6 +144,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   echoes:        { show: ['echoes-controls-group'] },
   physarum:      { show: ['physarum-controls-group'] },
   optical:       { show: ['optical-controls-group'] },
+  geodesic:      { show: ['geodesic-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

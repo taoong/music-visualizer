@@ -122,6 +122,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   opticalGrid: 'optical-grid',
   opticalBulge: 'optical-bulge',
   opticalColor: 'optical-color',
+  geodesicShells: 'geodesic-shells',
+  geodesicSpin: 'geodesic-spin',
+  geodesicGlow: 'geodesic-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

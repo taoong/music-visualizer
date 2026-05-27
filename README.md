@@ -84,6 +84,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `#` | Echoes | Polar slit-scan temporal mandala; each audio frame stored as an annular ring; rings radiate outward (newest innermost, oldest outermost); Twist morphs from concentric mandala to tight spiral; beat shifts 7-band hue palette |
 | `$` | Physarum | Slime-mold agent-network simulation (Jeff Jones algorithm, Zach Lieberman 2025); agents sense pheromone trails and steer toward highest concentration; emergent self-organising mycelial web; beat scatters agents + hue jump; bass drives deposit rate; dominant band colours hue |
 | `%` | Op-Art | Audio-reactive Op-Art grid inspired by Victor Vasarely's "Vega-Nor" series (1969); NxN circles modulated by 7 per-band sinusoidal standing waves at increasing spatial frequencies plus a central Vasarely dome illusion; beat fires an expanding radial shockwave; Color slider morphs from black/white monochrome to full chromatic HSB |
+| `^` | Geodesic | Up to 5 nested icosahedral wireframe shells rotating independently (each driven by a different audio frequency band); overlapping neon wireframes create iridescent crystalline interference patterns; 3-pass glow per edge; vertex node dots; beat fires angular impulses; inspired by teamLab's "Bubble Universe" (2024) |
 
 ## Keyboard Shortcuts
 
@@ -111,6 +112,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `~` | Growth visualization |
 | `@` | Pixel Sort visualization |
 | `#` | Echoes visualization |
+| `^` | Geodesic visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

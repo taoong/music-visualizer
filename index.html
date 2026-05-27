@@ -327,6 +327,7 @@
           <option value="echoes">Echoes</option>
           <option value="physarum">Physarum</option>
           <option value="optical">Op-Art</option>
+          <option value="geodesic">Geodesic</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1657,6 +1658,45 @@
               step="1"
               value="30"
               aria-label="Sensor angle in degrees — narrow = agents follow existing highways (few, thick lanes), wide = agents branch freely (dense complex web)"
+            />
+          </div>
+        </div>
+
+        <div id="geodesic-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="geodesic-shells">Shells</label>
+            <input
+              type="range"
+              id="geodesic-shells"
+              min="1"
+              max="5"
+              step="1"
+              value="3"
+              aria-label="Number of nested wireframe spheres — 1 = single violet crystal core, 5 = full nested iridescent lattice"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="geodesic-spin">Spin</label>
+            <input
+              type="range"
+              id="geodesic-spin"
+              min="0"
+              max="2"
+              step="0.05"
+              value="1"
+              aria-label="Rotation speed multiplier — 0 = near-still meditative drift, 2 = fast energetic spin"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="geodesic-glow">Glow</label>
+            <input
+              type="range"
+              id="geodesic-glow"
+              min="0.5"
+              max="3"
+              step="0.1"
+              value="1.5"
+              aria-label="Neon glow intensity — low = clean crisp wireframe lines, high = intense radiant bloom halos"
             />
           </div>
         </div>

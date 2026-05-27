@@ -49,4 +49,5 @@ export { drawPixelsort, resetPixelsort } from './pixelsort';
 export { drawEchoes, resetEchoes } from './echoes';
 export { drawPhysarum, resetPhysarum } from './physarum';
 export { drawOptical, resetOptical } from './optical';
+export { drawGeodesic, resetGeodesic } from './geodesic';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
