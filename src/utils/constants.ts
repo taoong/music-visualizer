@@ -313,6 +313,10 @@ export const DEFAULT_CONFIG = {
   geodesicShells: 3,
   geodesicSpin: 1.0,
   geodesicGlow: 1.5,
+  // Ribbons-specific
+  ribbonsCount: 7,
+  ribbonsWave: 1.0,
+  ribbonsShimmer: 0.5,
 };
 
 // FFT and decay constants

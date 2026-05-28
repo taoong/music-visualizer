@@ -161,6 +161,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'geodesic-shells', key: 'geodesicShells' },
     { id: 'geodesic-spin', key: 'geodesicSpin' },
     { id: 'geodesic-glow', key: 'geodesicGlow' },
+    { id: 'ribbons-count', key: 'ribbonsCount' },
+    { id: 'ribbons-wave', key: 'ribbonsWave' },
+    { id: 'ribbons-shimmer', key: 'ribbonsShimmer' },
   ] as const;
 
   for (const { id, key } of configs) {

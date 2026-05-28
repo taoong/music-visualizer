@@ -85,6 +85,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `$` | Physarum | Slime-mold agent-network simulation (Jeff Jones algorithm, Zach Lieberman 2025); agents sense pheromone trails and steer toward highest concentration; emergent self-organising mycelial web; beat scatters agents + hue jump; bass drives deposit rate; dominant band colours hue |
 | `%` | Op-Art | Audio-reactive Op-Art grid inspired by Victor Vasarely's "Vega-Nor" series (1969); NxN circles modulated by 7 per-band sinusoidal standing waves at increasing spatial frequencies plus a central Vasarely dome illusion; beat fires an expanding radial shockwave; Color slider morphs from black/white monochrome to full chromatic HSB |
 | `^` | Geodesic | Up to 5 nested icosahedral wireframe shells rotating independently (each driven by a different audio frequency band); overlapping neon wireframes create iridescent crystalline interference patterns; 3-pass glow per edge; vertex node dots; beat fires angular impulses; inspired by teamLab's "Bubble Universe" (2024) |
+| `&` | Ribbons | N sinuous silk-ribbon strands float horizontally across the canvas, each driven by a frequency band; amplitude scales oscillation height; iridescent canvas-gradient glow (3 passes: outer halo, mid body, bright core) shimmers along each strand; beat fires a traveling snap wave; inspired by teamLab "Light Sculpture – Flow" (2024) |
 
 ## Keyboard Shortcuts
 
@@ -113,6 +114,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `@` | Pixel Sort visualization |
 | `#` | Echoes visualization |
 | `^` | Geodesic visualization |
+| `&` | Ribbons visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

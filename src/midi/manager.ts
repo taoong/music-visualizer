@@ -125,6 +125,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   geodesicShells: 'geodesic-shells',
   geodesicSpin: 'geodesic-spin',
   geodesicGlow: 'geodesic-glow',
+  ribbonsCount: 'ribbons-count',
+  ribbonsWave: 'ribbons-wave',
+  ribbonsShimmer: 'ribbons-shimmer',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
