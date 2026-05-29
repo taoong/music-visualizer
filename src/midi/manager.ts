@@ -128,6 +128,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   ribbonsCount: 'ribbons-count',
   ribbonsWave: 'ribbons-wave',
   ribbonsShimmer: 'ribbons-shimmer',
+  infinitynetScale: 'infinitynet-scale',
+  infinitynetBreathe: 'infinitynet-breathe',
+  infinitynetPalette: 'infinitynet-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

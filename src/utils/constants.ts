@@ -317,6 +317,10 @@ export const DEFAULT_CONFIG = {
   ribbonsCount: 7,
   ribbonsWave: 1.0,
   ribbonsShimmer: 0.5,
+  // Infinity Net-specific
+  infinitynetScale: 0.3,
+  infinitynetBreathe: 0.7,
+  infinitynetPalette: 0.0,
 };
 
 // FFT and decay constants

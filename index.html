@@ -329,6 +329,7 @@
           <option value="optical">Op-Art</option>
           <option value="geodesic">Geodesic</option>
           <option value="ribbons">Ribbons</option>
+          <option value="infinitynet">Infinity Net</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1737,6 +1738,45 @@
               step="0.01"
               value="0.5"
               aria-label="Iridescent colour-shift intensity — 0 = solid band colour, 1 = full rainbow shimmer along each strand"
+            />
+          </div>
+        </div>
+
+        <div id="infinitynet-controls-group" class="hidden">
+          <div class="slider-group">
+            <label for="infinitynet-scale">Scale</label>
+            <input
+              type="range"
+              id="infinitynet-scale"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.3"
+              aria-label="Arc spacing — 0 = dense field of tiny arcs, 1 = sparse grid of larger arcs"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="infinitynet-breathe">Breathe</label>
+            <input
+              type="range"
+              id="infinitynet-breathe"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.7"
+              aria-label="Amplitude swell — 0 = arcs stay static, 1 = arcs fully bloom and collapse with audio energy"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="infinitynet-palette">Palette</label>
+            <input
+              type="range"
+              id="infinitynet-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0"
+              aria-label="Colour palette — 0 = Kusama monochrome white-on-black, 1 = full chromatic per frequency band"
             />
           </div>
         </div>

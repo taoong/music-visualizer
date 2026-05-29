@@ -86,6 +86,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `%` | Op-Art | Audio-reactive Op-Art grid inspired by Victor Vasarely's "Vega-Nor" series (1969); NxN circles modulated by 7 per-band sinusoidal standing waves at increasing spatial frequencies plus a central Vasarely dome illusion; beat fires an expanding radial shockwave; Color slider morphs from black/white monochrome to full chromatic HSB |
 | `^` | Geodesic | Up to 5 nested icosahedral wireframe shells rotating independently (each driven by a different audio frequency band); overlapping neon wireframes create iridescent crystalline interference patterns; 3-pass glow per edge; vertex node dots; beat fires angular impulses; inspired by teamLab's "Bubble Universe" (2024) |
 | `&` | Ribbons | N sinuous silk-ribbon strands float horizontally across the canvas, each driven by a frequency band; amplitude scales oscillation height; iridescent canvas-gradient glow (3 passes: outer halo, mid body, bright core) shimmers along each strand; beat fires a traveling snap wave; inspired by teamLab "Light Sculpture – Flow" (2024) |
+| `*` | Infinity Net | Dense hex-offset grid of semicircular arcs inspired by Yayoi Kusama's "Infinity Net" paintings (1958–ongoing); 7 concentric radial zones map to frequency bands (sub-bass at centre → brilliance at edge); amplitude pulses arc size; beat fires an expanding ripple ring; Palette slider morphs from Kusama's iconic white-on-black monochrome to full chromatic per-band colour |
 
 ## Keyboard Shortcuts
 
@@ -115,6 +116,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `#` | Echoes visualization |
 | `^` | Geodesic visualization |
 | `&` | Ribbons visualization |
+| `*` | Infinity Net visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

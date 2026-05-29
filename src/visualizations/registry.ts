@@ -49,6 +49,7 @@ import { drawPhysarum, resetPhysarum } from './physarum';
 import { drawOptical, resetOptical } from './optical';
 import { drawGeodesic, resetGeodesic } from './geodesic';
 import { drawRibbons, resetRibbons } from './ribbons';
+import { drawInfinityNet, resetInfinityNet } from './infinitynet';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -137,4 +138,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   optical:       { draw: drawOptical,        reset: resetOptical,       key: '%',  label: 'Op-Art' },
   geodesic:      { draw: drawGeodesic,       reset: resetGeodesic,      key: '^',  label: 'Geodesic' },
   ribbons:       { draw: drawRibbons,        reset: resetRibbons,       key: '&',  label: 'Ribbons' },
+  infinitynet:   { draw: drawInfinityNet,    reset: resetInfinityNet,   key: '*',  label: 'Infinity Net' },
 };

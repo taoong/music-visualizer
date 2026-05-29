@@ -51,4 +51,5 @@ export { drawPhysarum, resetPhysarum } from './physarum';
 export { drawOptical, resetOptical } from './optical';
 export { drawGeodesic, resetGeodesic } from './geodesic';
 export { drawRibbons, resetRibbons } from './ribbons';
+export { drawInfinityNet, resetInfinityNet } from './infinitynet';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

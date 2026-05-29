@@ -92,6 +92,7 @@ const ALL_CONTROL_IDS = [
   'blobs-controls-group', 'grayscott-controls-group', 'growth-controls-group',
   'pixelsort-controls-group', 'echoes-controls-group', 'physarum-controls-group',
   'optical-controls-group', 'geodesic-controls-group', 'ribbons-controls-group',
+  'infinitynet-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -146,6 +147,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   optical:       { show: ['optical-controls-group'] },
   geodesic:      { show: ['geodesic-controls-group'] },
   ribbons:       { show: ['ribbons-controls-group'] },
+  infinitynet:   { show: ['infinitynet-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

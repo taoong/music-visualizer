@@ -164,6 +164,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'ribbons-count', key: 'ribbonsCount' },
     { id: 'ribbons-wave', key: 'ribbonsWave' },
     { id: 'ribbons-shimmer', key: 'ribbonsShimmer' },
+    { id: 'infinitynet-scale', key: 'infinitynetScale' },
+    { id: 'infinitynet-breathe', key: 'infinitynetBreathe' },
+    { id: 'infinitynet-palette', key: 'infinitynetPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
