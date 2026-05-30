@@ -131,6 +131,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   infinitynetScale: 'infinitynet-scale',
   infinitynetBreathe: 'infinitynet-breathe',
   infinitynetPalette: 'infinitynet-palette',
+  zengardenLines: 'zengarden-lines',
+  zengardenDepth: 'zengarden-depth',
+  zengardenRocks: 'zengarden-rocks',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

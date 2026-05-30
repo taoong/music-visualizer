@@ -321,6 +321,10 @@ export const DEFAULT_CONFIG = {
   infinitynetScale: 0.3,
   infinitynetBreathe: 0.7,
   infinitynetPalette: 0.0,
+  // Zen Garden-specific
+  zengardenLines: 0.4,
+  zengardenDepth: 0.5,
+  zengardenRocks: 0.33,
 };
 
 // FFT and decay constants

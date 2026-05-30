@@ -167,6 +167,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'infinitynet-scale', key: 'infinitynetScale' },
     { id: 'infinitynet-breathe', key: 'infinitynetBreathe' },
     { id: 'infinitynet-palette', key: 'infinitynetPalette' },
+    { id: 'zengarden-lines', key: 'zengardenLines' },
+    { id: 'zengarden-depth', key: 'zengardenDepth' },
+    { id: 'zengarden-rocks', key: 'zengardenRocks' },
   ] as const;
 
   for (const { id, key } of configs) {
