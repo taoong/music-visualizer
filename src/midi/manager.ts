@@ -134,6 +134,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   zengardenLines: 'zengarden-lines',
   zengardenDepth: 'zengarden-depth',
   zengardenRocks: 'zengarden-rocks',
+  arabesqueSteps: 'arabesque-steps',
+  arabesqueSpeed: 'arabesque-speed',
+  arabesqueTrail: 'arabesque-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -325,6 +325,10 @@ export const DEFAULT_CONFIG = {
   zengardenLines: 0.4,
   zengardenDepth: 0.5,
   zengardenRocks: 0.33,
+  // Arabesque-specific
+  arabesqueSteps: 80,
+  arabesqueSpeed: 0.4,
+  arabesqueTrail: 0.65,
 };
 
 // FFT and decay constants

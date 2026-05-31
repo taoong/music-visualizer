@@ -88,6 +88,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `&` | Ribbons | N sinuous silk-ribbon strands float horizontally across the canvas, each driven by a frequency band; amplitude scales oscillation height; iridescent canvas-gradient glow (3 passes: outer halo, mid body, bright core) shimmers along each strand; beat fires a traveling snap wave; inspired by teamLab "Light Sculpture – Flow" (2024) |
 | `*` | Infinity Net | Dense hex-offset grid of semicircular arcs inspired by Yayoi Kusama's "Infinity Net" paintings (1958–ongoing); 7 concentric radial zones map to frequency bands (sub-bass at centre → brilliance at edge); amplitude pulses arc size; beat fires an expanding ripple ring; Palette slider morphs from Kusama's iconic white-on-black monochrome to full chromatic per-band colour |
 | `_` | Zen Garden | Karesansui (枯山水) dry-rock-garden: rake lines flow across a warm sandy canvas, curving around stone formations; 7 frequency bands each govern a horizontal zone of the garden (sub-bass=deep rolling waves, brilliance=fine ripples); beat triggers a sudden re-raking phase-jump event; inspired by the Ryōan-ji temple garden in Kyoto (c. 1500) and Tokujin Yoshioka's sand installations |
+| `!` | Arabesque | 7 arabesque petals traced via John Whitney Sr.'s differential motion formula (r[k] = R·|sin(kπ/N)| at angle k·φ), phase-offset by 2π/7 for 7-fold symmetry; the trail buffer accumulates layered Islamic-geometric forms that bloom and transform with the music; beat snaps the phase angle and shifts the hue palette; inspired by John Whitney Sr., "Arabesque" (1975, programmed by Larry Cuba) |
 
 ## Keyboard Shortcuts
 
@@ -119,6 +120,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `&` | Ribbons visualization |
 | `*` | Infinity Net visualization |
 | `_` | Zen Garden visualization |
+| `!` | Arabesque visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

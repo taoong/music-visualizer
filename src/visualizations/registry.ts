@@ -51,6 +51,7 @@ import { drawGeodesic, resetGeodesic } from './geodesic';
 import { drawRibbons, resetRibbons } from './ribbons';
 import { drawInfinityNet, resetInfinityNet } from './infinitynet';
 import { drawZengarden, resetZengarden } from './zengarden';
+import { drawArabesque, resetArabesque } from './arabesque';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -141,4 +142,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   ribbons:       { draw: drawRibbons,        reset: resetRibbons,       key: '&',  label: 'Ribbons' },
   infinitynet:   { draw: drawInfinityNet,    reset: resetInfinityNet,   key: '*',  label: 'Infinity Net' },
   zengarden:     { draw: drawZengarden,      reset: resetZengarden,     key: '_',  label: 'Zen Garden' },
+  arabesque:     { draw: drawArabesque,      reset: resetArabesque,     key: '!',  label: 'Arabesque' },
 };

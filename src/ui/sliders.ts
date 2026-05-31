@@ -170,6 +170,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'zengarden-lines', key: 'zengardenLines' },
     { id: 'zengarden-depth', key: 'zengardenDepth' },
     { id: 'zengarden-rocks', key: 'zengardenRocks' },
+    { id: 'arabesque-steps', key: 'arabesqueSteps' },
+    { id: 'arabesque-speed', key: 'arabesqueSpeed' },
+    { id: 'arabesque-trail', key: 'arabesqueTrail' },
   ] as const;
 
   for (const { id, key } of configs) {

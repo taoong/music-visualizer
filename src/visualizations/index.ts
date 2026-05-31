@@ -53,4 +53,5 @@ export { drawGeodesic, resetGeodesic } from './geodesic';
 export { drawRibbons, resetRibbons } from './ribbons';
 export { drawInfinityNet, resetInfinityNet } from './infinitynet';
 export { drawZengarden, resetZengarden } from './zengarden';
+export { drawArabesque, resetArabesque } from './arabesque';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
