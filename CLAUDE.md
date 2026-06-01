@@ -40,13 +40,15 @@ src/
 │   ├── circle.ts              # Rotating spike circle (7 bands x 60 spikes), optional center image
 │   ├── spectrum.ts            # Horizontal bar chart
 │   ├── tunnel.ts              # Octave-based concentric rings with glow, optional center image
-│   ├── balls.ts               # Physics-based bouncing balls with kick boost
+│   ├── balls.ts               # Physics-based bouncing balls (VizMode: tetris) with beat kick boost
+│   ├── lasers.ts              # Concert laser light show with beat-synced beams and frequency-driven color
 │   ├── text.ts                # Beat-synced text patterns (7 modes: zoom, diagonal, quad-mirror, crown, echo, reflect, kaleidoscope)
-│   ├── space.ts               # Third-person spaceship + asteroid field; asteroids spawn on beat, ship swerves to dodge, ~every 8 beats ship mis-swerves and gets hit
-│   ├── runners.ts             # Infinite side-scrolling marathon runners at 3 depth layers; beat → instant 7× speed burst 180 ms
-│   ├── imagegrid.ts           # 16×16 mosaic of 3D tiles viewed top-down; tile height driven by column's freq band; beat → radiating height-wave; image upload → tile tops show image regions
+│   ├── highway.ts             # Audio-reactive highway drive; perspective road with lane markings; beat fires headlight flares; freq bands drive scenery and road color; Three.js WebGL overlay
+│   ├── liquidmetal.ts         # (lazy) Liquid Metal: molten chrome icosphere; Three.js PBR with RoomEnvironment IBL; amplitude deforms mesh; GlitchPass on transients; sliders: Rotation Speed, Spin Chaos
+│   ├── neon.ts                # (lazy) Neon Grid: synthwave terrain mesh; Three.js vertex displacement driven by 7 bands; UnrealBloomPass; sliders: Camera Rotation, Intensity, Camera Height
+│   ├── imagegrid.ts           # (lazy) 16×16 mosaic of 3D tiles viewed top-down; tile height driven by column's freq band; beat → radiating height-wave; image upload → tile tops show image regions
 │   ├── colormap.ts            # Pixel-level audio-reactive color modulation; user image (or rainbow gradient) hue-mapped to 7 freq bands; band amplitude boosts saturation/brightness of matching pixels
-│   ├── sculpture.ts           # 8 flat panels in a circle showing image strips; beat-synced camera orbit; audio-reactive tilt/glow/spacing; Three.js WebGL overlay
+│   ├── sculpture.ts           # (lazy) 8 flat panels in a circle showing image strips; beat-synced camera orbit; audio-reactive tilt/glow/spacing; Three.js WebGL overlay
 │   ├── binary.ts              # Matrix-style cascading binary/ASCII characters; columns mapped to 7 freq bands; beat-synced wave ripple; green-tinted with transient white flash
 │   ├── tungtung.ts            # Dancer: beat-synced dancing alien; pose interpolation; spotlight stage; disco floor; beat particles; configurable text flash (default "Move those feet!")
 │   ├── aurora.ts              # Neon Ring Tunnel: first-person flight through 36 neon polygon rings mapped to 7 freq bands (teal→magenta); beat zoom-punch/shake/shockwaves/flash; Perlin camera drift; hyperspace particles; centroid-shifted palette
@@ -65,7 +67,7 @@ src/
 │   ├── weave.ts               # Weave: audio-reactive tapestry; N horizontal warp threads + N vertical weft threads cross the canvas in a grid; each thread mapped to a freq band (weft offset by ½ BAND_COUNT for hue contrast); threads vibrate sinusoidally (amplitude scales with band energy); 3-pass glow per thread; intersection nodes light up proportional to product of both crossing bands' amplitudes — only bright where both are simultaneously active; beat fires an expanding radial shockwave ring from canvas centre; hue shifts on each beat; sliders: Threads (4–32 per axis), Glow (stroke/halo size), Pulse (shockwave intensity)
 │   ├── synthwave.ts           # Synthwave: retro 80s perspective grid; cyan horizontal lines scroll toward viewer via t² perspective bunching; magenta vertical fan lines converge to vanishing point; striped glowing sun (yellow→pink) sits on horizon; 7 freq bands drive audio-reactive mountain silhouette heights; beats pulse sun + flash screen pink; ADD blendMode neon glow on all elements; sliders: Speed (scroll rate), Horizon (horizon height 0.2–0.65), Glow (neon intensity)
 │   ├── bloom.ts               # Bloom: generative neon branching growth; tips radiate from canvas centre, steered by Perlin noise; sub-bass spawns thick warm-red roots that fork hierarchically up through orange→yellow→green→teal→blue→violet at finest tips (one hue per freq band); 3-pass glow (outer/mid/core) rendered to offscreen buffer with configurable fade rate; beats trigger root burst; amplitude drives continuous forking; sliders: Density (fork rate), Lifespan (trail persistence), Spread (branch deviation angle)
-│   ├── monolith.ts            # Monolith: tall faceted crystal obelisk (stretched icosahedron, 80 facets grouped into 7 freq bands) sits at world origin; camera is the protagonist with choreographed beat-driven moves — continuous orbit baseline, crash-zoom punch on every beat, Hitchcock dolly-zoom every 16 beats, sustained-bass pull-back, occasional snap-cuts, top-down/worm's-eye phases every 32 beats, barrel rolls on hi-hat transients, frame-rate-independent decay; Three.js WebGL overlay with UnrealBloomPass
+│   ├── monolith.ts            # (lazy) Monolith: tall faceted crystal obelisk (stretched icosahedron, 80 facets grouped into 7 freq bands) sits at world origin; camera is the protagonist with choreographed beat-driven moves — continuous orbit baseline, crash-zoom punch on every beat, Hitchcock dolly-zoom every 16 beats, sustained-bass pull-back, occasional snap-cuts, top-down/worm's-eye phases every 32 beats, barrel rolls on hi-hat transients, frame-rate-independent decay; Three.js WebGL overlay with UnrealBloomPass
 │   ├── hive.ts                # Hive: full-canvas flat-top hexagonal honeycomb grid; 7 concentric radial zones each mapped to one freq band (sub-bass at centre → brilliance at edge); hex brightness driven by band amplitude; beat-triggered expanding ripple ring sweeps outward and nudges global hue palette; bloom glow ellipses behind each active hex; sliders: Hex Size (grid density), Glow (bloom intensity), Ripple (beat ripple strength)
 │   ├── marbling.ts            # Marbling: full-screen psychedelic plasma/marble-paper colour field; 3 base sinusoidal waves + 7 audio-reactive band waves superpose into a continuous value field; value → HSV hue → pixel colour via offscreen pixel buffer at ¼ res (⅛ mobile); beat triggers hue-phase jump and brightness flash; sliders: Hue Shift (palette rotation 0–1), Zoom (pattern density 0–1), Speed (animation rate 0–1)
 │   ├── flowfield.ts           # Flow Field: Perlin-noise vector field guiding colored brushstroke ribbons (inspired by Tyler Hobbs' "Fidenza" 2021); 7 bands mapped to distinct hues (violet→blue→teal→green→yellow→orange→magenta); amplitude drives ribbon speed, stroke weight, and brightness; sub-bass bends field spatially; beats burst fresh ribbons from canvas edges; 3-pass ADD glow per ribbon; offscreen trail buffer; sliders: Turbulence (laminar→chaotic), Trail (fade rate), Width (stroke weight)
@@ -74,7 +76,6 @@ src/
 │   ├── topography.ts          # Topography: full-canvas audio-reactive topographic contour map inspired by Tyler Hobbs' "Meridian" series (2022); 7 freq bands drive elevation of horizontal stripes (sub-bass=left → brilliance=right) via Gaussian weighting; Perlin noise base terrain drifts over time; marching squares extracts iso-contour lines at 3–15 elevation levels; each level hue-mapped to nearest freq band (blue=sub → red=brilliance); 2-pass neon glow (wide halo + bright core); beat radiates circular elevation surge from canvas centre; sliders: Resolution (grid density 10–60), Levels (contour count 3–15), Speed (animation rate)
 │   ├── interference.ts        # Interference: audio-reactive moiré / interference-pattern visualizer inspired by Ryoji Ikeda's "test pattern" series; 7 freq bands each drive a standing-wave layer at evenly distributed angles (0°–154°); superposition creates shifting moiré fringes that tilt, breathe, and shimmer with the music; audio phase offsets + amplitude-driven angular twist animate the pattern; beat fires hue jump and brightness flash; saturation scales with loudness (near-monochrome at silence → vivid colour at full volume); offscreen pixel buffer at ¼ res (⅙ mobile) with imageSmoothingEnabled; sliders: Frequency (spatial density), Twist (audio angular deviation), Drift (animation speed)
 │   ├── voronoi.ts             # Voronoi Stained Glass: N Voronoi cells mapped to 7 freq bands; each cell glows with jewel-tone hue (amethyst→sapphire→aquamarine→emerald→topaz→amber→ruby) at band amplitude; dark lead lines between cells; beat fires warm flash + Shatter scatters seeds then eases them home for kaleidoscope-click reorganisation; offscreen pixel buffer at ¼ res (⅛ mobile); sliders: Cells (10–80), Glow (light intensity), Shatter (beat scatter)
-│   ├── physarum.ts            # Physarum slime mold: N autonomous agents (500–4000) sense a diffusing Float32Array trail map and steer toward the densest nearby trail; deposit, 3×3 box-blur diffuse, decay (ping-pong) each frame; beat scatters headings + hue jump; transients scatter central agents; overall energy drives step speed + deposit strength; offscreen pixel buffer at ¼ res (⅙ mobile); sliders: Agents (500–4000), Sensor (10°–75°), Decay (0.005–0.05/frame)
 │   ├── grayscott.ts           # Gray-Scott: continuous A/B reaction-diffusion chemical simulation; Du=1.0/Dv=0.5 diffusion with per-cell feed/kill kinetics; ping-pong Float32Array buffers; sub-bass nudges feed rate, brilliance nudges kill rate, transients inject random activator seeds, beats inject central blob + hue jump; B concentration → HSB color; offscreen pixel buffer at ¼ res (⅙ mobile); sliders: Feed (F ∈ 0.010–0.095), Kill (K ∈ 0.040–0.075), Speed (steps/frame 1–6)
 │   ├── blobs.ts               # Blobs: audio-reactive metaball field inspired by Zachary Lieberman's "Circles, Blobs, Ripples" (Unit London, 2024); 7 metaballs (one per freq band) drift via Perlin noise, each ball's charge driven by its band's amplitude; classic 1/r² scalar field thresholded to produce organic fusion; blobs merge into one heaving mass at high amplitude and scatter as separate orbs when quiet; beat bursts all blobs radially outward; offscreen pixel buffer at ¼ res (⅙ mobile); sliders: Viscosity (fusion threshold), Drift (animation speed), Glow (edge halo intensity)
 │   ├── growth.ts              # Growth: differential growth simulation inspired by Nervous System's Floraform (2014); 7 closed curves (one per freq band) start as small circles and grow by inserting midpoint nodes on long edges; spatial-hash repulsion between all nodes causes curves to fold like coral, brain sulci, and leaf margins; amplitude drives growth speed and neon glow; beats sprout new seed organisms; 3-pass glow rendering; sliders: Growth (edge-split rate), Tension (spring stiffness), Repulsion (repulsion radius)
@@ -112,7 +113,7 @@ src/
 
 1. **Audio input** — User uploads a file, selects sample track, or uses microphone for live input (via `Tone.UserMedia`). Optionally run stem separation via `/api/separate` (Demucs).
 2. **BPM detection** — Server-side Essentia via `/api/detect-bpm`, with client-side onset/autocorrelation fallback.
-3. **Space reset** — On `audioReady`, `resetSpace()` clears asteroid/beat state for the new track. Asteroids are spawned purely on detected beats at runtime (no pre-computation).
+3. **Viz reset** — On `audioReady`, `VIZ_REGISTRY.highway.reset?.()` clears highway state for the new track. All other vizzes are reset when the user switches to them via the registry's `reset` callback.
 4. **Playback** — `audioEngine` creates Tone.js Player(s) + FFT node(s). Freq mode: 1 player. Stem mode: 5 parallel players (kick, drums, bass, vocals, other).
 5. **Render loop** (`main.ts` `p.draw`) runs at 60fps:
    - Get raw FFT → log-band amplitudes (7 bands) or per-stem amplitudes (5 stems)
@@ -145,18 +146,28 @@ Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChang
 - `initMidi()` — calls `navigator.requestMIDIAccess()`, attaches `onmidimessage` to all inputs, re-attaches on `onstatechange` (device plug/unplug), loads saved mappings from localStorage.
 - CC messages (`0xB0`): if `startMappingMode(configKey)` is active, the next CC resolves the promise and saves the mapping; otherwise the CC value is mapped `0–127 → [slider.min, slider.max]` and dispatched as an `input` event on the slider DOM element.
 - Mappings persisted under `localStorage` key `visualizer-midi-mappings`.
-- `CONFIG_TO_SLIDER` table maps every `keyof Config` to its slider DOM id (20 entries).
+- `CONFIG_TO_SLIDER` table maps every `keyof Config` to its slider DOM id.
 
 `src/midi/ui.ts` renders the overlay panel and is initialized by `initUI()` in `controller.ts`. The overlay is injected into `<body>` on first call (not present in static HTML). Styles are injected as a `<style>` tag.
 
 ### Adding a new visualization
 
-1. Create `src/visualizations/<name>.ts` exporting `draw<Name>(p: P5Instance, dt: number)` and `reset<Name>()`.
+1. Create `src/visualizations/<name>.ts` exporting `draw<Name>(p: P5Instance, dt: number)` and `reset<Name>()`. Use module-scoped state (no classes). Follow the pattern in `blobs.ts` or `grayscott.ts`.
 2. Add `'<name>'` to the `VizMode` union in `src/types/index.ts`.
-3. Export from `src/visualizations/index.ts`.
-4. Add an entry to `src/visualizations/registry.ts` — `draw`, optional `reset`/`dispose`, `key` (keyboard shortcut), and `label`. This replaces the old per-viz changes to `main.ts`, `keyboard.ts`, and `controller.ts`.
-5. Add `<option>` in `index.html` viz-selector dropdown.
-6. Add any missing p5.js methods to `src/types/globals.d.ts`.
+3. Add config keys to the `Config` interface in `src/types/index.ts` and their defaults to `DEFAULT_CONFIG` in `src/utils/constants.ts`.
+4. Add entries to `CONFIG_TO_SLIDER` in `src/midi/manager.ts`.
+5. Export `draw<Name>` and `reset<Name>` from `src/visualizations/index.ts`.
+6. Add an entry to `src/visualizations/registry.ts` — `draw`, optional `reset`/`dispose`, `key` (keyboard shortcut auto-registered from this), and `label`. Import directly from the viz file (not from `./index`) to avoid circular deps. If the viz uses Three.js, wrap with `lazyViz()`.
+7. Add `<option>` in `index.html` viz-selector dropdown.
+8. Add slider HTML in a new `<div id="<name>-controls-group" class="hidden">` in `index.html`.
+9. Add slider bindings to the `configs` array in `src/ui/sliders.ts` (inside `] as const`).
+10. In `src/ui/controller.ts`: add the controls-group ID to `ALL_CONTROL_IDS`, and add the viz to the `VIZ_CONTROLS` record (not a switch/case — it's a record lookup).
+11. If the viz requires BPM/beat sync and won't work with mic input, add it to `micHiddenVizModes` in `src/ui/controller.ts`.
+12. Add a mobile performance guard using `isMobile` from `src/utils/constants.ts` (reduce pixel buffer resolution, particle count, etc.).
+13. Update CLAUDE.md and README.md in the same commit.
+14. Add any missing p5.js methods to `src/types/globals.d.ts`.
+
+Note: keyboard shortcuts are auto-registered from `VIZ_REGISTRY` — do not add them manually to `keyboard.ts`.
 
 ### External libraries
 
