@@ -322,16 +322,7 @@
           <option value="voronoi">Stained Glass</option>
           <option value="blobs">Blobs</option>
           <option value="grayscott">Gray-Scott</option>
-          <option value="growth">Growth</option>
-          <option value="pixelsort">Pixel Sort</option>
-          <option value="echoes">Echoes</option>
           <option value="physarum">Physarum</option>
-          <option value="optical">Op-Art</option>
-          <option value="geodesic">Geodesic</option>
-          <option value="ribbons">Ribbons</option>
-          <option value="infinitynet">Infinity Net</option>
-          <option value="zengarden">Zen Garden</option>
-          <option value="arabesque">Arabesque</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1471,185 +1462,17 @@
           </div>
         </div>
 
-        <div id="growth-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="growth-speed">Growth</label>
-            <input
-              type="range"
-              id="growth-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Growth rate — how quickly curves acquire new nodes and grow in complexity"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="growth-tension">Tension</label>
-            <input
-              type="range"
-              id="growth-tension"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Spring stiffness — high tension produces tight, compact folds; low tension lets curves spread loosely"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="growth-repulsion">Repulsion</label>
-            <input
-              type="range"
-              id="growth-repulsion"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Repulsion radius — high values push curves far apart; low values allow dense overlapping"
-            />
-          </div>
-        </div>
-
-        <div id="pixelsort-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="pixelsort-threshold">Threshold</label>
-            <input
-              type="range"
-              id="pixelsort-threshold"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.45"
-              aria-label="Sort threshold — luminance level above which pixels enter a sorted run; low = maximally glitchy, high = subtle shimmer"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="pixelsort-span">Span</label>
-            <input
-              type="range"
-              id="pixelsort-span"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Maximum sorted run length — short = tight isolated bands, long = sweeping full-column streaks"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="pixelsort-hue">Hue</label>
-            <input
-              type="range"
-              id="pixelsort-hue"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0"
-              aria-label="Palette rotation — shifts all 7 frequency-band hue zones around the colour wheel"
-            />
-          </div>
-        </div>
-
-        <div id="echoes-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="echoes-depth">Depth</label>
-            <input
-              type="range"
-              id="echoes-depth"
-              min="20"
-              max="150"
-              step="1"
-              value="60"
-              aria-label="Ring history depth — number of past audio frames shown as concentric rings; low = tight core, high = full spiral bloom"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="echoes-twist">Twist</label>
-            <input
-              type="range"
-              id="echoes-twist"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.2"
-              aria-label="Rotation per ring — 0 = concentric mandala rings, 1 = tight double-helix spiral"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="echoes-scale">Scale</label>
-            <input
-              type="range"
-              id="echoes-scale"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.6"
-              aria-label="Amplitude-to-radius scale — 0 = flat perfect circles, 1 = dramatic frequency spikes"
-            />
-          </div>
-        </div>
-
-        <div id="optical-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="optical-grid">Grid</label>
-            <input
-              type="range"
-              id="optical-grid"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Grid density — low = sparse large circles (coarse Vasarely effect), high = dense small circles (fine shimmer)"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="optical-bulge">Bulge</label>
-            <input
-              type="range"
-              id="optical-bulge"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.6"
-              aria-label="Distortion amplitude — low = subtle breathing, high = extreme warp with circles vanishing at troughs"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="optical-color">Color</label>
-            <input
-              type="range"
-              id="optical-color"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Colour mode — 0 = classic black and white (Vasarely monochrome), 1 = full chromatic HSB palette"
-            />
-          </div>
-        </div>
-
         <div id="physarum-controls-group" class="hidden">
           <div class="slider-group">
             <label for="physarum-agents">Agents</label>
             <input
               type="range"
               id="physarum-agents"
-              min="100"
-              max="3000"
-              step="100"
-              value="1500"
-              aria-label="Number of slime-mold agents — more agents = denser, faster-forming network; capped at 600 on mobile"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="physarum-evaporation">Evaporation</label>
-            <input
-              type="range"
-              id="physarum-evaporation"
               min="0"
               max="1"
               step="0.01"
-              value="0.65"
-              aria-label="Trail persistence — low = trails fade quickly leaving thin gossamer paths, high = trails linger forming dense glowing highways"
+              value="0.4"
+              aria-label="Agent count 500–4000 — low for sparse wandering threads, high for dense interlocking networks"
             />
           </div>
           <div class="slider-group">
@@ -1657,206 +1480,23 @@
             <input
               type="range"
               id="physarum-sensor"
-              min="5"
-              max="75"
-              step="1"
-              value="30"
-              aria-label="Sensor angle in degrees — narrow = agents follow existing highways (few, thick lanes), wide = agents branch freely (dense complex web)"
-            />
-          </div>
-        </div>
-
-        <div id="geodesic-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="geodesic-shells">Shells</label>
-            <input
-              type="range"
-              id="geodesic-shells"
-              min="1"
-              max="5"
-              step="1"
-              value="3"
-              aria-label="Number of nested wireframe spheres — 1 = single violet crystal core, 5 = full nested iridescent lattice"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="geodesic-spin">Spin</label>
-            <input
-              type="range"
-              id="geodesic-spin"
-              min="0"
-              max="2"
-              step="0.05"
-              value="1"
-              aria-label="Rotation speed multiplier — 0 = near-still meditative drift, 2 = fast energetic spin"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="geodesic-glow">Glow</label>
-            <input
-              type="range"
-              id="geodesic-glow"
-              min="0.5"
-              max="3"
-              step="0.1"
-              value="1.5"
-              aria-label="Neon glow intensity — low = clean crisp wireframe lines, high = intense radiant bloom halos"
-            />
-          </div>
-        </div>
-
-        <div id="ribbons-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="ribbons-count">Ribbons</label>
-            <input
-              type="range"
-              id="ribbons-count"
-              min="2"
-              max="12"
-              step="1"
-              value="7"
-              aria-label="Number of ribbon strands — 2 = wide bold pair, 12 = dense interwoven curtain"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="ribbons-wave">Wave</label>
-            <input
-              type="range"
-              id="ribbons-wave"
-              min="0.2"
-              max="4"
-              step="0.1"
-              value="1"
-              aria-label="Oscillation density — low = gentle sweeping curves, high = tight rapid standing waves"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="ribbons-shimmer">Shimmer</label>
-            <input
-              type="range"
-              id="ribbons-shimmer"
               min="0"
               max="1"
               step="0.01"
-              value="0.5"
-              aria-label="Iridescent colour-shift intensity — 0 = solid band colour, 1 = full rainbow shimmer along each strand"
-            />
-          </div>
-        </div>
-
-        <div id="infinitynet-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="infinitynet-scale">Scale</label>
-            <input
-              type="range"
-              id="infinitynet-scale"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.3"
-              aria-label="Arc spacing — 0 = dense field of tiny arcs, 1 = sparse grid of larger arcs"
+              value="0.45"
+              aria-label="Sensor angle 10°–75° — narrow for tight braided veins, wide for branching coral growth"
             />
           </div>
           <div class="slider-group">
-            <label for="infinitynet-breathe">Breathe</label>
+            <label for="physarum-decay">Decay</label>
             <input
               type="range"
-              id="infinitynet-breathe"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.7"
-              aria-label="Amplitude swell — 0 = arcs stay static, 1 = arcs fully bloom and collapse with audio energy"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="infinitynet-palette">Palette</label>
-            <input
-              type="range"
-              id="infinitynet-palette"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0"
-              aria-label="Colour palette — 0 = Kusama monochrome white-on-black, 1 = full chromatic per frequency band"
-            />
-          </div>
-        </div>
-
-        <div id="zengarden-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="zengarden-lines">Lines</label>
-            <input
-              type="range"
-              id="zengarden-lines"
+              id="physarum-decay"
               min="0"
               max="1"
               step="0.01"
               value="0.4"
-              aria-label="Rake-line density — 0 = 10 widely spaced lines, 1 = 60 fine tines"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="zengarden-depth">Depth</label>
-            <input
-              type="range"
-              id="zengarden-depth"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Wave amplitude — 0 = nearly flat sand, 1 = deep rolling waves"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="zengarden-rocks">Rocks</label>
-            <input
-              type="range"
-              id="zengarden-rocks"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.33"
-              aria-label="Stone formations — 0 = empty garden, 1 = six stones"
-            />
-          </div>
-        </div>
-
-        <div id="arabesque-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="arabesque-steps">Steps</label>
-            <input
-              type="range"
-              id="arabesque-steps"
-              min="20"
-              max="200"
-              step="1"
-              value="80"
-              aria-label="Harmonic step count — 20 = angular facets, 200 = smooth arabesque curves"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="arabesque-speed">Speed</label>
-            <input
-              type="range"
-              id="arabesque-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Phase rotation rate — 0 = near-static, 1 = rapid morphing"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="arabesque-trail">Trail</label>
-            <input
-              type="range"
-              id="arabesque-trail"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.65"
-              aria-label="Trail persistence — 0 = instant fade, 1 = long-lasting layered history"
+              aria-label="Trail decay rate — slow for persistent glowing networks, fast for ephemeral wisps"
             />
           </div>
         </div>

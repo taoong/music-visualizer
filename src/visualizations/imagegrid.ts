@@ -13,6 +13,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
+import { isMobile } from '../utils/constants';
 import { getUserImageUrl } from './userImage';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -78,9 +79,9 @@ function setup(): void {
   document.body.appendChild(threeCanvas);
 
   // Renderer
-  renderer = new THREE.WebGLRenderer({ canvas: threeCanvas, antialias: true, alpha: true });
+  renderer = new THREE.WebGLRenderer({ canvas: threeCanvas, antialias: !isMobile, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 

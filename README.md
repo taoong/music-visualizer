@@ -116,6 +116,8 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `~` | Growth visualization |
 | `@` | Pixel Sort visualization |
 | `#` | Echoes visualization |
+| `$` | Physarum visualization |
+| `%` | Op-Art visualization |
 | `^` | Geodesic visualization |
 | `&` | Ribbons visualization |
 | `*` | Infinity Net visualization |

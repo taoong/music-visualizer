@@ -76,7 +76,6 @@ export function drawOptical(p: P5Instance, dt: number): void {
 
   const halfW = w * 0.5;
   const halfH = h * 0.5;
-  const maxR = Math.sqrt(halfW * halfW + halfH * halfH);
   const shockBandPx = cellR * 3 + 30;
 
   // ── Draw grid ──────────────────────────────────────────────────────────────

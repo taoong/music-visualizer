@@ -10,6 +10,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { store } from '../state/store';
 import { getBandAverages } from './helpers';
 import { getUserImageUrl } from './userImage';
+import { isMobile } from '../utils/constants';
 
 // ── Module state ──────────────────────────────────────────────────────────────
 
@@ -96,9 +97,9 @@ function setup(): void {
   document.body.appendChild(threeCanvas);
 
   // Renderer
-  renderer = new THREE.WebGLRenderer({ canvas: threeCanvas, antialias: true, alpha: true });
+  renderer = new THREE.WebGLRenderer({ canvas: threeCanvas, antialias: !isMobile, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
