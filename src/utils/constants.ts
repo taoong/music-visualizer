@@ -329,6 +329,10 @@ export const DEFAULT_CONFIG = {
   arabesqueSteps: 80,
   arabesqueSpeed: 0.4,
   arabesqueTrail: 0.65,
+  // Murmuration-specific
+  murmuBirds: 800,
+  murmuCohesion: 0.5,
+  murmuTrail: 0.6,
 };
 
 // FFT and decay constants

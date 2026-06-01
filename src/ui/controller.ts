@@ -95,6 +95,7 @@ const ALL_CONTROL_IDS = [
   'infinitynet-controls-group',
   'zengarden-controls-group',
   'arabesque-controls-group',
+  'murmuration-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -152,6 +153,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   infinitynet:   { show: ['infinitynet-controls-group'] },
   zengarden:     { show: ['zengarden-controls-group'] },
   arabesque:     { show: ['arabesque-controls-group'] },
+  murmuration:   { show: ['murmuration-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

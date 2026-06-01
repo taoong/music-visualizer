@@ -137,6 +137,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   arabesqueSteps: 'arabesque-steps',
   arabesqueSpeed: 'arabesque-speed',
   arabesqueTrail: 'arabesque-trail',
+  murmuBirds: 'murmu-birds',
+  murmuCohesion: 'murmu-cohesion',
+  murmuTrail: 'murmu-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -190,6 +190,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'arabesque-steps', key: 'arabesqueSteps' },
     { id: 'arabesque-speed', key: 'arabesqueSpeed' },
     { id: 'arabesque-trail', key: 'arabesqueTrail' },
+    { id: 'murmu-birds', key: 'murmuBirds' },
+    { id: 'murmu-cohesion', key: 'murmuCohesion' },
+    { id: 'murmu-trail', key: 'murmuTrail' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -54,4 +54,5 @@ export { drawRibbons, resetRibbons } from './ribbons';
 export { drawInfinityNet, resetInfinityNet } from './infinitynet';
 export { drawZengarden, resetZengarden } from './zengarden';
 export { drawArabesque, resetArabesque } from './arabesque';
+export { drawMurmuration, resetMurmuration } from './murmuration';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
