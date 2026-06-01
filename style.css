@@ -539,6 +539,57 @@ body {
   opacity: 0.3;
 }
 
+/* Volume control in splash status bar */
+.term-vol-sep {
+  margin-left: auto;
+}
+
+.term-vol-label {
+  flex-shrink: 0;
+  letter-spacing: 0.08em;
+}
+
+.term-vol-slider {
+  width: 72px;
+  flex-shrink: 0;
+  height: 2px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(
+    to right,
+    #c49428 calc(var(--val, 80) * 1%),
+    #2a2518 calc(var(--val, 80) * 1%)
+  );
+  border-radius: 1px;
+  cursor: pointer;
+  outline: none;
+}
+
+.term-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffd866;
+  box-shadow: 0 0 6px rgba(255, 216, 102, 0.5);
+  cursor: pointer;
+}
+
+.term-vol-slider::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 50%;
+  background: #ffd866;
+  box-shadow: 0 0 6px rgba(255, 216, 102, 0.5);
+  cursor: pointer;
+}
+
+.term-vol-slider:focus-visible {
+  outline: 1px solid rgba(255, 216, 102, 0.4);
+  outline-offset: 3px;
+}
+
 
 /* ── Image Controls (Playback Bar) ─────────────────────── */
 #image-group {

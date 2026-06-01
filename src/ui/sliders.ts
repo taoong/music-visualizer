@@ -7,17 +7,34 @@ import { BANDS } from '../utils/constants';
 
 export function bindVolumeControl(): () => void {
   const volumeSlider = document.getElementById('master-volume') as HTMLInputElement | null;
+  const splashSlider = document.getElementById('splash-volume') as HTMLInputElement | null;
 
-  if (!volumeSlider) return () => {};
-
-  const handler = () => {
-    const value = parseFloat(volumeSlider.value);
+  function applyVolume(value: number): void {
     store.updateConfig('masterVolume', value);
     audioEngine.setVolume(value);
-  };
+    // Keep both sliders in sync
+    if (volumeSlider) volumeSlider.value = String(value);
+    if (splashSlider) {
+      splashSlider.value = String(value);
+      splashSlider.style.setProperty('--val', String(Math.round(value * 100)));
+    }
+  }
 
-  volumeSlider.addEventListener('input', handler);
-  return () => volumeSlider.removeEventListener('input', handler);
+  // Set initial fill position on the splash slider
+  if (splashSlider) {
+    splashSlider.style.setProperty('--val', String(Math.round(parseFloat(splashSlider.value) * 100)));
+  }
+
+  const handlers: (() => void)[] = [];
+
+  for (const slider of [volumeSlider, splashSlider]) {
+    if (!slider) continue;
+    const handler = () => applyVolume(parseFloat(slider.value));
+    slider.addEventListener('input', handler);
+    handlers.push(() => slider.removeEventListener('input', handler));
+  }
+
+  return () => handlers.forEach(fn => fn());
 }
 
 export function bindSensitivitySliders(): () => void {
