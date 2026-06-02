@@ -345,6 +345,7 @@
           <option value="zengarden">Zen Garden</option>
           <option value="arabesque">Arabesque</option>
           <option value="murmuration">Murmuration</option>
+          <option value="facets">Facets</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1909,6 +1910,45 @@
               step="0.01"
               value="0.6"
               aria-label="Motion trail persistence — 0 = instant fade, 1 = long glowing history"
+            />
+          </div>
+        </div>
+
+        <div id="facets-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="facets-density">Density</label>
+            <input
+              type="range"
+              id="facets-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Mesh resolution — 0 = few large gem facets, 1 = many fine facets"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="facets-shimmer">Shimmer</label>
+            <input
+              type="range"
+              id="facets-shimmer"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Vertex displacement — 0 = rigid crystal, 1 = wildly deforming surface"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="facets-glow">Glow</label>
+            <input
+              type="range"
+              id="facets-glow"
+              min="0"
+              max="1.5"
+              step="0.01"
+              value="0.8"
+              aria-label="Wireframe edge brightness — 0 = no edges, 1.5 = blazing neon lines"
             />
           </div>
         </div>

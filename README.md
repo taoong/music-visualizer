@@ -89,6 +89,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `*` | Infinity Net | Dense hex-offset grid of semicircular arcs inspired by Yayoi Kusama's "Infinity Net" paintings (1958–ongoing); 7 concentric radial zones map to frequency bands (sub-bass at centre → brilliance at edge); amplitude pulses arc size; beat fires an expanding ripple ring; Palette slider morphs from Kusama's iconic white-on-black monochrome to full chromatic per-band colour |
 | `_` | Zen Garden | Karesansui (枯山水) dry-rock-garden: rake lines flow across a warm sandy canvas, curving around stone formations; 7 frequency bands each govern a horizontal zone of the garden (sub-bass=deep rolling waves, brilliance=fine ripples); beat triggers a sudden re-raking phase-jump event; inspired by the Ryōan-ji temple garden in Kyoto (c. 1500) and Tokujin Yoshioka's sand installations |
 | `!` | Arabesque | 7 arabesque petals traced via John Whitney Sr.'s differential motion formula (r[k] = R·|sin(kπ/N)| at angle k·φ), phase-offset by 2π/7 for 7-fold symmetry; the trail buffer accumulates layered Islamic-geometric forms that bloom and transform with the music; beat snaps the phase angle and shifts the hue palette; inspired by John Whitney Sr., "Arabesque" (1975, programmed by Larry Cuba) |
+| `+` | Facets | Jittered triangular mesh spanning the full canvas; each facet's hue maps to one of 7 frequency bands (amethyst→sapphire→aquamarine→emerald→topaz→amber→ruby, left to right); two orbiting virtual light sources sweep caustic highlights across the surface; Perlin noise continuously undulates vertices; audio amplitude brightens each band's facets from dark jewel-tone to blazing; beat bursts all vertices radially outward and flashes the surface blue-white; inspired by Quayola "Strata" series (2010–) |
 
 ## Keyboard Shortcuts
 
@@ -123,6 +124,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `*` | Infinity Net visualization |
 | `_` | Zen Garden visualization |
 | `!` | Arabesque visualization |
+| `+` | Facets visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

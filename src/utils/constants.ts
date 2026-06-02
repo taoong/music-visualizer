@@ -333,6 +333,10 @@ export const DEFAULT_CONFIG = {
   murmuBirds: 800,
   murmuCohesion: 0.5,
   murmuTrail: 0.6,
+  // Facets-specific
+  facetsDensity: 0.5,
+  facetsShimmer: 0.45,
+  facetsGlow: 0.8,
 };
 
 // FFT and decay constants

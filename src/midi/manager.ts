@@ -140,6 +140,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   murmuBirds: 'murmu-birds',
   murmuCohesion: 'murmu-cohesion',
   murmuTrail: 'murmu-trail',
+  facetsDensity: 'facets-density',
+  facetsShimmer: 'facets-shimmer',
+  facetsGlow: 'facets-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

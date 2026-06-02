@@ -193,6 +193,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'murmu-birds', key: 'murmuBirds' },
     { id: 'murmu-cohesion', key: 'murmuCohesion' },
     { id: 'murmu-trail', key: 'murmuTrail' },
+    { id: 'facets-density', key: 'facetsDensity' },
+    { id: 'facets-shimmer', key: 'facetsShimmer' },
+    { id: 'facets-glow', key: 'facetsGlow' },
   ] as const;
 
   for (const { id, key } of configs) {
