@@ -196,6 +196,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'facets-density', key: 'facetsDensity' },
     { id: 'facets-shimmer', key: 'facetsShimmer' },
     { id: 'facets-glow', key: 'facetsGlow' },
+    { id: 'halftone-grid', key: 'halftoneGrid' },
+    { id: 'halftone-spread', key: 'halftoneSpread' },
+    { id: 'halftone-palette', key: 'halftonePalette' },
   ] as const;
 
   for (const { id, key } of configs) {

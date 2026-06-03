@@ -337,6 +337,10 @@ export const DEFAULT_CONFIG = {
   facetsDensity: 0.5,
   facetsShimmer: 0.45,
   facetsGlow: 0.8,
+  // Halftone-specific
+  halftoneGrid: 0.4,
+  halftoneSpread: 0.7,
+  halftonePalette: 0.0,
 };
 
 // FFT and decay constants

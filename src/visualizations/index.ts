@@ -56,4 +56,5 @@ export { drawZengarden, resetZengarden } from './zengarden';
 export { drawArabesque, resetArabesque } from './arabesque';
 export { drawMurmuration, resetMurmuration } from './murmuration';
 export { drawFacets, resetFacets } from './facets';
+export { drawHalftone, resetHalftone } from './halftone';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';

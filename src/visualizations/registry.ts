@@ -54,6 +54,7 @@ import { drawZengarden, resetZengarden } from './zengarden';
 import { drawArabesque, resetArabesque } from './arabesque';
 import { drawMurmuration, resetMurmuration } from './murmuration';
 import { drawFacets, resetFacets } from './facets';
+import { drawHalftone, resetHalftone } from './halftone';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -147,4 +148,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   arabesque:     { draw: drawArabesque,      reset: resetArabesque,     key: '!',  label: 'Arabesque' },
   murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: 'm',  label: 'Murmuration' },
   facets:        { draw: drawFacets,         reset: resetFacets,        key: '+',  label: 'Facets' },
+  halftone:      { draw: drawHalftone,       reset: resetHalftone,      key: 'f',  label: 'Halftone' },
 };

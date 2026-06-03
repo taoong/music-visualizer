@@ -25,7 +25,7 @@ export function initKeyboardShortcuts(): () => void {
     defineShortcut(entry.key, () => setVizMode(mode), `${entry.label} visualization`);
   }
   defineShortcut('m', toggleMute, 'Mute/Unmute');
-  defineShortcut('f', toggleFullscreen, 'Toggle fullscreen');
+  defineShortcut('F', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');
   defineShortcut('r', randomizeSettings, 'Randomize settings');
   defineShortcut('i', toggleImage, 'Toggle image upload/remove');

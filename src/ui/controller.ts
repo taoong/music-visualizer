@@ -97,6 +97,7 @@ const ALL_CONTROL_IDS = [
   'arabesque-controls-group',
   'murmuration-controls-group',
   'facets-controls-group',
+  'halftone-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -156,6 +157,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   arabesque:     { show: ['arabesque-controls-group'] },
   murmuration:   { show: ['murmuration-controls-group'] },
   facets:        { show: ['facets-controls-group'] },
+  halftone:      { show: ['halftone-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

@@ -143,6 +143,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   facetsDensity: 'facets-density',
   facetsShimmer: 'facets-shimmer',
   facetsGlow: 'facets-glow',
+  halftoneGrid: 'halftone-grid',
+  halftoneSpread: 'halftone-spread',
+  halftonePalette: 'halftone-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
