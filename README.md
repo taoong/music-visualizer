@@ -62,8 +62,8 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `4` | Balls | Physics-based bouncing balls with kick boost |
 | `5` | Lasers | Concert laser light show with beat-synced beams |
 | `6` | Text | Beat-synced text in 7 cycling visual patterns |
-| `7` | Space | Third-person spaceship navigating an asteroid field; asteroids fly toward the viewer timed to song events |
-| `8` | Runners | Infinite side-scrolling marathon of stick-figure runners at 3 depth layers; beat fires an instant 7× speed burst for 180 ms |
+| `7` | Highway | Audio-reactive highway drive; perspective road with beat-synced lane markings and headlight flares; freq bands drive scenery and road color; Three.js WebGL overlay |
+| `8` | Liquid Metal | Molten chrome icosphere; Three.js PBR with IBL environment; amplitude deforms mesh vertices; GlitchPass fires on transients |
 | `N` | Neon Grid | Three.js synthwave terrain with audio-driven height displacement and bloom |
 | `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |
 | `C` | Color Map | Pixel-level audio-reactive color modulation; user image (or rainbow gradient) with hue-mapped frequency band boosting |
@@ -89,8 +89,9 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `*` | Infinity Net | Dense hex-offset grid of semicircular arcs inspired by Yayoi Kusama's "Infinity Net" paintings (1958–ongoing); 7 concentric radial zones map to frequency bands (sub-bass at centre → brilliance at edge); amplitude pulses arc size; beat fires an expanding ripple ring; Palette slider morphs from Kusama's iconic white-on-black monochrome to full chromatic per-band colour |
 | `_` | Zen Garden | Karesansui (枯山水) dry-rock-garden: rake lines flow across a warm sandy canvas, curving around stone formations; 7 frequency bands each govern a horizontal zone of the garden (sub-bass=deep rolling waves, brilliance=fine ripples); beat triggers a sudden re-raking phase-jump event; inspired by the Ryōan-ji temple garden in Kyoto (c. 1500) and Tokujin Yoshioka's sand installations |
 | `!` | Arabesque | 7 arabesque petals traced via John Whitney Sr.'s differential motion formula (r[k] = R·|sin(kπ/N)| at angle k·φ), phase-offset by 2π/7 for 7-fold symmetry; the trail buffer accumulates layered Islamic-geometric forms that bloom and transform with the music; beat snaps the phase angle and shifts the hue palette; inspired by John Whitney Sr., "Arabesque" (1975, programmed by Larry Cuba) |
+| `\|` | Murmuration | Boid flocking simulation; thousands of birds exhibit emergent separation/alignment/cohesion; each bird colored by velocity direction producing electric rainbow swirls; persistent trail buffer; beat triggers predator-event scatter + hue jump; inspired by Universal Everything "Future Self" (2012) |
 | `+` | Facets | Jittered triangular mesh spanning the full canvas; each facet's hue maps to one of 7 frequency bands (amethyst→sapphire→aquamarine→emerald→topaz→amber→ruby, left to right); two orbiting virtual light sources sweep caustic highlights across the surface; Perlin noise continuously undulates vertices; audio amplitude brightens each band's facets from dark jewel-tone to blazing; beat bursts all vertices radially outward and flashes the surface blue-white; inspired by Quayola "Strata" series (2010–) |
-| `f` | Halftone | Three CMY dot-screens at 15°/45°/75° composited via MULTIPLY blend on white, replicating offset-press colour mixing (C+M→indigo, M+Y→scarlet, C+Y→olive); each dot's radius is driven by the frequency band whose horizontal screen-zone it falls in, so bass swells the left of the canvas and treble sparkles the right; beat fires an expanding ring-pulse of swollen dots from canvas centre; inspired by Roy Lichtenstein "Drowning Girl" (MoMA, 1963) and the Ben-Day dot printing process |
+| `<` | Halftone | Three CMY dot-screens at 15°/45°/75° composited via MULTIPLY blend on white, replicating offset-press colour mixing (C+M→indigo, M+Y→scarlet, C+Y→olive); each dot's radius is driven by the frequency band whose horizontal screen-zone it falls in, so bass swells the left of the canvas and treble sparkles the right; beat fires an expanding ring-pulse of swollen dots from canvas centre; inspired by Roy Lichtenstein "Drowning Girl" (MoMA, 1963) and the Ben-Day dot printing process |
 
 ## Keyboard Shortcuts
 
@@ -127,9 +128,9 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `_` | Zen Garden visualization |
 | `!` | Arabesque visualization |
 | `+` | Facets visualization |
-| `f` | Halftone visualization |
+| `<` | Halftone visualization |
 | `M` | Mute / Unmute |
-| `Shift+F` | Toggle fullscreen |
+| `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |
 | `R` | Randomize settings |
 | `I` | Toggle image upload / remove |
