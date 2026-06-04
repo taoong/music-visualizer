@@ -91,6 +91,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `!` | Arabesque | 7 arabesque petals traced via John Whitney Sr.'s differential motion formula (r[k] = R·|sin(kπ/N)| at angle k·φ), phase-offset by 2π/7 for 7-fold symmetry; the trail buffer accumulates layered Islamic-geometric forms that bloom and transform with the music; beat snaps the phase angle and shifts the hue palette; inspired by John Whitney Sr., "Arabesque" (1975, programmed by Larry Cuba) |
 | `\|` | Murmuration | Boid flocking simulation; thousands of birds exhibit emergent separation/alignment/cohesion; each bird colored by velocity direction producing electric rainbow swirls; persistent trail buffer; beat triggers predator-event scatter + hue jump; inspired by Universal Everything "Future Self" (2012) |
 | `+` | Facets | Jittered triangular mesh spanning the full canvas; each facet's hue maps to one of 7 frequency bands (amethyst→sapphire→aquamarine→emerald→topaz→amber→ruby, left to right); two orbiting virtual light sources sweep caustic highlights across the surface; Perlin noise continuously undulates vertices; audio amplitude brightens each band's facets from dark jewel-tone to blazing; beat bursts all vertices radially outward and flashes the surface blue-white; inspired by Quayola "Strata" series (2010–) |
+| `>` | Epicycles | Fourier series harmonic visualizer; 7 nested spinning circles (one per frequency band) trace an evolving Lissajous curve; bass drives the outermost arm, brilliance makes fine interior spirals; beat fires a hue jump; inspired by 19th-century harmonograph machines |
 | `<` | Halftone | Three CMY dot-screens at 15°/45°/75° composited via MULTIPLY blend on white, replicating offset-press colour mixing (C+M→indigo, M+Y→scarlet, C+Y→olive); each dot's radius is driven by the frequency band whose horizontal screen-zone it falls in, so bass swells the left of the canvas and treble sparkles the right; beat fires an expanding ring-pulse of swollen dots from canvas centre; inspired by Roy Lichtenstein "Drowning Girl" (MoMA, 1963) and the Ben-Day dot printing process |
 
 ## Keyboard Shortcuts
@@ -128,6 +129,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `_` | Zen Garden visualization |
 | `!` | Arabesque visualization |
 | `+` | Facets visualization |
+| `>` | Epicycles visualization |
 | `<` | Halftone visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |

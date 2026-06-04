@@ -199,6 +199,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'halftone-grid', key: 'halftoneGrid' },
     { id: 'halftone-spread', key: 'halftoneSpread' },
     { id: 'halftone-palette', key: 'halftonePalette' },
+    { id: 'epicycles-cycles', key: 'epicyclesCycles' },
+    { id: 'epicycles-speed', key: 'epicyclesSpeed' },
+    { id: 'epicycles-trail', key: 'epicyclesTrail' },
   ] as const;
 
   for (const { id, key } of configs) {

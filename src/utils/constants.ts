@@ -341,6 +341,10 @@ export const DEFAULT_CONFIG = {
   halftoneGrid: 0.4,
   halftoneSpread: 0.7,
   halftonePalette: 0.0,
+  // Epicycles-specific
+  epicyclesCycles: 0.7,
+  epicyclesSpeed: 0.3,
+  epicyclesTrail: 0.5,
 };
 
 // FFT and decay constants

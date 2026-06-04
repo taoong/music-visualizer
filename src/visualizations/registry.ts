@@ -52,6 +52,7 @@ import { drawRibbons, resetRibbons } from './ribbons';
 import { drawInfinityNet, resetInfinityNet } from './infinitynet';
 import { drawZengarden, resetZengarden } from './zengarden';
 import { drawArabesque, resetArabesque } from './arabesque';
+import { drawEpicycles, resetEpicycles } from './epicycles';
 import { drawMurmuration, resetMurmuration } from './murmuration';
 import { drawFacets, resetFacets } from './facets';
 import { drawHalftone, resetHalftone } from './halftone';
@@ -149,4 +150,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: '|',  label: 'Murmuration' },
   facets:        { draw: drawFacets,         reset: resetFacets,        key: '+',  label: 'Facets' },
   halftone:      { draw: drawHalftone,       reset: resetHalftone,      key: '<',  label: 'Halftone' },
+  epicycles:     { draw: drawEpicycles,      reset: resetEpicycles,     key: '>',  label: 'Epicycles' },
 };

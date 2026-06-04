@@ -146,6 +146,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   halftoneGrid: 'halftone-grid',
   halftoneSpread: 'halftone-spread',
   halftonePalette: 'halftone-palette',
+  epicyclesCycles: 'epicycles-cycles',
+  epicyclesSpeed: 'epicycles-speed',
+  epicyclesTrail: 'epicycles-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
