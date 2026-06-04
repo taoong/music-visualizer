@@ -22,20 +22,15 @@ import { drawRippleTank, resetRippleTank } from './rippletank';
 import { drawCymatics, resetCymatics } from './cymatics';
 import { drawCloudChamber, resetCloudChamber } from './cloudchamber';
 import { drawAttractor, resetAttractor } from './attractor';
-import { drawMandala, resetMandala } from './mandala';
 import { drawStringart, resetStringart } from './stringart';
 import { drawConstellation, resetConstellation } from './constellation';
-import { drawPetals, resetPetals } from './petals';
 import { drawWaterfall, resetWaterfall } from './waterfall';
-import { drawKaleido, resetKaleido } from './kaleido';
-import { drawKaleidoscope, resetKaleidoscope } from './kaleidoscope';
 import { drawWeave, resetWeave } from './weave';
 import { drawSynthwave, resetSynthwave } from './synthwave';
 import { drawBloom, resetBloom } from './bloom';
 import { drawHive, resetHive } from './hive';
 import { drawMarbling, resetMarbling } from './marbling';
 import { drawFlowField, resetFlowField } from './flowfield';
-import { drawLissajous, resetLissajous } from './lissajous';
 import { drawTruchet, resetTruchet } from './truchet';
 import { drawTopography, resetTopography } from './topography';
 import { drawInterference, resetInterference } from './interference';
@@ -50,12 +45,9 @@ import { drawOptical, resetOptical } from './optical';
 import { drawGeodesic, resetGeodesic } from './geodesic';
 import { drawRibbons, resetRibbons } from './ribbons';
 import { drawInfinityNet, resetInfinityNet } from './infinitynet';
-import { drawZengarden, resetZengarden } from './zengarden';
 import { drawArabesque, resetArabesque } from './arabesque';
 import { drawEpicycles, resetEpicycles } from './epicycles';
 import { drawMurmuration, resetMurmuration } from './murmuration';
-import { drawFacets, resetFacets } from './facets';
-import { drawHalftone, resetHalftone } from './halftone';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -116,21 +108,15 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   cymatics:      { draw: drawCymatics,       reset: resetCymatics,      key: 'y',  label: 'Cymatics' },
   cloudchamber:  { draw: drawCloudChamber,   reset: resetCloudChamber,  key: 'd',  label: 'Cloud Chamber' },
   attractor:     { draw: drawAttractor,      reset: resetAttractor,     key: 'j',  label: 'Attractor' },
-  mandala:       { draw: drawMandala,        reset: resetMandala,       key: 'l',  label: 'Mandala' },
   stringart:     { draw: drawStringart,      reset: resetStringart,     key: 'v',  label: 'String Art' },
   constellation: { draw: drawConstellation,  reset: resetConstellation, key: 'o',  label: 'Constellation' },
-  petals:        { draw: drawPetals,         reset: resetPetals,        key: 'p',  label: 'Petals' },
   waterfall:     { draw: drawWaterfall,      reset: resetWaterfall,     key: 'e',  label: 'Waterfall' },
-  kaleido:       { draw: drawKaleido,        reset: resetKaleido,       key: 'q',  label: 'Kaleido' },
-  kaleidoscope:  { draw: drawKaleidoscope,   reset: resetKaleidoscope,  key: 'x',  label: 'Kaleidoscope' },
   weave:         { draw: drawWeave,          reset: resetWeave,         key: 'z',  label: 'Weave' },
   synthwave:     { draw: drawSynthwave,      reset: resetSynthwave,     key: "'",  label: 'Synthwave' },
   bloom:         { draw: drawBloom,          reset: resetBloom,         key: '0',  label: 'Bloom' },
-  monolith:      lazyViz(async () => { const { drawMonolith: draw, resetMonolith: reset, disposeMonolith: dispose } = await import('./monolith'); return { draw, reset, dispose }; }, '`', 'Monolith'),
   hive:          { draw: drawHive,           reset: resetHive,          key: '9',  label: 'Hive' },
   marbling:      { draw: drawMarbling,       reset: resetMarbling,      key: ';',  label: 'Marbling' },
   flowfield:     { draw: drawFlowField,      reset: resetFlowField,     key: '[',  label: 'Flow Field' },
-  lissajous:     { draw: drawLissajous,      reset: resetLissajous,     key: ']',  label: 'Lissajous' },
   truchet:       { draw: drawTruchet,        reset: resetTruchet,       key: '\\', label: 'Truchet' },
   topography:    { draw: drawTopography,     reset: resetTopography,    key: '-',  label: 'Topography' },
   interference:  { draw: drawInterference,   reset: resetInterference,  key: '=',  label: 'Interference' },
@@ -145,10 +131,7 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   geodesic:      { draw: drawGeodesic,       reset: resetGeodesic,      key: '^',  label: 'Geodesic' },
   ribbons:       { draw: drawRibbons,        reset: resetRibbons,       key: '&',  label: 'Ribbons' },
   infinitynet:   { draw: drawInfinityNet,    reset: resetInfinityNet,   key: '*',  label: 'Infinity Net' },
-  zengarden:     { draw: drawZengarden,      reset: resetZengarden,     key: '_',  label: 'Zen Garden' },
   arabesque:     { draw: drawArabesque,      reset: resetArabesque,     key: '!',  label: 'Arabesque' },
   murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: '|',  label: 'Murmuration' },
-  facets:        { draw: drawFacets,         reset: resetFacets,        key: '+',  label: 'Facets' },
-  halftone:      { draw: drawHalftone,       reset: resetHalftone,      key: '<',  label: 'Halftone' },
   epicycles:     { draw: drawEpicycles,      reset: resetEpicycles,     key: '>',  label: 'Epicycles' },
 };

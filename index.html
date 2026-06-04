@@ -313,21 +313,15 @@
           <option value="cymatics">Cymatics</option>
           <option value="cloudchamber">Cloud Chamber</option>
           <option value="attractor">Strange Attractor</option>
-          <option value="mandala">Mandala</option>
           <option value="stringart">String Art</option>
           <option value="constellation">Constellation</option>
-          <option value="petals">Petal Bloom</option>
           <option value="waterfall">Waterfall</option>
-          <option value="kaleido">Kaleido</option>
-          <option value="kaleidoscope">Kaleidoscope</option>
           <option value="weave">Weave</option>
           <option value="synthwave">Synthwave</option>
           <option value="bloom">Bloom</option>
-          <option value="monolith">Monolith</option>
           <option value="hive">Hive</option>
           <option value="marbling">Marbling</option>
           <option value="flowfield">Flow Field</option>
-          <option value="lissajous">Lissajous</option>
           <option value="truchet">Truchet</option>
           <option value="topography">Topography</option>
           <option value="interference">Interference</option>
@@ -342,11 +336,8 @@
           <option value="geodesic">Geodesic</option>
           <option value="ribbons">Ribbons</option>
           <option value="infinitynet">Infinity Net</option>
-          <option value="zengarden">Zen Garden</option>
           <option value="arabesque">Arabesque</option>
           <option value="murmuration">Murmuration</option>
-          <option value="facets">Facets</option>
-          <option value="halftone">Halftone</option>
           <option value="epicycles">Epicycles</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
@@ -670,80 +661,6 @@
             />
           </div>
         </div>
-        <div id="mandala-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="mandala-beat-freq">Beat Frequency</label>
-            <input
-              type="range"
-              id="mandala-beat-freq"
-              min="1"
-              max="4"
-              step="1"
-              value="1"
-              aria-label="Trigger beat effect every Nth beat"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="mandala-grid-speed">Grid Speed</label>
-            <input
-              type="range"
-              id="mandala-grid-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.3"
-              aria-label="Grid rotation speed"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="mandala-hex-speed">Hexagon Speed</label>
-            <input
-              type="range"
-              id="mandala-hex-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Hexagon rotation speed"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="mandala-square-speed">Square Speed</label>
-            <input
-              type="range"
-              id="mandala-square-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Square rotation speed"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="mandala-tri-speed">Triangle Speed</label>
-            <input
-              type="range"
-              id="mandala-tri-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.6"
-              aria-label="Triangle rotation speed"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="mandala-circle-speed">Circle Speed</label>
-            <input
-              type="range"
-              id="mandala-circle-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Circle rotation speed"
-            />
-          </div>
-        </div>
         <div id="stringart-controls-group" class="hidden">
           <div class="slider-group">
             <label for="stringart-pins">Pins</label>
@@ -820,44 +737,6 @@
             />
           </div>
         </div>
-        <div id="petals-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="petals-petal-count">Petal Count</label>
-            <input
-              type="range"
-              id="petals-petal-count"
-              min="3"
-              max="16"
-              step="1"
-              value="6"
-              aria-label="Number of petals per ring"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="petals-bloom-scale">Bloom Scale</label>
-            <input
-              type="range"
-              id="petals-bloom-scale"
-              min="0.1"
-              max="2"
-              step="0.01"
-              value="0.8"
-              aria-label="How much petals grow with audio amplitude"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="petals-spin-speed">Spin Speed</label>
-            <input
-              type="range"
-              id="petals-spin-speed"
-              min="0"
-              max="3"
-              step="0.01"
-              value="0.5"
-              aria-label="Rotation speed of the petal rings"
-            />
-          </div>
-        </div>
         <div id="waterfall-controls-group" class="hidden">
           <div class="slider-group">
             <label for="waterfall-scroll-speed">Scroll Speed</label>
@@ -893,82 +772,6 @@
               step="0.01"
               value="0.7"
               aria-label="Base hue of the color palette"
-            />
-          </div>
-        </div>
-        <div id="kaleido-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="kaleido-segments">Segments</label>
-            <input
-              type="range"
-              id="kaleido-segments"
-              min="2"
-              max="12"
-              step="1"
-              value="6"
-              aria-label="Number of mirror-symmetry segments (2=bilateral, 6=hexagonal, 12=complex)"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="kaleido-trail">Trail</label>
-            <input
-              type="range"
-              id="kaleido-trail"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Motion trail persistence (0=instant clear, 1=long layered mandala)"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="kaleido-smear">Organic</label>
-            <input
-              type="range"
-              id="kaleido-smear"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.25"
-              aria-label="Organic harmonic distortion (0=crystal symmetry, 1=fluid chaos)"
-            />
-          </div>
-        </div>
-        <div id="kaleidoscope-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="kaleidoscope-segments">Segments</label>
-            <input
-              type="range"
-              id="kaleidoscope-segments"
-              min="3"
-              max="12"
-              step="1"
-              value="6"
-              aria-label="Number of symmetry wedges (visual fold = 2×)"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="kaleidoscope-complexity">Complexity</label>
-            <input
-              type="range"
-              id="kaleidoscope-complexity"
-              min="1"
-              max="4"
-              step="1"
-              value="2"
-              aria-label="Harmonic layers per wedge"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="kaleidoscope-spin-speed">Spin Speed</label>
-            <input
-              type="range"
-              id="kaleidoscope-spin-speed"
-              min="0"
-              max="3"
-              step="0.01"
-              value="0.5"
-              aria-label="Rotation speed of the kaleidoscope pattern"
             />
           </div>
         </div>
@@ -1211,44 +1014,6 @@
               step="0.01"
               value="0.5"
               aria-label="Ribbon stroke width — hairline threads to broad brushstrokes"
-            />
-          </div>
-        </div>
-        <div id="lissajous-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="lissajous-curves">Curves</label>
-            <input
-              type="range"
-              id="lissajous-curves"
-              min="1"
-              max="7"
-              step="1"
-              value="5"
-              aria-label="Number of Lissajous curves shown (1 = ellipse only, 7 = all shapes)"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="lissajous-glow">Glow</label>
-            <input
-              type="range"
-              id="lissajous-glow"
-              min="0.1"
-              max="3"
-              step="0.05"
-              value="1.2"
-              aria-label="Phosphor glow halo intensity"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="lissajous-drift">Drift</label>
-            <input
-              type="range"
-              id="lissajous-drift"
-              min="0"
-              max="2"
-              step="0.01"
-              value="0.4"
-              aria-label="Phase drift speed — slow morphing to fast spin"
             />
           </div>
         </div>
@@ -1799,44 +1564,6 @@
           </div>
         </div>
 
-        <div id="zengarden-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="zengarden-lines">Lines</label>
-            <input
-              type="range"
-              id="zengarden-lines"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Rake-line density — 0 = 10 widely spaced lines, 1 = 60 fine tines"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="zengarden-depth">Depth</label>
-            <input
-              type="range"
-              id="zengarden-depth"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Wave amplitude — 0 = nearly flat sand, 1 = deep rolling waves"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="zengarden-rocks">Rocks</label>
-            <input
-              type="range"
-              id="zengarden-rocks"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.33"
-              aria-label="Stone formations — 0 = empty garden, 1 = six stones"
-            />
-          </div>
-        </div>
 
         <div id="arabesque-controls-group" class="hidden">
           <div class="slider-group">
@@ -1916,83 +1643,7 @@
           </div>
         </div>
 
-        <div id="facets-controls-group" class="controls-group hidden">
-          <div class="slider-group">
-            <label for="facets-density">Density</label>
-            <input
-              type="range"
-              id="facets-density"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Mesh resolution — 0 = few large gem facets, 1 = many fine facets"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="facets-shimmer">Shimmer</label>
-            <input
-              type="range"
-              id="facets-shimmer"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.45"
-              aria-label="Vertex displacement — 0 = rigid crystal, 1 = wildly deforming surface"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="facets-glow">Glow</label>
-            <input
-              type="range"
-              id="facets-glow"
-              min="0"
-              max="1.5"
-              step="0.01"
-              value="0.8"
-              aria-label="Wireframe edge brightness — 0 = no edges, 1.5 = blazing neon lines"
-            />
-          </div>
-        </div>
 
-        <div id="halftone-controls-group" class="controls-group hidden">
-          <div class="slider-group">
-            <label for="halftone-grid">Grid</label>
-            <input
-              type="range"
-              id="halftone-grid"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Dot grid density — 0 = coarse few large dots, 1 = fine dense dot screen"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="halftone-spread">Spread</label>
-            <input
-              type="range"
-              id="halftone-spread"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.7"
-              aria-label="Amplitude sensitivity — 0 = all dots same size, 1 = full size range with audio"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="halftone-palette">Palette</label>
-            <input
-              type="range"
-              id="halftone-palette"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0"
-              aria-label="Ink colour palette — 0 = CMYK press, 0.5 = warm sunset, 1 = day-glo pop"
-            />
-          </div>
-        </div>
 
         <div id="epicycles-controls-group" class="controls-group hidden">
           <div class="slider-group">

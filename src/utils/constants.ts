@@ -206,13 +206,6 @@ export const DEFAULT_CONFIG = {
   // Attractor-specific
   attractorChaos: 0.6,
   attractorTrailLength: 0.5,
-  // Mandala-specific
-  mandalaBeatFreq: 1,
-  mandalaGridSpeed: 0.3,
-  mandalaHexSpeed: 0.4,
-  mandalaSquareSpeed: 0.5,
-  mandalaTriSpeed: 0.6,
-  mandalaCircleSpeed: 0.5,
   // String Art-specific
   stringartPins: 100,
   stringartMultiplier: 3,
@@ -221,22 +214,10 @@ export const DEFAULT_CONFIG = {
   constellationStarCount: 0.5,
   constellationConnRange: 0.4,
   constellationDriftSpeed: 0.3,
-  // Petal Bloom-specific
-  petalsPetalCount: 6,
-  petalsBloomScale: 0.8,
-  petalsSpinSpeed: 0.5,
   // Waterfall-specific
   waterfallScrollSpeed: 0.4,
   waterfallGain: 0.125,
   waterfallHue: 0.7,
-  // Kaleido-specific
-  kaleidoSegments: 6,
-  kaleidoTrail: 0.4,
-  kaleidoSmear: 0.25,
-  // Kaleidoscope-specific
-  kaleidoscopeSegments: 6,
-  kaleidoscopeComplexity: 2,
-  kaleidoscopeSpinSpeed: 0.5,
   // Weave-specific
   weaveThreads: 12,
   weaveGlow: 1.0,
@@ -261,10 +242,6 @@ export const DEFAULT_CONFIG = {
   flowfieldTurbulence: 0.4,
   flowfieldTrail: 0.55,
   flowfieldWidth: 0.5,
-  // Lissajous-specific
-  lissajousCurves: 5,
-  lissajousGlow: 1.2,
-  lissajousDrift: 0.4,
   // Truchet-specific
   truchetGrid: 0.35,
   truchetSpeed: 0.6,
@@ -321,10 +298,6 @@ export const DEFAULT_CONFIG = {
   infinitynetScale: 0.3,
   infinitynetBreathe: 0.7,
   infinitynetPalette: 0.0,
-  // Zen Garden-specific
-  zengardenLines: 0.4,
-  zengardenDepth: 0.5,
-  zengardenRocks: 0.33,
   // Arabesque-specific
   arabesqueSteps: 80,
   arabesqueSpeed: 0.4,
@@ -333,14 +306,6 @@ export const DEFAULT_CONFIG = {
   murmuBirds: 800,
   murmuCohesion: 0.5,
   murmuTrail: 0.6,
-  // Facets-specific
-  facetsDensity: 0.5,
-  facetsShimmer: 0.45,
-  facetsGlow: 0.8,
-  // Halftone-specific
-  halftoneGrid: 0.4,
-  halftoneSpread: 0.7,
-  halftonePalette: 0.0,
   // Epicycles-specific
   epicyclesCycles: 0.7,
   epicyclesSpeed: 0.3,

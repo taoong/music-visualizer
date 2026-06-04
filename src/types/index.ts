@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems' | 'mic';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'mandala' | 'stringart' | 'constellation' | 'petals' | 'waterfall' | 'kaleido' | 'kaleidoscope' | 'weave' | 'synthwave' | 'bloom' | 'monolith' | 'hive' | 'marbling' | 'flowfield' | 'lissajous' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'optical' | 'geodesic' | 'ribbons' | 'infinitynet' | 'zengarden' | 'arabesque' | 'murmuration' | 'facets' | 'halftone' | 'epicycles';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'optical' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -78,13 +78,6 @@ export interface Config {
   // Attractor-specific
   attractorChaos: number;
   attractorTrailLength: number;
-  // Mandala-specific
-  mandalaBeatFreq: number;
-  mandalaGridSpeed: number;
-  mandalaHexSpeed: number;
-  mandalaSquareSpeed: number;
-  mandalaTriSpeed: number;
-  mandalaCircleSpeed: number;
   // String Art-specific
   stringartPins: number;
   stringartMultiplier: number;
@@ -93,22 +86,10 @@ export interface Config {
   constellationStarCount: number;
   constellationConnRange: number;
   constellationDriftSpeed: number;
-  // Petal Bloom-specific
-  petalsPetalCount: number;
-  petalsBloomScale: number;
-  petalsSpinSpeed: number;
   // Waterfall-specific
   waterfallScrollSpeed: number;
   waterfallGain: number;
   waterfallHue: number;
-  // Kaleido-specific
-  kaleidoSegments: number;
-  kaleidoTrail: number;
-  kaleidoSmear: number;
-  // Kaleidoscope-specific
-  kaleidoscopeSegments: number;
-  kaleidoscopeComplexity: number;
-  kaleidoscopeSpinSpeed: number;
   // Weave-specific
   weaveThreads: number;
   weaveGlow: number;
@@ -133,10 +114,6 @@ export interface Config {
   flowfieldTurbulence: number;
   flowfieldTrail: number;
   flowfieldWidth: number;
-  // Lissajous-specific
-  lissajousCurves: number;
-  lissajousGlow: number;
-  lissajousDrift: number;
   // Truchet-specific
   truchetGrid: number;
   truchetSpeed: number;
@@ -193,10 +170,6 @@ export interface Config {
   infinitynetScale: number;
   infinitynetBreathe: number;
   infinitynetPalette: number;
-  // Zen Garden-specific
-  zengardenLines: number;
-  zengardenDepth: number;
-  zengardenRocks: number;
   // Arabesque-specific
   arabesqueSteps: number;
   arabesqueSpeed: number;
@@ -205,14 +178,6 @@ export interface Config {
   murmuBirds: number;
   murmuCohesion: number;
   murmuTrail: number;
-  // Facets-specific
-  facetsDensity: number;
-  facetsShimmer: number;
-  facetsGlow: number;
-  // Halftone-specific
-  halftoneGrid: number;
-  halftoneSpread: number;
-  halftonePalette: number;
   // Epicycles-specific
   epicyclesCycles: number;
   epicyclesSpeed: number;
