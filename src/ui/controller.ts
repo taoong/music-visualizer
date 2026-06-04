@@ -246,6 +246,7 @@ function bindRandomizeButton(): () => void {
     const rand = (min: number, max: number) => Math.random() * (max - min) + min;
     const vizMode = store.state.vizMode;
 
+    // Randomize sensitivity sliders
     if (store.isFreqMode || store.isMicMode) {
       for (const band of BANDS) {
         setSlider(band.sliderId, rand(1.0, 3.0));
@@ -258,22 +259,29 @@ function bindRandomizeButton(): () => void {
       setSlider('sens-other', rand(1.0, 3.0));
     }
 
-    const useScale = vizMode === 'circle' || vizMode === 'spectrum';
-    const useDecay = vizMode !== 'lasers' && vizMode !== 'text' && vizMode !== 'tetris';
+    // Randomize shared display sliders based on what's visible for this viz
+    const ctrl = VIZ_CONTROLS[vizMode];
+    const shown = ctrl.show;
 
-    if (useScale) setSlider('spike-scale', rand(0.5, 2.0));
-    if (useDecay) setSlider('decay-rate', rand(0.7, 0.95));
+    if (shown.includes('scale-group')) setSlider('spike-scale', rand(0.5, 2.0));
+    if (shown.includes('decay-rate-group')) setSlider('decay-rate', rand(0.7, 0.95));
+    if (shown.includes('rotation-speed-group')) setSlider('rotation-speed', rand(0.0, 15.0));
+    if (shown.includes('intensity-group')) setSlider('viz-intensity', rand(0.5, 2.0));
+    if (shown.includes('beat-division-group')) setSlider('beat-division', Math.floor(rand(1, 5)));
 
-    if (vizMode === 'circle') {
-      setSlider('rotation-speed', rand(0.0, 15.0));
-    }
-
-    if (vizMode === 'tetris') {
-      setSlider('beat-division', Math.floor(rand(1, 5)));
-    }
-
-    if (vizMode === 'lasers' || vizMode === 'text') {
-      setSlider('viz-intensity', rand(0.5, 2.0));
+    // Randomize all viz-specific sliders using each input's own min/max range
+    for (const groupId of shown) {
+      if (['scale-group', 'decay-rate-group', 'rotation-speed-group',
+           'intensity-group', 'beat-division-group', 'text-input-group',
+           'circle-image-rotation-group'].includes(groupId)) continue;
+      const group = document.getElementById(groupId);
+      group?.querySelectorAll<HTMLInputElement>('input[type="range"]').forEach(input => {
+        const min = parseFloat(input.min);
+        const max = parseFloat(input.max);
+        const step = parseFloat(input.step) || 0.01;
+        const value = Math.round(rand(min, max) / step) * step;
+        setSlider(input.id, Math.max(min, Math.min(max, value)));
+      });
     }
   };
 

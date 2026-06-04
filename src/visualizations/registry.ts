@@ -146,7 +146,7 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   infinitynet:   { draw: drawInfinityNet,    reset: resetInfinityNet,   key: '*',  label: 'Infinity Net' },
   zengarden:     { draw: drawZengarden,      reset: resetZengarden,     key: '_',  label: 'Zen Garden' },
   arabesque:     { draw: drawArabesque,      reset: resetArabesque,     key: '!',  label: 'Arabesque' },
-  murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: 'm',  label: 'Murmuration' },
+  murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: '|',  label: 'Murmuration' },
   facets:        { draw: drawFacets,         reset: resetFacets,        key: '+',  label: 'Facets' },
-  halftone:      { draw: drawHalftone,       reset: resetHalftone,      key: 'f',  label: 'Halftone' },
+  halftone:      { draw: drawHalftone,       reset: resetHalftone,      key: '<',  label: 'Halftone' },
 };
