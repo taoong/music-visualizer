@@ -175,7 +175,7 @@ export const DEFAULT_CONFIG = {
   // Shared
   spikeScale: 1.2,
   rotationSpeed: 0.3,
-  masterVolume: 0.8,
+  masterVolume: 0.25,
   decayRate: 0.88, // Default decay rate (0.0 = instant, 1.0 = no decay)
   intensity: 1.0,
   beatDivision: 1,
