@@ -122,6 +122,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   epicyclesCycles: 'epicycles-cycles',
   epicyclesSpeed: 'epicycles-speed',
   epicyclesTrail: 'epicycles-trail',
+  circuitNodes: 'circuit-nodes',
+  circuitSpeed: 'circuit-speed',
+  circuitGlow: 'circuit-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

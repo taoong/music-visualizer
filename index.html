@@ -339,6 +339,7 @@
           <option value="arabesque">Arabesque</option>
           <option value="murmuration">Murmuration</option>
           <option value="epicycles">Epicycles</option>
+          <option value="circuit">Circuit</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1680,6 +1681,45 @@
               step="0.01"
               value="0.5"
               aria-label="Trail history length — short for recent trace only, long for full Lissajous bloom"
+            />
+          </div>
+        </div>
+
+        <div id="circuit-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="circuit-nodes">Nodes</label>
+            <input
+              type="range"
+              id="circuit-nodes"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Number of circuit nodes (10–60) — fewer for sparse clean routing, more for dense PCB mesh"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="circuit-speed">Speed</label>
+            <input
+              type="range"
+              id="circuit-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Signal pulse travel speed — slow for contemplative drift, fast for frantic data rush"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="circuit-glow">Glow</label>
+            <input
+              type="range"
+              id="circuit-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Trace neon glow intensity — low for subtle circuit ghost, high for blazing neon light show"
             />
           </div>
         </div>

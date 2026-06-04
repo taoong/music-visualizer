@@ -96,6 +96,7 @@ const ALL_CONTROL_IDS = [
   'arabesque-controls-group',
   'murmuration-controls-group',
   'epicycles-controls-group',
+  'circuit-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -148,6 +149,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   arabesque:     { show: ['arabesque-controls-group'] },
   murmuration:   { show: ['murmuration-controls-group'] },
   epicycles:     { show: ['epicycles-controls-group'] },
+  circuit:       { show: ['circuit-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

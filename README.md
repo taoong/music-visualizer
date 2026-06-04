@@ -93,6 +93,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `+` | Facets | Jittered triangular mesh spanning the full canvas; each facet's hue maps to one of 7 frequency bands (amethyst→sapphire→aquamarine→emerald→topaz→amber→ruby, left to right); two orbiting virtual light sources sweep caustic highlights across the surface; Perlin noise continuously undulates vertices; audio amplitude brightens each band's facets from dark jewel-tone to blazing; beat bursts all vertices radially outward and flashes the surface blue-white; inspired by Quayola "Strata" series (2010–) |
 | `>` | Epicycles | Fourier series harmonic visualizer; 7 nested spinning circles (one per frequency band) trace an evolving Lissajous curve; bass drives the outermost arm, brilliance makes fine interior spirals; beat fires a hue jump; inspired by 19th-century harmonograph machines |
 | `<` | Halftone | Three CMY dot-screens at 15°/45°/75° composited via MULTIPLY blend on white, replicating offset-press colour mixing (C+M→indigo, M+Y→scarlet, C+Y→olive); each dot's radius is driven by the frequency band whose horizontal screen-zone it falls in, so bass swells the left of the canvas and treble sparkles the right; beat fires an expanding ring-pulse of swollen dots from canvas centre; inspired by Roy Lichtenstein "Drowning Girl" (MoMA, 1963) and the Ben-Day dot printing process |
+| `Q` | Circuit | PCB-trace neon routing; N nodes scatter across the canvas connected by smooth L-shaped bezier traces colored by frequency band (violet→magenta, left→right); signal pulses animate along traces; beat fires a cascade burst from random nodes and shifts the hue palette; inspired by Joshua Davis "Praystation" generative circuit-board design system (2001–2003) |
 
 ## Keyboard Shortcuts
 
@@ -131,6 +132,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `+` | Facets visualization |
 | `>` | Epicycles visualization |
 | `<` | Halftone visualization |
+| `Q` | Circuit visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

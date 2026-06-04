@@ -48,6 +48,7 @@ import { drawInfinityNet, resetInfinityNet } from './infinitynet';
 import { drawArabesque, resetArabesque } from './arabesque';
 import { drawEpicycles, resetEpicycles } from './epicycles';
 import { drawMurmuration, resetMurmuration } from './murmuration';
+import { drawCircuit, resetCircuit } from './circuit';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -134,4 +135,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   arabesque:     { draw: drawArabesque,      reset: resetArabesque,     key: '!',  label: 'Arabesque' },
   murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: '|',  label: 'Murmuration' },
   epicycles:     { draw: drawEpicycles,      reset: resetEpicycles,     key: '>',  label: 'Epicycles' },
+  circuit:       { draw: drawCircuit,        reset: resetCircuit,       key: 'q',  label: 'Circuit' },
 };

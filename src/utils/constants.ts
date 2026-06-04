@@ -310,6 +310,10 @@ export const DEFAULT_CONFIG = {
   epicyclesCycles: 0.7,
   epicyclesSpeed: 0.3,
   epicyclesTrail: 0.5,
+  // Circuit-specific
+  circuitNodes: 0.5,
+  circuitSpeed: 0.4,
+  circuitGlow: 0.5,
 };
 
 // FFT and decay constants
