@@ -91,13 +91,11 @@ const ALL_CONTROL_IDS = [
   'interference-controls-group', 'voronoi-controls-group',
   'blobs-controls-group', 'grayscott-controls-group', 'growth-controls-group',
   'pixelsort-controls-group', 'echoes-controls-group', 'physarum-controls-group',
-  'optical-controls-group', 'geodesic-controls-group', 'ribbons-controls-group',
+  'geodesic-controls-group', 'ribbons-controls-group',
   'infinitynet-controls-group',
   'arabesque-controls-group',
   'murmuration-controls-group',
   'epicycles-controls-group',
-  'circuit-controls-group',
-  'caustics-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -143,15 +141,12 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   pixelsort:     { show: ['pixelsort-controls-group'] },
   echoes:        { show: ['echoes-controls-group'] },
   physarum:      { show: ['physarum-controls-group'] },
-  optical:       { show: ['optical-controls-group'] },
   geodesic:      { show: ['geodesic-controls-group'] },
   ribbons:       { show: ['ribbons-controls-group'] },
   infinitynet:   { show: ['infinitynet-controls-group'] },
   arabesque:     { show: ['arabesque-controls-group'] },
   murmuration:   { show: ['murmuration-controls-group'] },
   epicycles:     { show: ['epicycles-controls-group'] },
-  circuit:       { show: ['circuit-controls-group'] },
-  caustics:      { show: ['caustics-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

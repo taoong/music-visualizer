@@ -41,15 +41,12 @@ import { drawGrowth, resetGrowth } from './growth';
 import { drawPixelsort, resetPixelsort } from './pixelsort';
 import { drawEchoes, resetEchoes } from './echoes';
 import { drawPhysarum, resetPhysarum } from './physarum';
-import { drawOptical, resetOptical } from './optical';
 import { drawGeodesic, resetGeodesic } from './geodesic';
 import { drawRibbons, resetRibbons } from './ribbons';
 import { drawInfinityNet, resetInfinityNet } from './infinitynet';
 import { drawArabesque, resetArabesque } from './arabesque';
 import { drawEpicycles, resetEpicycles } from './epicycles';
 import { drawMurmuration, resetMurmuration } from './murmuration';
-import { drawCircuit, resetCircuit } from './circuit';
-import { drawCaustics, resetCaustics } from './caustics';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -129,13 +126,10 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   pixelsort:     { draw: drawPixelsort,      reset: resetPixelsort,     key: '@',  label: 'Pixel Sort' },
   echoes:        { draw: drawEchoes,         reset: resetEchoes,        key: '#',  label: 'Echoes' },
   physarum:      { draw: drawPhysarum,       reset: resetPhysarum,      key: '$',  label: 'Physarum' },
-  optical:       { draw: drawOptical,        reset: resetOptical,       key: '%',  label: 'Op-Art' },
   geodesic:      { draw: drawGeodesic,       reset: resetGeodesic,      key: '^',  label: 'Geodesic' },
   ribbons:       { draw: drawRibbons,        reset: resetRibbons,       key: '&',  label: 'Ribbons' },
   infinitynet:   { draw: drawInfinityNet,    reset: resetInfinityNet,   key: '*',  label: 'Infinity Net' },
   arabesque:     { draw: drawArabesque,      reset: resetArabesque,     key: '!',  label: 'Arabesque' },
   murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: '|',  label: 'Murmuration' },
   epicycles:     { draw: drawEpicycles,      reset: resetEpicycles,     key: '>',  label: 'Epicycles' },
-  circuit:       { draw: drawCircuit,        reset: resetCircuit,       key: 'q',  label: 'Circuit' },
-  caustics:      { draw: drawCaustics,       reset: resetCaustics,      key: 'g',  label: 'Caustics' },
 };

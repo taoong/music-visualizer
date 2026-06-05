@@ -282,10 +282,6 @@ export const DEFAULT_CONFIG = {
   physarumAgents: 1500,
   physarumEvaporation: 0.65,
   physarumSensor: 30,
-  // Optical (Op-Art)-specific
-  opticalGrid: 0.4,
-  opticalBulge: 0.6,
-  opticalColor: 0.5,
   // Geodesic-specific
   geodesicShells: 3,
   geodesicSpin: 1.0,
@@ -310,14 +306,6 @@ export const DEFAULT_CONFIG = {
   epicyclesCycles: 0.7,
   epicyclesSpeed: 0.3,
   epicyclesTrail: 0.5,
-  // Circuit-specific
-  circuitNodes: 0.5,
-  circuitSpeed: 0.4,
-  circuitGlow: 0.5,
-  // Caustics-specific
-  causticsWaveScale: 0.4,
-  causticsSpeed: 0.4,
-  causticsBrightness: 0.5,
 };
 
 // FFT and decay constants

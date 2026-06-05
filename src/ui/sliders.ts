@@ -154,9 +154,6 @@ export function bindDisplaySliders(): () => void {
     { id: 'physarum-agents', key: 'physarumAgents' },
     { id: 'physarum-evaporation', key: 'physarumEvaporation' },
     { id: 'physarum-sensor', key: 'physarumSensor' },
-    { id: 'optical-grid', key: 'opticalGrid' },
-    { id: 'optical-bulge', key: 'opticalBulge' },
-    { id: 'optical-color', key: 'opticalColor' },
     { id: 'geodesic-shells', key: 'geodesicShells' },
     { id: 'geodesic-spin', key: 'geodesicSpin' },
     { id: 'geodesic-glow', key: 'geodesicGlow' },
@@ -175,12 +172,6 @@ export function bindDisplaySliders(): () => void {
     { id: 'epicycles-cycles', key: 'epicyclesCycles' },
     { id: 'epicycles-speed', key: 'epicyclesSpeed' },
     { id: 'epicycles-trail', key: 'epicyclesTrail' },
-    { id: 'circuit-nodes', key: 'circuitNodes' },
-    { id: 'circuit-speed', key: 'circuitSpeed' },
-    { id: 'circuit-glow', key: 'circuitGlow' },
-    { id: 'caustics-wave-scale', key: 'causticsWaveScale' },
-    { id: 'caustics-speed', key: 'causticsSpeed' },
-    { id: 'caustics-brightness', key: 'causticsBrightness' },
   ] as const;
 
   for (const { id, key } of configs) {

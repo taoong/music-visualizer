@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems' | 'mic';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'optical' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'circuit' | 'caustics';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -154,10 +154,6 @@ export interface Config {
   physarumAgents: number;
   physarumEvaporation: number;
   physarumSensor: number;
-  // Optical (Op-Art)-specific
-  opticalGrid: number;
-  opticalBulge: number;
-  opticalColor: number;
   // Geodesic-specific
   geodesicShells: number;
   geodesicSpin: number;
@@ -182,14 +178,6 @@ export interface Config {
   epicyclesCycles: number;
   epicyclesSpeed: number;
   epicyclesTrail: number;
-  // Circuit-specific
-  circuitNodes: number;
-  circuitSpeed: number;
-  circuitGlow: number;
-  // Caustics-specific
-  causticsWaveScale: number;
-  causticsSpeed: number;
-  causticsBrightness: number;
 }
 
 // Application state

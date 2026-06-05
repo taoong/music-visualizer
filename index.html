@@ -332,15 +332,12 @@
           <option value="growth">Growth</option>
           <option value="pixelsort">Pixel Sort</option>
           <option value="echoes">Echoes</option>
-          <option value="optical">Op-Art</option>
           <option value="geodesic">Geodesic</option>
           <option value="ribbons">Ribbons</option>
           <option value="infinitynet">Infinity Net</option>
           <option value="arabesque">Arabesque</option>
           <option value="murmuration">Murmuration</option>
           <option value="epicycles">Epicycles</option>
-          <option value="circuit">Circuit</option>
-          <option value="caustics">Caustics</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1410,44 +1407,6 @@
           </div>
         </div>
 
-        <div id="optical-controls-group" class="hidden">
-          <div class="slider-group">
-            <label for="optical-grid">Grid</label>
-            <input
-              type="range"
-              id="optical-grid"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Grid density — low = sparse large circles (coarse Vasarely effect), high = dense small circles (fine shimmer)"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="optical-bulge">Bulge</label>
-            <input
-              type="range"
-              id="optical-bulge"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.6"
-              aria-label="Distortion amplitude — low = subtle breathing, high = extreme warp with circles vanishing at troughs"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="optical-color">Color</label>
-            <input
-              type="range"
-              id="optical-color"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Colour mode — 0 = classic black and white (Vasarely monochrome), 1 = full chromatic HSB palette"
-            />
-          </div>
-        </div>
 
         <div id="geodesic-controls-group" class="hidden">
           <div class="slider-group">
@@ -1686,82 +1645,6 @@
           </div>
         </div>
 
-        <div id="circuit-controls-group" class="controls-group hidden">
-          <div class="slider-group">
-            <label for="circuit-nodes">Nodes</label>
-            <input
-              type="range"
-              id="circuit-nodes"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Number of circuit nodes (10–60) — fewer for sparse clean routing, more for dense PCB mesh"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="circuit-speed">Speed</label>
-            <input
-              type="range"
-              id="circuit-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Signal pulse travel speed — slow for contemplative drift, fast for frantic data rush"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="circuit-glow">Glow</label>
-            <input
-              type="range"
-              id="circuit-glow"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Trace neon glow intensity — low for subtle circuit ghost, high for blazing neon light show"
-            />
-          </div>
-        </div>
-        <div id="caustics-controls-group" class="controls-group hidden">
-          <div class="slider-group">
-            <label for="caustics-wave-scale">Wave Scale</label>
-            <input
-              type="range"
-              id="caustics-wave-scale"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Spatial scale of wave grid — low for large sparse caustic pools, high for fine dense mesh"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="caustics-speed">Speed</label>
-            <input
-              type="range"
-              id="caustics-speed"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.4"
-              aria-label="Animation drift rate — slow for gentle ocean shimmer, fast for frantic rapid flash"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="caustics-brightness">Brightness</label>
-            <input
-              type="range"
-              id="caustics-brightness"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-              aria-label="Sharpness of caustic focal points — low for diffuse ambient glow, high for razor-sharp light lines"
-            />
-          </div>
-        </div>
       </section>
 
       <section>

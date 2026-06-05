@@ -101,9 +101,6 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   physarumAgents: 'physarum-agents',
   physarumEvaporation: 'physarum-evaporation',
   physarumSensor: 'physarum-sensor',
-  opticalGrid: 'optical-grid',
-  opticalBulge: 'optical-bulge',
-  opticalColor: 'optical-color',
   geodesicShells: 'geodesic-shells',
   geodesicSpin: 'geodesic-spin',
   geodesicGlow: 'geodesic-glow',
@@ -122,12 +119,6 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   epicyclesCycles: 'epicycles-cycles',
   epicyclesSpeed: 'epicycles-speed',
   epicyclesTrail: 'epicycles-trail',
-  circuitNodes: 'circuit-nodes',
-  circuitSpeed: 'circuit-speed',
-  circuitGlow: 'circuit-glow',
-  causticsWaveScale: 'caustics-wave-scale',
-  causticsSpeed: 'caustics-speed',
-  causticsBrightness: 'caustics-brightness',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
