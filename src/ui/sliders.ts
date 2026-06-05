@@ -178,6 +178,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'circuit-nodes', key: 'circuitNodes' },
     { id: 'circuit-speed', key: 'circuitSpeed' },
     { id: 'circuit-glow', key: 'circuitGlow' },
+    { id: 'caustics-wave-scale', key: 'causticsWaveScale' },
+    { id: 'caustics-speed', key: 'causticsSpeed' },
+    { id: 'caustics-brightness', key: 'causticsBrightness' },
   ] as const;
 
   for (const { id, key } of configs) {

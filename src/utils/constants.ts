@@ -314,6 +314,10 @@ export const DEFAULT_CONFIG = {
   circuitNodes: 0.5,
   circuitSpeed: 0.4,
   circuitGlow: 0.5,
+  // Caustics-specific
+  causticsWaveScale: 0.4,
+  causticsSpeed: 0.4,
+  causticsBrightness: 0.5,
 };
 
 // FFT and decay constants

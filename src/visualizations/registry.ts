@@ -49,6 +49,7 @@ import { drawArabesque, resetArabesque } from './arabesque';
 import { drawEpicycles, resetEpicycles } from './epicycles';
 import { drawMurmuration, resetMurmuration } from './murmuration';
 import { drawCircuit, resetCircuit } from './circuit';
+import { drawCaustics, resetCaustics } from './caustics';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -136,4 +137,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: '|',  label: 'Murmuration' },
   epicycles:     { draw: drawEpicycles,      reset: resetEpicycles,     key: '>',  label: 'Epicycles' },
   circuit:       { draw: drawCircuit,        reset: resetCircuit,       key: 'q',  label: 'Circuit' },
+  caustics:      { draw: drawCaustics,       reset: resetCaustics,      key: 'g',  label: 'Caustics' },
 };

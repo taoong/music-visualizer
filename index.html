@@ -340,6 +340,7 @@
           <option value="murmuration">Murmuration</option>
           <option value="epicycles">Epicycles</option>
           <option value="circuit">Circuit</option>
+          <option value="caustics">Caustics</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1720,6 +1721,44 @@
               step="0.01"
               value="0.5"
               aria-label="Trace neon glow intensity — low for subtle circuit ghost, high for blazing neon light show"
+            />
+          </div>
+        </div>
+        <div id="caustics-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="caustics-wave-scale">Wave Scale</label>
+            <input
+              type="range"
+              id="caustics-wave-scale"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Spatial scale of wave grid — low for large sparse caustic pools, high for fine dense mesh"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="caustics-speed">Speed</label>
+            <input
+              type="range"
+              id="caustics-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Animation drift rate — slow for gentle ocean shimmer, fast for frantic rapid flash"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="caustics-brightness">Brightness</label>
+            <input
+              type="range"
+              id="caustics-brightness"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Sharpness of caustic focal points — low for diffuse ambient glow, high for razor-sharp light lines"
             />
           </div>
         </div>

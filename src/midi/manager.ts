@@ -125,6 +125,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   circuitNodes: 'circuit-nodes',
   circuitSpeed: 'circuit-speed',
   circuitGlow: 'circuit-glow',
+  causticsWaveScale: 'caustics-wave-scale',
+  causticsSpeed: 'caustics-speed',
+  causticsBrightness: 'caustics-brightness',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
