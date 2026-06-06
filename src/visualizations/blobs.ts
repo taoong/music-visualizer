@@ -49,6 +49,37 @@ let buf: P5Graphics | null = null;
 let bufW = 0;
 let bufH = 0;
 
+export function interactBlobs(event: import('../types').InteractionEvent): void {
+  if (blobs.length === 0) return;
+  const { type, x, y } = event;
+  if (type === 'tap' || type === 'dragstart') {
+    // Burst all blobs away from the tap point
+    for (let i = 0; i < blobs.length; i++) {
+      const dx = blobs[i].x - x;
+      const dy = blobs[i].y - y;
+      const len = Math.sqrt(dx * dx + dy * dy) + 0.001;
+      const str = 0.04;
+      beatVx[i] = (dx / len) * str;
+      beatVy[i] = (dy / len) * str;
+    }
+  } else if (type === 'drag') {
+    // Pull the nearest blob toward the drag point
+    let nearest = 0;
+    let minDist = Infinity;
+    for (let i = 0; i < blobs.length; i++) {
+      const dx = blobs[i].x - x;
+      const dy = blobs[i].y - y;
+      const d = dx * dx + dy * dy;
+      if (d < minDist) { minDist = d; nearest = i; }
+    }
+    const dx = x - blobs[nearest].x;
+    const dy = y - blobs[nearest].y;
+    const len = Math.sqrt(dx * dx + dy * dy) + 0.001;
+    beatVx[nearest] += (dx / len) * 0.015;
+    beatVy[nearest] += (dy / len) * 0.015;
+  }
+}
+
 export function resetBlobs(): void {
   blobs = [];
   beatVx = [];

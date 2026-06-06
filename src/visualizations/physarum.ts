@@ -135,6 +135,25 @@ function resizeAgents(target: number): void {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
+export function interactPhysarum(event: import('../types').InteractionEvent): void {
+  if (bufW === 0 || bufH === 0) return;
+  const { type, x, y } = event;
+  if (type === 'tap' || type === 'drag' || type === 'dragstart') {
+    const cx = Math.floor(x * bufW);
+    const cy = Math.floor(y * bufH);
+    const r = Math.max(2, Math.floor(Math.min(bufW, bufH) * 0.05));
+    for (let oy = -r; oy <= r; oy++) {
+      for (let ox = -r; ox <= r; ox++) {
+        if (ox * ox + oy * oy <= r * r) {
+          const px = Math.max(0, Math.min(bufW - 1, cx + ox));
+          const py = Math.max(0, Math.min(bufH - 1, cy + oy));
+          trailBuf[py * bufW + px] = Math.min(1.0, trailBuf[py * bufW + px] + 0.9);
+        }
+      }
+    }
+  }
+}
+
 export function resetPhysarum(): void {
   trailBuf   = new Float32Array(0);
   nextBuf    = new Float32Array(0);

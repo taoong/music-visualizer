@@ -938,6 +938,31 @@ body {
   flex-shrink: 0;
 }
 
+#interact-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-subtle);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+#interact-btn:hover {
+  background: var(--bg-surface);
+}
+
+#interact-btn[aria-pressed="true"] {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: #6366f1;
+  color: #a5b4fc;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+}
+
 #volume-btn {
   width: 32px;
   height: 32px;

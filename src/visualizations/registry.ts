@@ -5,7 +5,7 @@
  *   index.ts → registry.ts → <viz>.ts is fine;
  *   registry.ts → index.ts → registry.ts would not be.
  */
-import type { VizMode } from '../types';
+import type { VizMode, InteractionEvent } from '../types';
 import { drawSpikeCircle, resetSpikeCircle } from './circle';
 import { drawSpectrum } from './spectrum';
 import { drawTunnel } from './tunnel';
@@ -40,13 +40,19 @@ import { drawGrayscott, resetGrayscott } from './grayscott';
 import { drawGrowth, resetGrowth } from './growth';
 import { drawPixelsort, resetPixelsort } from './pixelsort';
 import { drawEchoes, resetEchoes } from './echoes';
-import { drawPhysarum, resetPhysarum } from './physarum';
+import { drawPhysarum, resetPhysarum, interactPhysarum } from './physarum';
 import { drawGeodesic, resetGeodesic } from './geodesic';
 import { drawRibbons, resetRibbons } from './ribbons';
 import { drawInfinityNet, resetInfinityNet } from './infinitynet';
 import { drawArabesque, resetArabesque } from './arabesque';
 import { drawEpicycles, resetEpicycles } from './epicycles';
 import { drawMurmuration, resetMurmuration } from './murmuration';
+import { interactBlobs } from './blobs';
+import { interactGrayscott } from './grayscott';
+import { interactRippleTank } from './rippletank';
+import { interactConstellation } from './constellation';
+import { interactMarbling } from './marbling';
+import { interactBloom } from './bloom';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -81,6 +87,8 @@ export type VizEntry = {
   draw: (p: P5Instance, dt: number) => void;
   reset?: () => void;
   dispose?: () => void;
+  /** Called when interactive mode is active and the user taps/drags/presses a key on the canvas. */
+  interact?: (event: InteractionEvent) => void;
   /** Keyboard shortcut character (single key). */
   key: string;
   label: string;
@@ -103,29 +111,29 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   tungtung:      { draw: drawTungTung,       reset: resetTungTung,      key: 't',  label: 'Dancer' },
   aurora:        { draw: drawAurora,         reset: resetAurora,        key: 'a',  label: 'Aurora' },
   bootsandcats:  { draw: drawBootsAndCats,   reset: resetBootsAndCats,  key: 'k',  label: 'Boots & Cats' },
-  rippletank:    { draw: drawRippleTank,     reset: resetRippleTank,    key: 'w',  label: 'Ripple Tank' },
+  rippletank:    { draw: drawRippleTank,     reset: resetRippleTank,    key: 'w',  label: 'Ripple Tank',  interact: interactRippleTank },
   cymatics:      { draw: drawCymatics,       reset: resetCymatics,      key: 'y',  label: 'Cymatics' },
   cloudchamber:  { draw: drawCloudChamber,   reset: resetCloudChamber,  key: 'd',  label: 'Cloud Chamber' },
   attractor:     { draw: drawAttractor,      reset: resetAttractor,     key: 'j',  label: 'Attractor' },
   stringart:     { draw: drawStringart,      reset: resetStringart,     key: 'v',  label: 'String Art' },
-  constellation: { draw: drawConstellation,  reset: resetConstellation, key: 'o',  label: 'Constellation' },
+  constellation: { draw: drawConstellation,  reset: resetConstellation, key: 'o',  label: 'Constellation', interact: (e) => interactConstellation(e, window.p5Instance) },
   waterfall:     { draw: drawWaterfall,      reset: resetWaterfall,     key: 'e',  label: 'Waterfall' },
   weave:         { draw: drawWeave,          reset: resetWeave,         key: 'z',  label: 'Weave' },
   synthwave:     { draw: drawSynthwave,      reset: resetSynthwave,     key: "'",  label: 'Synthwave' },
-  bloom:         { draw: drawBloom,          reset: resetBloom,         key: '0',  label: 'Bloom' },
+  bloom:         { draw: drawBloom,          reset: resetBloom,         key: '0',  label: 'Bloom',        interact: (e) => interactBloom(e, window.p5Instance) },
   hive:          { draw: drawHive,           reset: resetHive,          key: '9',  label: 'Hive' },
-  marbling:      { draw: drawMarbling,       reset: resetMarbling,      key: ';',  label: 'Marbling' },
+  marbling:      { draw: drawMarbling,       reset: resetMarbling,      key: ';',  label: 'Marbling',     interact: interactMarbling },
   flowfield:     { draw: drawFlowField,      reset: resetFlowField,     key: '[',  label: 'Flow Field' },
   truchet:       { draw: drawTruchet,        reset: resetTruchet,       key: '\\', label: 'Truchet' },
   topography:    { draw: drawTopography,     reset: resetTopography,    key: '-',  label: 'Topography' },
   interference:  { draw: drawInterference,   reset: resetInterference,  key: '=',  label: 'Interference' },
   voronoi:       { draw: drawVoronoi,        reset: resetVoronoi,       key: '.',  label: 'Stained Glass' },
-  blobs:         { draw: drawBlobs,          reset: resetBlobs,         key: ',',  label: 'Blobs' },
-  grayscott:     { draw: drawGrayscott,      reset: resetGrayscott,     key: '/',  label: 'Gray-Scott' },
+  blobs:         { draw: drawBlobs,          reset: resetBlobs,         key: ',',  label: 'Blobs',        interact: interactBlobs },
+  grayscott:     { draw: drawGrayscott,      reset: resetGrayscott,     key: '/',  label: 'Gray-Scott',   interact: interactGrayscott },
   growth:        { draw: drawGrowth,         reset: resetGrowth,        key: '~',  label: 'Growth' },
   pixelsort:     { draw: drawPixelsort,      reset: resetPixelsort,     key: '@',  label: 'Pixel Sort' },
   echoes:        { draw: drawEchoes,         reset: resetEchoes,        key: '#',  label: 'Echoes' },
-  physarum:      { draw: drawPhysarum,       reset: resetPhysarum,      key: '$',  label: 'Physarum' },
+  physarum:      { draw: drawPhysarum,       reset: resetPhysarum,      key: '$',  label: 'Physarum',     interact: interactPhysarum },
   geodesic:      { draw: drawGeodesic,       reset: resetGeodesic,      key: '^',  label: 'Geodesic' },
   ribbons:       { draw: drawRibbons,        reset: resetRibbons,       key: '&',  label: 'Ribbons' },
   infinitynet:   { draw: drawInfinityNet,    reset: resetInfinityNet,   key: '*',  label: 'Infinity Net' },

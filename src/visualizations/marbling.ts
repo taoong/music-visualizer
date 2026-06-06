@@ -113,6 +113,9 @@ export function drawMarbling(p: P5Instance, dt: number): void {
   const speed = 0.005 + config.marblingSpeed * 0.025;
   time += speed * dt;
 
+  // Decay stir strength
+  stirStrength *= Math.pow(0.92, dt);
+
   // Zoom: maps slider [0,1] → spatial scale [0.4, 3.2]
   const zs = 0.4 + config.marblingZoom * 2.8;
 
@@ -156,6 +159,14 @@ export function drawMarbling(p: P5Instance, dt: number): void {
         v += ampW[b] * Math.sin(nx * fx + ny * fy + time * sm);
       }
 
+      // Interactive stir: sinusoidal displacement from touch/drag point
+      if (stirStrength > 0.01) {
+        const sdx = (px / renderWidth) - stirX;
+        const sdy = (py / renderHeight) - stirY;
+        const sd = Math.sqrt(sdx * sdx + sdy * sdy);
+        v += stirStrength * Math.sin(sd * 20 - time * 3) * Math.exp(-sd * 6);
+      }
+
       // Map v → hue: 25° per unit gives several visible colour bands
       const hue = ((v * 25 + hueBase) % 360 + 360) % 360;
 
@@ -170,6 +181,27 @@ export function drawMarbling(p: P5Instance, dt: number): void {
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'low';
   ctx.drawImage(offscreenCanvas!, 0, 0, p.width, p.height);
+}
+
+// Module-level stir state
+let stirX = 0.5, stirY = 0.5, stirStrength = 0;
+
+export function interactMarbling(event: import('../types').InteractionEvent): void {
+  const { type, x, y } = event;
+  if (type === 'tap') {
+    // Jump hue on tap
+    huePhase = (huePhase + 60) % 360;
+    stirStrength = 0.5;
+    stirX = x; stirY = y;
+  } else if (type === 'drag' || type === 'dragstart') {
+    stirX = x; stirY = y;
+    stirStrength = Math.min(stirStrength + 0.4, 2.0);
+  } else if (type === 'dragend') {
+    // Stir decays naturally
+  } else if (type === 'key' && event.key === 'r') {
+    huePhase = Math.random() * 360;
+    time = 0;
+  }
 }
 
 // ── Reset ─────────────────────────────────────────────────────────────────────

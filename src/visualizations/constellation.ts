@@ -248,6 +248,39 @@ export function drawConstellation(p: P5Instance, dt: number): void {
   (p as any).colorMode(p['RGB'], 255);
 }
 
+export function interactConstellation(event: import('../types').InteractionEvent, p: P5Instance): void {
+  if (!initialized || starCount === 0) return;
+  const { type, x: nx, y: ny } = event;
+  const px = nx * p.width;
+  const py = ny * p.height;
+
+  if (type === 'tap') {
+    // Flash stars near tap point gold and give them a gentle push outward
+    for (let i = 0; i < starCount; i++) {
+      const dx = x[i] - px;
+      const dy = y[i] - py;
+      const d2 = dx * dx + dy * dy;
+      const r = p.width * 0.15;
+      if (d2 < r * r) {
+        const d = Math.sqrt(d2) + 0.01;
+        vx[i] += (dx / d) * 1.5;
+        vy[i] += (dy / d) * 1.5;
+        flashGold[i] = 1.0;
+      }
+    }
+  } else if (type === 'drag' || type === 'dragstart') {
+    // Gravitational attraction: pull all stars toward cursor
+    for (let i = 0; i < starCount; i++) {
+      const dx = px - x[i];
+      const dy = py - y[i];
+      const d = Math.sqrt(dx * dx + dy * dy) + 1;
+      const f = Math.min(80 / (d * d), 0.8);
+      vx[i] += (dx / d) * f;
+      vy[i] += (dy / d) * f;
+    }
+  }
+}
+
 export function resetConstellation(): void {
   initialized = false;
   lastBeatIndex = -1;

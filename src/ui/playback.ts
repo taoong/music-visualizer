@@ -171,3 +171,25 @@ export function bindImageControls(): () => void {
     unsubscribe();
   };
 }
+
+export function bindInteractButton(): () => void {
+  const btn = document.getElementById('interact-btn');
+  if (!btn) return () => {};
+
+  const handler = () => {
+    store.setInteractive(!store.state.isInteractive);
+  };
+
+  const sync = () => {
+    const active = store.state.isInteractive;
+    btn.setAttribute('aria-pressed', String(active));
+  };
+
+  const unsub = store.on('interactiveChange', sync);
+  btn.addEventListener('click', handler);
+
+  return () => {
+    btn.removeEventListener('click', handler);
+    unsub();
+  };
+}

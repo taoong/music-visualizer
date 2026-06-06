@@ -42,6 +42,37 @@ let tips: Tip[] = [];
 let pg: any = null;
 let lastBeatIndex = -1;
 let globalNoiseT = 0;
+let interactBiasX = 0, interactBiasY = 0, interactBiasStrength = 0;
+
+export function interactBloom(event: import('../types').InteractionEvent, p: P5Instance): void {
+  const { type, x, y } = event;
+  if (type === 'tap') {
+    // Spawn a new root tip at tap position
+    for (let i = 0; i < 3; i++) {
+      if (tips.length < MAX_TIPS) {
+        tips.push({
+          x: x * p.width,
+          y: y * p.height,
+          angle: Math.random() * Math.PI * 2,
+          life: 1.0,
+          maxLife: 1.0,
+          thickness: 6 + Math.random() * 4,
+          band: Math.floor(Math.random() * 7),
+          noiseT: Math.random() * 1000,
+          speed: 1.5 + Math.random(),
+          forkTimer: 0.4 + Math.random() * 0.3,
+          depth: 0,
+        });
+      }
+    }
+  } else if (type === 'drag' || type === 'dragstart') {
+    interactBiasX = x * p.width;
+    interactBiasY = y * p.height;
+    interactBiasStrength = 1.0;
+  } else if (type === 'dragend') {
+    interactBiasStrength = 0;
+  }
+}
 
 export function resetBloom(): void {
   tips = [];
@@ -114,6 +145,16 @@ export function drawBloom(p: P5Instance, dt: number): void {
     // Perlin-noise steering
     const noiseVal = (p as any).noise(tip.noiseT, globalNoiseT) * 2 - 1;
     tip.angle += noiseVal * spread * 0.055 * dt;
+    // Bias tip toward drag position
+    if (interactBiasStrength > 0.01) {
+      const bx = interactBiasX - tip.x;
+      const by = interactBiasY - tip.y;
+      const ba = Math.atan2(by, bx); void (bx * bx + by * by);
+      let da = ba - tip.angle;
+      while (da > Math.PI) da -= 2 * Math.PI;
+      while (da < -Math.PI) da += 2 * Math.PI;
+      tip.angle += da * 0.08 * interactBiasStrength * dt;
+    }
 
     const prevX = tip.x;
     const prevY = tip.y;

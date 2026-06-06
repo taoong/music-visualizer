@@ -268,6 +268,19 @@ export function drawRippleTank(p: P5Instance, dt: number): void {
 
 }
 
+export function interactRippleTank(event: import('../types').InteractionEvent): void {
+  if (!initialized || renderWidth === 0) return;
+  const { type, x, y } = event;
+  if (type === 'tap' || type === 'dragstart' || type === 'drag') {
+    shockwaves.push({
+      cx: x * renderWidth,
+      cy: y * renderHeight,
+      radius: 0,
+      amplitude: 1.5,
+    });
+  }
+}
+
 // ── Reset ────────────────────────────────────────────────────────────────────
 
 export function resetRippleTank(): void {

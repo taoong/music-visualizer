@@ -180,6 +180,21 @@ export interface Config {
   epicyclesTrail: number;
 }
 
+// Interaction event dispatched to visualizations in interactive mode
+export interface InteractionEvent {
+  type: 'tap' | 'dragstart' | 'drag' | 'dragend' | 'hold' | 'key';
+  /** Normalized [0,1] canvas X position */
+  x: number;
+  /** Normalized [0,1] canvas Y position */
+  y: number;
+  /** Normalized drag delta X since last event */
+  dx?: number;
+  /** Normalized drag delta Y since last event */
+  dy?: number;
+  /** Key character (keyboard events only) */
+  key?: string;
+}
+
 // Application state
 export interface AppState {
   mode: AnalysisMode;
@@ -203,6 +218,8 @@ export interface AppState {
   lastBeatIndex: number;
   beatOffset: number;
 
+  // Interactive mode
+  isInteractive: boolean;
 }
 
 // Wormhole visualization types

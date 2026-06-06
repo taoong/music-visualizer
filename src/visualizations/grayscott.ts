@@ -119,6 +119,19 @@ function allocGrid(w: number, h: number): void {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
+export function interactGrayscott(event: import('../types').InteractionEvent): void {
+  if (gW === 0 || gH === 0) return;
+  const { type, x, y } = event;
+  if (type === 'tap' || type === 'drag' || type === 'dragstart') {
+    const cx = x * gW;
+    const cy = y * gH;
+    const r = Math.max(2, Math.floor(Math.min(gW, gH) * 0.04));
+    seedCircle(cx, cy, r, 0.0, 1.0);
+  } else if (type === 'key' && event.key === 'r') {
+    initGrid();
+  }
+}
+
 export function resetGrayscott(): void {
   if (gW > 0 && gH > 0) initGrid();
   lastBeatIndex = -1;

@@ -31,6 +31,7 @@ import {
 import { VIZ_REGISTRY, loadUserImage } from './visualizations';
 import { initUI, updateScrubberUI } from './ui/controller';
 import { initKeyboardShortcuts, initSwipeGestures, announceToScreenReader } from './ui/keyboard';
+import { initInteraction } from './ui/interaction';
 import { showError } from './utils/errors';
 import {
   BANDS,
@@ -69,10 +70,11 @@ const sketch = (p: P5Instance) => {
       p.frameRate(30);
     }
 
-    // Initialize UI, keyboard shortcuts, and swipe gestures
+    // Initialize UI, keyboard shortcuts, swipe gestures, and interactive mode
     const cleanupUI = initUI();
     const cleanupKeyboard = initKeyboardShortcuts();
     const cleanupSwipe = initSwipeGestures();
+    const cleanupInteraction = initInteraction(p.drawingContext.canvas);
 
     // Reset highway state when a new track is loaded
     const unsubAudioReady = store.on('audioReady', () => {
@@ -85,6 +87,7 @@ const sketch = (p: P5Instance) => {
       cleanupUI();
       cleanupKeyboard();
       cleanupSwipe();
+      cleanupInteraction();
       audioEngine.disposeAll();
       Object.values(VIZ_REGISTRY).forEach(entry => entry.dispose?.());
     });
