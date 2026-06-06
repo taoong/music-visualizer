@@ -8,7 +8,7 @@ import { setVisualizerText, setDancerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
 import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, bindSplashKeyboard, initStemAvailability } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
-import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI, bindInteractButton } from './playback';
+import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
 import { bindBPMControls } from './bpm';
 
@@ -39,7 +39,6 @@ export function initUI(): () => void {
   cleanupFns.push(bindTrackSwitching());
   cleanupFns.push(bindImageControls());
   cleanupFns.push(bindScrubber());
-  cleanupFns.push(bindInteractButton());
 
   // Sliders
   cleanupFns.push(bindVolumeControl());

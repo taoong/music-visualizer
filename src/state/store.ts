@@ -23,7 +23,6 @@ type EventType =
   | 'vizModeChange'
   | 'bpmDetected'
   | 'imageChange'
-  | 'interactiveChange'
   | 'error';
 
 type EventListener = (data?: unknown) => void;
@@ -49,7 +48,6 @@ class StateStore {
     beatIntervalSec: 0,
     lastBeatIndex: -1,
     beatOffset: 0,
-    isInteractive: false,
   };
 
   // Configuration
@@ -265,15 +263,9 @@ class StateStore {
 
   }
 
-  setInteractive(active: boolean): void {
-    this.state.isInteractive = active;
-    this.emit('interactiveChange', active);
-    this.emit('stateChange', this.state);
-  }
-
   // Getters
   get isInteractive(): boolean {
-    return this.state.isInteractive;
+    return this.state.mode === 'interactive';
   }
 
   get isFreqMode(): boolean {

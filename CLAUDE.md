@@ -133,7 +133,8 @@ src/
 ### State management
 
 `store` is a singleton `StateStore` with three state objects:
-- **`state: AppState`** — mode (`freq`/`stems`/`mic`), vizMode, isPlaying, BPM data
+- **`state: AppState`** — mode (`freq`/`stems`/`mic`/`interactive`), vizMode, isPlaying, BPM data
+  - `interactive` mode: audio plays as background but FFT processing and BPM detection are skipped — the viz reads zeroed audio state and responds only to user touch/drag/keyboard via `src/ui/interaction.ts` → `VIZ_REGISTRY[mode].interact?.(event)`. Implemented for: blobs, grayscott, physarum, rippletank, constellation, marbling, bloom.
 - **`config: Config`** — sensitivities (7 freq + 5 stem), spikeScale, decayRate, rotationSpeed, masterVolume
 - **`audioState: AudioProcessingState`** — smoothedBands, transientValues, deltaValues, spectral centroid, octave data
 

@@ -3,7 +3,7 @@
  */
 
 // Audio analysis modes
-export type AnalysisMode = 'freq' | 'stems' | 'mic';
+export type AnalysisMode = 'freq' | 'stems' | 'mic' | 'interactive';
 export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots';
 
 // Frequency band definitions
@@ -222,8 +222,6 @@ export interface AppState {
   lastBeatIndex: number;
   beatOffset: number;
 
-  // Interactive mode
-  isInteractive: boolean;
 }
 
 // Wormhole visualization types

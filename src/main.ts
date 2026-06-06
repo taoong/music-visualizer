@@ -112,9 +112,11 @@ const sketch = (p: P5Instance) => {
     const mode = store.state.mode;
     if (mode === 'freq' || mode === 'mic') {
       processFreqMode(dt);
-    } else {
+    } else if (mode === 'stems') {
       processStemMode(dt);
     }
+    // 'interactive' mode: audio still plays but skip all FFT/band processing —
+    // the viz reads zeroed audio state and responds only to user input.
 
     // Update UI
     updateScrubberUI();

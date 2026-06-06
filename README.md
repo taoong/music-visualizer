@@ -7,10 +7,11 @@ Created by Tao Ong with Claude Code.
 ## Features
 
 - **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Liquid Metal, Neon Grid, Blobs, Gray-Scott, Physarum, Murmuration, and many more (55+ total)
-- **Three audio input modes:**
+- **Four analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
   - **Microphone** — Live audio input from your mic for real-time visualization
+  - **Interactive** — Audio plays as background, but the visualization is driven entirely by touch/drag/keyboard input on the canvas; supported vizzes: Blobs, Gray-Scott, Physarum, Ripple Tank, Constellation, Marbling, Bloom
 - **Beat synchronization** — BPM detection with beat-reactive animations; BPM input, TAP tempo, and BEAT phase sync in the playback bar
 - **Real-time audio processing** — Transient detection, auto-gain normalization, spectral centroid tracking
 - **Full keyboard controls** — Switch visualizations, seek, volume, fullscreen, and more

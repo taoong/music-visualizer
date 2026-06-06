@@ -83,12 +83,16 @@
                   <span id="mode-stems-unavail" class="term-note hidden">// requires local server</span>
                   <span id="mode-stems-desc" class="sr-only">Use AI to separate audio into stems</span>
                 </button>
+                <button class="term-item mode-btn" data-nav="5" id="mode-interactive" type="button" role="radio" aria-checked="false" aria-describedby="mode-interactive-desc">
+                  <span class="term-radio" aria-hidden="true"></span><span>interactive</span>
+                  <span id="mode-interactive-desc" class="sr-only">Drive the visualization with touch, drag, and keyboard input — audio plays but does not affect the viz</span>
+                </button>
               </div>
             </div>
 
             <div class="term-divider-line"></div>
 
-            <button class="term-item term-launch" data-nav="5" id="play-btn" disabled type="button" aria-describedby="file-name">
+            <button class="term-item term-launch" data-nav="6" id="play-btn" disabled type="button" aria-describedby="file-name">
               LAUNCH
               <span class="sr-only">Start the music visualization</span>
             </button>
@@ -1812,15 +1816,6 @@
           <button id="tap-tempo-btn" type="button" title="Tap repeatedly to set BPM">TAP</button>
           <button id="beat-sync-btn" type="button" title="Tap on a beat to sync phase">BEAT</button>
         </div>
-        <button
-          id="interact-btn"
-          type="button"
-          aria-label="Toggle interactive mode — tap and drag canvas to affect the visualization"
-          aria-pressed="false"
-          title="Interactive mode"
-        >
-          ✋
-        </button>
         <div id="volume-group">
           <button
             id="volume-btn"

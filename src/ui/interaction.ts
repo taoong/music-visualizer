@@ -40,7 +40,7 @@ export function initInteraction(canvas: HTMLCanvasElement): () => void {
   }
 
   function dispatch(event: InteractionEvent): void {
-    if (!store.state.isInteractive) return;
+    if (store.state.mode !== 'interactive') return;
     VIZ_REGISTRY[store.state.vizMode].interact?.(event);
   }
 
@@ -157,7 +157,7 @@ export function initInteraction(canvas: HTMLCanvasElement): () => void {
   // triggering visualization-switching shortcuts.
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (!store.state.isInteractive) return;
+    if (store.state.mode !== 'interactive') return;
     // Ignore if typing in an input field
     if (
       e.target instanceof HTMLInputElement ||
@@ -184,10 +184,12 @@ export function initInteraction(canvas: HTMLCanvasElement): () => void {
   // Use capture so we intercept before the viz-switching keyboard handler
   document.addEventListener('keydown', onKeyDown, { capture: true });
 
-  // Show pointer cursor on canvas when interactive mode is active
-  const unsubInteractive = store.on('interactiveChange', (active) => {
-    canvas.style.cursor = active ? 'crosshair' : '';
+  // Show crosshair cursor whenever interactive mode is the active mode
+  const unsubInteractive = store.on('modeChange', () => {
+    canvas.style.cursor = store.state.mode === 'interactive' ? 'crosshair' : '';
   });
+  // Set initial cursor
+  canvas.style.cursor = store.state.mode === 'interactive' ? 'crosshair' : '';
 
   return () => {
     clearHold();

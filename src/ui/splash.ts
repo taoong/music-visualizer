@@ -107,25 +107,27 @@ export function bindSampleButton(): () => void {
 export function bindModeSelector(): () => void {
   const modeFreqBtn = document.getElementById('mode-freq');
   const modeStemsBtn = document.getElementById('mode-stems');
+  const modeInteractiveBtn = document.getElementById('mode-interactive');
   const freqSliders = document.getElementById('freq-sliders');
   const stemSliders = document.getElementById('stem-sliders');
 
-  if (!modeFreqBtn || !modeStemsBtn) return () => {};
+  if (!modeFreqBtn || !modeStemsBtn || !modeInteractiveBtn) return () => {};
 
   const setMode = (mode: AnalysisMode) => {
     store.setMode(mode);
     completeStep2();
 
-    if (mode === 'freq') {
-      modeFreqBtn.classList.add('active');
-      modeStemsBtn.classList.remove('active');
-      freqSliders?.classList.remove('hidden');
-      stemSliders?.classList.add('hidden');
-    } else {
-      modeStemsBtn.classList.add('active');
-      modeFreqBtn.classList.remove('active');
+    modeFreqBtn.classList.toggle('active', mode === 'freq');
+    modeStemsBtn.classList.toggle('active', mode === 'stems');
+    modeInteractiveBtn.classList.toggle('active', mode === 'interactive');
+
+    if (mode === 'stems') {
       stemSliders?.classList.remove('hidden');
       freqSliders?.classList.add('hidden');
+    } else {
+      // freq and interactive both use the 7-band sensitivity panel layout
+      freqSliders?.classList.remove('hidden');
+      stemSliders?.classList.add('hidden');
     }
   };
 
@@ -134,13 +136,16 @@ export function bindModeSelector(): () => void {
     if ((modeStemsBtn as HTMLElement).dataset.unavailable === 'true') return;
     setMode('stems');
   };
+  const interactiveHandler = () => setMode('interactive');
 
   modeFreqBtn.addEventListener('click', freqHandler);
   modeStemsBtn.addEventListener('click', stemsHandler);
+  modeInteractiveBtn.addEventListener('click', interactiveHandler);
 
   return () => {
     modeFreqBtn.removeEventListener('click', freqHandler);
     modeStemsBtn.removeEventListener('click', stemsHandler);
+    modeInteractiveBtn.removeEventListener('click', interactiveHandler);
   };
 }
 
@@ -176,10 +181,11 @@ export function bindPlayButton(): () => void {
   if (!playBtn) return () => {};
 
   const handler = async () => {
-    if (store.isFreqMode) {
-      await handleFreqModePlay();
-    } else {
+    if (store.state.mode === 'stems') {
       await handleStemModePlay();
+    } else {
+      // freq + interactive both load via the freq audio path
+      await handleFreqModePlay();
     }
   };
 
@@ -271,14 +277,23 @@ async function handleFreqModePlay(): Promise<void> {
   try {
     await audioEngine.initFreqMode(source);
 
-    const bpmData = await detectBPMWithFallback(
-      store.state.useSample ? 'sample.mp3' : store.state.userFile!,
-      audioEngine.getAudioBuffer(),
-    );
-    if (bpmData) store.setBPM(bpmData);
+    // Interactive mode: audio plays but does not drive the viz — skip BPM
+    // detection so beat-synced vizzes stay inert.
+    if (!store.isInteractive) {
+      const bpmData = await detectBPMWithFallback(
+        store.state.useSample ? 'sample.mp3' : store.state.userFile!,
+        audioEngine.getAudioBuffer(),
+      );
+      if (bpmData) store.setBPM(bpmData);
+    }
 
     splash?.classList.add('hidden');
     document.getElementById('playback-bar')?.classList.add('visible');
+
+    // Hide BPM controls in interactive mode — they have no effect.
+    if (store.isInteractive) {
+      document.getElementById('bpm-group')?.classList.add('hidden');
+    }
 
     audioEngine.start();
 
@@ -421,8 +436,8 @@ export function bindSplashKeyboard(): () => void {
           });
         }
 
-        // Auto-advance cursor after mode selection
-        if (navCursorIndex === 3 || navCursorIndex === 4) {
+        // Auto-advance cursor after mode selection (freq=3, stems=4, interactive=5)
+        if (navCursorIndex >= 3 && navCursorIndex <= 5) {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
               const launchIdx = navItems.findIndex(el => el.id === 'play-btn');
