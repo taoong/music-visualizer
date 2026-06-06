@@ -172,6 +172,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'epicycles-cycles', key: 'epicyclesCycles' },
     { id: 'epicycles-speed', key: 'epicyclesSpeed' },
     { id: 'epicycles-trail', key: 'epicyclesTrail' },
+    { id: 'knots-topology', key: 'knotsTopology' },
+    { id: 'knots-glow', key: 'knotsGlow' },
+    { id: 'knots-speed', key: 'knotsSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

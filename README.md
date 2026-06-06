@@ -95,6 +95,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `<` | Halftone | Three CMY dot-screens at 15°/45°/75° composited via MULTIPLY blend on white, replicating offset-press colour mixing (C+M→indigo, M+Y→scarlet, C+Y→olive); each dot's radius is driven by the frequency band whose horizontal screen-zone it falls in, so bass swells the left of the canvas and treble sparkles the right; beat fires an expanding ring-pulse of swollen dots from canvas centre; inspired by Roy Lichtenstein "Drowning Girl" (MoMA, 1963) and the Ben-Day dot printing process |
 | `Q` | Circuit | PCB-trace neon routing; N nodes scatter across the canvas connected by smooth L-shaped bezier traces colored by frequency band (violet→magenta, left→right); signal pulses animate along traces; beat fires a cascade burst from random nodes and shifts the hue palette; inspired by Joshua Davis "Praystation" generative circuit-board design system (2001–2003) |
 | `G` | Caustics | Underwater light caustic patterns; 7 sinusoidal wave layers (one per frequency band) travel at evenly distributed angles and spatial scales; constructive interference focuses light into bright focal clusters that shift and shimmer with the music; power-law sharpening produces razor-thin caustic lines on a deep-navy background; radial vignette adds pool-depth atmosphere; beat fires a brightness surge and hue shift; inspired by Jason Bruges Studio light-dome installations and Izabela Pluta "Like folds in water (caustic network)" (2024) |
+| `n` | Knot | Torus knot T(2, q) rendered as 3 interleaved neon strands in pure p5.js 2D perspective (no Three.js); the Topology slider sweeps q from trefoil (3) to septafoil (7), each creating a distinct knotted geometry; strands colored by frequency register — sub+bass drives violet, mid drives teal, highs drive amber — with a 60° hue gradient along each strand; 3-pass phosphor glow; beat fires angular impulse + hue shift; bass amplitude inflates the torus; inspired by George W. Hart's topological mathematical sculpture at the Bridges Conference on Mathematical Art |
 
 ## Keyboard Shortcuts
 
@@ -135,6 +136,7 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `<` | Halftone visualization |
 | `Q` | Circuit visualization |
 | `G` | Caustics visualization |
+| `n` | Knot visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

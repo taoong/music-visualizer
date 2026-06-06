@@ -119,6 +119,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   epicyclesCycles: 'epicycles-cycles',
   epicyclesSpeed: 'epicycles-speed',
   epicyclesTrail: 'epicycles-trail',
+  knotsTopology: 'knots-topology',
+  knotsGlow: 'knots-glow',
+  knotsSpeed: 'knots-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

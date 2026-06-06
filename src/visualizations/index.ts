@@ -49,3 +49,4 @@ export { drawArabesque, resetArabesque } from './arabesque';
 export { drawMurmuration, resetMurmuration } from './murmuration';
 export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImageUrl } from './userImage';
 export { drawEpicycles, resetEpicycles } from './epicycles';
+export { drawKnots, resetKnots } from './knots';

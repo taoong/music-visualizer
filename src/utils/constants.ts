@@ -306,6 +306,10 @@ export const DEFAULT_CONFIG = {
   epicyclesCycles: 0.7,
   epicyclesSpeed: 0.3,
   epicyclesTrail: 0.5,
+  // Knot-specific
+  knotsTopology: 3.0,
+  knotsGlow: 1.0,
+  knotsSpeed: 0.5,
 };
 
 // FFT and decay constants

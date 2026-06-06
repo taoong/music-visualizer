@@ -47,6 +47,7 @@ import { drawInfinityNet, resetInfinityNet } from './infinitynet';
 import { drawArabesque, resetArabesque } from './arabesque';
 import { drawEpicycles, resetEpicycles } from './epicycles';
 import { drawMurmuration, resetMurmuration } from './murmuration';
+import { drawKnots, resetKnots } from './knots';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -140,4 +141,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   arabesque:     { draw: drawArabesque,      reset: resetArabesque,     key: '!',  label: 'Arabesque' },
   murmuration:   { draw: drawMurmuration,    reset: resetMurmuration,   key: '|',  label: 'Murmuration' },
   epicycles:     { draw: drawEpicycles,      reset: resetEpicycles,     key: '>',  label: 'Epicycles' },
+  knots:         { draw: drawKnots,          reset: resetKnots,         key: 'n',  label: 'Knot' },
 };
