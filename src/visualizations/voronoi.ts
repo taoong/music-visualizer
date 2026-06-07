@@ -265,6 +265,29 @@ export function drawVoronoi(p: P5Instance, dt: number): void {
 
 // ── Reset ─────────────────────────────────────────────────────────────────────
 
+export function interactVoronoi(event: import('../types').InteractionEvent): void {
+  const { type, x, y } = event;
+  if (type === 'tap' || type === 'dragstart') {
+    beatFlash = 1.0;
+    if (seeds.length > 0) {
+      // Shatter strength falls off with distance from tap point (in normalized coords)
+      const mag = 0.06;
+      for (const seed of seeds) {
+        const sdx = seed.homeX - x;
+        const sdy = seed.homeY - y;
+        const dist = Math.sqrt(sdx * sdx + sdy * sdy);
+        const falloff = Math.max(0, 1 - dist * 1.4);
+        seed.scatterX = (Math.random() - 0.5) * 2 * mag * (0.3 + falloff);
+        seed.scatterY = (Math.random() - 0.5) * 2 * mag * (0.3 + falloff);
+        seed.x = Math.max(0.01, Math.min(0.99, seed.homeX + seed.scatterX));
+        seed.y = Math.max(0.01, Math.min(0.99, seed.homeY + seed.scatterY));
+      }
+      shatterDecay = 1.0;
+      needsMapRebuild = true;
+    }
+  }
+}
+
 export function resetVoronoi(): void {
   offscreenCanvas = null;
   offscreenCtx    = null;

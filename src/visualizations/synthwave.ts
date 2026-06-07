@@ -25,6 +25,17 @@ export function resetSynthwave(): void {
   sunPulse = 0;
 }
 
+export function interactSynthwave(event: import('../types').InteractionEvent): void {
+  const { type } = event;
+  if (type === 'tap' || type === 'key') {
+    beatFlash = 1.0;
+    sunPulse = 1.0;
+  } else if (type === 'drag' || type === 'dragstart') {
+    const dx = event.dx ?? 0;
+    scrollOffset += dx * 200;
+  }
+}
+
 // Cosine-interpolated mountain height at normalized x position (0–1)
 function getMountainY(xNorm: number, horizonY: number, amps: number[], maxH: number): number {
   const t = xNorm * (BAND_COUNT - 1);

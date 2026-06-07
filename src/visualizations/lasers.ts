@@ -384,6 +384,15 @@ export function resetLasers(): void {
   patternIndex = 0;
 }
 
+export function interactLasers(event: import('../types').InteractionEvent, p: P5Instance): void {
+  const { type } = event;
+  if (type === 'tap' || type === 'key') {
+    // Tap = regenerate pattern + strobe flash (same as a beat hit)
+    beams = generatePattern(p.width, p.height);
+    beatFlash = 1.0;
+  }
+}
+
 export function drawLasers(p: P5Instance, dt: number): void {
   const { state, config } = store;
   const { amps } = getBandAverages(BAND_COUNT);

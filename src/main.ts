@@ -20,6 +20,7 @@ import {
   computeStemCentroid,
 } from './audio/fft';
 import { updateTransient, computeDelta, applyAutoGain } from './audio/processing';
+import { processInteractiveAudio } from './audio/interactiveSynth';
 import {
   computeDecayFactor,
   processOctaveData,
@@ -114,9 +115,12 @@ const sketch = (p: P5Instance) => {
       processFreqMode(dt);
     } else if (mode === 'stems') {
       processStemMode(dt);
+    } else if (mode === 'interactive') {
+      // Audio plays as background; band state is synthesized from user input
+      // so every viz responds to taps/drags/holds via the same code paths it
+      // uses for real audio.
+      processInteractiveAudio(dt);
     }
-    // 'interactive' mode: audio still plays but skip all FFT/band processing —
-    // the viz reads zeroed audio state and responds only to user input.
 
     // Update UI
     updateScrubberUI();

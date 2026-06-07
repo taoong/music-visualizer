@@ -11,7 +11,7 @@ Created by Tao Ong with Claude Code.
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
   - **Microphone** — Live audio input from your mic for real-time visualization
-  - **Interactive** — Audio plays as background, but the visualization is driven entirely by touch/drag/keyboard input on the canvas; supported vizzes: Blobs, Gray-Scott, Physarum, Ripple Tank, Constellation, Marbling, Bloom
+  - **Interactive** — Audio plays as background, but the visualization is driven entirely by touch/drag/keyboard input. Input is synthesized into band amplitudes + transients that every viz already knows how to respond to, so all 45+ visualizations react. Additional bespoke handlers (spawning, shattering, rippling from tap position, etc.) live on Blobs, Gray-Scott, Physarum, Ripple Tank, Constellation, Marbling, Bloom, Aurora, Hive, Stained Glass, Tetris, Flow Field, Lasers, and Synthwave.
 - **Beat synchronization** — BPM detection with beat-reactive animations; BPM input, TAP tempo, and BEAT phase sync in the playback bar
 - **Real-time audio processing** — Transient detection, auto-gain normalization, spectral centroid tracking
 - **Full keyboard controls** — Switch visualizations, seek, volume, fullscreen, and more

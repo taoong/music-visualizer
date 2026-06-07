@@ -226,6 +226,22 @@ export function resetTetris(): void {
   initialized = false;
 }
 
+export function interactTetris(event: import('../types').InteractionEvent): void {
+  const { type, x } = event;
+  if (!initialized) return;
+  if (type === 'tap') {
+    if (clearTimer <= 0) hardDrop();
+  } else if (type === 'drag' || type === 'dragstart') {
+    // Drag X picks the target column for the falling piece
+    const col = Math.max(0, Math.min(COLS - 1, Math.floor(x * COLS)));
+    targetCol = col;
+    currentCol = col;
+  } else if (type === 'hold') {
+    targetRot = (targetRot + 1) % ALL_ROTATIONS[currentType].length;
+    currentRot = targetRot;
+  }
+}
+
 export function drawTetris(p: P5Instance, dt: number): void {
   const { state, config, audioState } = store;
 

@@ -17,6 +17,7 @@
  */
 import { store } from '../state/store';
 import { VIZ_REGISTRY } from '../visualizations/registry';
+import { feedInteractionEvent } from '../audio/interactiveSynth';
 import type { InteractionEvent } from '../types';
 
 const HOLD_MS = 500;
@@ -41,6 +42,9 @@ export function initInteraction(canvas: HTMLCanvasElement): () => void {
 
   function dispatch(event: InteractionEvent): void {
     if (store.state.mode !== 'interactive') return;
+    // Synth always runs so every viz gets amplitude/transient energy from input.
+    feedInteractionEvent(event);
+    // Bespoke handlers on top for vizzes that want richer per-event behavior.
     VIZ_REGISTRY[store.state.vizMode].interact?.(event);
   }
 

@@ -24,8 +24,21 @@ const BAND_HUES: readonly number[] = [275, 338, 22, 52, 138, 195, 245];
 // ── Module state ──────────────────────────────────────────────────────────────
 let rippleRadius = 0;
 let rippleStrength = 0;
+let rippleCenterX = -1; // -1 means use canvas center
+let rippleCenterY = -1;
 let globalHueShift = 0;
 let lastBeatIndex = -1;
+
+export function interactHive(event: import('../types').InteractionEvent, p: P5Instance): void {
+  const { type, x, y } = event;
+  if (type === 'tap' || type === 'dragstart') {
+    rippleRadius = 0;
+    rippleStrength = 1.0;
+    rippleCenterX = x * p.width;
+    rippleCenterY = y * p.height;
+    globalHueShift = (globalHueShift + 24) % 360;
+  }
+}
 
 // ── Draw ──────────────────────────────────────────────────────────────────────
 export function drawHive(p: P5Instance, dt: number): void {
@@ -51,6 +64,8 @@ export function drawHive(p: P5Instance, dt: number): void {
   const cx = w * 0.5;
   const cy = h * 0.5;
   const maxDist = Math.sqrt(cx * cx + cy * cy);
+  const rcx = rippleCenterX >= 0 ? rippleCenterX : cx;
+  const rcy = rippleCenterY >= 0 ? rippleCenterY : cy;
 
   // ── Beat detection ──────────────────────────────────────────────────────────
   if (state.detectedBPM > 0 && state.isPlaying) {
@@ -61,6 +76,8 @@ export function drawHive(p: P5Instance, dt: number): void {
       lastBeatIndex = beatIdx;
       rippleRadius = 0;
       rippleStrength = 1.0;
+      rippleCenterX = -1; // reset to canvas center for audio-driven beats
+      rippleCenterY = -1;
       // Nudge the palette on every beat
       globalHueShift = (globalHueShift + 18) % 360;
     }
@@ -99,7 +116,10 @@ export function drawHive(p: P5Instance, dt: number): void {
       // Ripple contribution: bell-shaped pulse centred on the expanding ring
       let rippleContrib = 0;
       if (rippleStrength > 0.005 && rippleStr > 0.005) {
-        const gap = Math.abs(dist - rippleRadius);
+        const rdx = hx - rcx;
+        const rdy = hy - rcy;
+        const rippleDist = Math.sqrt(rdx * rdx + rdy * rdy);
+        const gap = Math.abs(rippleDist - rippleRadius);
         if (gap < rippleWidth) {
           rippleContrib = rippleStrength * rippleStr * (1 - gap / rippleWidth);
         }

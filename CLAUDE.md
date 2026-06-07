@@ -134,7 +134,7 @@ src/
 
 `store` is a singleton `StateStore` with three state objects:
 - **`state: AppState`** — mode (`freq`/`stems`/`mic`/`interactive`), vizMode, isPlaying, BPM data
-  - `interactive` mode: audio plays as background but FFT processing and BPM detection are skipped — the viz reads zeroed audio state and responds only to user touch/drag/keyboard via `src/ui/interaction.ts` → `VIZ_REGISTRY[mode].interact?.(event)`. Implemented for: blobs, grayscott, physarum, rippletank, constellation, marbling, bloom.
+  - `interactive` mode: audio plays as background but FFT/BPM are skipped. Instead, `src/audio/interactiveSynth.ts` turns each pointer/key event into the same `audioState` (smoothedBands, transientValues, smoothedCentroid, smoothedOctaves) the vizzes already read for real audio — so every viz responds automatically. Tap fires a Gaussian transient centered on band at X position, drag X selects dominant band + Y modulates amplitude, hold pads mid bands, key pulses a band selected by char code. On top of the synth, bespoke per-viz `interact(event)` handlers on `VizEntry` add richer behavior for: blobs, grayscott, physarum, rippletank, constellation, marbling, bloom, aurora, hive, voronoi, tetris, flowfield, lasers, synthwave.
 - **`config: Config`** — sensitivities (7 freq + 5 stem), spikeScale, decayRate, rotationSpeed, masterVolume
 - **`audioState: AudioProcessingState`** — smoothedBands, transientValues, deltaValues, spectral centroid, octave data
 

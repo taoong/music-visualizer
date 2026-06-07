@@ -46,6 +46,45 @@ let fieldRows = 0;
 let lastBeatIndex = -1;
 let globalT = 0;
 
+export function interactFlowField(event: import('../types').InteractionEvent, p: P5Instance): void {
+  const { type, x, y } = event;
+  if (type === 'tap' || type === 'dragstart') {
+    // Burst of ribbons spawned at the tap point in all directions
+    const count = 12;
+    const px = x * p.width;
+    const py = y * p.height;
+    for (let i = 0; i < count && ribbons.length < MAX_RIBBONS; i++) {
+      const band = i % BAND_COUNT;
+      ribbons.push({
+        x: px,
+        y: py,
+        prevX: px,
+        prevY: py,
+        angle: (i / count) * Math.PI * 2,
+        speed: 1.5 + Math.random() * 2.5,
+        band,
+        life: 80 + Math.random() * 80,
+        maxLife: 80 + Math.random() * 80,
+        weight: 3 + Math.random() * 4,
+      });
+    }
+  } else if (type === 'drag') {
+    // Continuous spawn while dragging
+    if (ribbons.length < MAX_RIBBONS && Math.random() < 0.4) {
+      const px = x * p.width;
+      const py = y * p.height;
+      ribbons.push({
+        x: px, y: py, prevX: px, prevY: py,
+        angle: Math.random() * Math.PI * 2,
+        speed: 1.5 + Math.random() * 2,
+        band: Math.floor(Math.random() * BAND_COUNT),
+        life: 60, maxLife: 60,
+        weight: 2.5 + Math.random() * 3,
+      });
+    }
+  }
+}
+
 export function resetFlowField(): void {
   ribbons = [];
   pg = null;

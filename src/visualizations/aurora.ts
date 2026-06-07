@@ -311,6 +311,23 @@ export function drawAurora(p: P5Instance, dt: number): void {
   p.colorMode(p['RGB'], 255);
 }
 
+export function interactAurora(event: import('../types').InteractionEvent): void {
+  const { type } = event;
+  if (type === 'tap' || type === 'key') {
+    zoomPunch = Math.max(zoomPunch, 0.18);
+    shakeX = (Math.random() - 0.5) * 30;
+    shakeY = (Math.random() - 0.5) * 30;
+    rollImpulse += (Math.random() - 0.5) * 0.12;
+    beatFlash = 1.0;
+    if (shockwaves.length < MAX_SHOCKWAVES) {
+      shockwaves.push({ radius: 10, alpha: 1.0, hue: HUE_START + Math.random() * (HUE_END - HUE_START) });
+    }
+    spawnParticles(20, true);
+  } else if (type === 'hold') {
+    polygonSides = polygonSides === 6 ? 8 : 6;
+  }
+}
+
 export function resetAurora(): void {
   rings = [];
   zoomPunch = 0;
