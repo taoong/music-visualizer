@@ -310,6 +310,10 @@ export const DEFAULT_CONFIG = {
   knotsTopology: 3.0,
   knotsGlow: 1.0,
   knotsSpeed: 0.5,
+  // Penrose-specific
+  penroseDensity: 0.5,
+  penroseSpin: 0.3,
+  penroseGlow: 1.0,
 };
 
 // FFT and decay constants

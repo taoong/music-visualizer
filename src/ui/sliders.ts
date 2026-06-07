@@ -175,6 +175,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'knots-topology', key: 'knotsTopology' },
     { id: 'knots-glow', key: 'knotsGlow' },
     { id: 'knots-speed', key: 'knotsSpeed' },
+    { id: 'penrose-density', key: 'penroseDensity' },
+    { id: 'penrose-spin', key: 'penroseSpin' },
+    { id: 'penrose-glow', key: 'penroseGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

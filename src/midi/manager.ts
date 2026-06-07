@@ -122,6 +122,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   knotsTopology: 'knots-topology',
   knotsGlow: 'knots-glow',
   knotsSpeed: 'knots-speed',
+  penroseDensity: 'penrose-density',
+  penroseSpin: 'penrose-spin',
+  penroseGlow: 'penrose-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
