@@ -51,3 +51,4 @@ export { loadUserImage, clearUserImage, getUserImage, hasUserImage, getUserImage
 export { drawEpicycles, resetEpicycles } from './epicycles';
 export { drawKnots, resetKnots } from './knots';
 export { drawPenrose, resetPenrose } from './penrose';
+export { drawFlame, resetFlame } from './flame';

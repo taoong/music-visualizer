@@ -125,6 +125,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   penroseDensity: 'penrose-density',
   penroseSpin: 'penrose-spin',
   penroseGlow: 'penrose-glow',
+  flameDensity: 'flame-density',
+  flameGlow: 'flame-glow',
+  flameMutation: 'flame-mutation',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

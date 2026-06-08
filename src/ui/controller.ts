@@ -98,6 +98,7 @@ const ALL_CONTROL_IDS = [
   'epicycles-controls-group',
   'knots-controls-group',
   'penrose-controls-group',
+  'flame-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -151,6 +152,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   epicycles:     { show: ['epicycles-controls-group'] },
   knots:         { show: ['knots-controls-group'] },
   penrose:       { show: ['penrose-controls-group'] },
+  flame:         { show: ['flame-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

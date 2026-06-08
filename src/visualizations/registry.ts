@@ -49,6 +49,7 @@ import { drawEpicycles, resetEpicycles } from './epicycles';
 import { drawMurmuration, resetMurmuration } from './murmuration';
 import { drawKnots, resetKnots } from './knots';
 import { drawPenrose, resetPenrose } from './penrose';
+import { drawFlame, resetFlame } from './flame';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -151,4 +152,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   epicycles:     { draw: drawEpicycles,      reset: resetEpicycles,     key: '>',  label: 'Epicycles' },
   knots:         { draw: drawKnots,          reset: resetKnots,         key: 'n',  label: 'Knot' },
   penrose:       { draw: drawPenrose,        reset: resetPenrose,       key: 'p',  label: 'Penrose' },
+  flame:         { draw: drawFlame,          reset: resetFlame,         key: 'l',  label: 'Fractal Flame' },
 };

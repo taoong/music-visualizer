@@ -314,6 +314,10 @@ export const DEFAULT_CONFIG = {
   penroseDensity: 0.5,
   penroseSpin: 0.3,
   penroseGlow: 1.0,
+  // Fractal Flame-specific
+  flameDensity: 0.5,
+  flameGlow: 1.0,
+  flameMutation: 0.4,
 };
 
 // FFT and decay constants

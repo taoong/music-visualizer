@@ -178,6 +178,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'penrose-density', key: 'penroseDensity' },
     { id: 'penrose-spin', key: 'penroseSpin' },
     { id: 'penrose-glow', key: 'penroseGlow' },
+    { id: 'flame-density', key: 'flameDensity' },
+    { id: 'flame-glow', key: 'flameGlow' },
+    { id: 'flame-mutation', key: 'flameMutation' },
   ] as const;
 
   for (const { id, key } of configs) {

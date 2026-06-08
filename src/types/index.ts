@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -186,6 +186,10 @@ export interface Config {
   penroseDensity: number;
   penroseSpin: number;
   penroseGlow: number;
+  // Fractal Flame-specific
+  flameDensity: number;
+  flameGlow: number;
+  flameMutation: number;
 }
 
 // Interaction event dispatched to visualizations in interactive mode
