@@ -44,14 +44,14 @@ function initGrid(w: number, h: number): void {
 }
 
 function columnToBand(col: number): number {
-  const isFreqMode = store.state.mode === 'freq' || store.state.mode === 'mic';
+  const isFreqMode = store.state.mode === 'freq' || store.state.mode === 'mic' || store.state.mode === 'interactive';
   const bandCount = isFreqMode ? BAND_COUNT : 5;
   return Math.min(Math.floor((col / cols) * bandCount), bandCount - 1);
 }
 
 export function drawBinary(p: P5Instance, dt: number): void {
   const { state, config } = store;
-  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
+  const isFreqMode = state.mode === 'freq' || state.mode === 'mic' || state.mode === 'interactive';
   const bandCount = isFreqMode ? BAND_COUNT : 5;
 
   // Reinit grid if canvas size changed

@@ -17,7 +17,7 @@ export function drawSpectrum(p: P5Instance): void {
   const bottomMargin = 60 - audioState.centroidYOffset;
   const maxBarHeight = p.height * 0.7;
 
-  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
+  const isFreqMode = state.mode === 'freq' || state.mode === 'mic' || state.mode === 'interactive';
   const bandCount = isFreqMode ? 7 : 5;
   const totalBars = SPIKES_PER_BAND * bandCount;
 

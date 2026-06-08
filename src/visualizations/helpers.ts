@@ -16,7 +16,7 @@ export interface BandData {
  */
 export function getBandData(band: number, idx: number): BandData {
   const { audioState } = store;
-  const isFreqMode = store.state.mode === 'freq' || store.state.mode === 'mic';
+  const isFreqMode = store.state.mode === 'freq' || store.state.mode === 'mic' || store.state.mode === 'interactive';
 
   if (isFreqMode) {
     return {
@@ -44,7 +44,7 @@ export function getBandData(band: number, idx: number): BandData {
  */
 export function getBandAverages(bandCount: number): { amps: number[]; transients: number[]; deltas: number[] } {
   const { audioState } = store;
-  const isFreqMode = store.state.mode === 'freq' || store.state.mode === 'mic';
+  const isFreqMode = store.state.mode === 'freq' || store.state.mode === 'mic' || store.state.mode === 'interactive';
   const stemSmoothed = audioEngine.getStemSmoothed();
 
   const amps: number[] = new Array(bandCount);

@@ -23,7 +23,7 @@ let lastBeatIndex = -1;
 
 export function drawStringart(p: P5Instance, dt: number): void {
   const { state, config } = store;
-  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
+  const isFreqMode = state.mode === 'freq' || state.mode === 'mic' || state.mode === 'interactive';
   const bandCount = isFreqMode ? BAND_COUNT : 5;
 
   const { amps, transients } = getBandAverages(bandCount);

@@ -63,6 +63,8 @@ import { interactTetris } from './balls';
 import { interactFlowField } from './flowfield';
 import { interactLasers } from './lasers';
 import { interactSynthwave } from './synthwave';
+import { interactText } from './text';
+import { interactHighway } from './highway';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -110,8 +112,8 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   tunnel:        { draw: drawTunnel,                                    key: '3',  label: 'Tunnel' },
   tetris:        { draw: drawTetris,         reset: resetTetris,        key: '4',  label: 'Tetris',       interact: interactTetris },
   lasers:        { draw: drawLasers,         reset: resetLasers,        key: '5',  label: 'Lasers',       interact: (e) => interactLasers(e, window.p5Instance) },
-  text:          { draw: drawText,           reset: resetText,          key: '6',  label: 'Text' },
-  highway:       { draw: drawHighway,        reset: resetHighway,       key: '7',  label: 'Highway' },
+  text:          { draw: drawText,           reset: resetText,          key: '6',  label: 'Text',         interact: interactText },
+  highway:       { draw: drawHighway,        reset: resetHighway,       key: '7',  label: 'Highway',      interact: interactHighway },
   liquidmetal:   lazyViz(async () => { const { drawLiquidMetal: draw, resetLiquidMetal: reset, disposeLiquidMetal: dispose } = await import('./liquidmetal'); return { draw, reset, dispose }; }, '8', 'Liquid Metal'),
   neon:          lazyViz(async () => { const { drawNeon: draw, resetNeon: reset, disposeNeon: dispose } = await import('./neon'); return { draw, reset, dispose }; }, 'n', 'Neon Grid'),
   imagegrid:     lazyViz(async () => { const { drawImageGrid: draw, resetImageGrid: reset, disposeImageGrid: dispose } = await import('./imagegrid'); return { draw, reset, dispose }; }, 'g', 'Image Grid'),

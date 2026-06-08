@@ -355,6 +355,14 @@ export function drawText(p: P5Instance, dt: number): void {
   (p as any).colorMode(p['RGB'], 255);
 }
 
+export function interactText(event: import('../types').InteractionEvent): void {
+  const { type } = event;
+  if (type === 'tap' || type === 'key') {
+    beatFlash = 1.0;
+    generateNextPattern();
+  }
+}
+
 export function resetText(): void {
   lastBeatIndex = -1;
   lastBeatGroupIndex = -1;

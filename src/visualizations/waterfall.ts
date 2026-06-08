@@ -109,7 +109,7 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
   const captureInterval = Math.max(1, 5 - config.waterfallScrollSpeed * 4);
   captureAccum += dt;
 
-  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
+  const isFreqMode = state.mode === 'freq' || state.mode === 'mic' || state.mode === 'interactive';
   const bandCount = isFreqMode ? BAND_COUNT : 5;
   const totalBins = bandCount * SPIKES_PER_BAND;
 

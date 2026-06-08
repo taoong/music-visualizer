@@ -508,6 +508,18 @@ function drawPlayerCar(
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
+export function interactHighway(event: import('../types').InteractionEvent): void {
+  const { type, x } = event;
+  if (type === 'tap' || type === 'key') {
+    // Tap fires a headlight flare like a beat hit
+    headlightGlow = 1.0;
+    beatCount++;
+  } else if (type === 'drag' || type === 'dragstart') {
+    // Drag X (0-1) maps to a lane (0, 1, or 2)
+    playerTargetLane = Math.max(0, Math.min(2, Math.floor(x * 3)));
+  }
+}
+
 export function resetHighway(): void {
   cars = [];
   roadScrollZ = 0;

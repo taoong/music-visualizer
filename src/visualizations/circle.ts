@@ -111,7 +111,7 @@ export function drawSpikeCircle(p: P5Instance): void {
   const baseRadius = minDim * 0.12;
   const maxSpikeLen = minDim * 0.35;
 
-  const isFreqMode = state.mode === 'freq' || state.mode === 'mic';
+  const isFreqMode = state.mode === 'freq' || state.mode === 'mic' || state.mode === 'interactive';
   const bandCount = isFreqMode ? 7 : 5;
   const totalSpikes = SPIKES_PER_BAND * bandCount;
 
