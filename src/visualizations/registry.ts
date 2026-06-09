@@ -45,6 +45,7 @@ import { drawMurmuration, resetMurmuration } from './murmuration';
 import { drawKnots, resetKnots } from './knots';
 import { drawPenrose, resetPenrose } from './penrose';
 import { drawFlame, resetFlame } from './flame';
+import { drawAurora, resetAurora } from './aurora';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -144,4 +145,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   knots:         { draw: drawKnots,          reset: resetKnots,         key: 'n',  label: 'Knot' },
   penrose:       { draw: drawPenrose,        reset: resetPenrose,       key: 'p',  label: 'Penrose' },
   flame:         { draw: drawFlame,          reset: resetFlame,         key: 'l',  label: 'Fractal Flame' },
+  aurora:        { draw: drawAurora,         reset: resetAurora,        key: 'a',  label: 'Aurora' },
 };

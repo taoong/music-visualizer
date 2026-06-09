@@ -123,6 +123,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   flameDensity: 'flame-density',
   flameGlow: 'flame-glow',
   flameMutation: 'flame-mutation',
+  auroraCurtains: 'aurora-curtains',
+  auroraWave: 'aurora-wave',
+  auroraHue: 'aurora-hue',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

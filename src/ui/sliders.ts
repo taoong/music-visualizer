@@ -176,6 +176,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'flame-density', key: 'flameDensity' },
     { id: 'flame-glow', key: 'flameGlow' },
     { id: 'flame-mutation', key: 'flameMutation' },
+    { id: 'aurora-curtains', key: 'auroraCurtains' },
+    { id: 'aurora-wave', key: 'auroraWave' },
+    { id: 'aurora-hue', key: 'auroraHue' },
   ] as const;
 
   for (const { id, key } of configs) {

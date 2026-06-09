@@ -311,6 +311,10 @@ export const DEFAULT_CONFIG = {
   flameDensity: 0.5,
   flameGlow: 1.0,
   flameMutation: 0.4,
+  // Aurora-specific
+  auroraCurtains: 5,
+  auroraWave: 0.45,
+  auroraHue: 0.05,
 };
 
 // FFT and decay constants

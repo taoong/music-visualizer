@@ -47,3 +47,4 @@ export { drawEpicycles, resetEpicycles } from './epicycles';
 export { drawKnots, resetKnots } from './knots';
 export { drawPenrose, resetPenrose } from './penrose';
 export { drawFlame, resetFlame } from './flame';
+export { drawAurora, resetAurora } from './aurora';
