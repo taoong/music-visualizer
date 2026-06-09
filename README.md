@@ -11,7 +11,7 @@ Created by Tao Ong with Claude Code.
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Stem Separation (Experimental)** — Uses AI (Demucs) to separate audio into kick, drums, bass, vocals, and other
   - **Microphone** — Live audio input from your mic for real-time visualization
-  - **Interactive** — Audio plays as background, but the visualization is driven entirely by touch/drag/keyboard input. Input is synthesized into band amplitudes + transients that every viz already knows how to respond to, so all 45+ visualizations react. Additional bespoke handlers (spawning, shattering, rippling from tap position, etc.) live on Blobs, Gray-Scott, Physarum, Ripple Tank, Constellation, Marbling, Bloom, Aurora, Hive, Stained Glass, Tetris, Flow Field, Lasers, and Synthwave.
+  - **Interactive** — Audio plays as background, but the visualization is driven entirely by touch/drag/keyboard input. Input is synthesized into band amplitudes + transients that every viz already knows how to respond to, so every visualization reacts. Additional bespoke handlers (spawning, shattering, rippling from tap position, etc.) live on Blobs, Gray-Scott, Physarum, Ripple Tank, Constellation, Marbling, Bloom, Hive, Stained Glass, Tetris, Flow Field, Lasers, Synthwave, Text, and Highway.
 - **Beat synchronization** — BPM detection with beat-reactive animations; BPM input, TAP tempo, and BEAT phase sync in the playback bar
 - **Real-time audio processing** — Transient detection, auto-gain normalization, spectral centroid tracking
 - **Full keyboard controls** — Switch visualizations, seek, volume, fullscreen, and more
@@ -67,13 +67,10 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `8` | Liquid Metal | Molten chrome icosphere; Three.js PBR with IBL environment; amplitude deforms mesh vertices; GlitchPass fires on transients |
 | `N` | Neon Grid | Three.js synthwave terrain with audio-driven height displacement and bloom |
 | `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |
-| `C` | Color Map | Pixel-level audio-reactive color modulation; user image (or rainbow gradient) with hue-mapped frequency band boosting |
 | `U` | Sculpture | 8 flat panels in a circle showing image strips; beat-synced camera orbit with audio-reactive tilt, glow, and spacing |
 | `B` | Binary | Matrix-style cascading binary/ASCII characters; columns mapped to frequency bands with beat-synced wave ripple |
-| `T` | Dancer | Beat-synced dancing alien with spotlight stage, disco floor, particles, and configurable text flash |
 | `W` | Ripple Tank | Physics-inspired wave interference; 7 freq-band point-sources emit circular waves with beat-triggered shockwaves |
 | `Y` | Cymatics | Chladni plate simulation; particles drift toward nodal lines of standing wave modes driven by frequency bands; beats scatter particles |
-| `D` | Cloud Chamber | Particle physics simulation; 7 particle types with Lorentz force magnetic field curving; beat cosmic ray showers |
 | `J` | Strange Attractor | Lorenz attractor chaos theory; particles trace butterfly-shaped 3D paths; audio warps system parameters; beats jolt the attractor |
 | `E` | Waterfall | 3D scrolling spectrogram: stacked ribbons of recent spectra receding into the distance; newest snapshot in front, older ones fade back with perspective and haze |
 | `Z` | Monolith | Tall faceted crystal obelisk; cinematic camera choreography (orbit, crash-zoom, Hitchcock dolly, snap-cut, top-down / worm's-eye, barrel rolls) all locked to the beat |
@@ -112,11 +109,8 @@ The dev server proxies `/api/*` to the Flask backend on port 5001.
 | `G` | Image Grid visualization |
 | `W` | Ripple Tank visualization |
 | `Y` | Cymatics visualization |
-| `C` | Color Map visualization |
 | `U` | Sculpture visualization |
 | `B` | Binary visualization |
-| `T` | Dancer visualization |
-| `D` | Cloud Chamber visualization |
 | `J` | Strange Attractor visualization |
 | `E` | Waterfall visualization |
 | `Z` | Monolith visualization |

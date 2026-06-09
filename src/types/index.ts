@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'stems' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'colormap' | 'sculpture' | 'binary' | 'tungtung' | 'aurora' | 'bootsandcats' | 'rippletank' | 'cymatics' | 'cloudchamber' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -60,8 +60,6 @@ export interface Config {
   sculptureZoom: number;
   // Circle-specific
   circleImageRotation: number;
-  // Boots & Cats-specific
-  bootsAcceleration: number;
   // Rippletank-specific
   rippletankBeatFreq: number;
   rippletankWaterSpeed: number;
@@ -70,11 +68,6 @@ export interface Config {
   cymaticsBeatFreq: number;
   cymaticsSandSize: number;
   cymaticsSandSpeed: number;
-  // Cloud Chamber-specific
-  cloudMagneticField: number;
-  cloudParticleLife: number;
-  cloudBeatFreq: number;
-  cloudBeatBoost: number;
   // Attractor-specific
   attractorChaos: number;
   attractorTrailLength: number;

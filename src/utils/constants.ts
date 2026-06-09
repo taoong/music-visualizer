@@ -188,8 +188,6 @@ export const DEFAULT_CONFIG = {
   sculptureZoom: 0.5,
   // Circle-specific
   circleImageRotation: 0.5,
-  // Boots & Cats-specific
-  bootsAcceleration: 0.5,
   // Rippletank-specific
   rippletankBeatFreq: 1,
   rippletankWaterSpeed: 0.5,
@@ -198,11 +196,6 @@ export const DEFAULT_CONFIG = {
   cymaticsBeatFreq: 1,
   cymaticsSandSize: 0.5,
   cymaticsSandSpeed: 0.5,
-  // Cloud Chamber-specific
-  cloudMagneticField: 0.4,
-  cloudParticleLife: 0.5,
-  cloudBeatFreq: 1,
-  cloudBeatBoost: 0.5,
   // Attractor-specific
   attractorChaos: 0.6,
   attractorTrailLength: 0.5,

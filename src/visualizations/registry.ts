@@ -13,14 +13,9 @@ import { drawTetris, resetTetris } from './balls';
 import { drawLasers, resetLasers } from './lasers';
 import { drawText, resetText } from './text';
 import { drawHighway, resetHighway } from './highway';
-import { drawColormap, resetColormap, disposeColormap } from './colormap';
 import { drawBinary, resetBinary } from './binary';
-import { drawTungTung, resetTungTung } from './tungtung';
-import { drawAurora, resetAurora } from './aurora';
-import { drawBootsAndCats, resetBootsAndCats } from './bootsandcats';
 import { drawRippleTank, resetRippleTank } from './rippletank';
 import { drawCymatics, resetCymatics } from './cymatics';
-import { drawCloudChamber, resetCloudChamber } from './cloudchamber';
 import { drawAttractor, resetAttractor } from './attractor';
 import { drawStringart, resetStringart } from './stringart';
 import { drawConstellation, resetConstellation } from './constellation';
@@ -56,7 +51,6 @@ import { interactRippleTank } from './rippletank';
 import { interactConstellation } from './constellation';
 import { interactMarbling } from './marbling';
 import { interactBloom } from './bloom';
-import { interactAurora } from './aurora';
 import { interactHive } from './hive';
 import { interactVoronoi } from './voronoi';
 import { interactTetris } from './balls';
@@ -117,15 +111,10 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   liquidmetal:   lazyViz(async () => { const { drawLiquidMetal: draw, resetLiquidMetal: reset, disposeLiquidMetal: dispose } = await import('./liquidmetal'); return { draw, reset, dispose }; }, '8', 'Liquid Metal'),
   neon:          lazyViz(async () => { const { drawNeon: draw, resetNeon: reset, disposeNeon: dispose } = await import('./neon'); return { draw, reset, dispose }; }, 'n', 'Neon Grid'),
   imagegrid:     lazyViz(async () => { const { drawImageGrid: draw, resetImageGrid: reset, disposeImageGrid: dispose } = await import('./imagegrid'); return { draw, reset, dispose }; }, 'g', 'Image Grid'),
-  colormap:      { draw: drawColormap,       reset: resetColormap,      key: 'c',  label: 'Color Map',     dispose: disposeColormap },
   sculpture:     lazyViz(async () => { const { drawSculpture: draw, resetSculpture: reset, disposeSculpture: dispose } = await import('./sculpture'); return { draw, reset, dispose }; }, 'u', 'Sculpture'),
   binary:        { draw: drawBinary,         reset: resetBinary,        key: 'b',  label: 'Binary' },
-  tungtung:      { draw: drawTungTung,       reset: resetTungTung,      key: 't',  label: 'Dancer' },
-  aurora:        { draw: drawAurora,         reset: resetAurora,        key: 'a',  label: 'Aurora',       interact: interactAurora },
-  bootsandcats:  { draw: drawBootsAndCats,   reset: resetBootsAndCats,  key: 'k',  label: 'Boots & Cats' },
   rippletank:    { draw: drawRippleTank,     reset: resetRippleTank,    key: 'w',  label: 'Ripple Tank',  interact: interactRippleTank },
   cymatics:      { draw: drawCymatics,       reset: resetCymatics,      key: 'y',  label: 'Cymatics' },
-  cloudchamber:  { draw: drawCloudChamber,   reset: resetCloudChamber,  key: 'd',  label: 'Cloud Chamber' },
   attractor:     { draw: drawAttractor,      reset: resetAttractor,     key: 'j',  label: 'Attractor' },
   stringart:     { draw: drawStringart,      reset: resetStringart,     key: 'v',  label: 'String Art' },
   constellation: { draw: drawConstellation,  reset: resetConstellation, key: 'o',  label: 'Constellation', interact: (e) => interactConstellation(e, window.p5Instance) },

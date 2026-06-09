@@ -4,7 +4,7 @@
 import { store } from '../state/store';
 import type { VizMode } from '../types';
 import { injectErrorStyles } from '../utils/errors';
-import { setVisualizerText, setDancerText } from '../visualizations';
+import { setVisualizerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
 import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, bindSplashKeyboard, initStemAvailability } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
@@ -81,8 +81,8 @@ const ALL_CONTROL_IDS = [
   'scale-group', 'decay-rate-group', 'rotation-speed-group', 'balls-kick-boost-group',
   'intensity-group', 'beat-division-group', 'text-input-group',
   'highway-controls-group', 'sculpture-controls-group', 'circle-image-rotation-group',
-  'boots-controls-group', 'rippletank-controls-group', 'cymatics-controls-group',
-  'cloudchamber-controls-group', 'attractor-controls-group',
+  'rippletank-controls-group', 'cymatics-controls-group',
+  'attractor-controls-group',
   'stringart-controls-group', 'constellation-controls-group',
   'waterfall-controls-group',
   'weave-controls-group', 'synthwave-controls-group', 'bloom-controls-group',
@@ -115,15 +115,10 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   liquidmetal:   { show: ['rotation-speed-group', 'intensity-group'],                             labels: { intensity: 'Spin Chaos' } },
   neon:          { show: ['rotation-speed-group', 'intensity-group', 'decay-rate-group'],          labels: { rotation: 'Camera Rotation', intensity: 'Intensity', decayRate: 'Camera Height' } },
   imagegrid:     { show: ['rotation-speed-group', 'intensity-group'],                             labels: { intensity: 'Bloom Strength' } },
-  colormap:      { show: ['intensity-group'],                                                      labels: { intensity: 'Color Boost' } },
   sculpture:     { show: ['rotation-speed-group', 'intensity-group', 'sculpture-controls-group'], labels: { intensity: 'Bloom Strength' } },
   binary:        { show: ['scale-group', 'decay-rate-group'] },
-  tungtung:      { show: ['text-input-group'] },
-  aurora:        { show: ['intensity-group', 'scale-group'],                                      labels: { intensity: 'Glow Strength' } },
-  bootsandcats:  { show: ['boots-controls-group'] },
   rippletank:    { show: ['scale-group', 'rippletank-controls-group'] },
   cymatics:      { show: ['cymatics-controls-group'] },
-  cloudchamber:  { show: ['cloudchamber-controls-group'] },
   attractor:     { show: ['attractor-controls-group'] },
   stringart:     { show: ['stringart-controls-group'] },
   constellation: { show: ['constellation-controls-group'] },
@@ -168,7 +163,7 @@ function bindVizSelector(): () => void {
   }
 
   // Visualizations that require beat/BPM tracking and don't work well with mic input
-  const micHiddenVizModes = ['liquidmetal', 'sculpture', 'tungtung', 'aurora', 'monolith'];
+  const micHiddenVizModes = ['liquidmetal', 'sculpture', 'monolith'];
 
   function updateMicVizVisibility(): void {
     const isMic = store.isMicMode;
@@ -219,7 +214,6 @@ function bindVizSelector(): () => void {
   const textHandler = () => {
     if (textInput) {
       setVisualizerText(textInput.value);
-      setDancerText(textInput.value);
     }
   };
 
