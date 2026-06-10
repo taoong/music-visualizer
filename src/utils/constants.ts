@@ -299,6 +299,10 @@ export const DEFAULT_CONFIG = {
   auroraCurtains: 5,
   auroraWave: 0.45,
   auroraHue: 0.05,
+  // Disorders-specific
+  disordersGrid: 16,
+  disordersChaos: 0.2,
+  disordersInterrupt: 0.5,
 };
 
 // FFT and decay constants

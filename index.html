@@ -273,6 +273,7 @@
           <option value="penrose">Penrose</option>
           <option value="flame">Fractal Flame</option>
           <option value="aurora">Aurora</option>
+          <option value="disorders">Disorders</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1668,6 +1669,45 @@
               step="0.01"
               value="0.05"
               aria-label="Palette shift — 0 = classic emerald green aurora, 0.5 = sapphire blue, 1 = crimson violet aurora"
+            />
+          </div>
+        </div>
+
+        <div id="disorders-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="disorders-grid">Grid</label>
+            <input
+              type="range"
+              id="disorders-grid"
+              min="6"
+              max="32"
+              step="1"
+              value="16"
+              aria-label="Lattice density — fewer, bolder strokes vs. a fine dense hatch"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="disorders-chaos">Disorder</label>
+            <input
+              type="range"
+              id="disorders-chaos"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.2"
+              aria-label="Baseline rotational chaos — 0 = a single ordered hatch, 1 = every stroke at its own random angle"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="disorders-interrupt">Interrupt</label>
+            <input
+              type="range"
+              id="disorders-interrupt"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Strength and spread of beat-triggered erasure waves sweeping the lattice"
             />
           </div>
         </div>

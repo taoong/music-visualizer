@@ -121,6 +121,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   auroraCurtains: 'aurora-curtains',
   auroraWave: 'aurora-wave',
   auroraHue: 'aurora-hue',
+  disordersGrid: 'disorders-grid',
+  disordersChaos: 'disorders-chaos',
+  disordersInterrupt: 'disorders-interrupt',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

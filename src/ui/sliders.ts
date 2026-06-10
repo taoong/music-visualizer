@@ -160,6 +160,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'aurora-curtains', key: 'auroraCurtains' },
     { id: 'aurora-wave', key: 'auroraWave' },
     { id: 'aurora-hue', key: 'auroraHue' },
+    { id: 'disorders-grid', key: 'disordersGrid' },
+    { id: 'disorders-chaos', key: 'disordersChaos' },
+    { id: 'disorders-interrupt', key: 'disordersInterrupt' },
   ] as const;
 
   for (const { id, key } of configs) {
