@@ -1,6 +1,6 @@
 /**
  * Interactive synth — converts user input (tap, drag, hold, key) into the
- * same audio-processing state that vizzes already read in freq/stems mode
+ * same audio-processing state that vizzes already read in freq mode
  * (`smoothedBands`, `transientValues`, `deltaValues`, `smoothedCentroid`,
  * `smoothedOctaves`, `octaveTransientValues`). With this, every visualization
  * automatically responds to interaction without needing its own handler —

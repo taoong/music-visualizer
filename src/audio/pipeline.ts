@@ -2,7 +2,6 @@
  * Shared audio processing pipeline helpers
  */
 import { store } from '../state/store';
-import { audioEngine } from './engine';
 import { updateTransient, computeDelta, smoothBins } from './processing';
 import {
   OCTAVE_COUNT,
@@ -77,30 +76,6 @@ export function decayFreqBands(dt: number): void {
     audioState.transientValues[b] =
       1.0 + (audioState.transientValues[b] - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
     audioState.deltaValues[b] *= Math.pow(DELTA_RELEASE, dt);
-  }
-}
-
-/**
- * Decay stem-smoothed data
- */
-export function decayStemBands(dt: number): void {
-  const { audioState, config } = store;
-  const stemSmoothed = audioEngine.getStemSmoothed();
-
-  if (stemSmoothed) {
-    for (const stem of Object.keys(stemSmoothed)) {
-      for (let i = 0; i < SPIKES_PER_BAND; i++) {
-        stemSmoothed[stem][i] *= Math.pow(config.decayRate, dt);
-      }
-
-      if (audioState.transientStems[stem]) {
-        audioState.transientStems[stem].multiplier =
-          1.0 + (audioState.transientStems[stem].multiplier - 1.0) * Math.pow(TRANSIENT_DECAY, dt);
-      }
-      if (audioState.deltaStems[stem]) {
-        audioState.deltaStems[stem].smoothed *= Math.pow(DELTA_RELEASE, dt);
-      }
-    }
   }
 }
 

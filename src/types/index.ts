@@ -3,7 +3,7 @@
  */
 
 // Audio analysis modes
-export type AnalysisMode = 'freq' | 'stems' | 'mic' | 'interactive';
+export type AnalysisMode = 'freq' | 'mic' | 'interactive';
 export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'aurora';
 
 // Frequency band definitions
@@ -18,9 +18,6 @@ export interface FrequencyBand {
   release: number;
   defaultSens: number;
 }
-
-// Stem types
-export type StemType = 'kick' | 'drums' | 'bass' | 'vocals' | 'other';
 
 // Octave definitions for tunnel visualization
 export interface Octave {
@@ -38,12 +35,6 @@ export interface Config {
   sensUpperMid: number;
   sensPresence: number;
   sensBrilliance: number;
-  // Stem mode sensitivities
-  sensKick: number;
-  sensDrums: number;
-  sensStemBass: number;
-  sensVocals: number;
-  sensOther: number;
   // Shared
   spikeScale: number;
   rotationSpeed: number;
@@ -258,15 +249,12 @@ export interface AudioProcessingState {
 
   // Auto-gain trackers
   autoGainBands: AutoGainTracker[];
-  autoGainStems: Record<string, AutoGainTracker>;
 
   // Transient detection
   transientBands: TransientState[];
-  transientStems: Record<string, TransientState>;
 
   // Delta (rate of change) detection
   deltaBands: DeltaState[];
-  deltaStems: Record<string, DeltaState>;
 
   // Waveform time-domain data
   waveformData: Float32Array;
@@ -299,15 +287,6 @@ export interface DeltaState {
   smoothed: number;
 }
 
-// Stem URLs
-export interface StemUrls {
-  kick: string | undefined;
-  drums: string | undefined;
-  bass: string | undefined;
-  vocals: string | undefined;
-  other: string | undefined;
-}
-
 // Error types
 export class AudioInitError extends Error {
   constructor(
@@ -316,16 +295,6 @@ export class AudioInitError extends Error {
   ) {
     super(message);
     this.name = 'AudioInitError';
-  }
-}
-
-export class StemSeparationError extends Error {
-  constructor(
-    message: string,
-    public originalError?: Error
-  ) {
-    super(message);
-    this.name = 'StemSeparationError';
   }
 }
 

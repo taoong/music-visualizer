@@ -29,14 +29,6 @@ const FREQ_ROWS: ControlRow[] = [
   { label: 'Brilliance (6–20 kHz)', configKey: 'sensBrilliance' },
 ];
 
-const STEM_ROWS: ControlRow[] = [
-  { label: 'Kick', configKey: 'sensKick' },
-  { label: 'Drums', configKey: 'sensDrums' },
-  { label: 'Bass', configKey: 'sensStemBass' },
-  { label: 'Vocals', configKey: 'sensVocals' },
-  { label: 'Other', configKey: 'sensOther' },
-];
-
 const DISPLAY_ROWS: ControlRow[] = [
   { label: 'Scale', configKey: 'spikeScale' },
   { label: 'Decay Rate', configKey: 'decayRate' },
@@ -93,7 +85,6 @@ function injectOverlayHTML(): void {
       </div>
       <div id="midi-controls-list">
         ${buildSectionHTML('Freq Sensitivity', FREQ_ROWS)}
-        ${buildSectionHTML('Stem Sensitivity', STEM_ROWS)}
         ${buildSectionHTML('Display', DISPLAY_ROWS)}
       </div>
       <div class="midi-footer">
@@ -280,7 +271,7 @@ function updateStatusBadge(): void {
 }
 
 function refreshAllMappingDisplays(): void {
-  const allRows = [...FREQ_ROWS, ...STEM_ROWS, ...DISPLAY_ROWS];
+  const allRows = [...FREQ_ROWS, ...DISPLAY_ROWS];
   for (const row of allRows) {
     const span = document.getElementById(`midi-mapping-${row.configKey}`);
     if (!span) continue;

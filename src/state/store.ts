@@ -69,15 +69,12 @@ class StateStore {
           peaks: new Float32Array(AUTO_GAIN_FRAMES).fill(AUTO_GAIN_FLOOR),
           idx: 0,
         })),
-      autoGainStems: {},
       transientBands: Array(BAND_COUNT)
         .fill(null)
         .map(() => ({ avg: 0, multiplier: 1.0 })),
-      transientStems: {},
       deltaBands: Array(BAND_COUNT)
         .fill(null)
         .map(() => ({ prevMean: 0, smoothed: 0 })),
-      deltaStems: {},
       waveformData: new Float32Array(FFT_SIZE),
       smoothedCentroid: 0.5,
       centroidYOffset: 0,
@@ -229,11 +226,6 @@ class StateStore {
     this.audioState.transientValues.fill(1.0);
     this.audioState.deltaValues.fill(0);
 
-    // Reset stems
-    this.audioState.autoGainStems = {};
-    this.audioState.transientStems = {};
-    this.audioState.deltaStems = {};
-
     // Reset waveform data
     this.audioState.waveformData.fill(0);
 
@@ -270,10 +262,6 @@ class StateStore {
 
   get isFreqMode(): boolean {
     return this.state.mode === 'freq';
-  }
-
-  get isStemMode(): boolean {
-    return this.state.mode === 'stems';
   }
 
   get isMicMode(): boolean {

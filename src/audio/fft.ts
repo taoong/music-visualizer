@@ -11,7 +11,7 @@ import {
 } from '../utils/constants';
 
 /**
- * Get FFT amplitudes for stem mode
+ * Get FFT amplitudes binned into a fixed number of buckets
  */
 export function getFFTAmplitudes(fft: ToneFFT, count: number, scaleFactor: number): Float32Array {
   const vals = fft.getValue();
@@ -132,33 +132,6 @@ export function getOctaveAmplitudes(fft: ToneFFT): Float32Array {
 }
 
 /**
- * Get octave amplitudes from multiple stem FFTs
- */
-export function getOctaveAmplitudesFromStems(
-  stemFfts: Record<string, ToneFFT>,
-  stems: readonly string[]
-): Float32Array {
-  const combined = new Float32Array(OCTAVE_COUNT);
-  let count = 0;
-
-  for (const stem of stems) {
-    if (!stemFfts[stem]) continue;
-    const octAmps = getOctaveAmplitudes(stemFfts[stem]);
-    for (let o = 0; o < OCTAVE_COUNT; o++) {
-      combined[o] += octAmps[o];
-    }
-    count++;
-  }
-
-  if (count > 0) {
-    for (let o = 0; o < OCTAVE_COUNT; o++) {
-      combined[o] /= count;
-    }
-  }
-  return combined;
-}
-
-/**
  * Compute spectral centroid
  */
 export function computeSpectralCentroid(fft: ToneFFT): number {
@@ -180,30 +153,4 @@ export function computeSpectralCentroid(fft: ToneFFT): number {
 
   if (energySum < 1e-10) return 80;
   return weightedSum / energySum;
-}
-
-/**
- * Compute spectral centroid from stem FFTs
- */
-export function computeStemCentroid(
-  stemFfts: Record<string, ToneFFT>,
-  stems: readonly string[]
-): number {
-  let totalWeightedCentroid = 0;
-  let totalEnergy = 0;
-
-  for (const stem of stems) {
-    if (!stemFfts[stem]) continue;
-    const vals = stemFfts[stem].getValue();
-    let stemEnergy = 0;
-    for (let i = 1; i < vals.length; i++) {
-      stemEnergy += Math.pow(10, vals[i] / 20);
-    }
-    const centroid = computeSpectralCentroid(stemFfts[stem]);
-    totalWeightedCentroid += centroid * stemEnergy;
-    totalEnergy += stemEnergy;
-  }
-
-  if (totalEnergy < 1e-10) return 80;
-  return totalWeightedCentroid / totalEnergy;
 }

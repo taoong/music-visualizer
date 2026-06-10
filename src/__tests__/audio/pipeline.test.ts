@@ -14,13 +14,10 @@ const { mockConfig, mockAudioState } = vi.hoisted(() => ({
     octaveDeltaValues:      new Float32Array(10).fill(0.3),
     octaveTransients:       Array(10).fill(null).map(() => ({ avg: 0.3, multiplier: 1.5 })),
     octaveDeltas:           Array(10).fill(null).map(() => ({ prevMean: 0.3, smoothed: 0.3 })),
-    transientStems: {} as Record<string, { avg: number; multiplier: number }>,
-    deltaStems:     {} as Record<string, { prevMean: number; smoothed: number }>,
   },
 }));
 
 vi.mock('../../state/store', () => ({ store: { config: mockConfig, audioState: mockAudioState } }));
-vi.mock('../../audio/engine', () => ({ audioEngine: { getStemSmoothed: () => null } }));
 
 import {
   computeDecayFactor,

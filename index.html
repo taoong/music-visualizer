@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Interactive music visualizer with frequency analysis and AI-powered stem separation. Real-time audio-reactive graphics powered by p5.js and Tone.js."
+      content="Interactive music visualizer with real-time frequency analysis. Audio-reactive graphics powered by p5.js and Tone.js."
     />
     <title>Music Visualizer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -78,12 +78,7 @@
                   <span class="term-radio" aria-hidden="true"></span><span>frequency_bands</span>
                   <span id="mode-freq-desc" class="sr-only">Analyze audio using 7 frequency bands</span>
                 </button>
-                <button class="term-item mode-btn" data-nav="4" id="mode-stems" type="button" role="radio" aria-checked="false" aria-describedby="mode-stems-desc">
-                  <span class="term-radio" aria-hidden="true"></span><span>stem_separation</span> <span class="badge">exp</span>
-                  <span id="mode-stems-unavail" class="term-note hidden">// requires local server</span>
-                  <span id="mode-stems-desc" class="sr-only">Use AI to separate audio into stems</span>
-                </button>
-                <button class="term-item mode-btn" data-nav="5" id="mode-interactive" type="button" role="radio" aria-checked="false" aria-describedby="mode-interactive-desc">
+                <button class="term-item mode-btn" data-nav="4" id="mode-interactive" type="button" role="radio" aria-checked="false" aria-describedby="mode-interactive-desc">
                   <span class="term-radio" aria-hidden="true"></span><span>interactive</span>
                   <span id="mode-interactive-desc" class="sr-only">Drive the visualization with touch, drag, and keyboard input — audio plays but does not affect the viz</span>
                 </button>
@@ -92,7 +87,7 @@
 
             <div class="term-divider-line"></div>
 
-            <button class="term-item term-launch" data-nav="6" id="play-btn" disabled type="button" aria-describedby="file-name">
+            <button class="term-item term-launch" data-nav="5" id="play-btn" disabled type="button" aria-describedby="file-name">
               LAUNCH
               <span class="sr-only">Start the music visualization</span>
             </button>
@@ -131,7 +126,7 @@
     >
       <div id="processing-content">
         <div class="spinner" role="progressbar" aria-label="Processing audio"></div>
-        <p id="processing-text">Separating stems…</p>
+        <p id="processing-text">Processing…</p>
       </div>
     </div>
 
@@ -225,69 +220,6 @@
               step="0.01"
               value="2.0"
               aria-label="Brilliance sensitivity"
-            />
-          </div>
-        </div>
-        <!-- Stem mode sliders (hidden by default) -->
-        <div id="stem-sliders" class="hidden" role="group" aria-label="Stem sensitivity">
-          <div class="slider-group">
-            <label for="sens-kick">Kick</label>
-            <input
-              type="range"
-              id="sens-kick"
-              min="0"
-              max="3"
-              step="0.01"
-              value="2.0"
-              aria-label="Kick drum sensitivity"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="sens-drums">Drums</label>
-            <input
-              type="range"
-              id="sens-drums"
-              min="0"
-              max="3"
-              step="0.01"
-              value="2.0"
-              aria-label="Drums sensitivity"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="sens-bass-stem">Bass</label>
-            <input
-              type="range"
-              id="sens-bass-stem"
-              min="0"
-              max="3"
-              step="0.01"
-              value="2.0"
-              aria-label="Bass sensitivity"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="sens-vocals">Vocals</label>
-            <input
-              type="range"
-              id="sens-vocals"
-              min="0"
-              max="3"
-              step="0.01"
-              value="2.0"
-              aria-label="Vocals sensitivity"
-            />
-          </div>
-          <div class="slider-group">
-            <label for="sens-other">Other</label>
-            <input
-              type="range"
-              id="sens-other"
-              min="0"
-              max="3"
-              step="0.01"
-              value="2.0"
-              aria-label="Other instruments sensitivity"
             />
           </div>
         </div>

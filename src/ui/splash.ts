@@ -3,39 +3,14 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { separateStems, detectBPMWithFallback } from '../audio/bpm';
-import { setProcessingState, setFileStatus } from '../utils/errors';
+import { detectBPMWithFallback } from '../audio/bpm';
+import { setFileStatus } from '../utils/errors';
 import { SAMPLE_URL } from '../utils/constants';
 import { loadUserImage, clearUserImage } from '../visualizations/userImage';
 import type { AnalysisMode } from '../types';
 
-let isSeparating = false;
 let navCursorIndex = 0;
 let navItems: HTMLElement[] = [];
-
-async function checkServerAvailable(): Promise<boolean> {
-  try {
-    const controller = new AbortController();
-    setTimeout(() => controller.abort(), 3000);
-    const resp = await fetch('/api/health', { signal: controller.signal });
-    return resp.ok;
-  } catch {
-    return false;
-  }
-}
-
-export async function initStemAvailability(): Promise<void> {
-  const btn = document.getElementById('mode-stems') as HTMLButtonElement | null;
-  const note = document.getElementById('mode-stems-unavail');
-  if (!btn) return;
-
-  const available = await checkServerAvailable();
-  if (!available) {
-    btn.dataset.unavailable = 'true';
-    btn.setAttribute('aria-disabled', 'true');
-    note?.classList.remove('hidden');
-  }
-}
 
 function completeStep1(): void {
   document.getElementById('splash-step-mode')?.classList.add('unlocked');
@@ -106,45 +81,26 @@ export function bindSampleButton(): () => void {
 
 export function bindModeSelector(): () => void {
   const modeFreqBtn = document.getElementById('mode-freq');
-  const modeStemsBtn = document.getElementById('mode-stems');
   const modeInteractiveBtn = document.getElementById('mode-interactive');
-  const freqSliders = document.getElementById('freq-sliders');
-  const stemSliders = document.getElementById('stem-sliders');
 
-  if (!modeFreqBtn || !modeStemsBtn || !modeInteractiveBtn) return () => {};
+  if (!modeFreqBtn || !modeInteractiveBtn) return () => {};
 
   const setMode = (mode: AnalysisMode) => {
     store.setMode(mode);
     completeStep2();
 
     modeFreqBtn.classList.toggle('active', mode === 'freq');
-    modeStemsBtn.classList.toggle('active', mode === 'stems');
     modeInteractiveBtn.classList.toggle('active', mode === 'interactive');
-
-    if (mode === 'stems') {
-      stemSliders?.classList.remove('hidden');
-      freqSliders?.classList.add('hidden');
-    } else {
-      // freq and interactive both use the 7-band sensitivity panel layout
-      freqSliders?.classList.remove('hidden');
-      stemSliders?.classList.add('hidden');
-    }
   };
 
   const freqHandler = () => setMode('freq');
-  const stemsHandler = () => {
-    if ((modeStemsBtn as HTMLElement).dataset.unavailable === 'true') return;
-    setMode('stems');
-  };
   const interactiveHandler = () => setMode('interactive');
 
   modeFreqBtn.addEventListener('click', freqHandler);
-  modeStemsBtn.addEventListener('click', stemsHandler);
   modeInteractiveBtn.addEventListener('click', interactiveHandler);
 
   return () => {
     modeFreqBtn.removeEventListener('click', freqHandler);
-    modeStemsBtn.removeEventListener('click', stemsHandler);
     modeInteractiveBtn.removeEventListener('click', interactiveHandler);
   };
 }
@@ -181,12 +137,8 @@ export function bindPlayButton(): () => void {
   if (!playBtn) return () => {};
 
   const handler = async () => {
-    if (store.state.mode === 'stems') {
-      await handleStemModePlay();
-    } else {
-      // freq + interactive both load via the freq audio path
-      await handleFreqModePlay();
-    }
+    // freq + interactive both load via the freq audio path
+    await handleFreqModePlay();
   };
 
   const touchHandler = (e: Event) => {
@@ -436,8 +388,8 @@ export function bindSplashKeyboard(): () => void {
           });
         }
 
-        // Auto-advance cursor after mode selection (freq=3, stems=4, interactive=5)
-        if (navCursorIndex >= 3 && navCursorIndex <= 5) {
+        // Auto-advance cursor after mode selection (freq=3, interactive=4)
+        if (navCursorIndex === 3 || navCursorIndex === 4) {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
               const launchIdx = navItems.findIndex(el => el.id === 'play-btn');
@@ -469,84 +421,3 @@ export function bindSplashKeyboard(): () => void {
   };
 }
 
-async function handleStemModePlay(): Promise<void> {
-  const splash = document.getElementById('splash');
-  const playBtn = document.getElementById('play-btn') as HTMLButtonElement | null;
-
-  if (isSeparating) return;
-
-  // Resolve audio file source (sample or uploaded file)
-  let audioFile: File | null = null;
-
-  if (store.state.useSample) {
-    try {
-      const resp = await fetch(SAMPLE_URL);
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const blob = await resp.blob();
-      audioFile = new File([blob], 'sample.mp3', { type: blob.type || 'audio/mpeg' });
-    } catch (err) {
-      setFileStatus('Failed to load sample track.', true);
-      return;
-    }
-  } else if (store.state.userFile) {
-    audioFile = store.state.userFile;
-  }
-
-  if (!audioFile) {
-    setFileStatus('Please upload a track or use the sample first.', true);
-    return;
-  }
-
-  // Stem separation (server-side, same path for both sample and user file)
-  isSeparating = true;
-  splash?.classList.add('hidden');
-  setProcessingState(true, 'Separating stems…');
-
-  let stemUrls: { kick: string; drums: string; bass: string; vocals: string; other: string };
-  try {
-    stemUrls = await separateStems(audioFile, text => {
-      setProcessingState(true, text);
-    });
-  } catch (err) {
-    console.error('Stem separation error:', err);
-    setProcessingState(false);
-    splash?.classList.remove('hidden');
-    setFileStatus('Stem separation failed. Try frequency mode or another file.', true);
-    if (playBtn) playBtn.disabled = false;
-    isSeparating = false;
-    return;
-  }
-  isSeparating = false;
-
-  if (playBtn) playBtn.disabled = true;
-  setProcessingState(true, 'Loading stems…');
-
-  try {
-    await audioEngine.initStemMode(stemUrls);
-
-    const bpmData = await detectBPMWithFallback(
-      store.state.useSample ? 'sample.mp3' : store.state.userFile!,
-      audioEngine.getAudioBuffer(),
-    );
-    if (bpmData) store.setBPM(bpmData);
-
-    setProcessingState(false);
-    splash?.classList.add('hidden');
-    document.getElementById('playback-bar')?.classList.add('visible');
-
-    audioEngine.start();
-
-    const trackName = document.getElementById('track-name');
-    if (trackName) {
-      trackName.textContent = store.state.useSample
-        ? 'Sample track'
-        : (store.state.userFile?.name ?? null);
-    }
-  } catch (err) {
-    console.error('Stem audio init error:', err);
-    setProcessingState(false);
-    splash?.classList.remove('hidden');
-    setFileStatus('Error loading stems. Try another file.', true);
-    if (playBtn) playBtn.disabled = false;
-  }
-}

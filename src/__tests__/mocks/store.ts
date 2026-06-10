@@ -30,11 +30,6 @@ export function createMockStoreState() {
       sensUpperMid: 2.0,
       sensPresence: 2.0,
       sensBrilliance: 2.0,
-      sensKick: 2.0,
-      sensDrums: 2.0,
-      sensStemBass: 2.0,
-      sensVocals: 2.0,
-      sensOther: 2.0,
       spikeScale: 1.2,
       rotationSpeed: 0.3,
       masterVolume: 0.8,
@@ -52,15 +47,12 @@ export function createMockStoreState() {
       transientValues: new Float32Array(7).fill(1.0),
       deltaValues: new Float32Array(7).fill(0),
       autoGainBands: [],
-      autoGainStems: {},
       transientBands: Array(7)
         .fill(null)
         .map(() => ({ avg: 0, multiplier: 1.0 })),
-      transientStems: {},
       deltaBands: Array(7)
         .fill(null)
         .map(() => ({ prevMean: 0, smoothed: 0 })),
-      deltaStems: {},
       smoothedCentroid: 0.5,
       centroidYOffset: 0,
       smoothedOctaves: new Float32Array(10).fill(0.5),

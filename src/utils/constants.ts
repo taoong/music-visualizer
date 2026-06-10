@@ -146,16 +146,6 @@ export const CENTROID_LOG_RANGE = CENTROID_LOG_HIGH - CENTROID_LOG_LOW;
 export const CENTROID_SMOOTHING = 0.06;
 export const CENTROID_Y_RANGE = 0.15;
 
-// Stem types and smoothing
-export const STEMS = ['kick', 'drums', 'bass', 'vocals', 'other'] as const;
-export const STEM_SMOOTHING: Record<string, [number, number]> = {
-  kick: [0.9, 0.06],
-  drums: [0.85, 0.08],
-  bass: [0.75, 0.1],
-  vocals: [0.78, 0.12],
-  other: [0.8, 0.14],
-};
-
 // Default configuration
 export const DEFAULT_CONFIG = {
   // Freq mode (7 bands)
@@ -166,12 +156,6 @@ export const DEFAULT_CONFIG = {
   sensUpperMid: 2.0,
   sensPresence: 2.0,
   sensBrilliance: 2.0,
-  // Stem mode
-  sensKick: 2.0,
-  sensDrums: 2.0,
-  sensStemBass: 2.0,
-  sensVocals: 2.0,
-  sensOther: 2.0,
   // Shared
   spikeScale: 1.2,
   rotationSpeed: 0.3,

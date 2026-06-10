@@ -23,7 +23,6 @@ vi.mock('../../state/store', async () => {
 vi.mock('../../audio/engine', () => ({
   audioEngine: {
     getPlaybackPosition: vi.fn(() => 0),
-    getStemSmoothed: vi.fn(() => null),
   },
 }));
 

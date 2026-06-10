@@ -52,25 +52,6 @@ export function bindSensitivitySliders(): () => void {
     }
   }
 
-  // Stem mode sliders
-  const stemConfigs = [
-    { id: 'sens-kick', key: 'sensKick' },
-    { id: 'sens-drums', key: 'sensDrums' },
-    { id: 'sens-bass-stem', key: 'sensStemBass' },
-    { id: 'sens-vocals', key: 'sensVocals' },
-    { id: 'sens-other', key: 'sensOther' },
-  ] as const;
-
-  for (const { id, key } of stemConfigs) {
-    const slider = document.getElementById(id) as HTMLInputElement | null;
-    if (slider) {
-      const handler = () => {
-        store.updateConfig(key, parseFloat(slider.value));
-      };
-      slider.addEventListener('input', handler);
-      cleanupFns.push(() => slider.removeEventListener('input', handler));
-    }
-  }
 
   return () => cleanupFns.forEach(fn => fn());
 }

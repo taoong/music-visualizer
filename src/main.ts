@@ -13,11 +13,8 @@ import { store } from './state/store';
 import { audioEngine } from './audio/engine';
 import {
   getLogBandAmplitudes,
-  getFFTAmplitudes,
   getOctaveAmplitudes,
-  getOctaveAmplitudesFromStems,
   computeSpectralCentroid,
-  computeStemCentroid,
 } from './audio/fft';
 import { updateTransient, computeDelta, applyAutoGain } from './audio/processing';
 import { processInteractiveAudio } from './audio/interactiveSynth';
@@ -26,7 +23,6 @@ import {
   processOctaveData,
   decayOctaveState,
   decayFreqBands,
-  decayStemBands,
   smoothBandBins,
 } from './audio/pipeline';
 import { VIZ_REGISTRY, loadUserImage } from './visualizations';
@@ -37,14 +33,11 @@ import { showError } from './utils/errors';
 import {
   BANDS,
   BAND_COUNT,
-  STEMS,
-  SPIKES_PER_BAND,
   CENTROID_LOW_HZ,
   CENTROID_HIGH_HZ,
   CENTROID_LOG_LOW,
   CENTROID_LOG_RANGE,
   CENTROID_SMOOTHING,
-  STEM_SMOOTHING,
   isMobile,
 } from './utils/constants';
 
@@ -113,8 +106,6 @@ const sketch = (p: P5Instance) => {
     const mode = store.state.mode;
     if (mode === 'freq' || mode === 'mic') {
       processFreqMode(dt);
-    } else if (mode === 'stems') {
-      processStemMode(dt);
     } else if (mode === 'interactive') {
       // Audio plays as background; band state is synthesized from user input
       // so every viz responds to taps/drags/holds via the same code paths it
@@ -187,87 +178,6 @@ function processFreqMode(dt: number): void {
     }
   } else {
     decayFreqBands(dt);
-    if (store.state.vizMode === 'tunnel') {
-      decayOctaveState(dt);
-    }
-  }
-}
-
-/**
- * Process audio in stem mode
- */
-function processStemMode(dt: number): void {
-  const stemFfts = audioEngine.getStemFFTs();
-  if (!stemFfts) return;
-
-  const { state, config, audioState } = store;
-  const stemSmoothed = audioEngine.getStemSmoothed();
-
-  const anyPlaying = state.isPlaying && stemFfts.kick !== undefined;
-
-  if (anyPlaying) {
-    const decayFactor = computeDecayFactor();
-
-    for (const stem of STEMS) {
-      if (!stemFfts[stem] || !stemSmoothed?.[stem]) continue;
-
-      // Initialize tracking structures if needed
-      if (!audioState.autoGainStems[stem]) {
-        audioState.autoGainStems[stem] = {
-          peaks: new Float32Array(300).fill(0.01),
-          idx: 0,
-        };
-      }
-      if (!audioState.transientStems[stem]) {
-        audioState.transientStems[stem] = { avg: 0, multiplier: 1.0 };
-      }
-      if (!audioState.deltaStems[stem]) {
-        audioState.deltaStems[stem] = { prevMean: 0, smoothed: 0 };
-      }
-
-      const raw = applyAutoGain(
-        getFFTAmplitudes(stemFfts[stem], SPIKES_PER_BAND, 10.0),
-        audioState.autoGainStems[stem]
-      );
-
-      audioState.transientStems[stem].multiplier = updateTransient(
-        audioState.transientStems[stem],
-        raw,
-        dt
-      );
-      audioState.deltaStems[stem].smoothed = computeDelta(audioState.deltaStems[stem], raw, dt);
-
-      const sensKey = `sens${stem.charAt(0).toUpperCase() + stem.slice(1)}` as keyof typeof config;
-      const [attack, release] = STEM_SMOOTHING[stem];
-
-      smoothBandBins(
-        stemSmoothed[stem],
-        raw,
-        config[sensKey] as number,
-        attack,
-        release,
-        decayFactor,
-        dt
-      );
-    }
-
-    updateCentroid(computeStemCentroid(stemFfts, STEMS));
-
-    const waveformAnalyserStem = audioEngine.getWaveformAnalyser();
-    if (waveformAnalyserStem) {
-      const waveRaw = waveformAnalyserStem.getValue();
-      audioState.waveformData.set(waveRaw.subarray(0, audioState.waveformData.length));
-    }
-
-    if (state.vizMode === 'tunnel') {
-      const rawOct = applyAutoGain(
-        getOctaveAmplitudesFromStems(stemFfts, STEMS),
-        audioState.autoGainOctaves
-      );
-      processOctaveData(rawOct, decayFactor, dt);
-    }
-  } else {
-    decayStemBands(dt);
     if (store.state.vizMode === 'tunnel') {
       decayOctaveState(dt);
     }

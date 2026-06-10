@@ -3,8 +3,8 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { separateStems, detectBPMWithFallback } from '../audio/bpm';
-import { showError, setProcessingState } from '../utils/errors';
+import { detectBPMWithFallback } from '../audio/bpm';
+import { showError } from '../utils/errors';
 import { formatTime } from '../utils/format';
 import { loadUserImage, clearUserImage } from '../visualizations/userImage';
 
@@ -90,45 +90,23 @@ export function bindTrackSwitching(): () => void {
     store.setUserFile(file);
     const trackNameEl = document.getElementById('track-name');
 
-    if (store.isFreqMode) {
-      if (trackNameEl) trackNameEl.textContent = 'Loading…';
+    if (trackNameEl) trackNameEl.textContent = 'Loading…';
 
-      try {
-        await audioEngine.initFreqMode(file);
+    try {
+      await audioEngine.initFreqMode(file);
 
+      if (!store.isInteractive) {
         const bpmData = await detectBPMWithFallback(file, audioEngine.getAudioBuffer());
         if (bpmData) store.setBPM(bpmData);
-
-        audioEngine.start();
-        document.getElementById('pause-btn')?.classList.add('is-playing');
-        if (trackNameEl) trackNameEl.textContent = file.name;
-      } catch (err) {
-        console.error('Track switch error:', err);
-        if (trackNameEl) trackNameEl.textContent = 'Error loading audio.';
-        showError('Failed to load audio file');
       }
-    } else {
-      setProcessingState(true, 'Separating stems…');
 
-      try {
-        const stemUrls = await separateStems(file);
-        setProcessingState(true, 'Loading stems…');
-
-        await audioEngine.initStemMode(stemUrls);
-
-        const bpmData = await detectBPMWithFallback(file, audioEngine.getAudioBuffer());
-        if (bpmData) store.setBPM(bpmData);
-
-        setProcessingState(false);
-        audioEngine.start();
-        document.getElementById('pause-btn')?.classList.add('is-playing');
-        if (trackNameEl) trackNameEl.textContent = file.name;
-      } catch (err) {
-        console.error('Stem switch error:', err);
-        setProcessingState(false);
-        if (trackNameEl) trackNameEl.textContent = 'Stem separation failed.';
-        showError('Failed to separate stems');
-      }
+      audioEngine.start();
+      document.getElementById('pause-btn')?.classList.add('is-playing');
+      if (trackNameEl) trackNameEl.textContent = file.name;
+    } catch (err) {
+      console.error('Track switch error:', err);
+      if (trackNameEl) trackNameEl.textContent = 'Error loading audio.';
+      showError('Failed to load audio file');
     }
   };
 

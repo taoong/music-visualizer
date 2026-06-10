@@ -129,8 +129,7 @@ function initOffscreen(canvasW: number, canvasH: number, bandCount: number): voi
 
 export function drawRippleTank(p: P5Instance, dt: number): void {
   const { state, config } = store;
-  const isFreqMode = state.mode === 'freq' || state.mode === 'mic' || state.mode === 'interactive';
-  const bandCount = isFreqMode ? BAND_COUNT : 5;
+  const bandCount = BAND_COUNT;
 
   // Init / resize check
   const needW = Math.max(1, Math.floor(p.width / PIXEL_SCALE));

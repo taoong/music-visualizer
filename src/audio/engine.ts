@@ -1,22 +1,13 @@
 /**
  * Audio engine for managing Tone.js instances and audio playback
  */
-import type { StemUrls } from '../types';
 import { store } from '../state/store';
-import { FFT_SIZE, SPIKES_PER_BAND } from '../utils/constants';
+import { FFT_SIZE } from '../utils/constants';
 
 export interface FreqModeAudio {
   player: TonePlayer;
   gainNode: ToneGain;
   fft: ToneFFT;
-}
-
-export interface StemModeAudio {
-  players: Record<string, TonePlayer>;
-  gainNodes: Record<string, ToneGain>;
-  masterGain: ToneGain;
-  ffts: Record<string, ToneFFT>;
-  smoothed: Record<string, Float32Array>;
 }
 
 export interface MicModeAudio {
@@ -28,7 +19,6 @@ export interface MicModeAudio {
 
 class AudioEngine {
   private freqAudio: FreqModeAudio | null = null;
-  private stemAudio: StemModeAudio | null = null;
   private micAudio: MicModeAudio | null = null;
   private blobUrls: string[] = [];
   private rawAudioBuffer: AudioBuffer | null = null;
@@ -99,73 +89,6 @@ class AudioEngine {
   }
 
   /**
-   * Initialize stem mode audio
-   */
-  async initStemMode(stemUrls: StemUrls): Promise<void> {
-    this.disposeAll();
-    await Tone.start();
-
-    const masterGain = new Tone.Gain(store.config.masterVolume);
-    masterGain.toDestination();
-
-    const players: Record<string, TonePlayer> = {};
-    const gainNodes: Record<string, ToneGain> = {};
-    const ffts: Record<string, ToneFFT> = {};
-    const smoothed: Record<string, Float32Array> = {};
-
-    const stems: string[] = ['kick', 'drums', 'bass', 'vocals', 'other'];
-
-    for (const stem of stems) {
-      const url = stemUrls[stem as keyof StemUrls];
-      if (!url) continue;
-
-      // Pre-fetch stem audio
-      try {
-        const resp = await fetch(url);
-        if (!resp.ok) continue;
-        const blob = await resp.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        this.blobUrls.push(blobUrl);
-
-        players[stem] = new Tone.Player({
-          url: blobUrl,
-          loop: true,
-          autostart: false,
-        });
-      } catch {
-        continue;
-      }
-
-      gainNodes[stem] = new Tone.Gain(1);
-      players[stem].connect(gainNodes[stem]);
-      gainNodes[stem].connect(masterGain);
-
-      ffts[stem] = new Tone.FFT(FFT_SIZE);
-      players[stem].connect(ffts[stem]);
-
-      smoothed[stem] = new Float32Array(SPIKES_PER_BAND);
-    }
-
-    if (Object.keys(players).length === 0) {
-      throw new Error('No stems could be loaded. Check that the Flask server is running.');
-    }
-
-    this.waveformAnalyser = new Tone.Analyser('waveform', FFT_SIZE);
-    masterGain.connect(this.waveformAnalyser);
-
-    await Tone.loaded();
-
-    this.stemAudio = {
-      players,
-      gainNodes,
-      masterGain,
-      ffts,
-      smoothed,
-    };
-    store.setAudioReady(true);
-  }
-
-  /**
    * Initialize microphone mode audio
    */
   async initMicMode(): Promise<void> {
@@ -228,18 +151,6 @@ class AudioEngine {
       this.micAudio = null;
     }
 
-    // Dispose stem mode
-    if (this.stemAudio) {
-      for (const stem of Object.keys(this.stemAudio.players)) {
-        this.stemAudio.players[stem].stop();
-        this.stemAudio.players[stem].dispose();
-        this.stemAudio.gainNodes[stem].dispose();
-        this.stemAudio.ffts[stem].dispose();
-      }
-      this.stemAudio.masterGain.dispose();
-      this.stemAudio = null;
-    }
-
     // Clean up blob URLs
     this.blobUrls.forEach(url => URL.revokeObjectURL(url));
     this.blobUrls = [];
@@ -262,15 +173,8 @@ class AudioEngine {
       return;
     }
 
-    const time = '+0';
-    const isFreqMode = store.state.mode === 'freq';
-
-    if (isFreqMode && this.freqAudio) {
-      this.freqAudio.player.start(time, offset);
-    } else if (!isFreqMode && this.stemAudio) {
-      for (const stem of Object.keys(this.stemAudio.players)) {
-        this.stemAudio.players[stem].start(time, offset);
-      }
+    if (this.freqAudio) {
+      this.freqAudio.player.start('+0', offset);
     }
 
     store.setPlaying(true);
@@ -287,15 +191,10 @@ class AudioEngine {
       return;
     }
 
-    const isFreqMode = store.state.mode === 'freq';
     const currentPosition = this.getPlaybackPosition();
 
-    if (isFreqMode && this.freqAudio) {
+    if (this.freqAudio) {
       this.freqAudio.player.stop();
-    } else if (!isFreqMode && this.stemAudio) {
-      for (const stem of Object.keys(this.stemAudio.players)) {
-        this.stemAudio.players[stem].stop();
-      }
     }
 
     store.setPlaying(false);
@@ -321,12 +220,8 @@ class AudioEngine {
    * Get audio duration
    */
   getDuration(): number {
-    const isFreqMode = store.state.mode === 'freq';
-
-    if (isFreqMode && this.freqAudio?.player.buffer) {
+    if (this.freqAudio?.player.buffer) {
       return this.freqAudio.player.buffer.duration;
-    } else if (!isFreqMode && this.stemAudio?.players.kick?.buffer) {
-      return this.stemAudio.players.kick.buffer.duration;
     }
     return 0;
   }
@@ -350,10 +245,8 @@ class AudioEngine {
   setVolume(volume: number): void {
     if (store.state.mode === 'mic' && this.micAudio) {
       this.micAudio.gainNode.gain.value = volume;
-    } else if (store.state.mode === 'freq' && this.freqAudio) {
+    } else if (this.freqAudio) {
       this.freqAudio.gainNode.gain.value = volume;
-    } else if (this.stemAudio) {
-      this.stemAudio.masterGain.gain.value = volume;
     }
   }
 
@@ -372,34 +265,10 @@ class AudioEngine {
   }
 
   /**
-   * Get FFTs for stem mode
-   */
-  getStemFFTs(): Record<string, ToneFFT> | null {
-    return this.stemAudio?.ffts || null;
-  }
-
-  /**
-   * Get stem smoothed data
-   */
-  getStemSmoothed(): Record<string, Float32Array> | null {
-    return this.stemAudio?.smoothed || null;
-  }
-
-  /**
    * Get cached AudioBuffer for client-side BPM detection
    */
   getAudioBuffer(): AudioBuffer | null {
-    if (this.rawAudioBuffer) return this.rawAudioBuffer;
-
-    // Fallback: try to get buffer from stem players
-    if (this.stemAudio) {
-      for (const stem of Object.keys(this.stemAudio.players)) {
-        const buf = this.stemAudio.players[stem].buffer?.get?.();
-        if (buf) return buf;
-      }
-    }
-
-    return null;
+    return this.rawAudioBuffer;
   }
 }
 

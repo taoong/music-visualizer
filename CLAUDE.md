@@ -1,16 +1,15 @@
 # Music Visualizer
 
-Real-time audio-reactive visualizer built with TypeScript, p5.js, and Tone.js. Supports file upload, sample track, and live microphone input. Optional Flask backend for AI stem separation (Demucs) and BPM detection (Essentia).
+Real-time audio-reactive visualizer built with TypeScript, p5.js, and Tone.js. Supports file upload, sample track, and live microphone input. BPM detection runs client-side via onset/autocorrelation.
 
 ## Commands
 
-- `npm run dev` — start Vite dev server (port 3000, proxies `/api/*` and `/server/*` to `:5001`)
+- `npm run dev` — start Vite dev server (port 3000)
 - `npm run build` — `tsc && vite build` (output to `dist/`)
 - `npm run lint` / `npm run lint:fix` — ESLint
 - `npm run test` — run Vitest tests
 - `npm run test:watch` — run Vitest in watch mode
 - `npm run typecheck` — `tsc --noEmit`
-- `cd server && python app.py` — start Flask backend on port 5001
 
 ## Architecture
 
@@ -21,11 +20,11 @@ src/
 ├── main.ts                    # p5 sketch entry point, render loop, audio pipeline orchestration
 ├── state/store.ts             # Singleton EventEmitter store (AppState, Config, AudioProcessingState)
 ├── audio/
-│   ├── engine.ts              # Tone.js player management (freq mode: 1 player, stem mode: 5 players + FFTs)
+│   ├── engine.ts              # Tone.js player management (freq mode + mic mode)
 │   ├── fft.ts                 # FFT analysis: log-band amplitudes, octave amplitudes, spectral centroid
 │   ├── processing.ts          # Auto-gain normalization, transient detection, delta (rate of change)
 │   ├── pipeline.ts            # Decay, octave processing, band smoothing with attack/release
-│   └── bpm.ts                 # BPM detection: server-side /api/detect-bpm + client-side fallback
+│   └── bpm.ts                 # BPM detection: client-side onset/autocorrelation
 ├── __tests__/
 │   ├── setup.ts               # Global test setup: browser global stubs for Node environment
 │   ├── mocks/
@@ -102,7 +101,7 @@ src/
 │   ├── splash.ts              # Splash screen: file upload, sample button, mic button, mode selector, image upload, play button
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
-│   ├── sliders.ts             # Volume, sensitivity (7 freq / 5 stem), display sliders
+│   ├── sliders.ts             # Volume, 7-band frequency sensitivity, display sliders
 │   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; shortcuts auto-registered from VIZ_REGISTRY; special keys: ;→marbling, [→flowfield, ]→lissajous, \→truchet, -→topography, =→interference, .→voronoi, ,→blobs, /→grayscott, ~→growth, @→pixelsort, #→echoes, $→physarum, %→optical, ^→geodesic, &→ribbons, *→infinitynet, _→zengarden, !→arabesque, |→murmuration, q→circuit, l→flame, a→aurora)
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
@@ -115,12 +114,12 @@ src/
 
 ### Data flow
 
-1. **Audio input** — User uploads a file, selects sample track, or uses microphone for live input (via `Tone.UserMedia`). Optionally run stem separation via `/api/separate` (Demucs).
-2. **BPM detection** — Server-side Essentia via `/api/detect-bpm`, with client-side onset/autocorrelation fallback.
+1. **Audio input** — User uploads a file, selects sample track, or uses microphone for live input (via `Tone.UserMedia`).
+2. **BPM detection** — Client-side onset/autocorrelation from the decoded `AudioBuffer`.
 3. **Viz reset** — On `audioReady`, `VIZ_REGISTRY.highway.reset?.()` clears highway state for the new track. All other vizzes are reset when the user switches to them via the registry's `reset` callback.
-4. **Playback** — `audioEngine` creates Tone.js Player(s) + FFT node(s). Freq mode: 1 player. Stem mode: 5 parallel players (kick, drums, bass, vocals, other).
+4. **Playback** — `audioEngine` creates a single Tone.js Player + FFT node for freq mode (or a Tone.UserMedia + FFT for mic mode).
 5. **Render loop** (`main.ts` `p.draw`) runs at 60fps:
-   - Get raw FFT → log-band amplitudes (7 bands) or per-stem amplitudes (5 stems)
+   - Get raw FFT → log-band amplitudes (7 bands)
    - Apply auto-gain normalization, transient detection, delta computation
    - Smooth with attack/release per band, frame-rate independent via `dt`
    - Store results in `store.audioState` (smoothedBands, transientValues, deltaValues)
@@ -131,9 +130,9 @@ src/
 ### State management
 
 `store` is a singleton `StateStore` with three state objects:
-- **`state: AppState`** — mode (`freq`/`stems`/`mic`/`interactive`), vizMode, isPlaying, BPM data
+- **`state: AppState`** — mode (`freq`/`mic`/`interactive`), vizMode, isPlaying, BPM data
   - `interactive` mode: audio plays as background but FFT/BPM are skipped. Instead, `src/audio/interactiveSynth.ts` turns each pointer/key event into the same `audioState` (smoothedBands, transientValues, smoothedCentroid, smoothedOctaves) the vizzes already read for real audio — so every viz responds automatically. Tap fires a Gaussian transient centered on band at X position, drag X selects dominant band + Y modulates amplitude, hold pads mid bands, key pulses a band selected by char code. On top of the synth, bespoke per-viz `interact(event)` handlers on `VizEntry` add richer behavior for: blobs, grayscott, physarum, rippletank, constellation, marbling, bloom, hive, voronoi, tetris, flowfield, lasers, synthwave, text, highway.
-- **`config: Config`** — sensitivities (7 freq + 5 stem), spikeScale, decayRate, rotationSpeed, masterVolume
+- **`config: Config`** — 7-band freq sensitivities, spikeScale, decayRate, rotationSpeed, masterVolume
 - **`audioState: AudioProcessingState`** — smoothedBands, transientValues, deltaValues, spectral centroid, octave data
 
 Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChange`, `vizModeChange`, `bpmDetected`, `imageChange`, `error`.
@@ -179,15 +178,6 @@ Note: keyboard shortcuts are auto-registered from `VIZ_REGISTRY` — do not add 
 - **p5.js 1.9.0** — CDN-loaded, 2D canvas rendering. Global `p5` constructor, instance passed as `P5Instance`.
 - **Tone.js 14.8.49** — CDN-loaded, Web Audio wrapper. `Tone.Player`, `Tone.Gain`, `Tone.FFT`.
 - Both have type stubs in `src/types/globals.d.ts` (no `@types` packages).
-
-### Server (optional)
-
-Flask app at `server/app.py` (port 5001):
-- `POST /api/separate` — Demucs stem separation → 5 MP3s (kick, drums, bass, vocals, other)
-- `POST /api/detect-bpm` — Essentia BPM detection → `{bpm, beatOffset}`
-- Static file serving for stems output
-
-Frontend works without the server — stem mode won't be available and BPM detection falls back to client-side.
 
 ## Maintenance
 

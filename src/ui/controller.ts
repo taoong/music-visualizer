@@ -6,7 +6,7 @@ import type { VizMode } from '../types';
 import { injectErrorStyles } from '../utils/errors';
 import { setVisualizerText } from '../visualizations';
 import { BANDS, isMobile } from '../utils/constants';
-import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, bindSplashKeyboard, initStemAvailability } from './splash';
+import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, bindSplashKeyboard } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
@@ -53,9 +53,6 @@ export function initUI(): () => void {
 
   // BPM controls
   cleanupFns.push(bindBPMControls());
-
-  // Probe for Flask server; disable stems button if unavailable
-  initStemAvailability();
 
   // MIDI mapping UI
   initMidiUI();
@@ -238,16 +235,8 @@ function bindRandomizeButton(): () => void {
     const vizMode = store.state.vizMode;
 
     // Randomize sensitivity sliders
-    if (store.isFreqMode || store.isMicMode) {
-      for (const band of BANDS) {
-        setSlider(band.sliderId, rand(1.0, 3.0));
-      }
-    } else {
-      setSlider('sens-kick', rand(1.0, 3.0));
-      setSlider('sens-drums', rand(1.0, 3.0));
-      setSlider('sens-bass-stem', rand(1.0, 3.0));
-      setSlider('sens-vocals', rand(1.0, 3.0));
-      setSlider('sens-other', rand(1.0, 3.0));
+    for (const band of BANDS) {
+      setSlider(band.sliderId, rand(1.0, 3.0));
     }
 
     // Randomize shared display sliders based on what's visible for this viz

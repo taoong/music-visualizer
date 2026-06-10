@@ -11,14 +11,13 @@ import {
 import { getBandData } from './helpers';
 
 export function drawSpectrum(p: P5Instance): void {
-  const { state, config, audioState } = store;
+  const { config, audioState } = store;
 
   const hPad = isMobile ? 10 : 40;
   const bottomMargin = 60 - audioState.centroidYOffset;
   const maxBarHeight = p.height * 0.7;
 
-  const isFreqMode = state.mode === 'freq' || state.mode === 'mic' || state.mode === 'interactive';
-  const bandCount = isFreqMode ? 7 : 5;
+  const bandCount = 7;
   const totalBars = SPIKES_PER_BAND * bandCount;
 
   const availWidth = p.width - hPad * 2;
