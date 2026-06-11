@@ -274,6 +274,7 @@
           <option value="flame">Fractal Flame</option>
           <option value="aurora">Aurora</option>
           <option value="disorders">Disorders</option>
+          <option value="blackwave">Black Wave</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1708,6 +1709,45 @@
               step="0.01"
               value="0.5"
               aria-label="Strength and spread of beat-triggered erasure waves sweeping the lattice"
+            />
+          </div>
+        </div>
+
+        <div id="blackwave-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="blackwave-density">Density</label>
+            <input
+              type="range"
+              id="blackwave-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Ink-stroke and foam-spray richness — 0 = sparse dry brushwork, 1 = dense textured spray"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="blackwave-swell">Swell</label>
+            <input
+              type="range"
+              id="blackwave-swell"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Wave amplitude — 0 = calm rolling swells, 1 = towering waves"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="blackwave-hue">Hue</label>
+            <input
+              type="range"
+              id="blackwave-hue"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Ink palette — 0 = sumi-e monochrome, 0.5 = Hokusai indigo ai-zuri, 1 = vermillion Red Fuji"
             />
           </div>
         </div>

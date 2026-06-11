@@ -124,6 +124,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   disordersGrid: 'disorders-grid',
   disordersChaos: 'disorders-chaos',
   disordersInterrupt: 'disorders-interrupt',
+  blackwaveDensity: 'blackwave-density',
+  blackwaveSwell: 'blackwave-swell',
+  blackwaveHue: 'blackwave-hue',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

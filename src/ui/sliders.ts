@@ -163,6 +163,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'disorders-grid', key: 'disordersGrid' },
     { id: 'disorders-chaos', key: 'disordersChaos' },
     { id: 'disorders-interrupt', key: 'disordersInterrupt' },
+    { id: 'blackwave-density', key: 'blackwaveDensity' },
+    { id: 'blackwave-swell', key: 'blackwaveSwell' },
+    { id: 'blackwave-hue', key: 'blackwaveHue' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -303,6 +303,10 @@ export const DEFAULT_CONFIG = {
   disordersGrid: 16,
   disordersChaos: 0.2,
   disordersInterrupt: 0.5,
+  // Black Wave-specific
+  blackwaveDensity: 0.5,
+  blackwaveSwell: 0.4,
+  blackwaveHue: 0.5,
 };
 
 // FFT and decay constants
