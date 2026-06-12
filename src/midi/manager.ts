@@ -127,6 +127,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   blackwaveDensity: 'blackwave-density',
   blackwaveSwell: 'blackwave-swell',
   blackwaveHue: 'blackwave-hue',
+  datadreamDensity: 'datadream-density',
+  datadreamFlow: 'datadream-flow',
+  datadreamForm: 'datadream-form',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

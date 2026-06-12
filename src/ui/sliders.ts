@@ -166,6 +166,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'blackwave-density', key: 'blackwaveDensity' },
     { id: 'blackwave-swell', key: 'blackwaveSwell' },
     { id: 'blackwave-hue', key: 'blackwaveHue' },
+    { id: 'datadream-density', key: 'datadreamDensity' },
+    { id: 'datadream-flow', key: 'datadreamFlow' },
+    { id: 'datadream-form', key: 'datadreamForm' },
   ] as const;
 
   for (const { id, key } of configs) {

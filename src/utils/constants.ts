@@ -307,6 +307,10 @@ export const DEFAULT_CONFIG = {
   blackwaveDensity: 0.5,
   blackwaveSwell: 0.4,
   blackwaveHue: 0.5,
+  // Data Dream-specific
+  datadreamDensity: 0.5,
+  datadreamFlow: 0.4,
+  datadreamForm: 0.6,
 };
 
 // FFT and decay constants

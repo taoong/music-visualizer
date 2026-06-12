@@ -50,3 +50,4 @@ export { drawFlame, resetFlame } from './flame';
 export { drawAurora, resetAurora } from './aurora';
 export { drawDisorders, resetDisorders } from './disorders';
 export { drawBlackWave, resetBlackWave } from './blackwave';
+export { drawDataDream, resetDataDream } from './datadream';

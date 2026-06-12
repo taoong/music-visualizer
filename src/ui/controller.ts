@@ -99,6 +99,7 @@ const ALL_CONTROL_IDS = [
   'aurora-controls-group',
   'disorders-controls-group',
   'blackwave-controls-group',
+  'datadream-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -151,6 +152,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   aurora:        { show: ['aurora-controls-group'] },
   disorders:     { show: ['disorders-controls-group'] },
   blackwave:     { show: ['blackwave-controls-group'] },
+  datadream:     { show: ['datadream-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
