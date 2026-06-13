@@ -49,6 +49,7 @@ import { drawAurora, resetAurora } from './aurora';
 import { drawDisorders, resetDisorders } from './disorders';
 import { drawBlackWave, resetBlackWave } from './blackwave';
 import { drawDataDream, resetDataDream } from './datadream';
+import { drawOrigami, resetOrigami } from './origami';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -152,4 +153,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   disorders:     { draw: drawDisorders,      reset: resetDisorders,     key: 'k',  label: 'Disorders' },
   blackwave:     { draw: drawBlackWave,      reset: resetBlackWave,     key: 'q',  label: 'Black Wave' },
   datadream:     { draw: drawDataDream,      reset: resetDataDream,     key: 'd',  label: 'Data Dream' },
+  origami:       { draw: drawOrigami,        reset: resetOrigami,       key: 't',  label: 'Origami' },
 };

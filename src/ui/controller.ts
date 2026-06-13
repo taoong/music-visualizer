@@ -100,6 +100,7 @@ const ALL_CONTROL_IDS = [
   'disorders-controls-group',
   'blackwave-controls-group',
   'datadream-controls-group',
+  'origami-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -153,6 +154,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   disorders:     { show: ['disorders-controls-group'] },
   blackwave:     { show: ['blackwave-controls-group'] },
   datadream:     { show: ['datadream-controls-group'] },
+  origami:       { show: ['origami-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

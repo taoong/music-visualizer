@@ -130,6 +130,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   datadreamDensity: 'datadream-density',
   datadreamFlow: 'datadream-flow',
   datadreamForm: 'datadream-form',
+  origamiFold: 'origami-fold',
+  origamiGrid: 'origami-grid',
+  origamiWave: 'origami-wave',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

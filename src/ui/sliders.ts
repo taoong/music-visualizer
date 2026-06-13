@@ -169,6 +169,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'datadream-density', key: 'datadreamDensity' },
     { id: 'datadream-flow', key: 'datadreamFlow' },
     { id: 'datadream-form', key: 'datadreamForm' },
+    { id: 'origami-fold', key: 'origamiFold' },
+    { id: 'origami-grid', key: 'origamiGrid' },
+    { id: 'origami-wave', key: 'origamiWave' },
   ] as const;
 
   for (const { id, key } of configs) {

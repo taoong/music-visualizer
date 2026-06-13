@@ -311,6 +311,10 @@ export const DEFAULT_CONFIG = {
   datadreamDensity: 0.5,
   datadreamFlow: 0.4,
   datadreamForm: 0.6,
+  // Origami-specific
+  origamiFold: 0.5,
+  origamiGrid: 14,
+  origamiWave: 0.5,
 };
 
 // FFT and decay constants
