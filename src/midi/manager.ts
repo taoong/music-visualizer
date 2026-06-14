@@ -133,6 +133,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   origamiFold: 'origami-fold',
   origamiGrid: 'origami-grid',
   origamiWave: 'origami-wave',
+  lightfieldGrid: 'lightfield-grid',
+  lightfieldFlow: 'lightfield-flow',
+  lightfieldGlow: 'lightfield-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

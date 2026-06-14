@@ -172,6 +172,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'origami-fold', key: 'origamiFold' },
     { id: 'origami-grid', key: 'origamiGrid' },
     { id: 'origami-wave', key: 'origamiWave' },
+    { id: 'lightfield-grid', key: 'lightfieldGrid' },
+    { id: 'lightfield-flow', key: 'lightfieldFlow' },
+    { id: 'lightfield-glow', key: 'lightfieldGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

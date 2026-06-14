@@ -277,6 +277,7 @@
           <option value="blackwave">Black Wave</option>
           <option value="datadream">Data Dream</option>
           <option value="origami">Origami</option>
+          <option value="lightfield">Light Field</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1828,6 +1829,45 @@
               step="0.01"
               value="0.5"
               aria-label="Speed and reach of the beat-triggered fold wave that ripples once across the sheet"
+            />
+          </div>
+        </div>
+
+        <div id="lightfield-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="lightfield-grid">Grid</label>
+            <input
+              type="range"
+              id="lightfield-grid"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Lattice density — 0 = a few floating points, 1 = a dense starfield"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lightfield-flow">Flow</label>
+            <input
+              type="range"
+              id="lightfield-flow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Wave speed through the lattice, drift turbulence, and camera orbit speed"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lightfield-glow">Glow</label>
+            <input
+              type="range"
+              id="lightfield-glow"
+              min="0"
+              max="2"
+              step="0.05"
+              value="1"
+              aria-label="Halo brightness around each point in the light field"
             />
           </div>
         </div>

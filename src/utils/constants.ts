@@ -315,6 +315,10 @@ export const DEFAULT_CONFIG = {
   origamiFold: 0.5,
   origamiGrid: 14,
   origamiWave: 0.5,
+  // Light Field-specific
+  lightfieldGrid: 0.5,
+  lightfieldFlow: 0.4,
+  lightfieldGlow: 1.0,
 };
 
 // FFT and decay constants

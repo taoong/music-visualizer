@@ -101,6 +101,7 @@ const ALL_CONTROL_IDS = [
   'blackwave-controls-group',
   'datadream-controls-group',
   'origami-controls-group',
+  'lightfield-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -155,6 +156,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   blackwave:     { show: ['blackwave-controls-group'] },
   datadream:     { show: ['datadream-controls-group'] },
   origami:       { show: ['origami-controls-group'] },
+  lightfield:    { show: ['lightfield-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
