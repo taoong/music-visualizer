@@ -45,10 +45,8 @@ import { drawMurmuration, resetMurmuration } from './murmuration';
 import { drawKnots, resetKnots } from './knots';
 import { drawPenrose, resetPenrose } from './penrose';
 import { drawFlame, resetFlame } from './flame';
-import { drawAurora, resetAurora } from './aurora';
 import { drawDisorders, resetDisorders } from './disorders';
 import { drawBlackWave, resetBlackWave } from './blackwave';
-import { drawDataDream, resetDataDream } from './datadream';
 import { drawOrigami, resetOrigami } from './origami';
 import { drawLightField, resetLightField } from './lightfield';
 import { interactBlobs } from './blobs';
@@ -150,10 +148,8 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   knots:         { draw: drawKnots,          reset: resetKnots,         key: 'n',  label: 'Knot' },
   penrose:       { draw: drawPenrose,        reset: resetPenrose,       key: 'p',  label: 'Penrose' },
   flame:         { draw: drawFlame,          reset: resetFlame,         key: 'l',  label: 'Fractal Flame' },
-  aurora:        { draw: drawAurora,         reset: resetAurora,        key: 'a',  label: 'Aurora' },
   disorders:     { draw: drawDisorders,      reset: resetDisorders,     key: 'k',  label: 'Disorders' },
   blackwave:     { draw: drawBlackWave,      reset: resetBlackWave,     key: 'q',  label: 'Black Wave' },
-  datadream:     { draw: drawDataDream,      reset: resetDataDream,     key: 'd',  label: 'Data Dream' },
   origami:       { draw: drawOrigami,        reset: resetOrigami,       key: 't',  label: 'Origami' },
   lightfield:    { draw: drawLightField,     reset: resetLightField,    key: 'x',  label: 'Light Field' },
 };

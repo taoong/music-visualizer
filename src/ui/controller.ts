@@ -96,10 +96,8 @@ const ALL_CONTROL_IDS = [
   'knots-controls-group',
   'penrose-controls-group',
   'flame-controls-group',
-  'aurora-controls-group',
   'disorders-controls-group',
   'blackwave-controls-group',
-  'datadream-controls-group',
   'origami-controls-group',
   'lightfield-controls-group',
 ] as const;
@@ -151,10 +149,8 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   knots:         { show: ['knots-controls-group'] },
   penrose:       { show: ['penrose-controls-group'] },
   flame:         { show: ['flame-controls-group'] },
-  aurora:        { show: ['aurora-controls-group'] },
   disorders:     { show: ['disorders-controls-group'] },
   blackwave:     { show: ['blackwave-controls-group'] },
-  datadream:     { show: ['datadream-controls-group'] },
   origami:       { show: ['origami-controls-group'] },
   lightfield:    { show: ['lightfield-controls-group'] },
 };

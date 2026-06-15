@@ -295,10 +295,6 @@ export const DEFAULT_CONFIG = {
   flameDensity: 0.5,
   flameGlow: 1.0,
   flameMutation: 0.4,
-  // Aurora-specific
-  auroraCurtains: 5,
-  auroraWave: 0.45,
-  auroraHue: 0.05,
   // Disorders-specific
   disordersGrid: 16,
   disordersChaos: 0.2,
@@ -307,10 +303,6 @@ export const DEFAULT_CONFIG = {
   blackwaveDensity: 0.5,
   blackwaveSwell: 0.4,
   blackwaveHue: 0.5,
-  // Data Dream-specific
-  datadreamDensity: 0.5,
-  datadreamFlow: 0.4,
-  datadreamForm: 0.6,
   // Origami-specific
   origamiFold: 0.5,
   origamiGrid: 14,

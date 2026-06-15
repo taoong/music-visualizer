@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'aurora' | 'disorders' | 'blackwave' | 'datadream' | 'origami' | 'lightfield';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -174,10 +174,6 @@ export interface Config {
   flameDensity: number;
   flameGlow: number;
   flameMutation: number;
-  // Aurora-specific
-  auroraCurtains: number;
-  auroraWave: number;
-  auroraHue: number;
   // Disorders-specific
   disordersGrid: number;
   disordersChaos: number;
@@ -186,10 +182,6 @@ export interface Config {
   blackwaveDensity: number;
   blackwaveSwell: number;
   blackwaveHue: number;
-  // Data Dream-specific
-  datadreamDensity: number;
-  datadreamFlow: number;
-  datadreamForm: number;
   // Origami-specific
   origamiFold: number;
   origamiGrid: number;
