@@ -276,6 +276,7 @@
           <option value="blackwave">Black Wave</option>
           <option value="origami">Origami</option>
           <option value="lightfield">Light Field</option>
+          <option value="aurora">Aurora</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1788,6 +1789,45 @@
               step="0.05"
               value="1"
               aria-label="Halo brightness around each point in the light field"
+            />
+          </div>
+        </div>
+
+        <div id="aurora-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="aurora-intensity">Intensity</label>
+            <input
+              type="range"
+              id="aurora-intensity"
+              min="0"
+              max="2"
+              step="0.05"
+              value="1"
+              aria-label="Overall aurora brightness — 0 = barely visible, 2 = blazing"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="aurora-turbulence">Turbulence</label>
+            <input
+              type="range"
+              id="aurora-turbulence"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Wave harmonic complexity — 0 = smooth single ripple, 1 = chaotic multi-harmonic curtains"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="aurora-drift">Drift</label>
+            <input
+              type="range"
+              id="aurora-drift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Animation speed — 0 = almost still, 1 = fast flowing curtains"
             />
           </div>
         </div>

@@ -130,6 +130,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   lightfieldGrid: 'lightfield-grid',
   lightfieldFlow: 'lightfield-flow',
   lightfieldGlow: 'lightfield-glow',
+  auroraIntensity: 'aurora-intensity',
+  auroraTurbulence: 'aurora-turbulence',
+  auroraDrift: 'aurora-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -311,6 +311,10 @@ export const DEFAULT_CONFIG = {
   lightfieldGrid: 0.5,
   lightfieldFlow: 0.4,
   lightfieldGlow: 1.0,
+  // Aurora-specific
+  auroraIntensity: 1.0,
+  auroraTurbulence: 0.45,
+  auroraDrift: 0.35,
 };
 
 // FFT and decay constants

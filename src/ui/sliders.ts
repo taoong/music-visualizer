@@ -169,6 +169,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'lightfield-grid', key: 'lightfieldGrid' },
     { id: 'lightfield-flow', key: 'lightfieldFlow' },
     { id: 'lightfield-glow', key: 'lightfieldGlow' },
+    { id: 'aurora-intensity', key: 'auroraIntensity' },
+    { id: 'aurora-turbulence', key: 'auroraTurbulence' },
+    { id: 'aurora-drift', key: 'auroraDrift' },
   ] as const;
 
   for (const { id, key } of configs) {
