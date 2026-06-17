@@ -101,6 +101,7 @@ const ALL_CONTROL_IDS = [
   'origami-controls-group',
   'lightfield-controls-group',
   'aurora-controls-group',
+  'nebula-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -155,6 +156,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   origami:       { show: ['origami-controls-group'] },
   lightfield:    { show: ['lightfield-controls-group'] },
   aurora:        { show: ['aurora-controls-group'] },
+  nebula:        { show: ['nebula-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

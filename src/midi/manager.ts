@@ -133,6 +133,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   auroraIntensity: 'aurora-intensity',
   auroraTurbulence: 'aurora-turbulence',
   auroraDrift: 'aurora-drift',
+  nebulaDensity: 'nebula-density',
+  nebulaDrift: 'nebula-drift',
+  nebulaStars: 'nebula-stars',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

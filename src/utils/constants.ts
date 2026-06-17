@@ -315,6 +315,10 @@ export const DEFAULT_CONFIG = {
   auroraIntensity: 1.0,
   auroraTurbulence: 0.45,
   auroraDrift: 0.35,
+  // Nebula-specific
+  nebulaDensity: 0.7,
+  nebulaDrift: 0.4,
+  nebulaStars: 0.6,
 };
 
 // FFT and decay constants

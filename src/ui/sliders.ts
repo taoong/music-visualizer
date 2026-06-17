@@ -172,6 +172,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'aurora-intensity', key: 'auroraIntensity' },
     { id: 'aurora-turbulence', key: 'auroraTurbulence' },
     { id: 'aurora-drift', key: 'auroraDrift' },
+    { id: 'nebula-density', key: 'nebulaDensity' },
+    { id: 'nebula-drift', key: 'nebulaDrift' },
+    { id: 'nebula-stars', key: 'nebulaStars' },
   ] as const;
 
   for (const { id, key } of configs) {
