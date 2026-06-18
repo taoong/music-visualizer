@@ -136,6 +136,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   nebulaDensity: 'nebula-density',
   nebulaDrift: 'nebula-drift',
   nebulaStars: 'nebula-stars',
+  brushStrokes: 'brush-strokes',
+  brushWeight: 'brush-weight',
+  brushTrail: 'brush-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

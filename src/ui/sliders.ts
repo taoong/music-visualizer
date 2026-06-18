@@ -175,6 +175,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'nebula-density', key: 'nebulaDensity' },
     { id: 'nebula-drift', key: 'nebulaDrift' },
     { id: 'nebula-stars', key: 'nebulaStars' },
+    { id: 'brush-strokes', key: 'brushStrokes' },
+    { id: 'brush-weight', key: 'brushWeight' },
+    { id: 'brush-trail', key: 'brushTrail' },
   ] as const;
 
   for (const { id, key } of configs) {

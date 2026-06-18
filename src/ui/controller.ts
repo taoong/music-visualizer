@@ -102,6 +102,7 @@ const ALL_CONTROL_IDS = [
   'lightfield-controls-group',
   'aurora-controls-group',
   'nebula-controls-group',
+  'brush-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -157,6 +158,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   lightfield:    { show: ['lightfield-controls-group'] },
   aurora:        { show: ['aurora-controls-group'] },
   nebula:        { show: ['nebula-controls-group'] },
+  brush:         { show: ['brush-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

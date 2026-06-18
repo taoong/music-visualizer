@@ -319,6 +319,10 @@ export const DEFAULT_CONFIG = {
   nebulaDensity: 0.7,
   nebulaDrift: 0.4,
   nebulaStars: 0.6,
+  // Brush-specific
+  brushStrokes: 0.5,
+  brushWeight: 0.5,
+  brushTrail: 0.6,
 };
 
 // FFT and decay constants
