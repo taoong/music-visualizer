@@ -163,7 +163,7 @@ export interface Config {
   epicyclesSpeed: number;
   epicyclesTrail: number;
   // Knot-specific
-  knotsTopology: number;
+  knotsBeatFreq: number;
   knotsGlow: number;
   knotsSpeed: number;
   // Penrose-specific

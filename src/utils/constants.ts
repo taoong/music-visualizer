@@ -284,7 +284,7 @@ export const DEFAULT_CONFIG = {
   epicyclesSpeed: 0.3,
   epicyclesTrail: 0.5,
   // Knot-specific
-  knotsTopology: 3.0,
+  knotsBeatFreq: 1,
   knotsGlow: 1.0,
   knotsSpeed: 0.5,
   // Penrose-specific

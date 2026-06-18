@@ -8,16 +8,19 @@
  * Three interleaved strands trace a torus knot T(2, q) in 3D space, rendered
  * as neon-glowing curves via perspective projection in pure p5.js 2D canvas
  * — no Three.js required. Each strand is colored by a different frequency
- * register (sub+bass → violet, mid → teal, high → amber). The Topology slider
- * sweeps q from trefoil (3) to septafoil (7). Beats fire angular impulses and
- * shift the colour palette; amplitude inflates the torus radii. Three-pass
- * phosphor glow (outer/mid/core) gives the appearance of glowing rope coiling
- * through space.
+ * register (sub+bass → violet, mid → teal, high → amber). The topology winding
+ * number q is no longer a static slider — it sweeps continuously between
+ * trefoil (3) and septafoil (7) on a beat-locked oscillator: every Nth beat
+ * (Beat Frequency) flips the direction of travel, and q eases-out toward the
+ * new target so each beat triggers a snap-then-settle morph of the knot's
+ * shape. Beats also fire angular impulses and shift the colour palette;
+ * amplitude inflates the torus radii. Three-pass phosphor glow (outer/mid/core)
+ * gives the appearance of glowing rope coiling through space.
  *
  * Sliders
- *   Topology — q winding number (3 = trefoil, 5 = cinquefoil, 7 = septafoil)
- *   Glow     — neon glow intensity
- *   Speed    — camera orbit and rotation speed
+ *   Beat Frequency — direction flips every Nth beat (1 = every beat → 8 = slow swing)
+ *   Glow           — neon glow intensity
+ *   Speed          — camera orbit and rotation speed
  */
 
 import { store } from '../state/store';
@@ -30,12 +33,19 @@ const TWO_PI = Math.PI * 2;
 // Base hues per strand: violet (sub/bass), teal (mid), amber (high)
 const STRAND_BASE_HUES: [number, number, number] = [270, 170, 35];
 
+// Q swings between these bounds on each direction reversal
+const Q_MIN = 3;
+const Q_MAX = 7;
+
 let angleY = 0;
 let angleX = 0.35;
 let angVelY = 0;
 let hueShift = 0;
 let lastBeatIndex = -1;
 let flashAlpha = 0;
+let qCurrent = Q_MIN;
+let qTarget = Q_MAX;
+let qDirection: 1 | -1 = 1;
 
 // Parametric torus knot T(2, q): two loops around the symmetry axis,
 // q loops around the tube.
@@ -71,23 +81,32 @@ export function drawKnots(p: P5Instance, dt: number): void {
   const { state, config } = store;
   const { amps } = getBandAverages(BAND_COUNT);
 
-  const knotsTopology = config.knotsTopology; // 3→7
+  const beatFreq = Math.max(1, Math.round(config.knotsBeatFreq)); // every Nth beat
   const knotsGlow = config.knotsGlow;         // 0→2
   const knotsSpeed = config.knotsSpeed;       // 0→2
 
-  // Beat detection
+  // Beat detection — every Nth beat flips q's direction of travel, so the
+  // topology eases-out toward Q_MIN or Q_MAX alternately.
   if (state.beatIntervalSec > 0) {
     const playPos = state.isPlaying
       ? (performance.now() / 1000 - state.playStartedAt / 1000 + state.startOffset)
       : state.startOffset;
     const beatIdx = Math.floor((playPos - state.beatOffset) / state.beatIntervalSec);
     if (beatIdx > lastBeatIndex && lastBeatIndex >= 0) {
+      if (beatIdx % beatFreq === 0) {
+        qDirection = (qDirection === 1 ? -1 : 1);
+        qTarget = qDirection === 1 ? Q_MAX : Q_MIN;
+      }
       angVelY += 0.15 + Math.random() * 0.12;
       hueShift = (hueShift + 40 + Math.random() * 50) % 360;
       flashAlpha = 35;
     }
     lastBeatIndex = beatIdx;
   }
+
+  // Exponential ease-out toward qTarget. Decay tuned so q is ~95% of the way
+  // there after one beat at 120 BPM, giving a visible snap-then-settle morph.
+  qCurrent += (qTarget - qCurrent) * (1 - Math.pow(0.90, dt));
 
   // Update rotation
   const avgAmp = amps.reduce((s, v) => s + v, 0) / BAND_COUNT;
@@ -137,7 +156,7 @@ export function drawKnots(p: P5Instance, dt: number): void {
     const pts: [number, number][] = [];
     for (let i = 0; i <= CURVE_PTS; i++) {
       const t = (i / CURVE_PTS) * TWO_PI + phaseOffsets[s];
-      const [x3, y3, z3] = knotPoint(t, knotsTopology, R, r);
+      const [x3, y3, z3] = knotPoint(t, qCurrent, R, r);
       const [rx, ry, rz] = rotateYX(x3, y3, z3, angleY, angleX);
       pts.push(project(rx, ry, rz, fov, cx, cy));
     }
@@ -182,4 +201,7 @@ export function resetKnots(): void {
   hueShift = 0;
   lastBeatIndex = -1;
   flashAlpha = 0;
+  qCurrent = Q_MIN;
+  qTarget = Q_MAX;
+  qDirection = 1;
 }

@@ -109,7 +109,7 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   epicyclesCycles: 'epicycles-cycles',
   epicyclesSpeed: 'epicycles-speed',
   epicyclesTrail: 'epicycles-trail',
-  knotsTopology: 'knots-topology',
+  knotsBeatFreq: 'knots-beat-freq',
   knotsGlow: 'knots-glow',
   knotsSpeed: 'knots-speed',
   penroseDensity: 'penrose-density',
