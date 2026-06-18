@@ -51,6 +51,4 @@ export { drawDisorders, resetDisorders } from './disorders';
 export { drawBlackWave, resetBlackWave } from './blackwave';
 export { drawOrigami, resetOrigami } from './origami';
 export { drawLightField, resetLightField } from './lightfield';
-export { drawAurora, resetAurora } from './aurora';
-export { drawNebula, resetNebula } from './nebula';
 export { drawBrush, resetBrush } from './brush';

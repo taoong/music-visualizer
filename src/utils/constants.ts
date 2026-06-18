@@ -311,14 +311,6 @@ export const DEFAULT_CONFIG = {
   lightfieldGrid: 0.5,
   lightfieldFlow: 0.4,
   lightfieldGlow: 1.0,
-  // Aurora-specific
-  auroraIntensity: 1.0,
-  auroraTurbulence: 0.45,
-  auroraDrift: 0.35,
-  // Nebula-specific
-  nebulaDensity: 0.7,
-  nebulaDrift: 0.4,
-  nebulaStars: 0.6,
   // Brush-specific
   brushStrokes: 0.5,
   brushWeight: 0.5,

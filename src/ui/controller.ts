@@ -100,8 +100,6 @@ const ALL_CONTROL_IDS = [
   'blackwave-controls-group',
   'origami-controls-group',
   'lightfield-controls-group',
-  'aurora-controls-group',
-  'nebula-controls-group',
   'brush-controls-group',
 ] as const;
 
@@ -156,8 +154,6 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   blackwave:     { show: ['blackwave-controls-group'] },
   origami:       { show: ['origami-controls-group'] },
   lightfield:    { show: ['lightfield-controls-group'] },
-  aurora:        { show: ['aurora-controls-group'] },
-  nebula:        { show: ['nebula-controls-group'] },
   brush:         { show: ['brush-controls-group'] },
 };
 
