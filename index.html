@@ -277,6 +277,7 @@
           <option value="origami">Origami</option>
           <option value="lightfield">Light Field</option>
           <option value="brush">Brush</option>
+          <option value="aurora">Aurora</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1828,6 +1829,45 @@
               step="0.01"
               value="0.6"
               aria-label="Paint persistence — 0 = ephemeral, 1 = lasting painting"
+            />
+          </div>
+        </div>
+
+        <div id="aurora-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="aurora-flow">Flow</label>
+            <input
+              type="range"
+              id="aurora-flow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Curtain animation speed and turbulence"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="aurora-layers">Layers</label>
+            <input
+              type="range"
+              id="aurora-layers"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Number of aurora curtain layers — 0 = sparse, 1 = dense"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="aurora-glow">Glow</label>
+            <input
+              type="range"
+              id="aurora-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Luminous halo intensity on each curtain"
             />
           </div>
         </div>

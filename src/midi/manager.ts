@@ -133,6 +133,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   brushStrokes: 'brush-strokes',
   brushWeight: 'brush-weight',
   brushTrail: 'brush-trail',
+  auroraFlow: 'aurora-flow',
+  auroraLayers: 'aurora-layers',
+  auroraGlow: 'aurora-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -172,6 +172,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'brush-strokes', key: 'brushStrokes' },
     { id: 'brush-weight', key: 'brushWeight' },
     { id: 'brush-trail', key: 'brushTrail' },
+    { id: 'aurora-flow', key: 'auroraFlow' },
+    { id: 'aurora-layers', key: 'auroraLayers' },
+    { id: 'aurora-glow', key: 'auroraGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

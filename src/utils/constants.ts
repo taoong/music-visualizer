@@ -315,6 +315,10 @@ export const DEFAULT_CONFIG = {
   brushStrokes: 0.5,
   brushWeight: 0.5,
   brushTrail: 0.6,
+  // Aurora-specific
+  auroraFlow: 0.4,
+  auroraLayers: 0.5,
+  auroraGlow: 0.6,
 };
 
 // FFT and decay constants
