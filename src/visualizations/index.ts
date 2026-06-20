@@ -53,3 +53,4 @@ export { drawOrigami, resetOrigami } from './origami';
 export { drawLightField, resetLightField } from './lightfield';
 export { drawBrush, resetBrush } from './brush';
 export { drawAurora, resetAurora } from './aurora';
+export { drawGlitch, resetGlitch } from './glitch';

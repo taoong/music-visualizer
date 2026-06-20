@@ -51,6 +51,7 @@ import { drawOrigami, resetOrigami } from './origami';
 import { drawLightField, resetLightField } from './lightfield';
 import { drawBrush, resetBrush } from './brush';
 import { drawAurora, resetAurora } from './aurora';
+import { drawGlitch, resetGlitch } from './glitch';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -156,4 +157,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   lightfield:    { draw: drawLightField,     reset: resetLightField,    key: 'x',  label: 'Light Field' },
   brush:         { draw: drawBrush,          reset: resetBrush,         key: 'd',  label: 'Brush' },
   aurora:        { draw: drawAurora,         reset: resetAurora,        key: 'a',  label: 'Aurora' },
+  glitch:        { draw: drawGlitch,         reset: resetGlitch,        key: 'c',  label: 'Glitch' },
 };

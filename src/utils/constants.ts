@@ -319,6 +319,10 @@ export const DEFAULT_CONFIG = {
   auroraFlow: 0.4,
   auroraLayers: 0.5,
   auroraGlow: 0.6,
+  // Glitch-specific
+  glitchDistort: 0.5,
+  glitchSplit: 0.5,
+  glitchNoise: 0.4,
 };
 
 // FFT and decay constants

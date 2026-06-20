@@ -136,6 +136,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   auroraFlow: 'aurora-flow',
   auroraLayers: 'aurora-layers',
   auroraGlow: 'aurora-glow',
+  glitchDistort: 'glitch-distort',
+  glitchSplit: 'glitch-split',
+  glitchNoise: 'glitch-noise',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

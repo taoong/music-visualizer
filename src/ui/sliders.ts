@@ -175,6 +175,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'aurora-flow', key: 'auroraFlow' },
     { id: 'aurora-layers', key: 'auroraLayers' },
     { id: 'aurora-glow', key: 'auroraGlow' },
+    { id: 'glitch-distort', key: 'glitchDistort' },
+    { id: 'glitch-split', key: 'glitchSplit' },
+    { id: 'glitch-noise', key: 'glitchNoise' },
   ] as const;
 
   for (const { id, key } of configs) {
