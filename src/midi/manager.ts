@@ -139,6 +139,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   glitchDistort: 'glitch-distort',
   glitchSplit: 'glitch-split',
   glitchNoise: 'glitch-noise',
+  phaseRings: 'phase-rings',
+  phaseDensity: 'phase-density',
+  phaseGlow: 'phase-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

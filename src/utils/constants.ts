@@ -323,6 +323,10 @@ export const DEFAULT_CONFIG = {
   glitchDistort: 0.5,
   glitchSplit: 0.5,
   glitchNoise: 0.4,
+  // Phase-specific
+  phaseRings: 0.57,
+  phaseDensity: 0.5,
+  phaseGlow: 1.0,
 };
 
 // FFT and decay constants

@@ -279,6 +279,7 @@
           <option value="brush">Brush</option>
           <option value="aurora">Aurora</option>
           <option value="glitch">Glitch</option>
+          <option value="phase">Phase</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1908,6 +1909,45 @@
               step="0.01"
               value="0.4"
               aria-label="Analog static grain density"
+            />
+          </div>
+        </div>
+
+        <div id="phase-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="phase-rings">Rings</label>
+            <input
+              type="range"
+              id="phase-rings"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.57"
+              aria-label="Number of concentric polyrhythmic rings"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="phase-density">Density</label>
+            <input
+              type="range"
+              id="phase-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Arc segments per ring"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="phase-glow">Glow</label>
+            <input
+              type="range"
+              id="phase-glow"
+              min="0.2"
+              max="2.0"
+              step="0.01"
+              value="1.0"
+              aria-label="Neon glow intensity"
             />
           </div>
         </div>

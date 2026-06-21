@@ -178,6 +178,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'glitch-distort', key: 'glitchDistort' },
     { id: 'glitch-split', key: 'glitchSplit' },
     { id: 'glitch-noise', key: 'glitchNoise' },
+    { id: 'phase-rings', key: 'phaseRings' },
+    { id: 'phase-density', key: 'phaseDensity' },
+    { id: 'phase-glow', key: 'phaseGlow' },
   ] as const;
 
   for (const { id, key } of configs) {
