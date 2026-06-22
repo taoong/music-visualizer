@@ -104,6 +104,7 @@ const ALL_CONTROL_IDS = [
   'aurora-controls-group',
   'glitch-controls-group',
   'phase-controls-group',
+  'warp-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -161,6 +162,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   aurora:        { show: ['aurora-controls-group'] },
   glitch:        { show: ['glitch-controls-group'] },
   phase:         { show: ['phase-controls-group'] },
+  warp:          { show: ['warp-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

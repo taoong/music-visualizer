@@ -53,6 +53,7 @@ import { drawBrush, resetBrush } from './brush';
 import { drawAurora, resetAurora } from './aurora';
 import { drawGlitch, resetGlitch } from './glitch';
 import { drawPhase, resetPhase } from './phase';
+import { drawWarp, resetWarp } from './warp';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -160,4 +161,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   aurora:        { draw: drawAurora,         reset: resetAurora,        key: 'a',  label: 'Aurora' },
   glitch:        { draw: drawGlitch,         reset: resetGlitch,        key: 'c',  label: 'Glitch' },
   phase:         { draw: drawPhase,          reset: resetPhase,         key: '+',  label: 'Phase' },
+  warp:          { draw: drawWarp,           reset: resetWarp,          key: '}',  label: 'Warp' },
 };

@@ -55,3 +55,4 @@ export { drawBrush, resetBrush } from './brush';
 export { drawAurora, resetAurora } from './aurora';
 export { drawGlitch, resetGlitch } from './glitch';
 export { drawPhase, resetPhase } from './phase';
+export { drawWarp, resetWarp } from './warp';

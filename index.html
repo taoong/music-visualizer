@@ -280,6 +280,7 @@
           <option value="aurora">Aurora</option>
           <option value="glitch">Glitch</option>
           <option value="phase">Phase</option>
+          <option value="warp">Warp</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1948,6 +1949,45 @@
               step="0.01"
               value="1.0"
               aria-label="Neon glow intensity"
+            />
+          </div>
+        </div>
+
+        <div id="warp-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="warp-speed">Speed</label>
+            <input
+              type="range"
+              id="warp-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Base warp velocity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="warp-density">Density</label>
+            <input
+              type="range"
+              id="warp-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Star density"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="warp-trail">Trail</label>
+            <input
+              type="range"
+              id="warp-trail"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Streak persistence"
             />
           </div>
         </div>

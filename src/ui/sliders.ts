@@ -181,6 +181,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'phase-rings', key: 'phaseRings' },
     { id: 'phase-density', key: 'phaseDensity' },
     { id: 'phase-glow', key: 'phaseGlow' },
+    { id: 'warp-speed', key: 'warpSpeed' },
+    { id: 'warp-density', key: 'warpDensity' },
+    { id: 'warp-trail', key: 'warpTrail' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -142,6 +142,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   phaseRings: 'phase-rings',
   phaseDensity: 'phase-density',
   phaseGlow: 'phase-glow',
+  warpSpeed: 'warp-speed',
+  warpDensity: 'warp-density',
+  warpTrail: 'warp-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

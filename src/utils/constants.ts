@@ -327,6 +327,10 @@ export const DEFAULT_CONFIG = {
   phaseRings: 0.57,
   phaseDensity: 0.5,
   phaseGlow: 1.0,
+  // Warp-specific
+  warpSpeed: 0.4,
+  warpDensity: 0.5,
+  warpTrail: 0.6,
 };
 
 // FFT and decay constants
