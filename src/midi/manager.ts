@@ -145,6 +145,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   warpSpeed: 'warp-speed',
   warpDensity: 'warp-density',
   warpTrail: 'warp-trail',
+  substrateDensity: 'substrate-density',
+  substrateSpeed: 'substrate-speed',
+  substrateFade: 'substrate-fade',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

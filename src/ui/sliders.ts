@@ -184,6 +184,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'warp-speed', key: 'warpSpeed' },
     { id: 'warp-density', key: 'warpDensity' },
     { id: 'warp-trail', key: 'warpTrail' },
+    { id: 'substrate-density', key: 'substrateDensity' },
+    { id: 'substrate-speed', key: 'substrateSpeed' },
+    { id: 'substrate-fade', key: 'substrateFade' },
   ] as const;
 
   for (const { id, key } of configs) {

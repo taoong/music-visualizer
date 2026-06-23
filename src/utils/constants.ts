@@ -331,6 +331,10 @@ export const DEFAULT_CONFIG = {
   warpSpeed: 0.4,
   warpDensity: 0.5,
   warpTrail: 0.6,
+  // Substrate-specific
+  substrateDensity: 0.5,
+  substrateSpeed: 0.4,
+  substrateFade: 0.6,
 };
 
 // FFT and decay constants

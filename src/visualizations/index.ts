@@ -56,3 +56,4 @@ export { drawAurora, resetAurora } from './aurora';
 export { drawGlitch, resetGlitch } from './glitch';
 export { drawPhase, resetPhase } from './phase';
 export { drawWarp, resetWarp } from './warp';
+export { drawSubstrate, resetSubstrate } from './substrate';

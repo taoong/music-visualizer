@@ -281,6 +281,7 @@
           <option value="glitch">Glitch</option>
           <option value="phase">Phase</option>
           <option value="warp">Warp</option>
+          <option value="substrate">Substrate</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -1988,6 +1989,45 @@
               step="0.01"
               value="0.6"
               aria-label="Streak persistence"
+            />
+          </div>
+        </div>
+
+        <div id="substrate-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="substrate-density">Density</label>
+            <input
+              type="range"
+              id="substrate-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Active crack count"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="substrate-speed">Speed</label>
+            <input
+              type="range"
+              id="substrate-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Crack growth rate"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="substrate-fade">Fade</label>
+            <input
+              type="range"
+              id="substrate-fade"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Trail persistence"
             />
           </div>
         </div>
