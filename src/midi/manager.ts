@@ -148,6 +148,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   substrateDensity: 'substrate-density',
   substrateSpeed: 'substrate-speed',
   substrateFade: 'substrate-fade',
+  smearSweep: 'smear-sweep',
+  smearBlend: 'smear-blend',
+  smearPalette: 'smear-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

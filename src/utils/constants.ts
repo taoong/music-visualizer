@@ -335,6 +335,10 @@ export const DEFAULT_CONFIG = {
   substrateDensity: 0.5,
   substrateSpeed: 0.4,
   substrateFade: 0.6,
+  // Smear-specific
+  smearSweep: 0.5,
+  smearBlend: 0.6,
+  smearPalette: 0.5,
 };
 
 // FFT and decay constants

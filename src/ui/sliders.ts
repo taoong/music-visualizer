@@ -187,6 +187,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'substrate-density', key: 'substrateDensity' },
     { id: 'substrate-speed', key: 'substrateSpeed' },
     { id: 'substrate-fade', key: 'substrateFade' },
+    { id: 'smear-sweep', key: 'smearSweep' },
+    { id: 'smear-blend', key: 'smearBlend' },
+    { id: 'smear-palette', key: 'smearPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
