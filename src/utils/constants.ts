@@ -339,6 +339,10 @@ export const DEFAULT_CONFIG = {
   smearSweep: 0.5,
   smearBlend: 0.6,
   smearPalette: 0.5,
+  // Ink-specific
+  inkFlow: 0.5,
+  inkDensity: 0.5,
+  inkDry: 0.3,
 };
 
 // FFT and decay constants

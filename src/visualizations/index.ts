@@ -58,3 +58,4 @@ export { drawPhase, resetPhase } from './phase';
 export { drawWarp, resetWarp } from './warp';
 export { drawSubstrate, resetSubstrate } from './substrate';
 export { drawSmear, resetSmear } from './smear';
+export { drawInk, resetInk } from './ink';

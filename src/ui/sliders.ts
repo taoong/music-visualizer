@@ -190,6 +190,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'smear-sweep', key: 'smearSweep' },
     { id: 'smear-blend', key: 'smearBlend' },
     { id: 'smear-palette', key: 'smearPalette' },
+    { id: 'ink-flow', key: 'inkFlow' },
+    { id: 'ink-density', key: 'inkDensity' },
+    { id: 'ink-dry', key: 'inkDry' },
   ] as const;
 
   for (const { id, key } of configs) {

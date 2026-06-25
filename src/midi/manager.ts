@@ -151,6 +151,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   smearSweep: 'smear-sweep',
   smearBlend: 'smear-blend',
   smearPalette: 'smear-palette',
+  inkFlow: 'ink-flow',
+  inkDensity: 'ink-density',
+  inkDry: 'ink-dry',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

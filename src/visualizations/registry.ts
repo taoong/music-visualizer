@@ -56,6 +56,7 @@ import { drawPhase, resetPhase } from './phase';
 import { drawWarp, resetWarp } from './warp';
 import { drawSubstrate, resetSubstrate } from './substrate';
 import { drawSmear, resetSmear } from './smear';
+import { drawInk, resetInk } from './ink';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -166,4 +167,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   warp:          { draw: drawWarp,           reset: resetWarp,          key: '}',  label: 'Warp' },
   substrate:     { draw: drawSubstrate,     reset: resetSubstrate,     key: 'g',  label: 'Substrate' },
   smear:         { draw: drawSmear,        reset: resetSmear,         key: '{',  label: 'Smear' },
+  ink:           { draw: drawInk,          reset: resetInk,           key: '<',  label: 'Ink Wash' },
 };
