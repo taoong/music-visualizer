@@ -154,6 +154,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   inkFlow: 'ink-flow',
   inkDensity: 'ink-density',
   inkDry: 'ink-dry',
+  nebulaWarp: 'nebula-warp',
+  nebulaDrift: 'nebula-drift',
+  nebulaPalette: 'nebula-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

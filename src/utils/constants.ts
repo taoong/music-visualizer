@@ -343,6 +343,10 @@ export const DEFAULT_CONFIG = {
   inkFlow: 0.5,
   inkDensity: 0.5,
   inkDry: 0.3,
+  // Nebula-specific
+  nebulaWarp: 0.5,
+  nebulaDrift: 0.4,
+  nebulaPalette: 0.0,
 };
 
 // FFT and decay constants

@@ -193,6 +193,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'ink-flow', key: 'inkFlow' },
     { id: 'ink-density', key: 'inkDensity' },
     { id: 'ink-dry', key: 'inkDry' },
+    { id: 'nebula-warp', key: 'nebulaWarp' },
+    { id: 'nebula-drift', key: 'nebulaDrift' },
+    { id: 'nebula-palette', key: 'nebulaPalette' },
   ] as const;
 
   for (const { id, key } of configs) {

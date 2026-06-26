@@ -108,6 +108,7 @@ const ALL_CONTROL_IDS = [
   'substrate-controls-group',
   'smear-controls-group',
   'ink-controls-group',
+  'nebula-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -169,6 +170,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   substrate:     { show: ['substrate-controls-group'] },
   smear:         { show: ['smear-controls-group'] },
   ink:           { show: ['ink-controls-group'] },
+  nebula:        { show: ['nebula-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
