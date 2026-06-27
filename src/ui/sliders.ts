@@ -196,6 +196,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'nebula-warp', key: 'nebulaWarp' },
     { id: 'nebula-drift', key: 'nebulaDrift' },
     { id: 'nebula-palette', key: 'nebulaPalette' },
+    { id: 'vortex-arms', key: 'vortexArms' },
+    { id: 'vortex-twist', key: 'vortexTwist' },
+    { id: 'vortex-speed', key: 'vortexSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

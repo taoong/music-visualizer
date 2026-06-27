@@ -285,6 +285,7 @@
           <option value="smear">Smear</option>
           <option value="ink">Ink Wash</option>
           <option value="nebula">Nebula</option>
+          <option value="vortex">Vortex</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2109,6 +2110,45 @@
               step="0.01"
               value="0"
               aria-label="Colour palette rotation"
+            />
+          </div>
+        </div>
+
+        <div id="vortex-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="vortex-arms">Arms</label>
+            <input
+              type="range"
+              id="vortex-arms"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Number of spiral arms — 2 (minimal) to 12 (dense galaxy)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="vortex-twist">Twist</label>
+            <input
+              type="range"
+              id="vortex-twist"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Spiral tightness — loose open arms to tight winding coils"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="vortex-speed">Speed</label>
+            <input
+              type="range"
+              id="vortex-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Base rotation speed — slow drift to rapid spinning"
             />
           </div>
         </div>

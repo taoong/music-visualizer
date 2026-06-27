@@ -347,6 +347,10 @@ export const DEFAULT_CONFIG = {
   nebulaWarp: 0.5,
   nebulaDrift: 0.4,
   nebulaPalette: 0.0,
+  // Vortex-specific
+  vortexArms: 0.5,
+  vortexTwist: 0.5,
+  vortexSpeed: 0.5,
 };
 
 // FFT and decay constants

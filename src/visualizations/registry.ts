@@ -58,6 +58,7 @@ import { drawSubstrate, resetSubstrate } from './substrate';
 import { drawSmear, resetSmear } from './smear';
 import { drawInk, resetInk } from './ink';
 import { drawNebula, resetNebula } from './nebula';
+import { drawVortex, resetVortex } from './vortex';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -170,4 +171,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   smear:         { draw: drawSmear,        reset: resetSmear,         key: '{',  label: 'Smear' },
   ink:           { draw: drawInk,          reset: resetInk,           key: '<',  label: 'Ink Wash' },
   nebula:        { draw: drawNebula,      reset: resetNebula,        key: ')',  label: 'Nebula' },
+  vortex:        { draw: drawVortex,     reset: resetVortex,        key: 'u',  label: 'Vortex' },
 };

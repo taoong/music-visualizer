@@ -60,3 +60,4 @@ export { drawSubstrate, resetSubstrate } from './substrate';
 export { drawSmear, resetSmear } from './smear';
 export { drawInk, resetInk } from './ink';
 export { drawNebula, resetNebula } from './nebula';
+export { drawVortex, resetVortex } from './vortex';

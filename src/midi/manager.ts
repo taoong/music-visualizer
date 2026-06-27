@@ -157,6 +157,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   nebulaWarp: 'nebula-warp',
   nebulaDrift: 'nebula-drift',
   nebulaPalette: 'nebula-palette',
+  vortexArms: 'vortex-arms',
+  vortexTwist: 'vortex-twist',
+  vortexSpeed: 'vortex-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
