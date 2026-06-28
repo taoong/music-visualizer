@@ -351,6 +351,10 @@ export const DEFAULT_CONFIG = {
   vortexArms: 0.5,
   vortexTwist: 0.5,
   vortexSpeed: 0.5,
+  // Lumia-specific
+  lumiaForms: 0.5,
+  lumiaDrift: 0.4,
+  lumiaGlow: 0.6,
 };
 
 // FFT and decay constants

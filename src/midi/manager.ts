@@ -160,6 +160,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   vortexArms: 'vortex-arms',
   vortexTwist: 'vortex-twist',
   vortexSpeed: 'vortex-speed',
+  lumiaForms: 'lumia-forms',
+  lumiaDrift: 'lumia-drift',
+  lumiaGlow: 'lumia-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

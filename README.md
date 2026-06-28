@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Liquid Metal, Neon Grid, Blobs, Gray-Scott, Physarum, Murmuration, and many more (55+ total)
+- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Liquid Metal, Neon Grid, Blobs, Gray-Scott, Physarum, Murmuration, and many more (58+ total)
 - **Three analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Microphone** — Live audio input from your mic for real-time visualization
@@ -88,6 +88,7 @@ Open http://localhost:3000. Upload a track or use the built-in sample.
 | `<` | Ink Wash | Audio-reactive sumi-e (墨絵) ink diffusion on parchment inspired by Andy Ye's generative ink wash experiments at NYU ITP — https://wp.nyu.edu/andyhyperillion/2023/03/27/noc-project-a-generative-interactive-ink-wash/ — and the ancient Japanese art of suminagashi (墨流し, "floating ink"); a grid-based diffusion simulation spreads ink organically across a warm cream parchment canvas — the only light-background visualization in the collection; 7 frequency bands each deposit ink at distributed positions with amplitude-driven concentration; diffusion is biased slightly downward (gravity drip) and perturbed by sinusoidal wobble for feathered, organic edges; beats trigger bold splash blobs and shift the hue palette; old ink slowly evaporates (dries); ping-pong Float32Array concentration grids with separate hue grid; offscreen pixel buffer at ¼ res (⅙ mobile); sliders: Flow (diffusion speed — tight drops to wide bleeding), Ink (drop density/concentration per audio event), Dry (evaporation rate — persistent stains to fast fading) |
 | `)` | Nebula | Domain-warped fBM cloudscape inspired by Inigo Quilez's domain warping technique — https://iquilezles.org/articles/warp/ — nested fractal Brownian motion where one noise field warps another, producing organic billowing painterly nebula forms like oil paint swirling in water or alien atmospheric phenomena; 7 freq bands modulate warp vectors at different octaves (sub-bass=large slow billows → brilliance=fine fast ripples); beat triggers warp-direction rotation and hue jump; double domain warp with gradient noise permutation table; offscreen pixel buffer at ¼ res (⅛ mobile); sliders: Warp (domain warp displacement magnitude — subtle drift to extreme distortion), Drift (animation speed), Palette (hue rotation for the colour scheme) |
 | `u` | Vortex | Audio-reactive spiral galaxy inspired by Olafur Eliasson's "Your Rainbow Panorama" (2011, ARoS Aarhus Kunstmuseum) — https://olafureliasson.net/artwork/your-rainbow-panorama-2011/ — a circular rainbow-glass walkway crowning the museum roof, translating the chromatic rotational structure into a digital spiral. N logarithmic spiral arms emanate from the canvas centre, each mapped to a frequency band (cycling if arms > 7); amplitude drives arm brightness and width; 3-pass additive glow rendering (outer halo + mid + bright core); beat detection fires a rotation impulse and shifts the hue palette; an offscreen trail buffer accumulates layered mandala-like patterns over time; a centre glow pulses with overall amplitude; mobile guard reduces points per arm; sliders: Arms (spiral arm count 2–12), Twist (spiral tightness — loose open arms to tight winding coils), Speed (base rotation rate) |
+| `]` | Lumia | Flowing translucent color forms with additive blending inspired by Thomas Wilfred's "Lumia" light art and his Clavilux color organ (1920s-30s) — https://americanart.si.edu/exhibitions/lumia — Wilfred coined the term "Lumia" for the eighth fine art: pure light, shaped and set in motion, projected through reflectors and stained-glass disks. Multiple large, soft luminous shapes drift across the canvas via Perlin noise; each of 7 frequency bands drives one or more forms; forms are translucent and blend additively where they overlap, creating rich secondary colours as in Wilfred's projections; amplitude scales form size and brightness; beats trigger expansion pulses and shift the hue palette; multi-stop radial gradients with inner iridescent glow layer give each form depth; offscreen trail buffer at ½ res (mobile); sliders: Forms (luminous shape count 4–14), Drift (movement speed/turbulence), Glow (brightness/trail persistence) |
 
 ## Keyboard Shortcuts
 
@@ -140,6 +141,7 @@ Open http://localhost:3000. Upload a track or use the built-in sample.
 | `G` | Substrate visualization |
 | `{` | Smear visualization |
 | `)` | Nebula visualization |
+| `]` | Lumia visualization |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

@@ -199,6 +199,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'vortex-arms', key: 'vortexArms' },
     { id: 'vortex-twist', key: 'vortexTwist' },
     { id: 'vortex-speed', key: 'vortexSpeed' },
+    { id: 'lumia-forms', key: 'lumiaForms' },
+    { id: 'lumia-drift', key: 'lumiaDrift' },
+    { id: 'lumia-glow', key: 'lumiaGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

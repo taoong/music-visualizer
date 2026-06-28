@@ -110,6 +110,7 @@ const ALL_CONTROL_IDS = [
   'ink-controls-group',
   'nebula-controls-group',
   'vortex-controls-group',
+  'lumia-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -173,6 +174,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   ink:           { show: ['ink-controls-group'] },
   nebula:        { show: ['nebula-controls-group'] },
   vortex:        { show: ['vortex-controls-group'] },
+  lumia:         { show: ['lumia-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

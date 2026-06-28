@@ -286,6 +286,7 @@
           <option value="ink">Ink Wash</option>
           <option value="nebula">Nebula</option>
           <option value="vortex">Vortex</option>
+          <option value="lumia">Lumia</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2149,6 +2150,45 @@
               step="0.01"
               value="0.5"
               aria-label="Base rotation speed — slow drift to rapid spinning"
+            />
+          </div>
+        </div>
+
+        <div id="lumia-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="lumia-forms">Forms</label>
+            <input
+              type="range"
+              id="lumia-forms"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Number of luminous forms — 4 (sparse) to 14 (dense)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lumia-drift">Drift</label>
+            <input
+              type="range"
+              id="lumia-drift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Movement speed and turbulence — slow meditation to active drift"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lumia-glow">Glow</label>
+            <input
+              type="range"
+              id="lumia-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Brightness and trail persistence — dim embers to radiant glow"
             />
           </div>
         </div>
