@@ -163,6 +163,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   lumiaForms: 'lumia-forms',
   lumiaDrift: 'lumia-drift',
   lumiaGlow: 'lumia-glow',
+  mirrorsReflections: 'mirrors-reflections',
+  mirrorsScatter: 'mirrors-scatter',
+  mirrorsShimmer: 'mirrors-shimmer',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

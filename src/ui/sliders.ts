@@ -202,6 +202,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'lumia-forms', key: 'lumiaForms' },
     { id: 'lumia-drift', key: 'lumiaDrift' },
     { id: 'lumia-glow', key: 'lumiaGlow' },
+    { id: 'mirrors-reflections', key: 'mirrorsReflections' },
+    { id: 'mirrors-scatter', key: 'mirrorsScatter' },
+    { id: 'mirrors-shimmer', key: 'mirrorsShimmer' },
   ] as const;
 
   for (const { id, key } of configs) {

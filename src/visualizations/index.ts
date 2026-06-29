@@ -62,3 +62,4 @@ export { drawInk, resetInk } from './ink';
 export { drawNebula, resetNebula } from './nebula';
 export { drawVortex, resetVortex } from './vortex';
 export { drawLumia, resetLumia } from './lumia';
+export { drawMirrors, resetMirrors } from './mirrors';

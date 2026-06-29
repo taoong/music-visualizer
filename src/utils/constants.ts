@@ -355,6 +355,10 @@ export const DEFAULT_CONFIG = {
   lumiaForms: 0.5,
   lumiaDrift: 0.4,
   lumiaGlow: 0.6,
+  // Mirrors-specific
+  mirrorsReflections: 0.5,
+  mirrorsScatter: 0.5,
+  mirrorsShimmer: 0.4,
 };
 
 // FFT and decay constants
