@@ -288,6 +288,7 @@
           <option value="vortex">Vortex</option>
           <option value="lumia">Lumia</option>
           <option value="mirrors">Mirrors</option>
+          <option value="woodmirror">Wood Mirror</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2229,6 +2230,45 @@
               step="0.01"
               value="0.4"
               aria-label="Speed of light oscillation — slow breathing to fast shimmer"
+            />
+          </div>
+        </div>
+
+        <div id="woodmirror-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="woodmirror-density">Density</label>
+            <input
+              type="range"
+              id="woodmirror-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Grid resolution — coarse pixels to fine mosaic"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="woodmirror-depth">Depth</label>
+            <input
+              type="range"
+              id="woodmirror-depth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Relief amplitude — flat sheen to dramatic light and shadow"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="woodmirror-speed">Speed</label>
+            <input
+              type="range"
+              id="woodmirror-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Motor response speed — slow settle to fast snap"
             />
           </div>
         </div>

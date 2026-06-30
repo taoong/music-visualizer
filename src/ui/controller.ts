@@ -112,6 +112,7 @@ const ALL_CONTROL_IDS = [
   'vortex-controls-group',
   'lumia-controls-group',
   'mirrors-controls-group',
+  'woodmirror-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -177,6 +178,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   vortex:        { show: ['vortex-controls-group'] },
   lumia:         { show: ['lumia-controls-group'] },
   mirrors:       { show: ['mirrors-controls-group'] },
+  woodmirror:    { show: ['woodmirror-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

@@ -166,6 +166,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   mirrorsReflections: 'mirrors-reflections',
   mirrorsScatter: 'mirrors-scatter',
   mirrorsShimmer: 'mirrors-shimmer',
+  woodmirrorDensity: 'woodmirror-density',
+  woodmirrorDepth: 'woodmirror-depth',
+  woodmirrorSpeed: 'woodmirror-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

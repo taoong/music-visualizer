@@ -205,6 +205,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'mirrors-reflections', key: 'mirrorsReflections' },
     { id: 'mirrors-scatter', key: 'mirrorsScatter' },
     { id: 'mirrors-shimmer', key: 'mirrorsShimmer' },
+    { id: 'woodmirror-density', key: 'woodmirrorDensity' },
+    { id: 'woodmirror-depth', key: 'woodmirrorDepth' },
+    { id: 'woodmirror-speed', key: 'woodmirrorSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -359,6 +359,10 @@ export const DEFAULT_CONFIG = {
   mirrorsReflections: 0.5,
   mirrorsScatter: 0.5,
   mirrorsShimmer: 0.4,
+  // WoodMirror-specific
+  woodmirrorDensity: 0.5,
+  woodmirrorDepth: 0.55,
+  woodmirrorSpeed: 0.45,
 };
 
 // FFT and decay constants
