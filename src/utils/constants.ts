@@ -367,6 +367,10 @@ export const DEFAULT_CONFIG = {
   discoSpin: 0.4,
   discoSparkle: 0.5,
   discoPalette: 0.0,
+  // Moire-specific
+  moireRings: 32,
+  moireInterference: 1.0,
+  moireContrast: 1.5,
 };
 
 // FFT and decay constants

@@ -3,6 +3,7 @@
  */
 export { VIZ_REGISTRY } from './registry';
 export type { VizEntry } from './registry';
+export { drawMoire, resetMoire } from './moire';
 export { drawSpikeCircle, resetSpikeCircle } from './circle';
 export { drawSpectrum } from './spectrum';
 export { drawTunnel } from './tunnel';

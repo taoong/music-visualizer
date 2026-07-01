@@ -172,6 +172,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   discoSpin: 'disco-spin',
   discoSparkle: 'disco-sparkle',
   discoPalette: 'disco-palette',
+  moireRings: 'moire-rings',
+  moireInterference: 'moire-interference',
+  moireContrast: 'moire-contrast',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

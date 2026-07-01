@@ -290,6 +290,7 @@
           <option value="mirrors">Mirrors</option>
           <option value="woodmirror">Wood Mirror</option>
           <option value="disco">Disco</option>
+          <option value="moire">Moiré</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2309,6 +2310,45 @@
               step="0.01"
               value="0"
               aria-label="Colour palette — 0 = rainbow, 1 = white spotlight"
+            />
+          </div>
+        </div>
+
+        <div id="moire-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="moire-rings">Rings</label>
+            <input
+              type="range"
+              id="moire-rings"
+              min="8"
+              max="80"
+              step="1"
+              value="32"
+              aria-label="Number of concentric rings per layer — sparse for loose fringes to dense for tight interference"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="moire-interference">Interference</label>
+            <input
+              type="range"
+              id="moire-interference"
+              min="0"
+              max="2"
+              step="0.05"
+              value="1"
+              aria-label="How aggressively the two ring fields drift — 0 is still, 2 is turbulent"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="moire-contrast">Contrast</label>
+            <input
+              type="range"
+              id="moire-contrast"
+              min="0.3"
+              max="3"
+              step="0.05"
+              value="1.5"
+              aria-label="Line thickness — thin for delicate fringes, thick for bold op-art"
             />
           </div>
         </div>

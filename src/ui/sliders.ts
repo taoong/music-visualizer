@@ -211,6 +211,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'disco-spin', key: 'discoSpin' },
     { id: 'disco-sparkle', key: 'discoSparkle' },
     { id: 'disco-palette', key: 'discoPalette' },
+    { id: 'moire-rings', key: 'moireRings' },
+    { id: 'moire-interference', key: 'moireInterference' },
+    { id: 'moire-contrast', key: 'moireContrast' },
   ] as const;
 
   for (const { id, key } of configs) {
