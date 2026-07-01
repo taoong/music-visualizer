@@ -363,6 +363,10 @@ export const DEFAULT_CONFIG = {
   woodmirrorDensity: 0.5,
   woodmirrorDepth: 0.55,
   woodmirrorSpeed: 0.45,
+  // Disco-specific
+  discoSpin: 0.4,
+  discoSparkle: 0.5,
+  discoPalette: 0.0,
 };
 
 // FFT and decay constants

@@ -64,3 +64,4 @@ export { drawVortex, resetVortex } from './vortex';
 export { drawLumia, resetLumia } from './lumia';
 export { drawMirrors, resetMirrors } from './mirrors';
 export { drawWoodMirror, resetWoodMirror } from './woodmirror';
+export { drawDisco, resetDisco } from './disco';

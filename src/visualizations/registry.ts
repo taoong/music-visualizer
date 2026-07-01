@@ -62,6 +62,7 @@ import { drawVortex, resetVortex } from './vortex';
 import { drawLumia, resetLumia } from './lumia';
 import { drawMirrors, resetMirrors } from './mirrors';
 import { drawWoodMirror, resetWoodMirror } from './woodmirror';
+import { drawDisco, resetDisco } from './disco';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -178,4 +179,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   lumia:         { draw: drawLumia,     reset: resetLumia,         key: ']',  label: 'Lumia' },
   mirrors:       { draw: drawMirrors,  reset: resetMirrors,        key: '(',  label: 'Mirrors' },
   woodmirror:    { draw: drawWoodMirror, reset: resetWoodMirror,   key: '%',  label: 'Wood Mirror' },
+  disco:         { draw: drawDisco,      reset: resetDisco,         key: '_',  label: 'Disco' },
 };

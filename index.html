@@ -289,6 +289,7 @@
           <option value="lumia">Lumia</option>
           <option value="mirrors">Mirrors</option>
           <option value="woodmirror">Wood Mirror</option>
+          <option value="disco">Disco</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2269,6 +2270,45 @@
               step="0.01"
               value="0.45"
               aria-label="Motor response speed — slow settle to fast snap"
+            />
+          </div>
+        </div>
+
+        <div id="disco-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="disco-spin">Spin</label>
+            <input
+              type="range"
+              id="disco-spin"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Rotation speed — slow ambient swirl to frantic disco spin"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="disco-sparkle">Sparkle</label>
+            <input
+              type="range"
+              id="disco-sparkle"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Reflected-spot glow radius and intensity"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="disco-palette">Palette</label>
+            <input
+              type="range"
+              id="disco-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0"
+              aria-label="Colour palette — 0 = rainbow, 1 = white spotlight"
             />
           </div>
         </div>

@@ -113,6 +113,7 @@ const ALL_CONTROL_IDS = [
   'lumia-controls-group',
   'mirrors-controls-group',
   'woodmirror-controls-group',
+  'disco-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -179,6 +180,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   lumia:         { show: ['lumia-controls-group'] },
   mirrors:       { show: ['mirrors-controls-group'] },
   woodmirror:    { show: ['woodmirror-controls-group'] },
+  disco:         { show: ['disco-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

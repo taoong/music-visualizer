@@ -169,6 +169,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   woodmirrorDensity: 'woodmirror-density',
   woodmirrorDepth: 'woodmirror-depth',
   woodmirrorSpeed: 'woodmirror-speed',
+  discoSpin: 'disco-spin',
+  discoSparkle: 'disco-sparkle',
+  discoPalette: 'disco-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

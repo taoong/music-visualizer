@@ -208,6 +208,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'woodmirror-density', key: 'woodmirrorDensity' },
     { id: 'woodmirror-depth', key: 'woodmirrorDepth' },
     { id: 'woodmirror-speed', key: 'woodmirrorSpeed' },
+    { id: 'disco-spin', key: 'discoSpin' },
+    { id: 'disco-sparkle', key: 'discoSparkle' },
+    { id: 'disco-palette', key: 'discoPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
