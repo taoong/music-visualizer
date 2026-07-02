@@ -291,6 +291,7 @@
           <option value="woodmirror">Wood Mirror</option>
           <option value="disco">Disco</option>
           <option value="moire">Moiré</option>
+          <option value="radiolaria">Radiolaria</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2349,6 +2350,57 @@
               step="0.05"
               value="1.5"
               aria-label="Line thickness — thin for delicate fringes, thick for bold op-art"
+            />
+          </div>
+        </div>
+
+        <div id="radiolaria-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="radiolaria-arms">Arms</label>
+            <input
+              type="range"
+              id="radiolaria-arms"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.43"
+              aria-label="N-fold radial symmetry — 3 arms (left) to 12 arms (right)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="radiolaria-shells">Shells</label>
+            <input
+              type="range"
+              id="radiolaria-shells"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Number of concentric lattice rings — 2 (minimal) to 7 (dense cage)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="radiolaria-spine">Spine</label>
+            <input
+              type="range"
+              id="radiolaria-spine"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Spine extension length — 0 is stubby, 1 is long crystalline needles"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="radiolaria-glow">Glow</label>
+            <input
+              type="range"
+              id="radiolaria-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="1"
+              aria-label="Neon phosphor glow intensity — 0 is clean lines, 1 is full luminous halo"
             />
           </div>
         </div>

@@ -54,7 +54,8 @@ export function drawPhase(p: P5Instance, dt: number): void {
   const cy = H / 2;
   const minDim = Math.min(W, H);
 
-  const bands = getBandAverages();
+  const bandData = getBandAverages(BAND_COUNT);
+  const bands = bandData.amps;
   const totalAmp = bands.reduce((s, v) => s + v, 0) / BAND_COUNT;
 
   const cfg = store.config;
@@ -62,9 +63,8 @@ export function drawPhase(p: P5Instance, dt: number): void {
   const arcSegments = Math.round(3 + (cfg.phaseDensity ?? 0.5) * 9);
   const glowIntensity = cfg.phaseGlow ?? 1.0;
 
-  const bpmData = store.state.bpm;
-  const beatIntervalSec = bpmData > 0 ? 60 / bpmData : 0;
-  const beatOffset = store.state.beatOffset ?? 0;
+  const beatIntervalSec = store.state.beatIntervalSec;
+  const beatOffset = store.state.beatOffset;
 
   if (beatIntervalSec > 0) {
     const pos = audioEngine.getPlaybackPosition();

@@ -61,7 +61,7 @@ function ensureTrailBuffer(w: number, h: number): void {
     c.height = th;
     trailBuffer = c as unknown as OffscreenCanvas;
   }
-  trailCtx = trailBuffer.getContext('2d') as CanvasRenderingContext2D;
+  trailCtx = trailBuffer.getContext('2d') as unknown as CanvasRenderingContext2D;
   if (trailCtx) {
     (trailCtx as CanvasRenderingContext2D).fillStyle = '#000';
     (trailCtx as CanvasRenderingContext2D).fillRect(0, 0, tw, th);

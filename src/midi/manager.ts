@@ -175,6 +175,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   moireRings: 'moire-rings',
   moireInterference: 'moire-interference',
   moireContrast: 'moire-contrast',
+  radiolariaArms: 'radiolaria-arms',
+  radiolariaShells: 'radiolaria-shells',
+  radiolariaSpine: 'radiolaria-spine',
+  radiolariaGlow: 'radiolaria-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

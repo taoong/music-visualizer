@@ -214,6 +214,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'moire-rings', key: 'moireRings' },
     { id: 'moire-interference', key: 'moireInterference' },
     { id: 'moire-contrast', key: 'moireContrast' },
+    { id: 'radiolaria-arms', key: 'radiolariaArms' },
+    { id: 'radiolaria-shells', key: 'radiolariaShells' },
+    { id: 'radiolaria-spine', key: 'radiolariaSpine' },
+    { id: 'radiolaria-glow', key: 'radiolariaGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

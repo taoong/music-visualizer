@@ -23,6 +23,32 @@ declare global {
     updatePixels(): void;
     noSmooth(): void;
     remove(): void;
+    background(color: number | string): void;
+    background(r: number, g: number, b: number, a?: number): void;
+    fill(color: number | string): void;
+    fill(r: number, g: number, b: number, a?: number): void;
+    noFill(): void;
+    noStroke(): void;
+    stroke(color: number | string): void;
+    stroke(r: number, g: number, b: number, a?: number): void;
+    strokeWeight(weight: number): void;
+    rect(x: number, y: number, w: number, h?: number): void;
+    line(x1: number, y1: number, x2: number, y2: number): void;
+    ellipse(x: number, y: number, w: number, h?: number): void;
+    circle(x: number, y: number, d: number): void;
+    point(x: number, y: number): void;
+    push(): void;
+    pop(): void;
+    translate(x: number, y: number): void;
+    rotate(angle: number): void;
+    scale(x: number, y?: number): void;
+    beginShape(): void;
+    endShape(mode?: number): void;
+    vertex(x: number, y: number): void;
+    colorMode(mode: string | number, max1?: number, max2?: number, max3?: number, maxA?: number): void;
+    blendMode(mode: number): void;
+    clear(): void;
+    drawingContext: CanvasRenderingContext2D;
   }
 
   interface P5Instance {

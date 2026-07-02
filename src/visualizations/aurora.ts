@@ -44,7 +44,7 @@ function ensureTrailBuffer(w: number, h: number): void {
     c.height = th;
     trailBuffer = c as unknown as OffscreenCanvas;
   }
-  trailCtx = trailBuffer.getContext('2d') as CanvasRenderingContext2D;
+  trailCtx = trailBuffer.getContext('2d') as unknown as CanvasRenderingContext2D;
   if (trailCtx) {
     (trailCtx as CanvasRenderingContext2D).fillStyle = '#000';
     (trailCtx as CanvasRenderingContext2D).fillRect(0, 0, tw, th);
@@ -205,7 +205,6 @@ export function drawAurora(p: P5Instance, dt: number): void {
 
   ctx.globalCompositeOperation = 'source-over';
 
-  const canvas = (p as any).drawingContext?.canvas || (p as any).canvas;
   const pCtx: CanvasRenderingContext2D | null = (p as any).drawingContext || null;
   if (pCtx && trailBuffer) {
     pCtx.save();

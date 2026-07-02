@@ -371,6 +371,11 @@ export const DEFAULT_CONFIG = {
   moireRings: 32,
   moireInterference: 1.0,
   moireContrast: 1.5,
+  // Radiolaria-specific
+  radiolariaArms: 0.43,
+  radiolariaShells: 0.5,
+  radiolariaSpine: 0.5,
+  radiolariaGlow: 1.0,
 };
 
 // FFT and decay constants
