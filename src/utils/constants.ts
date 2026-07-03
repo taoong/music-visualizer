@@ -376,6 +376,10 @@ export const DEFAULT_CONFIG = {
   radiolariaShells: 0.5,
   radiolariaSpine: 0.5,
   radiolariaGlow: 1.0,
+  // Noctiluca-specific
+  noctilucaDrift: 0.3,
+  noctilucaBloom: 0.5,
+  noctilucaWake:  0.55,
 };
 
 // FFT and decay constants

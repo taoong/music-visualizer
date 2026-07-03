@@ -292,6 +292,7 @@
           <option value="disco">Disco</option>
           <option value="moire">Moiré</option>
           <option value="radiolaria">Radiolaria</option>
+          <option value="noctiluca">Noctiluca</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2401,6 +2402,45 @@
               step="0.01"
               value="1"
               aria-label="Neon phosphor glow intensity — 0 is clean lines, 1 is full luminous halo"
+            />
+          </div>
+        </div>
+
+        <div id="noctiluca-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="noctiluca-drift">Drift</label>
+            <input
+              type="range"
+              id="noctiluca-drift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.3"
+              aria-label="Perlin noise current speed — 0 is still water, 1 is fast swirling currents"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="noctiluca-bloom">Bloom</label>
+            <input
+              type="range"
+              id="noctiluca-bloom"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Glow halo radius and trail persistence — 0 is sharp pinpoints, 1 is diffuse luminous halos"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="noctiluca-wake">Wake</label>
+            <input
+              type="range"
+              id="noctiluca-wake"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Wave brightness and cascade intensity — 0 is subtle shimmer, 1 is dramatic blue-fire cascade"
             />
           </div>
         </div>

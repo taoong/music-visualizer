@@ -179,6 +179,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   radiolariaShells: 'radiolaria-shells',
   radiolariaSpine: 'radiolaria-spine',
   radiolariaGlow: 'radiolaria-glow',
+  noctilucaDrift: 'noctiluca-drift',
+  noctilucaBloom: 'noctiluca-bloom',
+  noctilucaWake:  'noctiluca-wake',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

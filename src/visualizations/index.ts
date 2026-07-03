@@ -67,3 +67,4 @@ export { drawLumia, resetLumia } from './lumia';
 export { drawMirrors, resetMirrors } from './mirrors';
 export { drawWoodMirror, resetWoodMirror } from './woodmirror';
 export { drawDisco, resetDisco } from './disco';
+export { drawNoctiluca, resetNoctiluca } from './noctiluca';

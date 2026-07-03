@@ -65,6 +65,7 @@ import { drawWoodMirror, resetWoodMirror } from './woodmirror';
 import { drawDisco, resetDisco } from './disco';
 import { drawMoire, resetMoire } from './moire';
 import { drawRadiolaria, resetRadiolaria } from './radiolaria';
+import { drawNoctiluca, resetNoctiluca } from './noctiluca';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -184,4 +185,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   disco:         { draw: drawDisco,      reset: resetDisco,         key: '_',  label: 'Disco' },
   moire:         { draw: drawMoire,      reset: resetMoire,         key: 'f',  label: 'Moiré' },
   radiolaria:    { draw: drawRadiolaria, reset: resetRadiolaria,    key: '`',  label: 'Radiolaria' },
+  noctiluca:     { draw: drawNoctiluca,  reset: resetNoctiluca,     key: ':',  label: 'Noctiluca' },
 };
