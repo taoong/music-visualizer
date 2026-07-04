@@ -221,6 +221,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'noctiluca-drift', key: 'noctilucaDrift' },
     { id: 'noctiluca-bloom', key: 'noctilucaBloom' },
     { id: 'noctiluca-wake',  key: 'noctilucaWake' },
+    { id: 'ferrofluid-spikes',  key: 'ferrofluidSpikes' },
+    { id: 'ferrofluid-sheen',   key: 'ferrofluidSheen' },
+    { id: 'ferrofluid-surface', key: 'ferrofluidSurface' },
   ] as const;
 
   for (const { id, key } of configs) {

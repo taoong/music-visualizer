@@ -293,6 +293,7 @@
           <option value="moire">Moiré</option>
           <option value="radiolaria">Radiolaria</option>
           <option value="noctiluca">Noctiluca</option>
+          <option value="ferrofluid">Ferrofluid</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2441,6 +2442,45 @@
               step="0.01"
               value="0.55"
               aria-label="Wave brightness and cascade intensity — 0 is subtle shimmer, 1 is dramatic blue-fire cascade"
+            />
+          </div>
+        </div>
+
+        <div id="ferrofluid-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="ferrofluid-spikes">Spikes</label>
+            <input
+              type="range"
+              id="ferrofluid-spikes"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.7"
+              aria-label="Node density — 0 is a sparse scatter of spikes, 1 is a dense close-packed field"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="ferrofluid-sheen">Sheen</label>
+            <input
+              type="range"
+              id="ferrofluid-sheen"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.75"
+              aria-label="Metallic reflectivity — 0 is flat matte surface, 1 is mirror-chrome with brilliant highlights"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="ferrofluid-surface">Surface</label>
+            <input
+              type="range"
+              id="ferrofluid-surface"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Surface viscosity — 0 lets spikes drift freely on a fluid surface, 1 locks them to a rigid grid"
             />
           </div>
         </div>

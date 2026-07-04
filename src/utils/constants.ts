@@ -380,6 +380,10 @@ export const DEFAULT_CONFIG = {
   noctilucaDrift: 0.3,
   noctilucaBloom: 0.5,
   noctilucaWake:  0.55,
+  // Ferrofluid-specific
+  ferrofluidSpikes:  0.7,
+  ferrofluidSheen:   0.75,
+  ferrofluidSurface: 0.45,
 };
 
 // FFT and decay constants

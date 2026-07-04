@@ -68,3 +68,4 @@ export { drawMirrors, resetMirrors } from './mirrors';
 export { drawWoodMirror, resetWoodMirror } from './woodmirror';
 export { drawDisco, resetDisco } from './disco';
 export { drawNoctiluca, resetNoctiluca } from './noctiluca';
+export { drawFerrofluid, resetFerrofluid } from './ferrofluid';

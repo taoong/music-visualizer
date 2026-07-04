@@ -182,6 +182,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   noctilucaDrift: 'noctiluca-drift',
   noctilucaBloom: 'noctiluca-bloom',
   noctilucaWake:  'noctiluca-wake',
+  ferrofluidSpikes:  'ferrofluid-spikes',
+  ferrofluidSheen:   'ferrofluid-sheen',
+  ferrofluidSurface: 'ferrofluid-surface',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

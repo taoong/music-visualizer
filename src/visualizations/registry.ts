@@ -66,6 +66,7 @@ import { drawDisco, resetDisco } from './disco';
 import { drawMoire, resetMoire } from './moire';
 import { drawRadiolaria, resetRadiolaria } from './radiolaria';
 import { drawNoctiluca, resetNoctiluca } from './noctiluca';
+import { drawFerrofluid, resetFerrofluid } from './ferrofluid';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -186,4 +187,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   moire:         { draw: drawMoire,      reset: resetMoire,         key: 'f',  label: 'Moiré' },
   radiolaria:    { draw: drawRadiolaria, reset: resetRadiolaria,    key: '`',  label: 'Radiolaria' },
   noctiluca:     { draw: drawNoctiluca,  reset: resetNoctiluca,     key: ':',  label: 'Noctiluca' },
+  ferrofluid:    { draw: drawFerrofluid, reset: resetFerrofluid,    key: '8',  label: 'Ferrofluid' },
 };
