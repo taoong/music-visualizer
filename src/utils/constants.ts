@@ -384,6 +384,10 @@ export const DEFAULT_CONFIG = {
   ferrofluidSpikes:  0.7,
   ferrofluidSheen:   0.75,
   ferrofluidSurface: 0.45,
+  // Spirograph-specific
+  spirographLayers:     0.5,
+  spirographComplexity: 0.55,
+  spirographTrail:      0.70,
 };
 
 // FFT and decay constants

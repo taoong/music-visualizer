@@ -185,6 +185,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   ferrofluidSpikes:  'ferrofluid-spikes',
   ferrofluidSheen:   'ferrofluid-sheen',
   ferrofluidSurface: 'ferrofluid-surface',
+  spirographLayers:     'spirograph-layers',
+  spirographComplexity: 'spirograph-complexity',
+  spirographTrail:      'spirograph-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
