@@ -227,6 +227,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'spirograph-layers',     key: 'spirographLayers' },
     { id: 'spirograph-complexity', key: 'spirographComplexity' },
     { id: 'spirograph-trail',      key: 'spirographTrail' },
+    { id: 'mobile-shapes', key: 'mobileShapes' },
+    { id: 'mobile-swing',  key: 'mobileSwing' },
+    { id: 'mobile-wind',   key: 'mobileWind' },
   ] as const;
 
   for (const { id, key } of configs) {

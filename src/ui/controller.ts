@@ -119,6 +119,7 @@ const ALL_CONTROL_IDS = [
   'noctiluca-controls-group',
   'ferrofluid-controls-group',
   'spirograph-controls-group',
+  'mobile-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -191,6 +192,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   noctiluca:     { show: ['noctiluca-controls-group'] },
   ferrofluid:    { show: ['ferrofluid-controls-group'] },
   spirograph:    { show: ['spirograph-controls-group'] },
+  mobile:        { show: ['mobile-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

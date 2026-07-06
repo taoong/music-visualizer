@@ -388,6 +388,10 @@ export const DEFAULT_CONFIG = {
   spirographLayers:     0.5,
   spirographComplexity: 0.55,
   spirographTrail:      0.70,
+  // Mobile-specific
+  mobileShapes: 8,
+  mobileSwing:  0.5,
+  mobileWind:   0.3,
 };
 
 // FFT and decay constants

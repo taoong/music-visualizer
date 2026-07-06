@@ -68,6 +68,7 @@ import { drawRadiolaria, resetRadiolaria } from './radiolaria';
 import { drawNoctiluca, resetNoctiluca } from './noctiluca';
 import { drawFerrofluid, resetFerrofluid } from './ferrofluid';
 import { drawSpirograph, resetSpirograph } from './spirograph';
+import { drawMobile, resetMobile } from './mobile';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -190,4 +191,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   noctiluca:     { draw: drawNoctiluca,  reset: resetNoctiluca,     key: ':',  label: 'Noctiluca' },
   ferrofluid:    { draw: drawFerrofluid, reset: resetFerrofluid,    key: '8',  label: 'Ferrofluid' },
   spirograph:    { draw: drawSpirograph, reset: resetSpirograph,    key: '"',  label: 'Spirograph' },
+  mobile:        { draw: drawMobile,     reset: resetMobile,        key: 'M',  label: 'Mobile' },
 };

@@ -188,6 +188,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   spirographLayers:     'spirograph-layers',
   spirographComplexity: 'spirograph-complexity',
   spirographTrail:      'spirograph-trail',
+  mobileShapes: 'mobile-shapes',
+  mobileSwing:  'mobile-swing',
+  mobileWind:   'mobile-wind',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
