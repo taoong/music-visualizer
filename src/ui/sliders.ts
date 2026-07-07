@@ -230,6 +230,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'mobile-shapes', key: 'mobileShapes' },
     { id: 'mobile-swing',  key: 'mobileSwing' },
     { id: 'mobile-wind',   key: 'mobileWind' },
+    { id: 'irid-film',   key: 'iridFilm' },
+    { id: 'irid-ripple', key: 'iridRipple' },
+    { id: 'irid-speed',  key: 'iridSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

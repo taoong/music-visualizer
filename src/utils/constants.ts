@@ -392,6 +392,10 @@ export const DEFAULT_CONFIG = {
   mobileShapes: 8,
   mobileSwing:  0.5,
   mobileWind:   0.3,
+  // Iridescent-specific
+  iridFilm:   0.7,
+  iridRipple: 0.6,
+  iridSpeed:  0.4,
 };
 
 // FFT and decay constants

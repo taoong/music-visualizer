@@ -191,6 +191,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   mobileShapes: 'mobile-shapes',
   mobileSwing:  'mobile-swing',
   mobileWind:   'mobile-wind',
+  iridFilm:     'irid-film',
+  iridRipple:   'irid-ripple',
+  iridSpeed:    'irid-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
