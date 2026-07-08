@@ -194,6 +194,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   iridFilm:     'irid-film',
   iridRipple:   'irid-ripple',
   iridSpeed:    'irid-speed',
+  strataDensity: 'strata-density',
+  strataSwell:   'strata-swell',
+  strataHue:     'strata-hue',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

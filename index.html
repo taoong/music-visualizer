@@ -297,6 +297,7 @@
           <option value="spirograph">Spirograph</option>
           <option value="mobile">Mobile</option>
           <option value="iridescent">Iridescent</option>
+          <option value="strata">Strata</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2562,6 +2563,45 @@
               step="0.01"
               value="0.3"
               aria-label="Ambient drift — background turbulence that sways the mobile even during quiet passages"
+            />
+          </div>
+        </div>
+
+        <div id="strata-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="strata-density">Density</label>
+            <input
+              type="range"
+              id="strata-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Scan-line grain — low=coarse sedimentary layers, high=fine crystalline texture"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="strata-swell">Swell</label>
+            <input
+              type="range"
+              id="strata-swell"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Breathing amplitude — how much each stratum expands when its frequency band is loud"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="strata-hue">Hue</label>
+            <input
+              type="range"
+              id="strata-hue"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0"
+              aria-label="Palette rotation — 0=geological earth tones, 0.5=neon complement, 1=full 360° rotation"
             />
           </div>
         </div>

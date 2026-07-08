@@ -396,6 +396,10 @@ export const DEFAULT_CONFIG = {
   iridFilm:   0.7,
   iridRipple: 0.6,
   iridSpeed:  0.4,
+  // Strata-specific
+  strataDensity: 0.5,
+  strataSwell:   0.5,
+  strataHue:     0.0,
 };
 
 // FFT and decay constants

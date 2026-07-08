@@ -121,6 +121,7 @@ const ALL_CONTROL_IDS = [
   'spirograph-controls-group',
   'mobile-controls-group',
   'iridescent-controls-group',
+  'strata-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -195,6 +196,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   spirograph:    { show: ['spirograph-controls-group'] },
   mobile:        { show: ['mobile-controls-group'] },
   iridescent:    { show: ['iridescent-controls-group'] },
+  strata:        { show: ['strata-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

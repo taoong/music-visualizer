@@ -233,6 +233,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'irid-film',   key: 'iridFilm' },
     { id: 'irid-ripple', key: 'iridRipple' },
     { id: 'irid-speed',  key: 'iridSpeed' },
+    { id: 'strata-density', key: 'strataDensity' },
+    { id: 'strata-swell',   key: 'strataSwell' },
+    { id: 'strata-hue',     key: 'strataHue' },
   ] as const;
 
   for (const { id, key } of configs) {
