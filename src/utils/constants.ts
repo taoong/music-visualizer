@@ -404,6 +404,10 @@ export const DEFAULT_CONFIG = {
   boogieGrid:  8,
   boogieSpeed: 0.4,
   boogieVivid: 0.65,
+  // Feedback-specific
+  feedbackZoom: 0.4,
+  feedbackSpin: 0.25,
+  feedbackTrail: 0.55,
 };
 
 // FFT and decay constants

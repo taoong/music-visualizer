@@ -239,6 +239,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'boogie-grid',    key: 'boogieGrid' },
     { id: 'boogie-speed',   key: 'boogieSpeed' },
     { id: 'boogie-vivid',   key: 'boogieVivid' },
+    { id: 'feedback-zoom', key: 'feedbackZoom' },
+    { id: 'feedback-spin', key: 'feedbackSpin' },
+    { id: 'feedback-trail', key: 'feedbackTrail' },
   ] as const;
 
   for (const { id, key } of configs) {

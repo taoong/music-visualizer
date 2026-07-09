@@ -299,6 +299,7 @@
           <option value="iridescent">Iridescent</option>
           <option value="strata">Strata</option>
           <option value="boogie">Boogie</option>
+          <option value="feedback">Feedback</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2720,6 +2721,45 @@
               step="0.01"
               value="0.3"
               aria-label="Ink evaporation rate"
+            />
+          </div>
+        </div>
+
+        <div id="feedback-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="feedback-zoom">Zoom</label>
+            <input
+              type="range"
+              id="feedback-zoom"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Per-frame recursive scale — 0 = gentle drift, 1 = fast tunnel toward edges"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="feedback-spin">Spin</label>
+            <input
+              type="range"
+              id="feedback-spin"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.25"
+              aria-label="Per-frame recursive rotation — 0 = no spin, 1 = vortex"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="feedback-trail">Trail</label>
+            <input
+              type="range"
+              id="feedback-trail"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Persistence of the recursive history — 0 = short fade, 1 = long smear"
             />
           </div>
         </div>

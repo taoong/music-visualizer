@@ -72,6 +72,7 @@ import { drawMobile, resetMobile } from './mobile';
 import { drawIridescent, resetIridescent } from './iridescent';
 import { drawStrata, resetStrata } from './strata';
 import { drawBoogie, resetBoogie } from './boogie';
+import { drawFeedback, resetFeedback, disposeFeedback } from './feedback';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -198,4 +199,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   iridescent:    { draw: drawIridescent, reset: resetIridescent,    key: 'J',  label: 'Iridescent' },
   strata:        { draw: drawStrata,     reset: resetStrata,        key: 'Z',  label: 'Strata' },
   boogie:        { draw: drawBoogie,     reset: resetBoogie,        key: 'B',  label: 'Boogie' },
+  feedback:      { draw: drawFeedback,       reset: resetFeedback,      dispose: disposeFeedback, key: 'C', label: 'Feedback' },
 };

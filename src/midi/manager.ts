@@ -200,6 +200,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   boogieGrid:    'boogie-grid',
   boogieSpeed:   'boogie-speed',
   boogieVivid:   'boogie-vivid',
+  feedbackZoom: 'feedback-zoom',
+  feedbackSpin: 'feedback-spin',
+  feedbackTrail: 'feedback-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

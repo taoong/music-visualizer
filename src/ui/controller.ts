@@ -123,6 +123,7 @@ const ALL_CONTROL_IDS = [
   'iridescent-controls-group',
   'strata-controls-group',
   'boogie-controls-group',
+  'feedback-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -199,6 +200,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   iridescent:    { show: ['iridescent-controls-group'] },
   strata:        { show: ['strata-controls-group'] },
   boogie:        { show: ['boogie-controls-group'] },
+  feedback:      { show: ['feedback-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
