@@ -400,6 +400,10 @@ export const DEFAULT_CONFIG = {
   strataDensity: 0.5,
   strataSwell:   0.5,
   strataHue:     0.0,
+  // Boogie-specific
+  boogieGrid:  8,
+  boogieSpeed: 0.4,
+  boogieVivid: 0.65,
 };
 
 // FFT and decay constants

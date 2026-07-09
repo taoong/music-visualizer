@@ -33,6 +33,7 @@ declare global {
     stroke(r: number, g: number, b: number, a?: number): void;
     strokeWeight(weight: number): void;
     rect(x: number, y: number, w: number, h?: number): void;
+    rectMode(mode: string): void;
     line(x1: number, y1: number, x2: number, y2: number): void;
     ellipse(x: number, y: number, w: number, h?: number): void;
     circle(x: number, y: number, d: number): void;
@@ -69,6 +70,8 @@ declare global {
     PIE: number;
     CHORD: number;
     CENTER: string;
+    CORNER: string;
+    CORNERS: string;
     LEFT: string;
     RIGHT: string;
     ADD: number;
@@ -100,6 +103,7 @@ declare global {
     circle(x: number, y: number, d: number): void;
     ellipse(x: number, y: number, w: number, h?: number): void;
     rect(x: number, y: number, w: number, h?: number, tl?: number, tr?: number, br?: number, bl?: number): void;
+    rectMode(mode: string): void;
     triangle(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): void;
     vertex(x: number, y: number): void;
     bezierVertex(cx1: number, cy1: number, cx2: number, cy2: number, x: number, y: number): void;

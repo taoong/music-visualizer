@@ -236,6 +236,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'strata-density', key: 'strataDensity' },
     { id: 'strata-swell',   key: 'strataSwell' },
     { id: 'strata-hue',     key: 'strataHue' },
+    { id: 'boogie-grid',    key: 'boogieGrid' },
+    { id: 'boogie-speed',   key: 'boogieSpeed' },
+    { id: 'boogie-vivid',   key: 'boogieVivid' },
   ] as const;
 
   for (const { id, key } of configs) {

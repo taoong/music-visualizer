@@ -197,6 +197,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   strataDensity: 'strata-density',
   strataSwell:   'strata-swell',
   strataHue:     'strata-hue',
+  boogieGrid:    'boogie-grid',
+  boogieSpeed:   'boogie-speed',
+  boogieVivid:   'boogie-vivid',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

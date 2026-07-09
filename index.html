@@ -298,6 +298,7 @@
           <option value="mobile">Mobile</option>
           <option value="iridescent">Iridescent</option>
           <option value="strata">Strata</option>
+          <option value="boogie">Boogie</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2602,6 +2603,45 @@
               step="0.01"
               value="0"
               aria-label="Palette rotation — 0=geological earth tones, 0.5=neon complement, 1=full 360° rotation"
+            />
+          </div>
+        </div>
+
+        <div id="boogie-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="boogie-grid">Grid</label>
+            <input
+              type="range"
+              id="boogie-grid"
+              min="4"
+              max="16"
+              step="1"
+              value="8"
+              aria-label="Street count — fewer wide avenues vs. a dense fine-grid city map"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="boogie-speed">Speed</label>
+            <input
+              type="range"
+              id="boogie-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Dot velocity — how fast the coloured squares race along the streets"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="boogie-vivid">Vivid</label>
+            <input
+              type="range"
+              id="boogie-vivid"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.65"
+              aria-label="Colour intensity — how brightly intersection blocks and cell blocks glow with audio energy"
             />
           </div>
         </div>

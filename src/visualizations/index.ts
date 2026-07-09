@@ -73,3 +73,4 @@ export { drawSpirograph, resetSpirograph } from './spirograph';
 export { drawMobile, resetMobile } from './mobile';
 export { drawIridescent, resetIridescent } from './iridescent';
 export { drawStrata, resetStrata } from './strata';
+export { drawBoogie, resetBoogie } from './boogie';
