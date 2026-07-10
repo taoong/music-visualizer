@@ -104,60 +104,13 @@ Open http://localhost:3000. Upload a track or use the built-in sample.
 
 ## Keyboard Shortcuts
 
+Cycle through visualizations with the arrow keys, or pick one from the sidebar dropdown.
+
 | Key | Action |
 |-----|--------|
 | `Space` | Play / Pause |
-| `Left` / `Right` | Seek -5s / +5s |
-| `Up` / `Down` | Volume up / down |
-| `1`-`9`, `0` | Switch visualization mode |
-| `N` | Neon Grid visualization |
-| `G` | Image Grid visualization |
-| `W` | Ripple Tank visualization |
-| `Y` | Cymatics visualization |
-| `U` | Sculpture visualization |
-| `B` | Binary visualization |
-| `J` | Strange Attractor visualization |
-| `E` | Waterfall visualization |
-| `Z` | Monolith visualization |
-| `.` | Stained Glass visualization |
-| `,` | Blobs visualization |
-| `/` | Gray-Scott visualization |
-| `~` | Growth visualization |
-| `\|` | Murmuration visualization |
-| `@` | Pixel Sort visualization |
-| `#` | Echoes visualization |
-| `$` | Physarum visualization |
-| `%` | Op-Art visualization |
-| `^` | Geodesic visualization |
-| `&` | Ribbons visualization |
-| `*` | Infinity Net visualization |
-| `_` | Zen Garden visualization |
-| `!` | Arabesque visualization |
-| `+` | Facets visualization |
-| `>` | Epicycles visualization |
-| `<` | Ink Wash visualization |
-| `Q` | Circuit visualization |
-| `G` | Caustics visualization |
-| `n` | Knot visualization |
-| `p` | Penrose visualization |
-| `l` | Fractal Flame visualization |
-| `k` | Disorders visualization |
-| `q` | Black Wave visualization |
-| `t` | Origami visualization |
-| `x` | Light Field visualization |
-| `d` | Brush visualization |
-| `a` | Aurora visualization |
-| `c` | Glitch visualization |
-| `+` | Phase visualization |
-| `}` | Warp visualization |
-| `G` | Substrate visualization |
-| `{` | Smear visualization |
-| `)` | Nebula visualization |
-| `]` | Lumia visualization |
-| `(` | Mirrors visualization |
-| `%` | Wood Mirror visualization |
-| `_` | Disco visualization |
-| `C` | Feedback visualization |
+| `←` / `→` | Previous / next visualization |
+| `↑` / `↓` | Volume up / down |
 | `M` | Mute / Unmute |
 | `F` | Toggle fullscreen |
 | `S` | Toggle sidebar |

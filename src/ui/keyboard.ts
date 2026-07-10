@@ -4,7 +4,6 @@
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
 import { hasUserImage, clearUserImage } from '../visualizations/userImage';
-import { VIZ_REGISTRY } from '../visualizations/registry';
 import type { VizMode } from '../types';
 
 // Keyboard shortcut map
@@ -20,10 +19,6 @@ export function initKeyboardShortcuts(): () => void {
   defineShortcut('ArrowRight', () => cycleVizMode(1), 'Next visualization');
   defineShortcut('ArrowUp', () => adjustVolume(0.05), 'Volume up');
   defineShortcut('ArrowDown', () => adjustVolume(-0.05), 'Volume down');
-  // Register viz shortcuts from the registry
-  for (const [mode, entry] of Object.entries(VIZ_REGISTRY) as [VizMode, (typeof VIZ_REGISTRY)[VizMode]][]) {
-    defineShortcut(entry.key, () => setVizMode(mode), `${entry.label} visualization`);
-  }
   defineShortcut('m', toggleMute, 'Mute/Unmute');
   defineShortcut('F', toggleFullscreen, 'Toggle fullscreen');
   defineShortcut('s', toggleSidebar, 'Toggle sidebar');

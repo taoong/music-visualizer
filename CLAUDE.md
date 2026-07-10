@@ -129,7 +129,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, 7-band frequency sensitivity, display sliders
-│   └── keyboard.ts            # Keyboard shortcuts (0-9 viz modes, letter shortcuts, space, arrows, m/f/s/r/i/?/h/Esc; shortcuts auto-registered from VIZ_REGISTRY; special keys: ;→marbling, [→flowfield, ]→lumia, \→truchet, -→topography, =→interference, .→voronoi, ,→blobs, /→grayscott, ~→growth, @→pixelsort, #→echoes, $→physarum, %→woodmirror, ^→geodesic, &→ribbons, *→infinitynet, _→disco, !→arabesque, |→murmuration, q→blackwave, l→flame, k→disorders, d→brush, a→aurora, c→glitch, +→phase, }→warp, g→substrate, {→smear, <→ink, )→nebula, (→mirrors, J→iridescent, C→feedback)
+│   └── keyboard.ts            # Keyboard shortcuts: arrows cycle vizzes (via viz-selector option order), space play/pause, ↑↓ volume, m/f/s/r/i/?/h/Esc utility. Viz hotkeys were removed — the `key` field on registry entries is currently unused, but kept for potential future reintroduction
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)
@@ -198,7 +198,7 @@ Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChang
 13. Update CLAUDE.md and README.md in the same commit.
 14. Add any missing p5.js methods to `src/types/globals.d.ts`.
 
-Note: keyboard shortcuts are auto-registered from `VIZ_REGISTRY` — do not add them manually to `keyboard.ts`.
+Note: per-viz keyboard shortcuts have been removed. Users cycle vizzes with the arrow keys (which iterate over the `#viz-selector` `<option>` list) or pick one directly from the sidebar dropdown. The `key` field on registry entries is kept for potential future reintroduction but is not currently registered.
 
 ### External libraries
 
