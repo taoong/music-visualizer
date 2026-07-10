@@ -408,6 +408,10 @@ export const DEFAULT_CONFIG = {
   feedbackZoom: 0.4,
   feedbackSpin: 0.25,
   feedbackTrail: 0.55,
+
+  tesseractLayers: 3,
+  tesseractSpin:   0.5,
+  tesseractGlow:   0.6,
 };
 
 // FFT and decay constants

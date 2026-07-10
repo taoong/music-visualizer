@@ -73,6 +73,7 @@ import { drawIridescent, resetIridescent } from './iridescent';
 import { drawStrata, resetStrata } from './strata';
 import { drawBoogie, resetBoogie } from './boogie';
 import { drawFeedback, resetFeedback, disposeFeedback } from './feedback';
+import { drawTesseract, resetTesseract } from './tesseract';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -200,4 +201,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   strata:        { draw: drawStrata,     reset: resetStrata,        key: 'Z',  label: 'Strata' },
   boogie:        { draw: drawBoogie,     reset: resetBoogie,        key: 'B',  label: 'Boogie' },
   feedback:      { draw: drawFeedback,       reset: resetFeedback,      dispose: disposeFeedback, key: 'C', label: 'Feedback' },
+  tesseract:     { draw: drawTesseract,      reset: resetTesseract,                               key: 'T', label: 'Tesseract' },
 };

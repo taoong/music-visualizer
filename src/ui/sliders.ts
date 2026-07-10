@@ -242,6 +242,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'feedback-zoom', key: 'feedbackZoom' },
     { id: 'feedback-spin', key: 'feedbackSpin' },
     { id: 'feedback-trail', key: 'feedbackTrail' },
+    { id: 'tesseract-layers', key: 'tesseractLayers' },
+    { id: 'tesseract-spin',   key: 'tesseractSpin' },
+    { id: 'tesseract-glow',   key: 'tesseractGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

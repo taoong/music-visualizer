@@ -203,6 +203,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   feedbackZoom: 'feedback-zoom',
   feedbackSpin: 'feedback-spin',
   feedbackTrail: 'feedback-trail',
+  tesseractLayers: 'tesseract-layers',
+  tesseractSpin:   'tesseract-spin',
+  tesseractGlow:   'tesseract-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -300,6 +300,7 @@
           <option value="strata">Strata</option>
           <option value="boogie">Boogie</option>
           <option value="feedback">Feedback</option>
+          <option value="tesseract">Tesseract</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2760,6 +2761,45 @@
               step="0.01"
               value="0.55"
               aria-label="Persistence of the recursive history — 0 = short fade, 1 = long smear"
+            />
+          </div>
+        </div>
+
+        <div id="tesseract-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="tesseract-layers">Layers</label>
+            <input
+              type="range"
+              id="tesseract-layers"
+              min="1"
+              max="5"
+              step="1"
+              value="3"
+              aria-label="Number of nested 4D hypercubes — 1 = single tesseract, 5 = five interpenetrating shells"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="tesseract-spin">Spin</label>
+            <input
+              type="range"
+              id="tesseract-spin"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Base rotation speed across all 4D rotation planes"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="tesseract-glow">Glow</label>
+            <input
+              type="range"
+              id="tesseract-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Neon glow halo intensity — 0 = crisp lines, 1 = full phosphor bloom"
             />
           </div>
         </div>

@@ -75,3 +75,4 @@ export { drawIridescent, resetIridescent } from './iridescent';
 export { drawStrata, resetStrata } from './strata';
 export { drawBoogie, resetBoogie } from './boogie';
 export { drawFeedback, resetFeedback, disposeFeedback } from './feedback';
+export { drawTesseract, resetTesseract } from './tesseract';
