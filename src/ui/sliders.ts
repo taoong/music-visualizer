@@ -245,6 +245,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'tesseract-layers', key: 'tesseractLayers' },
     { id: 'tesseract-spin',   key: 'tesseractSpin' },
     { id: 'tesseract-glow',   key: 'tesseractGlow' },
+    { id: 'lumiere-lines', key: 'lumiereLines' },
+    { id: 'lumiere-drift', key: 'lumiereDrift' },
+    { id: 'lumiere-glow',  key: 'lumiereGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -206,6 +206,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   tesseractLayers: 'tesseract-layers',
   tesseractSpin:   'tesseract-spin',
   tesseractGlow:   'tesseract-glow',
+  lumiereLines: 'lumiere-lines',
+  lumiereDrift: 'lumiere-drift',
+  lumiereGlow:  'lumiere-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -412,6 +412,10 @@ export const DEFAULT_CONFIG = {
   tesseractLayers: 3,
   tesseractSpin:   0.5,
   tesseractGlow:   0.6,
+
+  lumiereLines: 16,
+  lumiereDrift: 0.4,
+  lumiereGlow:  0.6,
 };
 
 // FFT and decay constants
