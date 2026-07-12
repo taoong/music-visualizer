@@ -416,6 +416,11 @@ export const DEFAULT_CONFIG = {
   lumiereLines: 16,
   lumiereDrift: 0.4,
   lumiereGlow:  0.6,
+
+  hilbertOrder: 4,
+  hilbertWarp:  0.5,
+  hilbertGlow:  0.6,
+  hilbertTrail: 0.4,
 };
 
 // FFT and decay constants

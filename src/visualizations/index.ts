@@ -77,3 +77,4 @@ export { drawBoogie, resetBoogie } from './boogie';
 export { drawFeedback, resetFeedback, disposeFeedback } from './feedback';
 export { drawTesseract, resetTesseract } from './tesseract';
 export { drawLumiere, resetLumiere } from './lumiere';
+export { drawHilbert, resetHilbert } from './hilbert';

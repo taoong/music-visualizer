@@ -75,6 +75,7 @@ import { drawBoogie, resetBoogie } from './boogie';
 import { drawFeedback, resetFeedback, disposeFeedback } from './feedback';
 import { drawTesseract, resetTesseract } from './tesseract';
 import { drawLumiere, resetLumiere } from './lumiere';
+import { drawHilbert, resetHilbert } from './hilbert';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -204,4 +205,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   feedback:      { draw: drawFeedback,       reset: resetFeedback,      dispose: disposeFeedback, key: 'C', label: 'Feedback' },
   tesseract:     { draw: drawTesseract,      reset: resetTesseract,                               key: 'T', label: 'Tesseract' },
   lumiere:       { draw: drawLumiere,        reset: resetLumiere,                                 key: 'A', label: 'Lumière' },
+  hilbert:       { draw: drawHilbert,        reset: resetHilbert,                                 key: 'D', label: 'Hilbert' },
 };

@@ -302,6 +302,7 @@
           <option value="feedback">Feedback</option>
           <option value="tesseract">Tesseract</option>
           <option value="lumiere">Lumière</option>
+          <option value="hilbert">Hilbert</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2840,6 +2841,57 @@
               step="0.01"
               value="0.6"
               aria-label="Phosphor bloom intensity and trail persistence — 0 = crisp fast-fading, 1 = full bloom with long trails"
+            />
+          </div>
+        </div>
+
+        <div id="hilbert-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="hilbert-order">Order</label>
+            <input
+              type="range"
+              id="hilbert-order"
+              min="2"
+              max="6"
+              step="1"
+              value="4"
+              aria-label="Hilbert curve recursion depth — 2 = simple 4×4 grid, 6 = ultra-fine 64×64 labyrinth"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="hilbert-warp">Warp</label>
+            <input
+              type="range"
+              id="hilbert-warp"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Audio displacement amplitude — 0 = geometric precision, 1 = full writhing motion"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="hilbert-glow">Glow</label>
+            <input
+              type="range"
+              id="hilbert-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Neon phosphor bloom intensity — 0 = crisp thin lines, 1 = full luminous halo"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="hilbert-trail">Trail</label>
+            <input
+              type="range"
+              id="hilbert-trail"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Ghost trail persistence — 0 = instant clear, 1 = long luminous afterglow"
             />
           </div>
         </div>

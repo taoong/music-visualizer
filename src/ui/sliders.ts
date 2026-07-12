@@ -248,6 +248,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'lumiere-lines', key: 'lumiereLines' },
     { id: 'lumiere-drift', key: 'lumiereDrift' },
     { id: 'lumiere-glow',  key: 'lumiereGlow' },
+    { id: 'hilbert-order', key: 'hilbertOrder' },
+    { id: 'hilbert-warp',  key: 'hilbertWarp' },
+    { id: 'hilbert-glow',  key: 'hilbertGlow' },
+    { id: 'hilbert-trail', key: 'hilbertTrail' },
   ] as const;
 
   for (const { id, key } of configs) {

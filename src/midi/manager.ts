@@ -209,6 +209,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   lumiereLines: 'lumiere-lines',
   lumiereDrift: 'lumiere-drift',
   lumiereGlow:  'lumiere-glow',
+  hilbertOrder: 'hilbert-order',
+  hilbertWarp:  'hilbert-warp',
+  hilbertGlow:  'hilbert-glow',
+  hilbertTrail: 'hilbert-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

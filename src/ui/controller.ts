@@ -126,6 +126,7 @@ const ALL_CONTROL_IDS = [
   'feedback-controls-group',
   'tesseract-controls-group',
   'lumiere-controls-group',
+  'hilbert-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -205,6 +206,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   feedback:      { show: ['feedback-controls-group'] },
   tesseract:     { show: ['tesseract-controls-group'] },
   lumiere:       { show: ['lumiere-controls-group'] },
+  hilbert:       { show: ['hilbert-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
