@@ -252,6 +252,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'hilbert-warp',  key: 'hilbertWarp' },
     { id: 'hilbert-glow',  key: 'hilbertGlow' },
     { id: 'hilbert-trail', key: 'hilbertTrail' },
+    { id: 'delaunay-sectors',  key: 'delaunaySectors' },
+    { id: 'delaunay-spin',     key: 'delaunaySpin' },
+    { id: 'delaunay-contrast', key: 'delaunayContrast' },
   ] as const;
 
   for (const { id, key } of configs) {

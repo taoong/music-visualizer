@@ -213,6 +213,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   hilbertWarp:  'hilbert-warp',
   hilbertGlow:  'hilbert-glow',
   hilbertTrail: 'hilbert-trail',
+  delaunaySectors:  'delaunay-sectors',
+  delaunaySpin:     'delaunay-spin',
+  delaunayContrast: 'delaunay-contrast',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

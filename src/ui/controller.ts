@@ -127,6 +127,7 @@ const ALL_CONTROL_IDS = [
   'tesseract-controls-group',
   'lumiere-controls-group',
   'hilbert-controls-group',
+  'delaunay-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -207,6 +208,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   tesseract:     { show: ['tesseract-controls-group'] },
   lumiere:       { show: ['lumiere-controls-group'] },
   hilbert:       { show: ['hilbert-controls-group'] },
+  delaunay:      { show: ['delaunay-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

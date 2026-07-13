@@ -421,6 +421,10 @@ export const DEFAULT_CONFIG = {
   hilbertWarp:  0.5,
   hilbertGlow:  0.6,
   hilbertTrail: 0.4,
+
+  delaunaySectors:  6,
+  delaunaySpin:     0.4,
+  delaunayContrast: 0.6,
 };
 
 // FFT and decay constants
