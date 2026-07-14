@@ -255,6 +255,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'delaunay-sectors',  key: 'delaunaySectors' },
     { id: 'delaunay-spin',     key: 'delaunaySpin' },
     { id: 'delaunay-contrast', key: 'delaunayContrast' },
+    { id: 'kintsugi-cracks', key: 'kintsugiCracks' },
+    { id: 'kintsugi-glow',   key: 'kintsugiGlow' },
+    { id: 'kintsugi-decay',  key: 'kintsugiDecay' },
   ] as const;
 
   for (const { id, key } of configs) {

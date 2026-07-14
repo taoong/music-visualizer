@@ -128,6 +128,7 @@ const ALL_CONTROL_IDS = [
   'lumiere-controls-group',
   'hilbert-controls-group',
   'delaunay-controls-group',
+  'kintsugi-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -209,6 +210,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   lumiere:       { show: ['lumiere-controls-group'] },
   hilbert:       { show: ['hilbert-controls-group'] },
   delaunay:      { show: ['delaunay-controls-group'] },
+  kintsugi:      { show: ['kintsugi-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

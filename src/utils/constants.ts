@@ -425,6 +425,10 @@ export const DEFAULT_CONFIG = {
   delaunaySectors:  6,
   delaunaySpin:     0.4,
   delaunayContrast: 0.6,
+
+  kintsugiCracks: 0.5,
+  kintsugiGlow:   0.4,
+  kintsugiDecay:  0.5,
 };
 
 // FFT and decay constants

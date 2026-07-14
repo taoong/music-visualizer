@@ -216,6 +216,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   delaunaySectors:  'delaunay-sectors',
   delaunaySpin:     'delaunay-spin',
   delaunayContrast: 'delaunay-contrast',
+  kintsugiCracks: 'kintsugi-cracks',
+  kintsugiGlow:   'kintsugi-glow',
+  kintsugiDecay:  'kintsugi-decay',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

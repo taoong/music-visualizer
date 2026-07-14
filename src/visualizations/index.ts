@@ -79,3 +79,4 @@ export { drawTesseract, resetTesseract } from './tesseract';
 export { drawLumiere, resetLumiere } from './lumiere';
 export { drawHilbert, resetHilbert } from './hilbert';
 export { drawDelaunay, resetDelaunay } from './delaunay';
+export { drawKintsugi, resetKintsugi } from './kintsugi';
