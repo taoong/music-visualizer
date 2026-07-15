@@ -219,6 +219,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   kintsugiCracks: 'kintsugi-cracks',
   kintsugiGlow:   'kintsugi-glow',
   kintsugiDecay:  'kintsugi-decay',
+  juliaZoom:       'julia-zoom',
+  juliaIterations: 'julia-iterations',
+  juliaHue:        'julia-hue',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

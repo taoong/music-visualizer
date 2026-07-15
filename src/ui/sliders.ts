@@ -258,6 +258,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'kintsugi-cracks', key: 'kintsugiCracks' },
     { id: 'kintsugi-glow',   key: 'kintsugiGlow' },
     { id: 'kintsugi-decay',  key: 'kintsugiDecay' },
+    { id: 'julia-zoom',       key: 'juliaZoom' },
+    { id: 'julia-iterations', key: 'juliaIterations' },
+    { id: 'julia-hue',        key: 'juliaHue' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -429,6 +429,10 @@ export const DEFAULT_CONFIG = {
   kintsugiCracks: 0.5,
   kintsugiGlow:   0.4,
   kintsugiDecay:  0.5,
+
+  juliaZoom:       0.4,
+  juliaIterations: 0.4,
+  juliaHue:        0.0,
 };
 
 // FFT and decay constants
