@@ -433,6 +433,10 @@ export const DEFAULT_CONFIG = {
   juliaZoom:       0.4,
   juliaIterations: 0.4,
   juliaHue:        0.0,
+
+  kandinskyDensity: 0.55,
+  kandinskyMotion:  0.60,
+  kandinskyPalette: 0.0,
 };
 
 // FFT and decay constants

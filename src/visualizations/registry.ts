@@ -79,6 +79,7 @@ import { drawHilbert, resetHilbert } from './hilbert';
 import { drawDelaunay, resetDelaunay } from './delaunay';
 import { drawKintsugi, resetKintsugi } from './kintsugi';
 import { drawJulia, resetJulia } from './julia';
+import { drawKandinsky, resetKandinsky } from './kandinsky';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -212,4 +213,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   delaunay:      { draw: drawDelaunay,       reset: resetDelaunay,                                key: 'E', label: 'Delaunay' },
   kintsugi:      { draw: drawKintsugi,       reset: resetKintsugi,                                key: 'G', label: 'Kintsugi' },
   julia:         { draw: drawJulia,          reset: resetJulia,                                   key: 'N', label: 'Julia Set' },
+  kandinsky:     { draw: drawKandinsky,      reset: resetKandinsky,                               key: 'K', label: 'Kandinsky' },
 };

@@ -81,3 +81,4 @@ export { drawHilbert, resetHilbert } from './hilbert';
 export { drawDelaunay, resetDelaunay } from './delaunay';
 export { drawKintsugi, resetKintsugi } from './kintsugi';
 export { drawJulia, resetJulia } from './julia';
+export { drawKandinsky, resetKandinsky } from './kandinsky';

@@ -261,6 +261,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'julia-zoom',       key: 'juliaZoom' },
     { id: 'julia-iterations', key: 'juliaIterations' },
     { id: 'julia-hue',        key: 'juliaHue' },
+    { id: 'kandinsky-density', key: 'kandinskyDensity' },
+    { id: 'kandinsky-motion',  key: 'kandinskyMotion' },
+    { id: 'kandinsky-palette', key: 'kandinskyPalette' },
   ] as const;
 
   for (const { id, key } of configs) {

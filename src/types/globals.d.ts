@@ -76,6 +76,11 @@ declare global {
     RIGHT: string;
     ADD: number;
     BLEND: number;
+    SQUARE: string;
+    ROUND: string;
+    PROJECT: string;
+    MITER: string;
+    BEVEL: string;
 
     // Setup/Lifecycle
     createCanvas(w: number, h: number): { parent(id: string): void };
@@ -124,6 +129,7 @@ declare global {
     noStroke(): void;
     strokeWeight(weight: number): void;
     strokeCap(cap: string | number): void;
+    strokeJoin(join: string | number): void;
     colorMode(mode: string | number, max1?: number, max2?: number, max3?: number, maxA?: number): void;
     text(str: string, x: number, y: number): void;
     textSize(size: number): void;

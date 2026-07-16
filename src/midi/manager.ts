@@ -222,6 +222,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   juliaZoom:       'julia-zoom',
   juliaIterations: 'julia-iterations',
   juliaHue:        'julia-hue',
+  kandinskyDensity: 'kandinsky-density',
+  kandinskyMotion:  'kandinsky-motion',
+  kandinskyPalette: 'kandinsky-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
