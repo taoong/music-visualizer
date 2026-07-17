@@ -307,6 +307,7 @@
           <option value="kintsugi">Kintsugi</option>
           <option value="julia">Julia Set</option>
           <option value="kandinsky">Kandinsky</option>
+          <option value="apollonian">Apollonian</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3052,6 +3053,45 @@
               step="0.01"
               value="0"
               aria-label="Color palette — 0 = Bauhaus primary colors (yellow/red/blue), 1 = full chromatic spectrum"
+            />
+          </div>
+        </div>
+
+        <div id="apollonian-controls-group" class="controls-group hidden">
+          <div class="controls-row">
+            <label for="apollonian-depth">Depth</label>
+            <input
+              type="range"
+              id="apollonian-depth"
+              min="2"
+              max="7"
+              step="1"
+              value="6"
+              aria-label="Recursion generations — 2 = only the seed triad, 7 = finest innermost spirals"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="apollonian-glow">Glow</label>
+            <input
+              type="range"
+              id="apollonian-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Phosphor neon bloom intensity — 0 = clean outlines, 1 = full halo bloom"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="apollonian-palette">Palette</label>
+            <input
+              type="range"
+              id="apollonian-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0"
+              aria-label="Global hue rotation — shifts the entire colour spectrum around the wheel"
             />
           </div>
         </div>

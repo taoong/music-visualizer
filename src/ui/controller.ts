@@ -131,6 +131,7 @@ const ALL_CONTROL_IDS = [
   'kintsugi-controls-group',
   'julia-controls-group',
   'kandinsky-controls-group',
+  'apollonian-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -215,6 +216,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   kintsugi:      { show: ['kintsugi-controls-group'] },
   julia:         { show: ['julia-controls-group'] },
   kandinsky:     { show: ['kandinsky-controls-group'] },
+  apollonian:    { show: ['apollonian-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

@@ -437,6 +437,10 @@ export const DEFAULT_CONFIG = {
   kandinskyDensity: 0.55,
   kandinskyMotion:  0.60,
   kandinskyPalette: 0.0,
+
+  apollonianDepth:   6,
+  apollonianGlow:    0.6,
+  apollonianPalette: 0.0,
 };
 
 // FFT and decay constants

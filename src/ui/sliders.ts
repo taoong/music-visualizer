@@ -264,6 +264,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'kandinsky-density', key: 'kandinskyDensity' },
     { id: 'kandinsky-motion',  key: 'kandinskyMotion' },
     { id: 'kandinsky-palette', key: 'kandinskyPalette' },
+    { id: 'apollonian-depth',   key: 'apollonianDepth' },
+    { id: 'apollonian-glow',    key: 'apollonianGlow' },
+    { id: 'apollonian-palette', key: 'apollonianPalette' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -225,6 +225,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   kandinskyDensity: 'kandinsky-density',
   kandinskyMotion:  'kandinsky-motion',
   kandinskyPalette: 'kandinsky-palette',
+  apollonianDepth:   'apollonian-depth',
+  apollonianGlow:    'apollonian-glow',
+  apollonianPalette: 'apollonian-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
