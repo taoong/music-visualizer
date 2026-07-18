@@ -81,6 +81,7 @@ import { drawKintsugi, resetKintsugi } from './kintsugi';
 import { drawJulia, resetJulia } from './julia';
 import { drawKandinsky, resetKandinsky } from './kandinsky';
 import { drawApollonian, resetApollonian } from './apollonian';
+import { drawDendrite, resetDendrite } from './dendrite';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -216,4 +217,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   julia:         { draw: drawJulia,          reset: resetJulia,                                   key: 'N', label: 'Julia Set' },
   kandinsky:     { draw: drawKandinsky,      reset: resetKandinsky,                               key: 'K', label: 'Kandinsky' },
   apollonian:    { draw: drawApollonian,     reset: resetApollonian,                              key: 'P', label: 'Apollonian' },
+  dendrite:      { draw: drawDendrite,       reset: resetDendrite,                                key: 'L', label: 'Dendrite' },
 };

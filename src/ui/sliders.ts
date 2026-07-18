@@ -267,6 +267,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'apollonian-depth',   key: 'apollonianDepth' },
     { id: 'apollonian-glow',    key: 'apollonianGlow' },
     { id: 'apollonian-palette', key: 'apollonianPalette' },
+    { id: 'dendrite-growth', key: 'dendriteGrowth' },
+    { id: 'dendrite-glow',   key: 'dendriteGlow' },
+    { id: 'dendrite-chaos',  key: 'dendriteChaos' },
   ] as const;
 
   for (const { id, key } of configs) {

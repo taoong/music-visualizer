@@ -228,6 +228,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   apollonianDepth:   'apollonian-depth',
   apollonianGlow:    'apollonian-glow',
   apollonianPalette: 'apollonian-palette',
+  dendriteGrowth: 'dendrite-growth',
+  dendriteGlow:   'dendrite-glow',
+  dendriteChaos:  'dendrite-chaos',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -441,6 +441,10 @@ export const DEFAULT_CONFIG = {
   apollonianDepth:   6,
   apollonianGlow:    0.6,
   apollonianPalette: 0.0,
+
+  dendriteGrowth: 0.5,
+  dendriteGlow:   0.55,
+  dendriteChaos:  0.45,
 };
 
 // FFT and decay constants

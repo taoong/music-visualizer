@@ -308,6 +308,7 @@
           <option value="julia">Julia Set</option>
           <option value="kandinsky">Kandinsky</option>
           <option value="apollonian">Apollonian</option>
+          <option value="dendrite">Dendrite</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3092,6 +3093,45 @@
               step="0.01"
               value="0"
               aria-label="Global hue rotation — shifts the entire colour spectrum around the wheel"
+            />
+          </div>
+        </div>
+
+        <div id="dendrite-controls-group" class="controls-group hidden">
+          <div class="controls-row">
+            <label for="dendrite-growth">Growth</label>
+            <input
+              type="range"
+              id="dendrite-growth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Walker spawn rate — 0 = barely grows, 1 = rapid crystal formation"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="dendrite-glow">Glow</label>
+            <input
+              type="range"
+              id="dendrite-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Neon bloom radius and phosphor brightness"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="dendrite-chaos">Chaos</label>
+            <input
+              type="range"
+              id="dendrite-chaos"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Walker randomness — 0 = biased toward centre (tight columns), 1 = pure random walk (wide fractal arms)"
             />
           </div>
         </div>

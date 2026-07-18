@@ -132,6 +132,7 @@ const ALL_CONTROL_IDS = [
   'julia-controls-group',
   'kandinsky-controls-group',
   'apollonian-controls-group',
+  'dendrite-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -217,6 +218,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   julia:         { show: ['julia-controls-group'] },
   kandinsky:     { show: ['kandinsky-controls-group'] },
   apollonian:    { show: ['apollonian-controls-group'] },
+  dendrite:      { show: ['dendrite-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
