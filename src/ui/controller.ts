@@ -133,6 +133,7 @@ const ALL_CONTROL_IDS = [
   'kandinsky-controls-group',
   'apollonian-controls-group',
   'dendrite-controls-group',
+  'webwork-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -219,6 +220,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   kandinsky:     { show: ['kandinsky-controls-group'] },
   apollonian:    { show: ['apollonian-controls-group'] },
   dendrite:      { show: ['dendrite-controls-group'] },
+  webwork:       { show: ['webwork-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

@@ -231,6 +231,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   dendriteGrowth: 'dendrite-growth',
   dendriteGlow:   'dendrite-glow',
   dendriteChaos:  'dendrite-chaos',
+  webworkStrands: 'webwork-strands',
+  webworkDew:     'webwork-dew',
+  webworkPulse:   'webwork-pulse',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

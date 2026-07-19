@@ -309,6 +309,7 @@
           <option value="kandinsky">Kandinsky</option>
           <option value="apollonian">Apollonian</option>
           <option value="dendrite">Dendrite</option>
+          <option value="webwork">Web Work</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3132,6 +3133,45 @@
               step="0.01"
               value="0.45"
               aria-label="Walker randomness — 0 = biased toward centre (tight columns), 1 = pure random walk (wide fractal arms)"
+            />
+          </div>
+        </div>
+
+        <div id="webwork-controls-group" class="controls-group hidden">
+          <div class="controls-row">
+            <label for="webwork-strands">Strands</label>
+            <input
+              type="range"
+              id="webwork-strands"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Radial spoke count — 0 = coarse web (8 spokes), 1 = fine web (48 spokes)"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="webwork-dew">Dew</label>
+            <input
+              type="range"
+              id="webwork-dew"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Dew drop size and density at spoke–ring intersections"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="webwork-pulse">Pulse</label>
+            <input
+              type="range"
+              id="webwork-pulse"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.7"
+              aria-label="Beat-triggered radial ripple wave intensity"
             />
           </div>
         </div>

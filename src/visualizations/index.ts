@@ -84,3 +84,4 @@ export { drawJulia, resetJulia } from './julia';
 export { drawKandinsky, resetKandinsky } from './kandinsky';
 export { drawApollonian, resetApollonian } from './apollonian';
 export { drawDendrite, resetDendrite } from './dendrite';
+export { drawWebwork, resetWebwork } from './webwork';

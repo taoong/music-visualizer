@@ -270,6 +270,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'dendrite-growth', key: 'dendriteGrowth' },
     { id: 'dendrite-glow',   key: 'dendriteGlow' },
     { id: 'dendrite-chaos',  key: 'dendriteChaos' },
+    { id: 'webwork-strands', key: 'webworkStrands' },
+    { id: 'webwork-dew',     key: 'webworkDew' },
+    { id: 'webwork-pulse',   key: 'webworkPulse' },
   ] as const;
 
   for (const { id, key } of configs) {
