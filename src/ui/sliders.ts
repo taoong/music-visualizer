@@ -273,6 +273,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'webwork-strands', key: 'webworkStrands' },
     { id: 'webwork-dew',     key: 'webworkDew' },
     { id: 'webwork-pulse',   key: 'webworkPulse' },
+    { id: 'supershapes-symmetry', key: 'supershapesSymmetry' },
+    { id: 'supershapes-morph',    key: 'supershapesMorph' },
+    { id: 'supershapes-glow',     key: 'supershapesGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -449,6 +449,10 @@ export const DEFAULT_CONFIG = {
   webworkStrands: 0.6,
   webworkDew:     0.5,
   webworkPulse:   0.7,
+  // Super Forms-specific
+  supershapesSymmetry: 0.45,
+  supershapesMorph:    0.60,
+  supershapesGlow:     0.55,
 };
 
 // FFT and decay constants

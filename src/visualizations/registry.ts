@@ -83,6 +83,7 @@ import { drawKandinsky, resetKandinsky } from './kandinsky';
 import { drawApollonian, resetApollonian } from './apollonian';
 import { drawDendrite, resetDendrite } from './dendrite';
 import { drawWebwork, resetWebwork } from './webwork';
+import { drawSupershapes, resetSupershapes } from './supershapes';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -220,4 +221,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   apollonian:    { draw: drawApollonian,     reset: resetApollonian,                              key: 'P', label: 'Apollonian' },
   dendrite:      { draw: drawDendrite,       reset: resetDendrite,                                key: 'L', label: 'Dendrite' },
   webwork:       { draw: drawWebwork,        reset: resetWebwork,                                 key: 'O', label: 'Web Work' },
+  supershapes:   { draw: drawSupershapes,    reset: resetSupershapes,                             key: 'V', label: 'Super Forms' },
 };

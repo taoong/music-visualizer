@@ -234,6 +234,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   webworkStrands: 'webwork-strands',
   webworkDew:     'webwork-dew',
   webworkPulse:   'webwork-pulse',
+  supershapesSymmetry: 'supershapes-symmetry',
+  supershapesMorph:    'supershapes-morph',
+  supershapesGlow:     'supershapes-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
