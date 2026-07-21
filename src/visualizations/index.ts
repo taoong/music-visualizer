@@ -86,3 +86,4 @@ export { drawApollonian, resetApollonian } from './apollonian';
 export { drawDendrite, resetDendrite } from './dendrite';
 export { drawWebwork, resetWebwork } from './webwork';
 export { drawSupershapes, resetSupershapes } from './supershapes';
+export { drawCorridor, resetCorridor } from './corridor';

@@ -311,6 +311,7 @@
           <option value="dendrite">Dendrite</option>
           <option value="webwork">Web Work</option>
           <option value="supershapes">Super Forms</option>
+          <option value="corridor">Corridor</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3212,6 +3213,45 @@
               step="0.01"
               value="0.55"
               aria-label="Neon bloom intensity and trail persistence"
+            />
+          </div>
+        </div>
+
+        <div id="corridor-controls-group" class="controls-group hidden">
+          <div class="controls-row">
+            <label for="corridor-speed">Speed</label>
+            <input
+              type="range"
+              id="corridor-speed"
+              min="0"
+              max="1.5"
+              step="0.05"
+              value="0.5"
+              aria-label="Data scroll rate — 0 = static, 1.5 = fast streaming"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="corridor-depth">Depth</label>
+            <input
+              type="range"
+              id="corridor-depth"
+              min="4"
+              max="16"
+              step="1"
+              value="8"
+              aria-label="Number of corridor rings — 4 = shallow tunnel, 16 = deep infinite passage"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="corridor-palette">Palette</label>
+            <input
+              type="range"
+              id="corridor-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Colour mode — 0 = Ikeda monochrome white, 1 = full band rainbow"
             />
           </div>
         </div>

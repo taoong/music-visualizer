@@ -237,6 +237,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   supershapesSymmetry: 'supershapes-symmetry',
   supershapesMorph:    'supershapes-morph',
   supershapesGlow:     'supershapes-glow',
+  corridorSpeed:   'corridor-speed',
+  corridorDepth:   'corridor-depth',
+  corridorPalette: 'corridor-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

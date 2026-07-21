@@ -135,6 +135,7 @@ const ALL_CONTROL_IDS = [
   'dendrite-controls-group',
   'webwork-controls-group',
   'supershapes-controls-group',
+  'corridor-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -223,6 +224,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   dendrite:      { show: ['dendrite-controls-group'] },
   webwork:       { show: ['webwork-controls-group'] },
   supershapes:   { show: ['supershapes-controls-group'] },
+  corridor:      { show: ['corridor-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

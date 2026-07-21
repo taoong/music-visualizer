@@ -453,6 +453,10 @@ export const DEFAULT_CONFIG = {
   supershapesSymmetry: 0.45,
   supershapesMorph:    0.60,
   supershapesGlow:     0.55,
+  // Corridor-specific
+  corridorSpeed:   0.5,
+  corridorDepth:   8,
+  corridorPalette: 0.6,
 };
 
 // FFT and decay constants

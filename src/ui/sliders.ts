@@ -276,6 +276,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'supershapes-symmetry', key: 'supershapesSymmetry' },
     { id: 'supershapes-morph',    key: 'supershapesMorph' },
     { id: 'supershapes-glow',     key: 'supershapesGlow' },
+    { id: 'corridor-speed',   key: 'corridorSpeed' },
+    { id: 'corridor-depth',   key: 'corridorDepth' },
+    { id: 'corridor-palette', key: 'corridorPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
