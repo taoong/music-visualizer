@@ -279,6 +279,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'corridor-speed',   key: 'corridorSpeed' },
     { id: 'corridor-depth',   key: 'corridorDepth' },
     { id: 'corridor-palette', key: 'corridorPalette' },
+    { id: 'ganzfeld-zones', key: 'ganzfeldZones' },
+    { id: 'ganzfeld-haze',  key: 'ganzfeldHaze' },
+    { id: 'ganzfeld-drift', key: 'ganzfeldDrift' },
   ] as const;
 
   for (const { id, key } of configs) {

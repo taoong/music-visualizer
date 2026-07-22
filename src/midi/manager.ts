@@ -240,6 +240,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   corridorSpeed:   'corridor-speed',
   corridorDepth:   'corridor-depth',
   corridorPalette: 'corridor-palette',
+  ganzfeldZones: 'ganzfeld-zones',
+  ganzfeldHaze:  'ganzfeld-haze',
+  ganzfeldDrift: 'ganzfeld-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

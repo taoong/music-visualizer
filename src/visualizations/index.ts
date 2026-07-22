@@ -87,3 +87,4 @@ export { drawDendrite, resetDendrite } from './dendrite';
 export { drawWebwork, resetWebwork } from './webwork';
 export { drawSupershapes, resetSupershapes } from './supershapes';
 export { drawCorridor, resetCorridor } from './corridor';
+export { drawGanzfeld, resetGanzfeld } from './ganzfeld';

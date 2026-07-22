@@ -312,6 +312,7 @@
           <option value="webwork">Web Work</option>
           <option value="supershapes">Super Forms</option>
           <option value="corridor">Corridor</option>
+          <option value="ganzfeld">Ganzfeld</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3252,6 +3253,45 @@
               step="0.01"
               value="0.6"
               aria-label="Colour mode — 0 = Ikeda monochrome white, 1 = full band rainbow"
+            />
+          </div>
+        </div>
+
+        <div id="ganzfeld-controls-group" class="controls-group hidden">
+          <div class="controls-row">
+            <label for="ganzfeld-zones">Zones</label>
+            <input
+              type="range"
+              id="ganzfeld-zones"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.57"
+              aria-label="Number of concentric light rings — 0 = 3 bold rings, 1 = 7 subtle rings"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="ganzfeld-haze">Haze</label>
+            <input
+              type="range"
+              id="ganzfeld-haze"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Atmospheric diffusion — 0 = crisp ring boundaries, 1 = full Ganzfeld blur"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="ganzfeld-drift">Drift</label>
+            <input
+              type="range"
+              id="ganzfeld-drift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.3"
+              aria-label="Colour temperature drift — 0 = nearly static, 1 = fast palette cycling"
             />
           </div>
         </div>

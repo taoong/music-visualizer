@@ -457,6 +457,10 @@ export const DEFAULT_CONFIG = {
   corridorSpeed:   0.5,
   corridorDepth:   8,
   corridorPalette: 0.6,
+  // Ganzfeld-specific
+  ganzfeldZones: 0.57, // maps to ~7 zones out of max 7
+  ganzfeldHaze:  0.45,
+  ganzfeldDrift: 0.3,
 };
 
 // FFT and decay constants

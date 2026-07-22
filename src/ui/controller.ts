@@ -136,6 +136,7 @@ const ALL_CONTROL_IDS = [
   'webwork-controls-group',
   'supershapes-controls-group',
   'corridor-controls-group',
+  'ganzfeld-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -225,6 +226,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   webwork:       { show: ['webwork-controls-group'] },
   supershapes:   { show: ['supershapes-controls-group'] },
   corridor:      { show: ['corridor-controls-group'] },
+  ganzfeld:      { show: ['ganzfeld-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
