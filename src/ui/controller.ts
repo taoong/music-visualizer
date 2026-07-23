@@ -137,6 +137,7 @@ const ALL_CONTROL_IDS = [
   'supershapes-controls-group',
   'corridor-controls-group',
   'ganzfeld-controls-group',
+  'plaid-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -227,6 +228,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   supershapes:   { show: ['supershapes-controls-group'] },
   corridor:      { show: ['corridor-controls-group'] },
   ganzfeld:      { show: ['ganzfeld-controls-group'] },
+  plaid:         { show: ['plaid-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

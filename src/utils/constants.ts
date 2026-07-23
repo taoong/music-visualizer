@@ -461,6 +461,10 @@ export const DEFAULT_CONFIG = {
   ganzfeldZones: 0.57, // maps to ~7 zones out of max 7
   ganzfeldHaze:  0.45,
   ganzfeldDrift: 0.3,
+  // Plaid-specific
+  plaidScale: 0.5,
+  plaidWeave: 0.5,
+  plaidHue:   0.0,
 };
 
 // FFT and decay constants

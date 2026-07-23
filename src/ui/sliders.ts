@@ -282,6 +282,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'ganzfeld-zones', key: 'ganzfeldZones' },
     { id: 'ganzfeld-haze',  key: 'ganzfeldHaze' },
     { id: 'ganzfeld-drift', key: 'ganzfeldDrift' },
+    { id: 'plaid-scale', key: 'plaidScale' },
+    { id: 'plaid-weave', key: 'plaidWeave' },
+    { id: 'plaid-hue',   key: 'plaidHue' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -86,6 +86,7 @@ import { drawWebwork, resetWebwork } from './webwork';
 import { drawSupershapes, resetSupershapes } from './supershapes';
 import { drawCorridor, resetCorridor } from './corridor';
 import { drawGanzfeld, resetGanzfeld } from './ganzfeld';
+import { drawPlaid, resetPlaid } from './plaid';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -226,4 +227,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   supershapes:   { draw: drawSupershapes,    reset: resetSupershapes,                             key: 'V', label: 'Super Forms' },
   corridor:      { draw: drawCorridor,       reset: resetCorridor,                                key: 'Q', label: 'Corridor' },
   ganzfeld:      { draw: drawGanzfeld,       reset: resetGanzfeld,                                key: 'X', label: 'Ganzfeld' },
+  plaid:         { draw: drawPlaid,          reset: resetPlaid,                                   key: 'W', label: 'Plaid' },
 };

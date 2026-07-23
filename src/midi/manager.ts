@@ -243,6 +243,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   ganzfeldZones: 'ganzfeld-zones',
   ganzfeldHaze:  'ganzfeld-haze',
   ganzfeldDrift: 'ganzfeld-drift',
+  plaidScale: 'plaid-scale',
+  plaidWeave: 'plaid-weave',
+  plaidHue:   'plaid-hue',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

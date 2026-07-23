@@ -313,6 +313,7 @@
           <option value="supershapes">Super Forms</option>
           <option value="corridor">Corridor</option>
           <option value="ganzfeld">Ganzfeld</option>
+          <option value="plaid">Plaid</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3292,6 +3293,45 @@
               step="0.01"
               value="0.3"
               aria-label="Colour temperature drift — 0 = nearly static, 1 = fast palette cycling"
+            />
+          </div>
+        </div>
+
+        <div id="plaid-controls-group" class="controls-group hidden">
+          <div class="controls-row">
+            <label for="plaid-scale">Scale</label>
+            <input
+              type="range"
+              id="plaid-scale"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Thread scale — 0 = fine silk weave, 1 = bold tartan slabs"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="plaid-weave">Weave</label>
+            <input
+              type="range"
+              id="plaid-weave"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Thread balance — 0 = only horizontal bands, 0.5 = equal H+V plaid, 1 = only vertical bands"
+            />
+          </div>
+          <div class="controls-row">
+            <label for="plaid-hue">Hue</label>
+            <input
+              type="range"
+              id="plaid-hue"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0"
+              aria-label="Palette rotation — shifts all thread hues around the colour wheel"
             />
           </div>
         </div>
