@@ -314,6 +314,7 @@
           <option value="corridor">Corridor</option>
           <option value="ganzfeld">Ganzfeld</option>
           <option value="plaid">Plaid</option>
+          <option value="newton">Newton</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3332,6 +3333,45 @@
               step="0.01"
               value="0"
               aria-label="Palette rotation — shifts all thread hues around the colour wheel"
+            />
+          </div>
+        </div>
+
+        <div id="newton-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="newton-zoom">Zoom</label>
+            <input
+              type="range"
+              id="newton-zoom"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.3"
+              aria-label="Magnification — 0 = wide overview of all basins, 1 = deep zoom into fractal boundary detail"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="newton-roots">Roots</label>
+            <input
+              type="range"
+              id="newton-roots"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.71"
+              aria-label="Polynomial degree n (2–9) — number of basin petals; default 7 matches the 7 frequency bands"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="newton-glow">Glow</label>
+            <input
+              type="range"
+              id="newton-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Boundary luminescence — 0 = flat basin colours, 1 = neon-white burn along fractal edge regions"
             />
           </div>
         </div>

@@ -285,6 +285,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'plaid-scale', key: 'plaidScale' },
     { id: 'plaid-weave', key: 'plaidWeave' },
     { id: 'plaid-hue',   key: 'plaidHue' },
+    { id: 'newton-zoom',  key: 'newtonZoom' },
+    { id: 'newton-roots', key: 'newtonRoots' },
+    { id: 'newton-glow',  key: 'newtonGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

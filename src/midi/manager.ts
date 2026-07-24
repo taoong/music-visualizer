@@ -246,6 +246,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   plaidScale: 'plaid-scale',
   plaidWeave: 'plaid-weave',
   plaidHue:   'plaid-hue',
+  newtonZoom:  'newton-zoom',
+  newtonRoots: 'newton-roots',
+  newtonGlow:  'newton-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

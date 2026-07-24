@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'phase' | 'warp' | 'substrate' | 'smear' | 'ink' | 'nebula' | 'vortex' | 'lumia' | 'mirrors' | 'woodmirror' | 'disco' | 'moire' | 'radiolaria' | 'noctiluca' | 'ferrofluid' | 'spirograph' | 'mobile' | 'iridescent' | 'strata' | 'boogie' | 'feedback' | 'tesseract' | 'lumiere' | 'hilbert' | 'delaunay' | 'kintsugi' | 'julia' | 'kandinsky' | 'apollonian' | 'dendrite' | 'webwork' | 'supershapes' | 'corridor' | 'ganzfeld' | 'plaid';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'phase' | 'warp' | 'substrate' | 'smear' | 'ink' | 'nebula' | 'vortex' | 'lumia' | 'mirrors' | 'woodmirror' | 'disco' | 'moire' | 'radiolaria' | 'noctiluca' | 'ferrofluid' | 'spirograph' | 'mobile' | 'iridescent' | 'strata' | 'boogie' | 'feedback' | 'tesseract' | 'lumiere' | 'hilbert' | 'delaunay' | 'kintsugi' | 'julia' | 'kandinsky' | 'apollonian' | 'dendrite' | 'webwork' | 'supershapes' | 'corridor' | 'ganzfeld' | 'plaid' | 'newton';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -343,6 +343,10 @@ export interface Config {
   plaidScale: number;
   plaidWeave: number;
   plaidHue:   number;
+  // Newton Fractal-specific
+  newtonZoom:  number;
+  newtonRoots: number;
+  newtonGlow:  number;
 }
 
 // Interaction event dispatched to visualizations in interactive mode

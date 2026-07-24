@@ -465,6 +465,10 @@ export const DEFAULT_CONFIG = {
   plaidScale: 0.5,
   plaidWeave: 0.5,
   plaidHue:   0.0,
+  // Newton Fractal-specific
+  newtonZoom:  0.30,
+  newtonRoots: 0.71,  // maps to n = 2 + round(0.71*7) = 7 (matches BAND_COUNT)
+  newtonGlow:  0.50,
 };
 
 // FFT and decay constants

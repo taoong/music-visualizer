@@ -89,3 +89,4 @@ export { drawSupershapes, resetSupershapes } from './supershapes';
 export { drawCorridor, resetCorridor } from './corridor';
 export { drawGanzfeld, resetGanzfeld } from './ganzfeld';
 export { drawPlaid, resetPlaid } from './plaid';
+export { drawNewton, resetNewton } from './newton';

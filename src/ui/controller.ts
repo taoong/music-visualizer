@@ -138,6 +138,7 @@ const ALL_CONTROL_IDS = [
   'corridor-controls-group',
   'ganzfeld-controls-group',
   'plaid-controls-group',
+  'newton-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -229,6 +230,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   corridor:      { show: ['corridor-controls-group'] },
   ganzfeld:      { show: ['ganzfeld-controls-group'] },
   plaid:         { show: ['plaid-controls-group'] },
+  newton:        { show: ['newton-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
