@@ -88,6 +88,7 @@ import { drawCorridor, resetCorridor } from './corridor';
 import { drawGanzfeld, resetGanzfeld } from './ganzfeld';
 import { drawPlaid, resetPlaid } from './plaid';
 import { drawNewton, resetNewton } from './newton';
+import { drawPointillism, resetPointillism } from './pointillism';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -230,4 +231,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   ganzfeld:      { draw: drawGanzfeld,       reset: resetGanzfeld,                                key: 'X', label: 'Ganzfeld' },
   plaid:         { draw: drawPlaid,          reset: resetPlaid,                                   key: 'W', label: 'Plaid' },
   newton:        { draw: drawNewton,         reset: resetNewton,                                  key: 'F', label: 'Newton' },
+  pointillism:   { draw: drawPointillism,    reset: resetPointillism,                             key: 'U', label: 'Pointillism' },
 };

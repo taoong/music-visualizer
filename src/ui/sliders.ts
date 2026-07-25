@@ -288,6 +288,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'newton-zoom',  key: 'newtonZoom' },
     { id: 'newton-roots', key: 'newtonRoots' },
     { id: 'newton-glow',  key: 'newtonGlow' },
+    { id: 'pointillism-grain',     key: 'pointillismGrain' },
+    { id: 'pointillism-vibration', key: 'pointillismVibration' },
+    { id: 'pointillism-drift',     key: 'pointillismDrift' },
   ] as const;
 
   for (const { id, key } of configs) {

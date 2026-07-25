@@ -315,6 +315,7 @@
           <option value="ganzfeld">Ganzfeld</option>
           <option value="plaid">Plaid</option>
           <option value="newton">Newton</option>
+          <option value="pointillism">Pointillism</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3372,6 +3373,45 @@
               step="0.01"
               value="0.5"
               aria-label="Boundary luminescence — 0 = flat basin colours, 1 = neon-white burn along fractal edge regions"
+            />
+          </div>
+        </div>
+
+        <div id="pointillism-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="pointillism-grain">Grain</label>
+            <input
+              type="range"
+              id="pointillism-grain"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Dot density — 0 = few large chunky marks (Seurat close-up), 1 = fine dense stipple (Seurat from afar)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="pointillism-vibration">Vibration</label>
+            <input
+              type="range"
+              id="pointillism-vibration"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Chromatic vibration — 0 = flat primary hues only, 1 = full complement-dab shimmer (Seurat's divisionism)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="pointillism-drift">Drift</label>
+            <input
+              type="range"
+              id="pointillism-drift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Animation drift — 0 = nearly still (static painting), 1 = fast organic movement"
             />
           </div>
         </div>

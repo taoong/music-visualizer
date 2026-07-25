@@ -469,6 +469,10 @@ export const DEFAULT_CONFIG = {
   newtonZoom:  0.30,
   newtonRoots: 0.71,  // maps to n = 2 + round(0.71*7) = 7 (matches BAND_COUNT)
   newtonGlow:  0.50,
+  // Pointillism-specific
+  pointillismGrain:     0.50,
+  pointillismVibration: 0.45,
+  pointillismDrift:     0.35,
 };
 
 // FFT and decay constants

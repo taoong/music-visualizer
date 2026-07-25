@@ -249,6 +249,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   newtonZoom:  'newton-zoom',
   newtonRoots: 'newton-roots',
   newtonGlow:  'newton-glow',
+  pointillismGrain:     'pointillism-grain',
+  pointillismVibration: 'pointillism-vibration',
+  pointillismDrift:     'pointillism-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

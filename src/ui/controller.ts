@@ -139,6 +139,7 @@ const ALL_CONTROL_IDS = [
   'ganzfeld-controls-group',
   'plaid-controls-group',
   'newton-controls-group',
+  'pointillism-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -231,6 +232,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   ganzfeld:      { show: ['ganzfeld-controls-group'] },
   plaid:         { show: ['plaid-controls-group'] },
   newton:        { show: ['newton-controls-group'] },
+  pointillism:   { show: ['pointillism-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
