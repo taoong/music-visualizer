@@ -91,3 +91,4 @@ export { drawGanzfeld, resetGanzfeld } from './ganzfeld';
 export { drawPlaid, resetPlaid } from './plaid';
 export { drawNewton, resetNewton } from './newton';
 export { drawPointillism, resetPointillism } from './pointillism';
+export { drawRiemann, resetRiemann } from './riemann';

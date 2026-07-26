@@ -291,6 +291,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'pointillism-grain',     key: 'pointillismGrain' },
     { id: 'pointillism-vibration', key: 'pointillismVibration' },
     { id: 'pointillism-drift',     key: 'pointillismDrift' },
+    { id: 'riemann-spin', key: 'riemannSpin' },
+    { id: 'riemann-tilt', key: 'riemannTilt' },
+    { id: 'riemann-glow', key: 'riemannGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

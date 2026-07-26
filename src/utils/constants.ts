@@ -473,6 +473,9 @@ export const DEFAULT_CONFIG = {
   pointillismGrain:     0.50,
   pointillismVibration: 0.45,
   pointillismDrift:     0.35,
+  riemannSpin: 0.4,
+  riemannTilt: 0.4,
+  riemannGlow: 0.6,
 };
 
 // FFT and decay constants

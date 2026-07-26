@@ -252,6 +252,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   pointillismGrain:     'pointillism-grain',
   pointillismVibration: 'pointillism-vibration',
   pointillismDrift:     'pointillism-drift',
+  riemannSpin: 'riemann-spin',
+  riemannTilt: 'riemann-tilt',
+  riemannGlow: 'riemann-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
