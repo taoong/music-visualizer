@@ -121,7 +121,17 @@ const sketch = (p: P5Instance) => {
       VIZ_REGISTRY[store.state.vizMode].draw(p, dt);
     } catch (err) {
       console.error(`Visualization "${store.state.vizMode}" crashed:`, err);
-      store.setVizMode('circle');
+      // Reset the dropdown as well as the store, otherwise cycleVizMode
+      // (which reads store.state) and the visible <select> desync — the
+      // next arrow press jumps from wherever the user *thought* they were
+      // (still shown in the select) back to circle+1 in the dropdown.
+      const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
+      if (vizSelect) {
+        vizSelect.value = 'circle';
+        vizSelect.dispatchEvent(new Event('change'));
+      } else {
+        store.setVizMode('circle');
+      }
     }
   };
 
