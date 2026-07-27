@@ -90,6 +90,7 @@ import { drawPlaid, resetPlaid } from './plaid';
 import { drawNewton, resetNewton } from './newton';
 import { drawPointillism, resetPointillism } from './pointillism';
 import { drawRiemann, resetRiemann } from './riemann';
+import { drawCephalopod, resetCephalopod } from './cephalopod';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -234,4 +235,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   newton:        { draw: drawNewton,         reset: resetNewton,                                  key: 'F', label: 'Newton' },
   pointillism:   { draw: drawPointillism,    reset: resetPointillism,                             key: 'U', label: 'Pointillism' },
   riemann:       { draw: drawRiemann,        reset: resetRiemann,                                 key: 'Y', label: 'Riemann Sphere' },
+  cephalopod:    { draw: drawCephalopod,     reset: resetCephalopod,                              key: 'I', label: 'Cephalopod' },
 };

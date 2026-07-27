@@ -141,6 +141,7 @@ const ALL_CONTROL_IDS = [
   'newton-controls-group',
   'pointillism-controls-group',
   'riemann-controls-group',
+  'cephalopod-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -235,6 +236,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   newton:        { show: ['newton-controls-group'] },
   pointillism:   { show: ['pointillism-controls-group'] },
   riemann:       { show: ['riemann-controls-group'] },
+  cephalopod:    { show: ['cephalopod-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

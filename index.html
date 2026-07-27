@@ -317,6 +317,7 @@
           <option value="newton">Newton</option>
           <option value="pointillism">Pointillism</option>
           <option value="riemann">Riemann Sphere</option>
+          <option value="cephalopod">Cephalopod</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3452,6 +3453,45 @@
               step="0.01"
               value="0.6"
               aria-label="Stroke weight and bloom brightness — 0 = thin subtle lines, 1 = thick luminous glow"
+            />
+          </div>
+        </div>
+
+        <div id="cephalopod-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="cephalopod-density">Density</label>
+            <input
+              type="range"
+              id="cephalopod-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Cell density — 0 = sparse large cells, 1 = dense fine skin texture"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="cephalopod-chroma">Pigment</label>
+            <input
+              type="range"
+              id="cephalopod-chroma"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Colour vividness — 0 = natural muted ambers and blues, 1 = vivid neon with iridophore shimmer"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="cephalopod-wave">Ripple</label>
+            <input
+              type="range"
+              id="cephalopod-wave"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Beat-wave speed — 0 = slow rolling expansion, 1 = fast cascade across skin"
             />
           </div>
         </div>

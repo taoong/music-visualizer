@@ -92,3 +92,4 @@ export { drawPlaid, resetPlaid } from './plaid';
 export { drawNewton, resetNewton } from './newton';
 export { drawPointillism, resetPointillism } from './pointillism';
 export { drawRiemann, resetRiemann } from './riemann';
+export { drawCephalopod, resetCephalopod } from './cephalopod';

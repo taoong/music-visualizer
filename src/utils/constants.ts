@@ -476,6 +476,10 @@ export const DEFAULT_CONFIG = {
   riemannSpin: 0.4,
   riemannTilt: 0.4,
   riemannGlow: 0.6,
+  // Cephalopod-specific
+  cephalopodDensity: 0.5,
+  cephalopodChroma:  0.4,
+  cephalopodWave:    0.5,
 };
 
 // FFT and decay constants

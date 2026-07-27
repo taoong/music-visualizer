@@ -255,6 +255,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   riemannSpin: 'riemann-spin',
   riemannTilt: 'riemann-tilt',
   riemannGlow: 'riemann-glow',
+  // Cephalopod
+  cephalopodDensity: 'cephalopod-density',
+  cephalopodChroma:  'cephalopod-chroma',
+  cephalopodWave:    'cephalopod-wave',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
