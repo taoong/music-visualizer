@@ -147,9 +147,11 @@ export function drawPixelsort(p: P5Instance, dt: number): void {
   }
 
   // ── Step 2: column pixel sorting ─────────────────────────────────────────
-  const maxSpan = Math.min(rH - 1, Math.max(2,
-    Math.floor(10 + config.pixelsortSpan * 390)
-  ));
+  // Clamp to >=2 AFTER the min() — at very small canvas heights (e.g. during
+  // an aggressive window resize) rH-1 can be 0, which would leave the inner
+  // "collect run" loop unable to advance py and spin the outer while forever.
+  const maxSpan = Math.max(2, Math.min(rH - 1, Math.floor(10 + config.pixelsortSpan * 390)));
+  if (rH < 2) return; // Nothing to sort in a 1-pixel-tall buffer
 
   // Effective threshold: base value lowered by bass energy and beat surge
   const bassAmp       = amps[1];
