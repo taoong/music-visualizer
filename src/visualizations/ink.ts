@@ -228,10 +228,10 @@ export function drawInk(p: P5Instance, dt: number): void {
   offscreenCtx.putImageData(cachedImageData, 0, 0);
 
   p.background(BG_R, BG_G, BG_B);
-  const img = offscreenCanvas as unknown as P5Image;
-  p.noSmooth();
-  p.image(img, 0, 0, W, H);
-  p.smooth();
+  const ctx = (p as any).drawingContext as CanvasRenderingContext2D;
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(offscreenCanvas!, 0, 0, W, H);
+  ctx.imageSmoothingEnabled = true;
 }
 
 export function resetInk(): void {
