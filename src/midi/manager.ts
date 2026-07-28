@@ -259,6 +259,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cephalopodDensity: 'cephalopod-density',
   cephalopodChroma:  'cephalopod-chroma',
   cephalopodWave:    'cephalopod-wave',
+  // Sand Art
+  sandGrain: 'sand-grain',
+  sandFlow:  'sand-flow',
+  sandHue:   'sand-hue',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

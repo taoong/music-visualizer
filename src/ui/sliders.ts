@@ -297,6 +297,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'cephalopod-density', key: 'cephalopodDensity' },
     { id: 'cephalopod-chroma',  key: 'cephalopodChroma'  },
     { id: 'cephalopod-wave',    key: 'cephalopodWave'    },
+    { id: 'sand-grain', key: 'sandGrain' },
+    { id: 'sand-flow',  key: 'sandFlow'  },
+    { id: 'sand-hue',   key: 'sandHue'   },
   ] as const;
 
   for (const { id, key } of configs) {

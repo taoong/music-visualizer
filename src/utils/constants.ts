@@ -480,6 +480,10 @@ export const DEFAULT_CONFIG = {
   cephalopodDensity: 0.5,
   cephalopodChroma:  0.4,
   cephalopodWave:    0.5,
+  // Sand Art-specific
+  sandGrain: 0.5,
+  sandFlow:  0.5,
+  sandHue:   0.0,
 };
 
 // FFT and decay constants
