@@ -64,3 +64,4 @@ export { drawTesseract, resetTesseract } from './tesseract';
 export { drawSupershapes, resetSupershapes } from './supershapes';
 export { drawCorridor, resetCorridor } from './corridor';
 export { drawRiemann, resetRiemann } from './riemann';
+export { drawGlyphs, resetGlyphs } from './glyphs';

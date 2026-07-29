@@ -208,6 +208,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'riemann-spin', key: 'riemannSpin' },
     { id: 'riemann-tilt', key: 'riemannTilt' },
     { id: 'riemann-glow', key: 'riemannGlow' },
+    { id: 'glyphs-density', key: 'glyphsDensity' },
+    { id: 'glyphs-scale',   key: 'glyphsScale' },
+    { id: 'glyphs-drift',   key: 'glyphsDrift' },
   ] as const;
 
   for (const { id, key } of configs) {

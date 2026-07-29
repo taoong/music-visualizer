@@ -363,6 +363,10 @@ export const DEFAULT_CONFIG = {
   riemannSpin: 0.4,
   riemannTilt: 0.4,
   riemannGlow: 0.6,
+  // Glyphs-specific
+  glyphsDensity: 0.4,
+  glyphsScale:   0.4,
+  glyphsDrift:   0.4,
 };
 
 // FFT and decay constants

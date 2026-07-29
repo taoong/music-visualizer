@@ -62,6 +62,7 @@ import { drawTesseract, resetTesseract } from './tesseract';
 import { drawSupershapes, resetSupershapes } from './supershapes';
 import { drawCorridor, resetCorridor } from './corridor';
 import { drawRiemann, resetRiemann } from './riemann';
+import { drawGlyphs, resetGlyphs } from './glyphs';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -178,4 +179,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   supershapes:   { draw: drawSupershapes,    reset: resetSupershapes,   key: 'V',  label: 'Super Forms' },
   corridor:      { draw: drawCorridor,       reset: resetCorridor,      key: 'Q',  label: 'Corridor' },
   riemann:       { draw: drawRiemann,        reset: resetRiemann,       key: 'Y',  label: 'Riemann Sphere' },
+  glyphs:        { draw: drawGlyphs,         reset: resetGlyphs,        key: 'g',  label: 'Glyphs' },
 };

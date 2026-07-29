@@ -169,6 +169,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   riemannSpin: 'riemann-spin',
   riemannTilt: 'riemann-tilt',
   riemannGlow: 'riemann-glow',
+  glyphsDensity: 'glyphs-density',
+  glyphsScale:   'glyphs-scale',
+  glyphsDrift:   'glyphs-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
