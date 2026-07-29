@@ -323,30 +323,10 @@ export const DEFAULT_CONFIG = {
   glitchDistort: 0.5,
   glitchSplit: 0.5,
   glitchNoise: 0.4,
-  // Phase-specific
-  phaseRings: 0.57,
-  phaseDensity: 0.5,
-  phaseGlow: 1.0,
   // Warp-specific
   warpSpeed: 0.4,
   warpDensity: 0.5,
   warpTrail: 0.6,
-  // Substrate-specific
-  substrateDensity: 0.5,
-  substrateSpeed: 0.4,
-  substrateFade: 0.6,
-  // Smear-specific
-  smearSweep: 0.5,
-  smearBlend: 0.6,
-  smearPalette: 0.5,
-  // Ink-specific
-  inkFlow: 0.5,
-  inkDensity: 0.5,
-  inkDry: 0.3,
-  // Nebula-specific
-  nebulaWarp: 0.5,
-  nebulaDrift: 0.4,
-  nebulaPalette: 0.0,
   // Vortex-specific
   vortexArms: 0.5,
   vortexTwist: 0.5,
@@ -355,100 +335,22 @@ export const DEFAULT_CONFIG = {
   lumiaForms: 0.5,
   lumiaDrift: 0.4,
   lumiaGlow: 0.6,
-  // Mirrors-specific
-  mirrorsReflections: 0.5,
-  mirrorsScatter: 0.5,
-  mirrorsShimmer: 0.4,
   // WoodMirror-specific
   woodmirrorDensity: 0.5,
   woodmirrorDepth: 0.55,
   woodmirrorSpeed: 0.45,
-  // Disco-specific
-  discoSpin: 0.4,
-  discoSparkle: 0.5,
-  discoPalette: 0.0,
   // Moire-specific
   moireRings: 32,
   moireInterference: 1.0,
   moireContrast: 1.5,
-  // Radiolaria-specific
-  radiolariaArms: 0.43,
-  radiolariaShells: 0.5,
-  radiolariaSpine: 0.5,
-  radiolariaGlow: 1.0,
   // Noctiluca-specific
   noctilucaDrift: 0.3,
   noctilucaBloom: 0.5,
   noctilucaWake:  0.55,
-  // Ferrofluid-specific
-  ferrofluidSpikes:  0.7,
-  ferrofluidSheen:   0.75,
-  ferrofluidSurface: 0.45,
-  // Spirograph-specific
-  spirographLayers:     0.5,
-  spirographComplexity: 0.55,
-  spirographTrail:      0.70,
-  // Mobile-specific
-  mobileShapes: 8,
-  mobileSwing:  0.5,
-  mobileWind:   0.3,
-  // Iridescent-specific
-  iridFilm:   0.7,
-  iridRipple: 0.6,
-  iridSpeed:  0.4,
-  // Strata-specific
-  strataDensity: 0.5,
-  strataSwell:   0.5,
-  strataHue:     0.0,
-  // Boogie-specific
-  boogieGrid:  8,
-  boogieSpeed: 0.4,
-  boogieVivid: 0.65,
-  // Feedback-specific
-  feedbackZoom: 0.4,
-  feedbackSpin: 0.25,
-  feedbackTrail: 0.55,
 
   tesseractLayers: 3,
   tesseractSpin:   0.5,
   tesseractGlow:   0.6,
-
-  lumiereLines: 16,
-  lumiereDrift: 0.4,
-  lumiereGlow:  0.6,
-
-  hilbertOrder: 4,
-  hilbertWarp:  0.5,
-  hilbertGlow:  0.6,
-  hilbertTrail: 0.4,
-
-  delaunaySectors:  6,
-  delaunaySpin:     0.4,
-  delaunayContrast: 0.6,
-
-  kintsugiCracks: 0.5,
-  kintsugiGlow:   0.4,
-  kintsugiDecay:  0.5,
-
-  juliaZoom:       0.4,
-  juliaIterations: 0.4,
-  juliaHue:        0.0,
-
-  kandinskyDensity: 0.55,
-  kandinskyMotion:  0.60,
-  kandinskyPalette: 0.0,
-
-  apollonianDepth:   6,
-  apollonianGlow:    0.6,
-  apollonianPalette: 0.0,
-
-  dendriteGrowth: 0.5,
-  dendriteGlow:   0.55,
-  dendriteChaos:  0.45,
-
-  webworkStrands: 0.6,
-  webworkDew:     0.5,
-  webworkPulse:   0.7,
   // Super Forms-specific
   supershapesSymmetry: 0.45,
   supershapesMorph:    0.60,
@@ -457,33 +359,10 @@ export const DEFAULT_CONFIG = {
   corridorSpeed:   0.5,
   corridorDepth:   8,
   corridorPalette: 0.6,
-  // Ganzfeld-specific
-  ganzfeldZones: 0.57, // maps to ~7 zones out of max 7
-  ganzfeldHaze:  0.45,
-  ganzfeldDrift: 0.3,
-  // Plaid-specific
-  plaidScale: 0.5,
-  plaidWeave: 0.5,
-  plaidHue:   0.0,
-  // Newton Fractal-specific
-  newtonZoom:  0.30,
-  newtonRoots: 0.71,  // maps to n = 2 + round(0.71*7) = 7 (matches BAND_COUNT)
-  newtonGlow:  0.50,
-  // Pointillism-specific
-  pointillismGrain:     0.50,
-  pointillismVibration: 0.45,
-  pointillismDrift:     0.35,
+  // Riemann Sphere-specific
   riemannSpin: 0.4,
   riemannTilt: 0.4,
   riemannGlow: 0.6,
-  // Cephalopod-specific
-  cephalopodDensity: 0.5,
-  cephalopodChroma:  0.4,
-  cephalopodWave:    0.5,
-  // Sand Art-specific
-  sandGrain: 0.5,
-  sandFlow:  0.5,
-  sandHue:   0.0,
 };
 
 // FFT and decay constants

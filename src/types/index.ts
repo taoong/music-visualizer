@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'phase' | 'warp' | 'substrate' | 'smear' | 'ink' | 'nebula' | 'vortex' | 'lumia' | 'mirrors' | 'woodmirror' | 'disco' | 'moire' | 'radiolaria' | 'noctiluca' | 'ferrofluid' | 'spirograph' | 'mobile' | 'iridescent' | 'strata' | 'boogie' | 'feedback' | 'tesseract' | 'lumiere' | 'hilbert' | 'delaunay' | 'kintsugi' | 'julia' | 'kandinsky' | 'apollonian' | 'dendrite' | 'webwork' | 'supershapes' | 'corridor' | 'ganzfeld' | 'plaid' | 'newton' | 'pointillism' | 'riemann' | 'cephalopod' | 'sand';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -202,29 +202,10 @@ export interface Config {
   glitchDistort: number;
   glitchSplit: number;
   glitchNoise: number;
-  phaseRings: number;
-  phaseDensity: number;
-  phaseGlow: number;
   // Warp-specific
   warpSpeed: number;
   warpDensity: number;
   warpTrail: number;
-  // Substrate-specific
-  substrateDensity: number;
-  substrateSpeed: number;
-  substrateFade: number;
-  // Smear-specific
-  smearSweep: number;
-  smearBlend: number;
-  smearPalette: number;
-  // Ink-specific
-  inkFlow: number;
-  inkDensity: number;
-  inkDry: number;
-  // Nebula-specific
-  nebulaWarp: number;
-  nebulaDrift: number;
-  nebulaPalette: number;
   // Vortex-specific
   vortexArms: number;
   vortexTwist: number;
@@ -233,100 +214,22 @@ export interface Config {
   lumiaForms: number;
   lumiaDrift: number;
   lumiaGlow: number;
-  // Mirrors-specific
-  mirrorsReflections: number;
-  mirrorsScatter: number;
-  mirrorsShimmer: number;
   // WoodMirror-specific
   woodmirrorDensity: number;
   woodmirrorDepth: number;
   woodmirrorSpeed: number;
-  // Disco-specific
-  discoSpin: number;
-  discoSparkle: number;
-  discoPalette: number;
   // Moire-specific
   moireRings: number;
   moireInterference: number;
   moireContrast: number;
-  // Radiolaria-specific
-  radiolariaArms: number;
-  radiolariaShells: number;
-  radiolariaSpine: number;
-  radiolariaGlow: number;
   // Noctiluca-specific
   noctilucaDrift: number;
   noctilucaBloom: number;
   noctilucaWake: number;
-  // Ferrofluid-specific
-  ferrofluidSpikes: number;
-  ferrofluidSheen: number;
-  ferrofluidSurface: number;
-  // Spirograph-specific
-  spirographLayers: number;
-  spirographComplexity: number;
-  spirographTrail: number;
-  // Mobile-specific
-  mobileShapes: number;
-  mobileSwing: number;
-  mobileWind: number;
-  // Iridescent-specific
-  iridFilm: number;
-  iridRipple: number;
-  iridSpeed: number;
-  // Strata-specific
-  strataDensity: number;
-  strataSwell: number;
-  strataHue: number;
-  // Boogie-specific
-  boogieGrid:  number;
-  boogieSpeed: number;
-  boogieVivid: number;
-  // Feedback-specific
-  feedbackZoom: number;
-  feedbackSpin: number;
-  feedbackTrail: number;
   // Tesseract-specific
   tesseractLayers: number;
   tesseractSpin: number;
   tesseractGlow: number;
-  // Lumière-specific
-  lumiereLines: number;
-  lumiereDrift: number;
-  lumiereGlow:  number;
-  // Hilbert-specific
-  hilbertOrder: number;
-  hilbertWarp:  number;
-  hilbertGlow:  number;
-  hilbertTrail: number;
-  // Delaunay-specific
-  delaunaySectors:  number;
-  delaunaySpin:     number;
-  delaunayContrast: number;
-  // Kintsugi-specific
-  kintsugiCracks: number;
-  kintsugiGlow:   number;
-  kintsugiDecay:  number;
-  // Julia Set-specific
-  juliaZoom:       number;
-  juliaIterations: number;
-  juliaHue:        number;
-  // Kandinsky-specific
-  kandinskyDensity: number;
-  kandinskyMotion:  number;
-  kandinskyPalette: number;
-  // Apollonian-specific
-  apollonianDepth:   number;
-  apollonianGlow:    number;
-  apollonianPalette: number;
-  // Dendrite-specific
-  dendriteGrowth: number;
-  dendriteGlow:   number;
-  dendriteChaos:  number;
-  // Web Work-specific
-  webworkStrands: number;
-  webworkDew:     number;
-  webworkPulse:   number;
   // Super Forms-specific
   supershapesSymmetry: number;
   supershapesMorph:    number;
@@ -335,34 +238,10 @@ export interface Config {
   corridorSpeed:   number;
   corridorDepth:   number;
   corridorPalette: number;
-  // Ganzfeld-specific
-  ganzfeldZones: number;
-  ganzfeldHaze:  number;
-  ganzfeldDrift: number;
-  // Plaid-specific
-  plaidScale: number;
-  plaidWeave: number;
-  plaidHue:   number;
-  // Newton Fractal-specific
-  newtonZoom:  number;
-  newtonRoots: number;
-  newtonGlow:  number;
-  // Pointillism-specific
-  pointillismGrain:     number;
-  pointillismVibration: number;
-  pointillismDrift:     number;
   // Riemann Sphere-specific
   riemannSpin: number;
   riemannTilt: number;
   riemannGlow: number;
-  // Cephalopod-specific
-  cephalopodDensity: number;
-  cephalopodChroma:  number;
-  cephalopodWave:    number;
-  // Sand Art-specific
-  sandGrain: number;
-  sandFlow:  number;
-  sandHue:   number;
 }
 
 // Interaction event dispatched to visualizations in interactive mode

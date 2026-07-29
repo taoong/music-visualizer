@@ -52,46 +52,16 @@ import { drawLightField, resetLightField } from './lightfield';
 import { drawBrush, resetBrush } from './brush';
 import { drawAurora, resetAurora } from './aurora';
 import { drawGlitch, resetGlitch } from './glitch';
-import { drawPhase, resetPhase } from './phase';
 import { drawWarp, resetWarp } from './warp';
-import { drawSubstrate, resetSubstrate } from './substrate';
-import { drawSmear, resetSmear } from './smear';
-import { drawInk, resetInk } from './ink';
-import { drawNebula, resetNebula } from './nebula';
 import { drawVortex, resetVortex } from './vortex';
 import { drawLumia, resetLumia } from './lumia';
-import { drawMirrors, resetMirrors } from './mirrors';
 import { drawWoodMirror, resetWoodMirror } from './woodmirror';
-import { drawDisco, resetDisco } from './disco';
 import { drawMoire, resetMoire } from './moire';
-import { drawRadiolaria, resetRadiolaria } from './radiolaria';
 import { drawNoctiluca, resetNoctiluca } from './noctiluca';
-import { drawFerrofluid, resetFerrofluid } from './ferrofluid';
-import { drawSpirograph, resetSpirograph } from './spirograph';
-import { drawMobile, resetMobile } from './mobile';
-import { drawIridescent, resetIridescent } from './iridescent';
-import { drawStrata, resetStrata } from './strata';
-import { drawBoogie, resetBoogie } from './boogie';
-import { drawFeedback, resetFeedback, disposeFeedback } from './feedback';
 import { drawTesseract, resetTesseract } from './tesseract';
-import { drawLumiere, resetLumiere } from './lumiere';
-import { drawHilbert, resetHilbert } from './hilbert';
-import { drawDelaunay, resetDelaunay } from './delaunay';
-import { drawKintsugi, resetKintsugi } from './kintsugi';
-import { drawJulia, resetJulia } from './julia';
-import { drawKandinsky, resetKandinsky } from './kandinsky';
-import { drawApollonian, resetApollonian } from './apollonian';
-import { drawDendrite, resetDendrite } from './dendrite';
-import { drawWebwork, resetWebwork } from './webwork';
 import { drawSupershapes, resetSupershapes } from './supershapes';
 import { drawCorridor, resetCorridor } from './corridor';
-import { drawGanzfeld, resetGanzfeld } from './ganzfeld';
-import { drawPlaid, resetPlaid } from './plaid';
-import { drawNewton, resetNewton } from './newton';
-import { drawPointillism, resetPointillism } from './pointillism';
 import { drawRiemann, resetRiemann } from './riemann';
-import { drawCephalopod, resetCephalopod } from './cephalopod';
-import { drawSand, resetSand } from './sand';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -198,44 +168,14 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   brush:         { draw: drawBrush,          reset: resetBrush,         key: 'd',  label: 'Brush' },
   aurora:        { draw: drawAurora,         reset: resetAurora,        key: 'a',  label: 'Aurora' },
   glitch:        { draw: drawGlitch,         reset: resetGlitch,        key: 'c',  label: 'Glitch' },
-  phase:         { draw: drawPhase,          reset: resetPhase,         key: '+',  label: 'Phase' },
   warp:          { draw: drawWarp,           reset: resetWarp,          key: '}',  label: 'Warp' },
-  substrate:     { draw: drawSubstrate,     reset: resetSubstrate,     key: 'g',  label: 'Substrate' },
-  smear:         { draw: drawSmear,        reset: resetSmear,         key: '{',  label: 'Smear' },
-  ink:           { draw: drawInk,          reset: resetInk,           key: '<',  label: 'Ink Wash' },
-  nebula:        { draw: drawNebula,      reset: resetNebula,        key: ')',  label: 'Nebula' },
-  vortex:        { draw: drawVortex,     reset: resetVortex,        key: 'u',  label: 'Vortex' },
-  lumia:         { draw: drawLumia,     reset: resetLumia,         key: ']',  label: 'Lumia' },
-  mirrors:       { draw: drawMirrors,  reset: resetMirrors,        key: '(',  label: 'Mirrors' },
-  woodmirror:    { draw: drawWoodMirror, reset: resetWoodMirror,   key: '%',  label: 'Wood Mirror' },
-  disco:         { draw: drawDisco,      reset: resetDisco,         key: '_',  label: 'Disco' },
-  moire:         { draw: drawMoire,      reset: resetMoire,         key: 'f',  label: 'Moiré' },
-  radiolaria:    { draw: drawRadiolaria, reset: resetRadiolaria,    key: '`',  label: 'Radiolaria' },
-  noctiluca:     { draw: drawNoctiluca,  reset: resetNoctiluca,     key: ':',  label: 'Noctiluca' },
-  ferrofluid:    { draw: drawFerrofluid, reset: resetFerrofluid,    key: '8',  label: 'Ferrofluid' },
-  spirograph:    { draw: drawSpirograph, reset: resetSpirograph,    key: '"',  label: 'Spirograph' },
-  mobile:        { draw: drawMobile,     reset: resetMobile,        key: 'M',  label: 'Mobile' },
-  iridescent:    { draw: drawIridescent, reset: resetIridescent,    key: 'J',  label: 'Iridescent' },
-  strata:        { draw: drawStrata,     reset: resetStrata,        key: 'Z',  label: 'Strata' },
-  boogie:        { draw: drawBoogie,     reset: resetBoogie,        key: 'B',  label: 'Boogie' },
-  feedback:      { draw: drawFeedback,       reset: resetFeedback,      dispose: disposeFeedback, key: 'C', label: 'Feedback' },
-  tesseract:     { draw: drawTesseract,      reset: resetTesseract,                               key: 'T', label: 'Tesseract' },
-  lumiere:       { draw: drawLumiere,        reset: resetLumiere,                                 key: 'A', label: 'Lumière' },
-  hilbert:       { draw: drawHilbert,        reset: resetHilbert,                                 key: 'D', label: 'Hilbert' },
-  delaunay:      { draw: drawDelaunay,       reset: resetDelaunay,                                key: 'E', label: 'Delaunay' },
-  kintsugi:      { draw: drawKintsugi,       reset: resetKintsugi,                                key: 'G', label: 'Kintsugi' },
-  julia:         { draw: drawJulia,          reset: resetJulia,                                   key: 'N', label: 'Julia Set' },
-  kandinsky:     { draw: drawKandinsky,      reset: resetKandinsky,                               key: 'K', label: 'Kandinsky' },
-  apollonian:    { draw: drawApollonian,     reset: resetApollonian,                              key: 'P', label: 'Apollonian' },
-  dendrite:      { draw: drawDendrite,       reset: resetDendrite,                                key: 'L', label: 'Dendrite' },
-  webwork:       { draw: drawWebwork,        reset: resetWebwork,                                 key: 'O', label: 'Web Work' },
-  supershapes:   { draw: drawSupershapes,    reset: resetSupershapes,                             key: 'V', label: 'Super Forms' },
-  corridor:      { draw: drawCorridor,       reset: resetCorridor,                                key: 'Q', label: 'Corridor' },
-  ganzfeld:      { draw: drawGanzfeld,       reset: resetGanzfeld,                                key: 'X', label: 'Ganzfeld' },
-  plaid:         { draw: drawPlaid,          reset: resetPlaid,                                   key: 'W', label: 'Plaid' },
-  newton:        { draw: drawNewton,         reset: resetNewton,                                  key: 'F', label: 'Newton' },
-  pointillism:   { draw: drawPointillism,    reset: resetPointillism,                             key: 'U', label: 'Pointillism' },
-  riemann:       { draw: drawRiemann,        reset: resetRiemann,                                 key: 'Y', label: 'Riemann Sphere' },
-  cephalopod:    { draw: drawCephalopod,     reset: resetCephalopod,                              key: 'I', label: 'Cephalopod' },
-  sand:          { draw: drawSand,           reset: resetSand,                                    key: 'H', label: 'Sand Art' },
+  vortex:        { draw: drawVortex,         reset: resetVortex,        key: 'u',  label: 'Vortex' },
+  lumia:         { draw: drawLumia,          reset: resetLumia,         key: ']',  label: 'Lumia' },
+  woodmirror:    { draw: drawWoodMirror,     reset: resetWoodMirror,    key: '%',  label: 'Wood Mirror' },
+  moire:         { draw: drawMoire,          reset: resetMoire,         key: 'f',  label: 'Moiré' },
+  noctiluca:     { draw: drawNoctiluca,      reset: resetNoctiluca,     key: ':',  label: 'Noctiluca' },
+  tesseract:     { draw: drawTesseract,      reset: resetTesseract,     key: 'T',  label: 'Tesseract' },
+  supershapes:   { draw: drawSupershapes,    reset: resetSupershapes,   key: 'V',  label: 'Super Forms' },
+  corridor:      { draw: drawCorridor,       reset: resetCorridor,      key: 'Q',  label: 'Corridor' },
+  riemann:       { draw: drawRiemann,        reset: resetRiemann,       key: 'Y',  label: 'Riemann Sphere' },
 };
