@@ -367,6 +367,10 @@ export const DEFAULT_CONFIG = {
   glyphsDensity: 0.4,
   glyphsScale:   0.4,
   glyphsDrift:   0.4,
+  // Radiolaria-specific
+  radiolariaArms:       7,
+  radiolariaComplexity: 2,
+  radiolariaGlow:       1.0,
 };
 
 // FFT and decay constants

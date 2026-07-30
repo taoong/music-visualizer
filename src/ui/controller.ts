@@ -114,6 +114,7 @@ const ALL_CONTROL_IDS = [
   'corridor-controls-group',
   'riemann-controls-group',
   'glyphs-controls-group',
+  'radiolaria-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -181,6 +182,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   corridor:      { show: ['corridor-controls-group'] },
   riemann:       { show: ['riemann-controls-group'] },
   glyphs:        { show: ['glyphs-controls-group'] },
+  radiolaria:    { show: ['radiolaria-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

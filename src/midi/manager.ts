@@ -172,6 +172,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   glyphsDensity: 'glyphs-density',
   glyphsScale:   'glyphs-scale',
   glyphsDrift:   'glyphs-drift',
+  radiolariaArms:       'radiolaria-arms',
+  radiolariaComplexity: 'radiolaria-complexity',
+  radiolariaGlow:       'radiolaria-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -211,6 +211,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'glyphs-density', key: 'glyphsDensity' },
     { id: 'glyphs-scale',   key: 'glyphsScale' },
     { id: 'glyphs-drift',   key: 'glyphsDrift' },
+    { id: 'radiolaria-arms',       key: 'radiolariaArms' },
+    { id: 'radiolaria-complexity', key: 'radiolariaComplexity' },
+    { id: 'radiolaria-glow',       key: 'radiolariaGlow' },
   ] as const;
 
   for (const { id, key } of configs) {
