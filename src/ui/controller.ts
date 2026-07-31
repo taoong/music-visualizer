@@ -115,6 +115,7 @@ const ALL_CONTROL_IDS = [
   'riemann-controls-group',
   'glyphs-controls-group',
   'radiolaria-controls-group',
+  'ferrofluid-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -183,6 +184,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   riemann:       { show: ['riemann-controls-group'] },
   glyphs:        { show: ['glyphs-controls-group'] },
   radiolaria:    { show: ['radiolaria-controls-group'] },
+  ferrofluid:    { show: ['ferrofluid-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

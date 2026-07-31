@@ -64,6 +64,7 @@ import { drawCorridor, resetCorridor } from './corridor';
 import { drawRiemann, resetRiemann } from './riemann';
 import { drawGlyphs, resetGlyphs } from './glyphs';
 import { drawRadiolaria, resetRadiolaria } from './radiolaria';
+import { drawFerrofluid, resetFerrofluid } from './ferrofluid';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -182,4 +183,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   riemann:       { draw: drawRiemann,        reset: resetRiemann,       key: 'Y',  label: 'Riemann Sphere' },
   glyphs:        { draw: drawGlyphs,         reset: resetGlyphs,        key: 'g',  label: 'Glyphs' },
   radiolaria:    { draw: drawRadiolaria,     reset: resetRadiolaria,    key: 'X',  label: 'Radiolaria' },
+  ferrofluid:    { draw: drawFerrofluid,    reset: resetFerrofluid,    key: 'E',  label: 'Ferrofluid' },
 };

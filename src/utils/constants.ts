@@ -371,6 +371,10 @@ export const DEFAULT_CONFIG = {
   radiolariaArms:       7,
   radiolariaComplexity: 2,
   radiolariaGlow:       1.0,
+  // Ferrofluid-specific
+  ferrofluidSpikes:  0.35,
+  ferrofluidTension: 0.65,
+  ferrofluidShimmer: 0.70,
 };
 
 // FFT and decay constants

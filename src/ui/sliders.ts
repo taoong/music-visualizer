@@ -214,6 +214,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'radiolaria-arms',       key: 'radiolariaArms' },
     { id: 'radiolaria-complexity', key: 'radiolariaComplexity' },
     { id: 'radiolaria-glow',       key: 'radiolariaGlow' },
+    { id: 'ferrofluid-spikes',  key: 'ferrofluidSpikes' },
+    { id: 'ferrofluid-tension', key: 'ferrofluidTension' },
+    { id: 'ferrofluid-shimmer', key: 'ferrofluidShimmer' },
   ] as const;
 
   for (const { id, key } of configs) {

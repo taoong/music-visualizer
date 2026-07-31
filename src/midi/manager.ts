@@ -175,6 +175,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   radiolariaArms:       'radiolaria-arms',
   radiolariaComplexity: 'radiolaria-complexity',
   radiolariaGlow:       'radiolaria-glow',
+  ferrofluidSpikes:  'ferrofluid-spikes',
+  ferrofluidTension: 'ferrofluid-tension',
+  ferrofluidShimmer: 'ferrofluid-shimmer',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
