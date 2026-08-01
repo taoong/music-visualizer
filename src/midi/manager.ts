@@ -178,6 +178,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   ferrofluidSpikes:  'ferrofluid-spikes',
   ferrofluidTension: 'ferrofluid-tension',
   ferrofluidShimmer: 'ferrofluid-shimmer',
+  thermalDiffuse:   'thermal-diffuse',
+  thermalIntensity: 'thermal-intensity',
+  thermalPalette:   'thermal-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

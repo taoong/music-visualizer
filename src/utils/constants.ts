@@ -375,6 +375,10 @@ export const DEFAULT_CONFIG = {
   ferrofluidSpikes:  0.35,
   ferrofluidTension: 0.65,
   ferrofluidShimmer: 0.70,
+  // Thermal-specific
+  thermalDiffuse:   0.45,
+  thermalIntensity: 0.55,
+  thermalPalette:   0.0,
 };
 
 // FFT and decay constants

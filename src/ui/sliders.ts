@@ -217,6 +217,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'ferrofluid-spikes',  key: 'ferrofluidSpikes' },
     { id: 'ferrofluid-tension', key: 'ferrofluidTension' },
     { id: 'ferrofluid-shimmer', key: 'ferrofluidShimmer' },
+    { id: 'thermal-diffuse',   key: 'thermalDiffuse' },
+    { id: 'thermal-intensity', key: 'thermalIntensity' },
+    { id: 'thermal-palette',   key: 'thermalPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
