@@ -379,6 +379,10 @@ export const DEFAULT_CONFIG = {
   thermalDiffuse:   0.45,
   thermalIntensity: 0.55,
   thermalPalette:   0.0,
+  // Kintsugi-specific
+  kintsugiCracks: 0.5,
+  kintsugiGlow:   0.8,
+  kintsugiFlow:   0.5,
 };
 
 // FFT and decay constants

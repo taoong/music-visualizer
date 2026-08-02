@@ -68,3 +68,4 @@ export { drawGlyphs, resetGlyphs } from './glyphs';
 export { drawRadiolaria, resetRadiolaria } from './radiolaria';
 export { drawFerrofluid, resetFerrofluid } from './ferrofluid';
 export { drawThermal, resetThermal } from './thermal';
+export { drawKintsugi, resetKintsugi } from './kintsugi';

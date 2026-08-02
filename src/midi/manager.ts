@@ -181,6 +181,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   thermalDiffuse:   'thermal-diffuse',
   thermalIntensity: 'thermal-intensity',
   thermalPalette:   'thermal-palette',
+  kintsugiCracks: 'kintsugi-cracks',
+  kintsugiGlow:   'kintsugi-glow',
+  kintsugiFlow:   'kintsugi-flow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

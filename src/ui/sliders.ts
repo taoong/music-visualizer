@@ -220,6 +220,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'thermal-diffuse',   key: 'thermalDiffuse' },
     { id: 'thermal-intensity', key: 'thermalIntensity' },
     { id: 'thermal-palette',   key: 'thermalPalette' },
+    { id: 'kintsugi-cracks', key: 'kintsugiCracks' },
+    { id: 'kintsugi-glow',   key: 'kintsugiGlow' },
+    { id: 'kintsugi-flow',   key: 'kintsugiFlow' },
   ] as const;
 
   for (const { id, key } of configs) {
