@@ -223,6 +223,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'kintsugi-cracks', key: 'kintsugiCracks' },
     { id: 'kintsugi-glow',   key: 'kintsugiGlow' },
     { id: 'kintsugi-flow',   key: 'kintsugiFlow' },
+    { id: 'skyspace-rings', key: 'skyspaceRings' },
+    { id: 'skyspace-glow',  key: 'skyspaceGlow' },
+    { id: 'skyspace-drift', key: 'skyspaceDrift' },
   ] as const;
 
   for (const { id, key } of configs) {

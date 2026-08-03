@@ -383,6 +383,10 @@ export const DEFAULT_CONFIG = {
   kintsugiCracks: 0.5,
   kintsugiGlow:   0.8,
   kintsugiFlow:   0.5,
+  // Skyspace-specific
+  skyspaceRings: 0.44,  // ~7 rings by default
+  skyspaceGlow:  0.6,
+  skyspaceDrift: 0.3,
 };
 
 // FFT and decay constants

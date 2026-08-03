@@ -67,6 +67,7 @@ import { drawRadiolaria, resetRadiolaria } from './radiolaria';
 import { drawFerrofluid, resetFerrofluid } from './ferrofluid';
 import { drawThermal, resetThermal } from './thermal';
 import { drawKintsugi, resetKintsugi } from './kintsugi';
+import { drawSkyspace, resetSkyspace } from './skyspace';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -188,4 +189,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   ferrofluid:    { draw: drawFerrofluid,    reset: resetFerrofluid,    key: 'E',  label: 'Ferrofluid' },
   thermal:       { draw: drawThermal,       reset: resetThermal,       key: 'N',  label: 'Thermal' },
   kintsugi:      { draw: drawKintsugi,      reset: resetKintsugi,      key: 'K',  label: 'Kintsugi' },
+  skyspace:      { draw: drawSkyspace,      reset: resetSkyspace,      key: 'A',  label: 'Skyspace' },
 };

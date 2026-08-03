@@ -184,6 +184,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   kintsugiCracks: 'kintsugi-cracks',
   kintsugiGlow:   'kintsugi-glow',
   kintsugiFlow:   'kintsugi-flow',
+  skyspaceRings: 'skyspace-rings',
+  skyspaceGlow:  'skyspace-glow',
+  skyspaceDrift: 'skyspace-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
