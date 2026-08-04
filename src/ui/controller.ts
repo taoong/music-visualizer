@@ -119,6 +119,7 @@ const ALL_CONTROL_IDS = [
   'thermal-controls-group',
   'kintsugi-controls-group',
   'skyspace-controls-group',
+  'morpho-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -191,6 +192,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   thermal:       { show: ['thermal-controls-group'] },
   kintsugi:      { show: ['kintsugi-controls-group'] },
   skyspace:      { show: ['skyspace-controls-group'] },
+  morpho:        { show: ['morpho-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

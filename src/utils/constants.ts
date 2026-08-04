@@ -387,6 +387,10 @@ export const DEFAULT_CONFIG = {
   skyspaceRings: 0.44,  // ~7 rings by default
   skyspaceGlow:  0.6,
   skyspaceDrift: 0.3,
+  // Morphogenesis-specific
+  morphoScales:  5,     // 5 of 7 frequency-band scales active by default
+  morphoSpeed:   0.35,  // mid-range evolution speed
+  morphoPalette: 0.0,   // biological palette by default
 };
 
 // FFT and decay constants

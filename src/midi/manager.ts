@@ -187,6 +187,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   skyspaceRings: 'skyspace-rings',
   skyspaceGlow:  'skyspace-glow',
   skyspaceDrift: 'skyspace-drift',
+  morphoScales:  'morpho-scales',
+  morphoSpeed:   'morpho-speed',
+  morphoPalette: 'morpho-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

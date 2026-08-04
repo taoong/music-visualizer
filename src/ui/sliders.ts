@@ -226,6 +226,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'skyspace-rings', key: 'skyspaceRings' },
     { id: 'skyspace-glow',  key: 'skyspaceGlow' },
     { id: 'skyspace-drift', key: 'skyspaceDrift' },
+    { id: 'morpho-scales',  key: 'morphoScales' },
+    { id: 'morpho-speed',   key: 'morphoSpeed' },
+    { id: 'morpho-palette', key: 'morphoPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
