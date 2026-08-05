@@ -71,3 +71,4 @@ export { drawThermal, resetThermal } from './thermal';
 export { drawKintsugi, resetKintsugi } from './kintsugi';
 export { drawSkyspace, resetSkyspace } from './skyspace';
 export { drawMorpho, resetMorpho } from './morpho';
+export { drawPrism, resetPrism } from './prism';

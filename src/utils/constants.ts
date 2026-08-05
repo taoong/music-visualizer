@@ -391,6 +391,10 @@ export const DEFAULT_CONFIG = {
   morphoScales:  5,     // 5 of 7 frequency-band scales active by default
   morphoSpeed:   0.35,  // mid-range evolution speed
   morphoPalette: 0.0,   // biological palette by default
+  // Prism-specific
+  prismFilm:    0.35,   // base film thickness — starts in blue/green soap-film range
+  prismFlow:    0.40,   // moderate drift speed
+  prismShimmer: 0.65,   // vivid iridescence by default
 };
 
 // FFT and decay constants

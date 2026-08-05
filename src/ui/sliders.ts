@@ -229,6 +229,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'morpho-scales',  key: 'morphoScales' },
     { id: 'morpho-speed',   key: 'morphoSpeed' },
     { id: 'morpho-palette', key: 'morphoPalette' },
+    { id: 'prism-film',     key: 'prismFilm' },
+    { id: 'prism-flow',     key: 'prismFlow' },
+    { id: 'prism-shimmer',  key: 'prismShimmer' },
   ] as const;
 
   for (const { id, key } of configs) {

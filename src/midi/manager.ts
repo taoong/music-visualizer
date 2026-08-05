@@ -190,6 +190,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   morphoScales:  'morpho-scales',
   morphoSpeed:   'morpho-speed',
   morphoPalette: 'morpho-palette',
+  prismFilm:     'prism-film',
+  prismFlow:     'prism-flow',
+  prismShimmer:  'prism-shimmer',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -296,6 +296,7 @@
           <option value="kintsugi">Kintsugi</option>
           <option value="skyspace">Skyspace</option>
           <option value="morpho">Morphogenesis</option>
+          <option value="prism">Prism</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2616,6 +2617,45 @@
               step="0.01"
               value="0"
               aria-label="Colour map — 0 = biological green-violet, 0.5 = ocean blues, 1 = lava fire"
+            />
+          </div>
+        </div>
+
+        <div id="prism-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="prism-film">Film</label>
+            <input
+              type="range"
+              id="prism-film"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Base film thickness — 0 = thin/monochrome, 1 = full spectral cycling"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="prism-flow">Flow</label>
+            <input
+              type="range"
+              id="prism-flow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.40"
+              aria-label="Perlin drift speed and spatial density — 0 = slow large blobs, 1 = fast fine shimmer"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="prism-shimmer">Shimmer</label>
+            <input
+              type="range"
+              id="prism-shimmer"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.65"
+              aria-label="Iridescence brightness and saturation — 0 = subtle, 1 = vivid"
             />
           </div>
         </div>

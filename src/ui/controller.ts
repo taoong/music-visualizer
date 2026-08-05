@@ -120,6 +120,7 @@ const ALL_CONTROL_IDS = [
   'kintsugi-controls-group',
   'skyspace-controls-group',
   'morpho-controls-group',
+  'prism-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -193,6 +194,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   kintsugi:      { show: ['kintsugi-controls-group'] },
   skyspace:      { show: ['skyspace-controls-group'] },
   morpho:        { show: ['morpho-controls-group'] },
+  prism:         { show: ['prism-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
