@@ -72,3 +72,4 @@ export { drawKintsugi, resetKintsugi } from './kintsugi';
 export { drawSkyspace, resetSkyspace } from './skyspace';
 export { drawMorpho, resetMorpho } from './morpho';
 export { drawPrism, resetPrism } from './prism';
+export { drawCloth, resetCloth } from './cloth';

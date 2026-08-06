@@ -70,6 +70,7 @@ import { drawKintsugi, resetKintsugi } from './kintsugi';
 import { drawSkyspace, resetSkyspace } from './skyspace';
 import { drawMorpho, resetMorpho } from './morpho';
 import { drawPrism, resetPrism } from './prism';
+import { drawCloth, resetCloth } from './cloth';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -194,4 +195,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   skyspace:      { draw: drawSkyspace,      reset: resetSkyspace,      key: 'A',  label: 'Skyspace' },
   morpho:        { draw: drawMorpho,        reset: resetMorpho,        key: 'B',  label: 'Morphogenesis' },
   prism:         { draw: drawPrism,         reset: resetPrism,         key: 'P',  label: 'Prism' },
+  cloth:         { draw: drawCloth,         reset: resetCloth,         key: 'W',  label: 'Tapestry' },
 };

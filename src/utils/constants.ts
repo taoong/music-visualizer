@@ -395,6 +395,10 @@ export const DEFAULT_CONFIG = {
   prismFilm:    0.35,   // base film thickness — starts in blue/green soap-film range
   prismFlow:    0.40,   // moderate drift speed
   prismShimmer: 0.65,   // vivid iridescence by default
+  // Cloth/Tapestry-specific
+  clothDrape:   0.50,   // moderate gravity
+  clothRipple:  0.50,   // moderate audio-force strength
+  clothShimmer: 0.55,   // vivid metallic iridescence
 };
 
 // FFT and decay constants

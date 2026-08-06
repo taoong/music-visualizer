@@ -232,6 +232,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'prism-film',     key: 'prismFilm' },
     { id: 'prism-flow',     key: 'prismFlow' },
     { id: 'prism-shimmer',  key: 'prismShimmer' },
+    { id: 'cloth-drape',    key: 'clothDrape' },
+    { id: 'cloth-ripple',   key: 'clothRipple' },
+    { id: 'cloth-shimmer',  key: 'clothShimmer' },
   ] as const;
 
   for (const { id, key } of configs) {

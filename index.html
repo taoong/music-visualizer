@@ -297,6 +297,7 @@
           <option value="skyspace">Skyspace</option>
           <option value="morpho">Morphogenesis</option>
           <option value="prism">Prism</option>
+          <option value="cloth">Tapestry</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2656,6 +2657,45 @@
               step="0.01"
               value="0.65"
               aria-label="Iridescence brightness and saturation — 0 = subtle, 1 = vivid"
+            />
+          </div>
+        </div>
+
+        <div id="cloth-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="cloth-drape">Drape</label>
+            <input
+              type="range"
+              id="cloth-drape"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Gravity strength — 0 = levitating, 1 = heavy canvas"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="cloth-ripple">Ripple</label>
+            <input
+              type="range"
+              id="cloth-ripple"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Audio-force amplitude — how forcefully sound disturbs the cloth"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="cloth-shimmer">Shimmer</label>
+            <input
+              type="range"
+              id="cloth-shimmer"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Metallic iridescence and specular highlight brightness"
             />
           </div>
         </div>

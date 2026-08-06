@@ -193,6 +193,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   prismFilm:     'prism-film',
   prismFlow:     'prism-flow',
   prismShimmer:  'prism-shimmer',
+  clothDrape:    'cloth-drape',
+  clothRipple:   'cloth-ripple',
+  clothShimmer:  'cloth-shimmer',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
