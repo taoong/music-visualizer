@@ -235,6 +235,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'cloth-drape',    key: 'clothDrape' },
     { id: 'cloth-ripple',   key: 'clothRipple' },
     { id: 'cloth-shimmer',  key: 'clothShimmer' },
+    { id: 'dendron-walkers', key: 'dendronWalkers' },
+    { id: 'dendron-stick',   key: 'dendronStick' },
+    { id: 'dendron-glow',    key: 'dendronGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

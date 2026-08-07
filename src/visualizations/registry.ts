@@ -58,6 +58,7 @@ import { drawLumia, resetLumia } from './lumia';
 import { drawWoodMirror, resetWoodMirror } from './woodmirror';
 import { drawMoire, resetMoire } from './moire';
 import { drawNoctiluca, resetNoctiluca } from './noctiluca';
+import { drawDendron, resetDendron } from './dendron';
 import { drawTesseract, resetTesseract } from './tesseract';
 import { drawSupershapes, resetSupershapes } from './supershapes';
 import { drawCorridor, resetCorridor } from './corridor';
@@ -196,4 +197,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   morpho:        { draw: drawMorpho,        reset: resetMorpho,        key: 'B',  label: 'Morphogenesis' },
   prism:         { draw: drawPrism,         reset: resetPrism,         key: 'P',  label: 'Prism' },
   cloth:         { draw: drawCloth,         reset: resetCloth,         key: 'W',  label: 'Tapestry' },
+  dendron:       { draw: drawDendron,       reset: resetDendron,       key: 'C',  label: 'Dendron' },
 };

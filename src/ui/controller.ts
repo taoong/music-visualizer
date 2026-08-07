@@ -122,6 +122,7 @@ const ALL_CONTROL_IDS = [
   'morpho-controls-group',
   'prism-controls-group',
   'cloth-controls-group',
+  'dendron-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -197,6 +198,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   morpho:        { show: ['morpho-controls-group'] },
   prism:         { show: ['prism-controls-group'] },
   cloth:         { show: ['cloth-controls-group'] },
+  dendron:       { show: ['dendron-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

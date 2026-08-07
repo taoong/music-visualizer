@@ -399,6 +399,10 @@ export const DEFAULT_CONFIG = {
   clothDrape:   0.50,   // moderate gravity
   clothRipple:  0.50,   // moderate audio-force strength
   clothShimmer: 0.55,   // vivid metallic iridescence
+  // Dendron-specific
+  dendronWalkers: 0.50, // medium growth density
+  dendronStick:   0.35, // moderately fine branches
+  dendronGlow:    0.65, // vivid crystal glow
 };
 
 // FFT and decay constants

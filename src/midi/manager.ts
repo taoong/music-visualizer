@@ -196,6 +196,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   clothDrape:    'cloth-drape',
   clothRipple:   'cloth-ripple',
   clothShimmer:  'cloth-shimmer',
+  dendronWalkers: 'dendron-walkers',
+  dendronStick:   'dendron-stick',
+  dendronGlow:    'dendron-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
