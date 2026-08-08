@@ -199,6 +199,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   dendronWalkers: 'dendron-walkers',
   dendronStick:   'dendron-stick',
   dendronGlow:    'dendron-glow',
+  veilThreads:    'veil-threads',
+  veilOrder:      'veil-order',
+  veilTrail:      'veil-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

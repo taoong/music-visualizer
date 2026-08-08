@@ -403,6 +403,10 @@ export const DEFAULT_CONFIG = {
   dendronWalkers: 0.50, // medium growth density
   dendronStick:   0.35, // moderately fine branches
   dendronGlow:    0.65, // vivid crystal glow
+  // Veil-specific
+  veilThreads:   0.35,  // ~480 threads desktop / ~160 mobile
+  veilOrder:     0.50,  // balanced smoke/crystal
+  veilTrail:     0.55,  // moderate trail persistence
 };
 
 // FFT and decay constants
