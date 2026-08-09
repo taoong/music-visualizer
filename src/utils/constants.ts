@@ -367,30 +367,6 @@ export const DEFAULT_CONFIG = {
   glyphsDensity: 0.4,
   glyphsScale:   0.4,
   glyphsDrift:   0.4,
-  // Radiolaria-specific
-  radiolariaArms:       7,
-  radiolariaComplexity: 2,
-  radiolariaGlow:       1.0,
-  // Ferrofluid-specific
-  ferrofluidSpikes:  0.35,
-  ferrofluidTension: 0.65,
-  ferrofluidShimmer: 0.70,
-  // Thermal-specific
-  thermalDiffuse:   0.45,
-  thermalIntensity: 0.55,
-  thermalPalette:   0.0,
-  // Kintsugi-specific
-  kintsugiCracks: 0.5,
-  kintsugiGlow:   0.8,
-  kintsugiFlow:   0.5,
-  // Skyspace-specific
-  skyspaceRings: 0.44,  // ~7 rings by default
-  skyspaceGlow:  0.6,
-  skyspaceDrift: 0.3,
-  // Morphogenesis-specific
-  morphoScales:  5,     // 5 of 7 frequency-band scales active by default
-  morphoSpeed:   0.35,  // mid-range evolution speed
-  morphoPalette: 0.0,   // biological palette by default
   // Prism-specific
   prismFilm:    0.35,   // base film thickness — starts in blue/green soap-film range
   prismFlow:    0.40,   // moderate drift speed
@@ -399,10 +375,6 @@ export const DEFAULT_CONFIG = {
   clothDrape:   0.50,   // moderate gravity
   clothRipple:  0.50,   // moderate audio-force strength
   clothShimmer: 0.55,   // vivid metallic iridescence
-  // Dendron-specific
-  dendronWalkers: 0.50, // medium growth density
-  dendronStick:   0.35, // moderately fine branches
-  dendronGlow:    0.65, // vivid crystal glow
   // Veil-specific
   veilThreads:   0.35,  // ~480 threads desktop / ~160 mobile
   veilOrder:     0.50,  // balanced smoke/crystal

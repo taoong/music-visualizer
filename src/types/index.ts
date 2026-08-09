@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann' | 'glyphs' | 'radiolaria' | 'ferrofluid' | 'thermal' | 'kintsugi' | 'skyspace' | 'morpho' | 'prism' | 'cloth' | 'dendron' | 'veil' | 'suminagashi';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann' | 'glyphs' | 'prism' | 'cloth' | 'veil' | 'suminagashi';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -246,30 +246,6 @@ export interface Config {
   glyphsDensity: number;
   glyphsScale: number;
   glyphsDrift: number;
-  // Radiolaria-specific
-  radiolariaArms: number;
-  radiolariaComplexity: number;
-  radiolariaGlow: number;
-  // Ferrofluid-specific
-  ferrofluidSpikes: number;
-  ferrofluidTension: number;
-  ferrofluidShimmer: number;
-  // Thermal-specific
-  thermalDiffuse: number;
-  thermalIntensity: number;
-  thermalPalette: number;
-  // Kintsugi-specific
-  kintsugiCracks: number;
-  kintsugiGlow: number;
-  kintsugiFlow: number;
-  // Skyspace-specific
-  skyspaceRings: number;
-  skyspaceGlow: number;
-  skyspaceDrift: number;
-  // Morphogenesis-specific
-  morphoScales: number;
-  morphoSpeed: number;
-  morphoPalette: number;
   // Prism-specific
   prismFilm: number;
   prismFlow: number;
@@ -278,10 +254,6 @@ export interface Config {
   clothDrape: number;
   clothRipple: number;
   clothShimmer: number;
-  // Dendron-specific
-  dendronWalkers: number;
-  dendronStick: number;
-  dendronGlow: number;
   // Veil-specific
   veilThreads: number;
   veilOrder: number;

@@ -58,18 +58,11 @@ import { drawLumia, resetLumia } from './lumia';
 import { drawWoodMirror, resetWoodMirror } from './woodmirror';
 import { drawMoire, resetMoire } from './moire';
 import { drawNoctiluca, resetNoctiluca } from './noctiluca';
-import { drawDendron, resetDendron } from './dendron';
 import { drawTesseract, resetTesseract } from './tesseract';
 import { drawSupershapes, resetSupershapes } from './supershapes';
 import { drawCorridor, resetCorridor } from './corridor';
 import { drawRiemann, resetRiemann } from './riemann';
 import { drawGlyphs, resetGlyphs } from './glyphs';
-import { drawRadiolaria, resetRadiolaria } from './radiolaria';
-import { drawFerrofluid, resetFerrofluid } from './ferrofluid';
-import { drawThermal, resetThermal } from './thermal';
-import { drawKintsugi, resetKintsugi } from './kintsugi';
-import { drawSkyspace, resetSkyspace } from './skyspace';
-import { drawMorpho, resetMorpho } from './morpho';
 import { drawPrism, resetPrism } from './prism';
 import { drawCloth, resetCloth } from './cloth';
 import { drawVeil, resetVeil } from './veil';
@@ -191,15 +184,8 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   corridor:      { draw: drawCorridor,       reset: resetCorridor,      key: 'Q',  label: 'Corridor' },
   riemann:       { draw: drawRiemann,        reset: resetRiemann,       key: 'Y',  label: 'Riemann Sphere' },
   glyphs:        { draw: drawGlyphs,         reset: resetGlyphs,        key: 'g',  label: 'Glyphs' },
-  radiolaria:    { draw: drawRadiolaria,     reset: resetRadiolaria,    key: 'X',  label: 'Radiolaria' },
-  ferrofluid:    { draw: drawFerrofluid,    reset: resetFerrofluid,    key: 'E',  label: 'Ferrofluid' },
-  thermal:       { draw: drawThermal,       reset: resetThermal,       key: 'N',  label: 'Thermal' },
-  kintsugi:      { draw: drawKintsugi,      reset: resetKintsugi,      key: 'K',  label: 'Kintsugi' },
-  skyspace:      { draw: drawSkyspace,      reset: resetSkyspace,      key: 'A',  label: 'Skyspace' },
-  morpho:        { draw: drawMorpho,        reset: resetMorpho,        key: 'B',  label: 'Morphogenesis' },
   prism:         { draw: drawPrism,         reset: resetPrism,         key: 'P',  label: 'Prism' },
   cloth:         { draw: drawCloth,         reset: resetCloth,         key: 'W',  label: 'Tapestry' },
-  dendron:       { draw: drawDendron,       reset: resetDendron,       key: 'C',  label: 'Dendron' },
   veil:          { draw: drawVeil,          reset: resetVeil,          key: 'D',  label: 'Veil' },
   suminagashi:   { draw: drawSuminagashi,   reset: resetSuminagashi,   key: 'U',  label: 'Suminagashi' },
 };
