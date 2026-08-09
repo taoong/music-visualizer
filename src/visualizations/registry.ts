@@ -73,6 +73,7 @@ import { drawMorpho, resetMorpho } from './morpho';
 import { drawPrism, resetPrism } from './prism';
 import { drawCloth, resetCloth } from './cloth';
 import { drawVeil, resetVeil } from './veil';
+import { drawSuminagashi, resetSuminagashi } from './suminagashi';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -200,4 +201,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   cloth:         { draw: drawCloth,         reset: resetCloth,         key: 'W',  label: 'Tapestry' },
   dendron:       { draw: drawDendron,       reset: resetDendron,       key: 'C',  label: 'Dendron' },
   veil:          { draw: drawVeil,          reset: resetVeil,          key: 'D',  label: 'Veil' },
+  suminagashi:   { draw: drawSuminagashi,   reset: resetSuminagashi,   key: 'U',  label: 'Suminagashi' },
 };

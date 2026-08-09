@@ -241,6 +241,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'veil-threads',    key: 'veilThreads' },
     { id: 'veil-order',      key: 'veilOrder' },
     { id: 'veil-trail',      key: 'veilTrail' },
+    { id: 'suminagashi-rings', key: 'suminagashiRings' },
+    { id: 'suminagashi-drift', key: 'suminagashiDrift' },
+    { id: 'suminagashi-bloom', key: 'suminagashiBloom' },
   ] as const;
 
   for (const { id, key } of configs) {

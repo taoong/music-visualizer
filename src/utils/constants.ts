@@ -407,6 +407,10 @@ export const DEFAULT_CONFIG = {
   veilThreads:   0.35,  // ~480 threads desktop / ~160 mobile
   veilOrder:     0.50,  // balanced smoke/crystal
   veilTrail:     0.55,  // moderate trail persistence
+  // Suminagashi-specific
+  suminagashiRings: 0.40, // moderate ring spawn rate
+  suminagashiDrift: 0.35, // gentle source drift
+  suminagashiBloom: 0.50, // balanced glow and trail
 };
 
 // FFT and decay constants

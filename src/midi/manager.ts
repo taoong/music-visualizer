@@ -202,6 +202,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   veilThreads:    'veil-threads',
   veilOrder:      'veil-order',
   veilTrail:      'veil-trail',
+  suminagashiRings: 'suminagashi-rings',
+  suminagashiDrift: 'suminagashi-drift',
+  suminagashiBloom: 'suminagashi-bloom',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

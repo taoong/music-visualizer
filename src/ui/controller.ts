@@ -124,6 +124,7 @@ const ALL_CONTROL_IDS = [
   'cloth-controls-group',
   'dendron-controls-group',
   'veil-controls-group',
+  'suminagashi-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -201,6 +202,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   cloth:         { show: ['cloth-controls-group'] },
   dendron:       { show: ['dendron-controls-group'] },
   veil:          { show: ['veil-controls-group'] },
+  suminagashi:   { show: ['suminagashi-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

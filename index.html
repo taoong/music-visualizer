@@ -300,6 +300,7 @@
           <option value="cloth">Tapestry</option>
           <option value="dendron">Dendron</option>
           <option value="veil">Veil</option>
+          <option value="suminagashi">Suminagashi</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2776,6 +2777,45 @@
               step="0.01"
               value="0.55"
               aria-label="Trail persistence — 0 = short ghostly trace, 1 = long luminous history"
+            />
+          </div>
+        </div>
+
+        <div id="suminagashi-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="suminagashi-rings">Rings</label>
+            <input
+              type="range"
+              id="suminagashi-rings"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.40"
+              aria-label="Ring spawn rate — 0 = slow ceremonial drip, 1 = rapid cascading pour"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="suminagashi-drift">Drift</label>
+            <input
+              type="range"
+              id="suminagashi-drift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Ink source drift speed — 0 = near-still, 1 = fast wandering currents"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="suminagashi-bloom">Bloom</label>
+            <input
+              type="range"
+              id="suminagashi-bloom"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Glow halo width and trail persistence — 0 = crisp short-lived rings, 1 = wide luminous halos"
             />
           </div>
         </div>

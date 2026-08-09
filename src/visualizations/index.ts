@@ -75,3 +75,4 @@ export { drawPrism, resetPrism } from './prism';
 export { drawCloth, resetCloth } from './cloth';
 export { drawDendron, resetDendron } from './dendron';
 export { drawVeil, resetVeil } from './veil';
+export { drawSuminagashi, resetSuminagashi } from './suminagashi';
