@@ -383,6 +383,10 @@ export const DEFAULT_CONFIG = {
   suminagashiRings: 0.40, // moderate ring spawn rate
   suminagashiDrift: 0.35, // gentle source drift
   suminagashiBloom: 0.50, // balanced glow and trail
+  // Isometric City
+  isometricDensity: 0.45, // mid-range zoom: balanced city view
+  isometricHeight:  0.55, // moderate height sensitivity
+  isometricPalette: 0.05, // near-neon night by default
 };
 
 // FFT and decay constants

@@ -184,6 +184,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   suminagashiRings: 'suminagashi-rings',
   suminagashiDrift: 'suminagashi-drift',
   suminagashiBloom: 'suminagashi-bloom',
+  isometricDensity: 'isometric-density',
+  isometricHeight:  'isometric-height',
+  isometricPalette: 'isometric-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

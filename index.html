@@ -294,6 +294,7 @@
           <option value="cloth">Tapestry</option>
           <option value="veil">Veil</option>
           <option value="suminagashi">Suminagashi</option>
+          <option value="isometric">Isometric City</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2536,6 +2537,45 @@
               step="0.01"
               value="0.50"
               aria-label="Glow halo width and trail persistence — 0 = crisp short-lived rings, 1 = wide luminous halos"
+            />
+          </div>
+        </div>
+
+        <div id="isometric-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="isometric-density">Density</label>
+            <input
+              type="range"
+              id="isometric-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="City zoom — 0 = close-up towers filling the screen, 1 = wide skyline with many small buildings"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="isometric-height">Height</label>
+            <input
+              type="range"
+              id="isometric-height"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Building height sensitivity — 0 = flat low-rise city, 1 = soaring skyscrapers on every beat"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="isometric-palette">Palette</label>
+            <input
+              type="range"
+              id="isometric-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.05"
+              aria-label="Colour palette — 0 = neon cyberpunk night, 1 = warm daylight pastels"
             />
           </div>
         </div>

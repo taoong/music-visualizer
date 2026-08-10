@@ -223,6 +223,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'suminagashi-rings', key: 'suminagashiRings' },
     { id: 'suminagashi-drift', key: 'suminagashiDrift' },
     { id: 'suminagashi-bloom', key: 'suminagashiBloom' },
+    { id: 'isometric-density', key: 'isometricDensity' },
+    { id: 'isometric-height',  key: 'isometricHeight' },
+    { id: 'isometric-palette', key: 'isometricPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
