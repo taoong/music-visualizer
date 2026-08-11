@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Liquid Metal, Neon Grid, Blobs, Gray-Scott, Physarum, Murmuration, Riemann Sphere, Glyphs, Prism, Tapestry, Veil, Suminagashi, Isometric City, and many more (66 total)
+- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Liquid Metal, Neon Grid, Blobs, Gray-Scott, Physarum, Murmuration, Riemann Sphere, Glyphs, Prism, Tapestry, Veil, Suminagashi, Isometric City, Pursuit, and many more (67 total)
 - **Three analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Microphone** — Live audio input from your mic for real-time visualization

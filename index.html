@@ -295,6 +295,7 @@
           <option value="veil">Veil</option>
           <option value="suminagashi">Suminagashi</option>
           <option value="isometric">Isometric City</option>
+          <option value="pursuit">Pursuit</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2576,6 +2577,45 @@
               step="0.01"
               value="0.05"
               aria-label="Colour palette — 0 = neon cyberpunk night, 1 = warm daylight pastels"
+            />
+          </div>
+        </div>
+
+        <div id="pursuit-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="pursuit-symmetry">Symmetry</label>
+            <input
+              type="range"
+              id="pursuit-symmetry"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.33"
+              aria-label="Polygon order N (3–12) — sets the number of logarithmic spiral arms per pack"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="pursuit-speed">Speed</label>
+            <input
+              type="range"
+              id="pursuit-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.40"
+              aria-label="Pursuit velocity — slow = gentle elegant arcs, fast = tight coiled spirals"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="pursuit-trail">Trail</label>
+            <input
+              type="range"
+              id="pursuit-trail"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.60"
+              aria-label="Trail persistence — low = fleeting sparks, high = accumulated mandala bloom"
             />
           </div>
         </div>

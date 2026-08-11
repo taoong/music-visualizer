@@ -387,6 +387,10 @@ export const DEFAULT_CONFIG = {
   isometricDensity: 0.45, // mid-range zoom: balanced city view
   isometricHeight:  0.55, // moderate height sensitivity
   isometricPalette: 0.05, // near-neon night by default
+  // Pursuit
+  pursuitSymmetry: 0.33, // N=6 (hexagon) — balanced spiral arms
+  pursuitSpeed:    0.40, // moderate chase velocity
+  pursuitTrail:    0.60, // medium-long persistence for mandala build-up
 };
 
 // FFT and decay constants

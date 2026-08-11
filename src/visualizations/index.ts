@@ -70,3 +70,4 @@ export { drawCloth, resetCloth } from './cloth';
 export { drawVeil, resetVeil } from './veil';
 export { drawSuminagashi, resetSuminagashi } from './suminagashi';
 export { drawIsometric, resetIsometric } from './isometric';
+export { drawPursuit, resetPursuit } from './pursuit';

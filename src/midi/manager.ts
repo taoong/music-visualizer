@@ -187,6 +187,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   isometricDensity: 'isometric-density',
   isometricHeight:  'isometric-height',
   isometricPalette: 'isometric-palette',
+  pursuitSymmetry:  'pursuit-symmetry',
+  pursuitSpeed:     'pursuit-speed',
+  pursuitTrail:     'pursuit-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

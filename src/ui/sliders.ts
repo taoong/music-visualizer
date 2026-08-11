@@ -226,6 +226,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'isometric-density', key: 'isometricDensity' },
     { id: 'isometric-height',  key: 'isometricHeight' },
     { id: 'isometric-palette', key: 'isometricPalette' },
+    { id: 'pursuit-symmetry',  key: 'pursuitSymmetry' },
+    { id: 'pursuit-speed',     key: 'pursuitSpeed' },
+    { id: 'pursuit-trail',     key: 'pursuitTrail' },
   ] as const;
 
   for (const { id, key } of configs) {
