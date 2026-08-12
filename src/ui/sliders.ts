@@ -229,6 +229,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'pursuit-symmetry',  key: 'pursuitSymmetry' },
     { id: 'pursuit-speed',     key: 'pursuitSpeed' },
     { id: 'pursuit-trail',     key: 'pursuitTrail' },
+    { id: 'arb-depth',  key: 'arbDepth' },
+    { id: 'arb-spread', key: 'arbSpread' },
+    { id: 'arb-glow',   key: 'arbGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

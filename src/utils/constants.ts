@@ -391,6 +391,10 @@ export const DEFAULT_CONFIG = {
   pursuitSymmetry: 0.33, // N=6 (hexagon) — balanced spiral arms
   pursuitSpeed:    0.40, // moderate chase velocity
   pursuitTrail:    0.60, // medium-long persistence for mandala build-up
+  // Arboreal-specific
+  arbDepth:  0.50, // depth 4 — rich branching with good performance
+  arbSpread: 0.42, // ~30° branching angle — balanced tree/coral shape
+  arbGlow:   0.60, // vivid neon bloom with moderate trail
 };
 
 // FFT and decay constants

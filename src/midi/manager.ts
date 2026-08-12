@@ -190,6 +190,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   pursuitSymmetry:  'pursuit-symmetry',
   pursuitSpeed:     'pursuit-speed',
   pursuitTrail:     'pursuit-trail',
+  arbDepth:  'arb-depth',
+  arbSpread: 'arb-spread',
+  arbGlow:   'arb-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

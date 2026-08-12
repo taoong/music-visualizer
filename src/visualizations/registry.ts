@@ -69,6 +69,7 @@ import { drawVeil, resetVeil } from './veil';
 import { drawSuminagashi, resetSuminagashi } from './suminagashi';
 import { drawIsometric, resetIsometric } from './isometric';
 import { drawPursuit, resetPursuit } from './pursuit';
+import { drawArboreal, resetArboreal } from './arboreal';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -192,4 +193,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   suminagashi:   { draw: drawSuminagashi,   reset: resetSuminagashi,   key: 'U',  label: 'Suminagashi' },
   isometric:     { draw: drawIsometric,    reset: resetIsometric,     key: '8',  label: 'Isometric City' },
   pursuit:       { draw: drawPursuit,      reset: resetPursuit,       key: 'H',  label: 'Pursuit' },
+  arboreal:      { draw: drawArboreal,     reset: resetArboreal,      key: 'A',  label: 'Arboreal' },
 };

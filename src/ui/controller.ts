@@ -120,6 +120,7 @@ const ALL_CONTROL_IDS = [
   'suminagashi-controls-group',
   'isometric-controls-group',
   'pursuit-controls-group',
+  'arboreal-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -193,6 +194,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   suminagashi:   { show: ['suminagashi-controls-group'] },
   isometric:     { show: ['isometric-controls-group'] },
   pursuit:       { show: ['pursuit-controls-group'] },
+  arboreal:      { show: ['arboreal-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
