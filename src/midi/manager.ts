@@ -193,6 +193,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   arbDepth:  'arb-depth',
   arbSpread: 'arb-spread',
   arbGlow:   'arb-glow',
+  etchingLines: 'etching-lines',
+  etchingWave:  'etching-wave',
+  etchingGlow:  'etching-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -297,6 +297,7 @@
           <option value="isometric">Isometric City</option>
           <option value="pursuit">Pursuit</option>
           <option value="arboreal">Arboreal</option>
+          <option value="etching">Etching</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2656,6 +2657,45 @@
               step="0.01"
               value="0.60"
               aria-label="Neon bloom intensity and trail persistence; low = crisp lines, high = diffuse luminous halos"
+            />
+          </div>
+        </div>
+
+        <div id="etching-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="etching-lines">Lines</label>
+            <input
+              type="range"
+              id="etching-lines"
+              min="3"
+              max="20"
+              step="1"
+              value="10"
+              aria-label="Horizontal stroke density per frequency zone (3–20); low = sparse hatching, high = dense cross-hatch"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="etching-wave">Wave</label>
+            <input
+              type="range"
+              id="etching-wave"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Spatial oscillation frequency (0 = gentle undulation, 1 = tight scribble)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="etching-glow">Glow</label>
+            <input
+              type="range"
+              id="etching-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Stroke brightness and additive halo width (0 = dim hairlines, 1 = vivid neon)"
             />
           </div>
         </div>

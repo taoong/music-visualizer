@@ -232,6 +232,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'arb-depth',  key: 'arbDepth' },
     { id: 'arb-spread', key: 'arbSpread' },
     { id: 'arb-glow',   key: 'arbGlow' },
+    { id: 'etching-lines', key: 'etchingLines' },
+    { id: 'etching-wave',  key: 'etchingWave' },
+    { id: 'etching-glow',  key: 'etchingGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

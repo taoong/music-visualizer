@@ -395,6 +395,10 @@ export const DEFAULT_CONFIG = {
   arbDepth:  0.50, // depth 4 — rich branching with good performance
   arbSpread: 0.42, // ~30° branching angle — balanced tree/coral shape
   arbGlow:   0.60, // vivid neon bloom with moderate trail
+  // Etching-specific
+  etchingLines: 10,   // 10 strokes per zone — visible hatching density
+  etchingWave:  0.35, // moderate spatial frequency — organic undulation
+  etchingGlow:  0.55, // balanced brightness and halo
 };
 
 // FFT and decay constants
