@@ -235,6 +235,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'etching-lines', key: 'etchingLines' },
     { id: 'etching-wave',  key: 'etchingWave' },
     { id: 'etching-glow',  key: 'etchingGlow' },
+    { id: 'kintsugi-fragility', key: 'kintsugiFragility' },
+    { id: 'kintsugi-gold',      key: 'kintsugiGold' },
+    { id: 'kintsugi-trace',     key: 'kintsugiTrace' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -73,3 +73,4 @@ export { drawIsometric, resetIsometric } from './isometric';
 export { drawPursuit, resetPursuit } from './pursuit';
 export { drawArboreal, resetArboreal } from './arboreal';
 export { drawEtching, resetEtching } from './etching';
+export { drawKintsugi, resetKintsugi } from './kintsugi';

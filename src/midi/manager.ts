@@ -196,6 +196,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   etchingLines: 'etching-lines',
   etchingWave:  'etching-wave',
   etchingGlow:  'etching-glow',
+  kintsugiFragility: 'kintsugi-fragility',
+  kintsugiGold:      'kintsugi-gold',
+  kintsugiTrace:     'kintsugi-trace',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

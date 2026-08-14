@@ -399,6 +399,10 @@ export const DEFAULT_CONFIG = {
   etchingLines: 10,   // 10 strokes per zone — visible hatching density
   etchingWave:  0.35, // moderate spatial frequency — organic undulation
   etchingGlow:  0.55, // balanced brightness and halo
+  // Kintsugi-specific
+  kintsugiFragility: 0.50, // moderate crack density on beats
+  kintsugiGold:      0.45, // warm amber-gold by default
+  kintsugiTrace:     0.50, // medium persistence — cracks linger ~3 seconds
 };
 
 // FFT and decay constants

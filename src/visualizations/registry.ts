@@ -71,6 +71,7 @@ import { drawIsometric, resetIsometric } from './isometric';
 import { drawPursuit, resetPursuit } from './pursuit';
 import { drawArboreal, resetArboreal } from './arboreal';
 import { drawEtching, resetEtching } from './etching';
+import { drawKintsugi, resetKintsugi } from './kintsugi';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -196,4 +197,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   pursuit:       { draw: drawPursuit,      reset: resetPursuit,       key: 'H',  label: 'Pursuit' },
   arboreal:      { draw: drawArboreal,     reset: resetArboreal,      key: 'A',  label: 'Arboreal' },
   etching:       { draw: drawEtching,      reset: resetEtching,       key: 'i',  label: 'Etching' },
+  kintsugi:      { draw: drawKintsugi,     reset: resetKintsugi,      key: 'K',  label: 'Kintsugi' },
 };

@@ -122,6 +122,7 @@ const ALL_CONTROL_IDS = [
   'pursuit-controls-group',
   'arboreal-controls-group',
   'etching-controls-group',
+  'kintsugi-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -197,6 +198,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   pursuit:       { show: ['pursuit-controls-group'] },
   arboreal:      { show: ['arboreal-controls-group'] },
   etching:       { show: ['etching-controls-group'] },
+  kintsugi:      { show: ['kintsugi-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
