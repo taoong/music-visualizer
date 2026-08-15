@@ -238,6 +238,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'kintsugi-fragility', key: 'kintsugiFragility' },
     { id: 'kintsugi-gold',      key: 'kintsugiGold' },
     { id: 'kintsugi-trace',     key: 'kintsugiTrace' },
+    { id: 'klimt-tile-size',   key: 'klimtTileSize' },
+    { id: 'klimt-gold',        key: 'klimtGold' },
+    { id: 'klimt-complexity',  key: 'klimtComplexity' },
   ] as const;
 
   for (const { id, key } of configs) {

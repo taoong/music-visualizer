@@ -199,6 +199,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   kintsugiFragility: 'kintsugi-fragility',
   kintsugiGold:      'kintsugi-gold',
   kintsugiTrace:     'kintsugi-trace',
+  klimtTileSize:     'klimt-tile-size',
+  klimtGold:         'klimt-gold',
+  klimtComplexity:   'klimt-complexity',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

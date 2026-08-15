@@ -403,6 +403,10 @@ export const DEFAULT_CONFIG = {
   kintsugiFragility: 0.50, // moderate crack density on beats
   kintsugiGold:      0.45, // warm amber-gold by default
   kintsugiTrace:     0.50, // medium persistence — cracks linger ~3 seconds
+  // Klimt-specific
+  klimtTileSize:     0.50, // medium tile density
+  klimtGold:         0.65, // warm vivid gold
+  klimtComplexity:   0.55, // moderately ornate decorations
 };
 
 // FFT and decay constants
