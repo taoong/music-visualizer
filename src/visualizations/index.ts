@@ -75,3 +75,4 @@ export { drawArboreal, resetArboreal } from './arboreal';
 export { drawEtching, resetEtching } from './etching';
 export { drawKintsugi, resetKintsugi } from './kintsugi';
 export { drawKlimt, resetKlimt } from './klimt';
+export { drawRosette, resetRosette } from './rosette';

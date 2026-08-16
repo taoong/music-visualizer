@@ -241,6 +241,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'klimt-tile-size',   key: 'klimtTileSize' },
     { id: 'klimt-gold',        key: 'klimtGold' },
     { id: 'klimt-complexity',  key: 'klimtComplexity' },
+    { id: 'rosette-petals', key: 'rosettePetals' },
+    { id: 'rosette-bloom',  key: 'rosetteBloom' },
+    { id: 'rosette-glow',   key: 'rosetteGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

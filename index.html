@@ -300,6 +300,7 @@
           <option value="etching">Etching</option>
           <option value="kintsugi">Kintsugi</option>
           <option value="klimt">Klimt</option>
+          <option value="rosette">Rosette</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2776,6 +2777,45 @@
               step="0.01"
               value="0.55"
               aria-label="Stroke brightness and additive halo width (0 = dim hairlines, 1 = vivid neon)"
+            />
+          </div>
+        </div>
+
+        <div id="rosette-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="rosette-petals">Petals</label>
+            <input
+              type="range"
+              id="rosette-petals"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Base petal count (0 = 3-petal clover, 1 = 8-petal star); each band adds its index for progressive density"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="rosette-bloom">Bloom</label>
+            <input
+              type="range"
+              id="rosette-bloom"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.75"
+              aria-label="Pen-extension scale driven by amplitude (0 = circles only, 1 = full spirograph bloom)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="rosette-glow">Glow</label>
+            <input
+              type="range"
+              id="rosette-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.72"
+              aria-label="Trail persistence (0 = crisp instant curves, 1 = dense layered mandala buildup)"
             />
           </div>
         </div>

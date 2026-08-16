@@ -202,6 +202,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   klimtTileSize:     'klimt-tile-size',
   klimtGold:         'klimt-gold',
   klimtComplexity:   'klimt-complexity',
+  rosettePetals: 'rosette-petals',
+  rosetteBloom:  'rosette-bloom',
+  rosetteGlow:   'rosette-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -407,6 +407,10 @@ export const DEFAULT_CONFIG = {
   klimtTileSize:     0.50, // medium tile density
   klimtGold:         0.65, // warm vivid gold
   klimtComplexity:   0.55, // moderately ornate decorations
+  // Rosette-specific
+  rosettePetals: 0.40, // base petal count near 5 — rich without being too dense
+  rosetteBloom:  0.75, // generous pen extension — vivid spirograph petal shapes
+  rosetteGlow:   0.72, // moderate trail — mandala layering without full smear
 };
 
 // FFT and decay constants
