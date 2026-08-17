@@ -76,3 +76,4 @@ export { drawEtching, resetEtching } from './etching';
 export { drawKintsugi, resetKintsugi } from './kintsugi';
 export { drawKlimt, resetKlimt } from './klimt';
 export { drawRosette, resetRosette } from './rosette';
+export { drawFeedbackLoop, resetFeedbackLoop } from './feedbackloop';

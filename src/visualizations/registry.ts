@@ -74,6 +74,7 @@ import { drawEtching, resetEtching } from './etching';
 import { drawKintsugi, resetKintsugi } from './kintsugi';
 import { drawKlimt, resetKlimt } from './klimt';
 import { drawRosette, resetRosette } from './rosette';
+import { drawFeedbackLoop, resetFeedbackLoop } from './feedbackloop';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -202,4 +203,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   kintsugi:      { draw: drawKintsugi,     reset: resetKintsugi,      key: 'K',  label: 'Kintsugi' },
   klimt:         { draw: drawKlimt,        reset: resetKlimt,         key: 'B',  label: 'Klimt' },
   rosette:       { draw: drawRosette,      reset: resetRosette,       key: 'J',  label: 'Rosette' },
+  feedbackloop:  { draw: drawFeedbackLoop, reset: resetFeedbackLoop,  key: '<',  label: 'Feedback' },
 };

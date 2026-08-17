@@ -205,6 +205,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   rosettePetals: 'rosette-petals',
   rosetteBloom:  'rosette-bloom',
   rosetteGlow:   'rosette-glow',
+  feedbackZoom:   'feedback-zoom',
+  feedbackSpiral: 'feedback-spiral',
+  feedbackGlow:   'feedback-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

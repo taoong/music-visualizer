@@ -244,6 +244,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'rosette-petals', key: 'rosettePetals' },
     { id: 'rosette-bloom',  key: 'rosetteBloom' },
     { id: 'rosette-glow',   key: 'rosetteGlow' },
+    { id: 'feedback-zoom',   key: 'feedbackZoom' },
+    { id: 'feedback-spiral', key: 'feedbackSpiral' },
+    { id: 'feedback-glow',   key: 'feedbackGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

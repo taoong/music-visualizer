@@ -411,6 +411,10 @@ export const DEFAULT_CONFIG = {
   rosettePetals: 0.40, // base petal count near 5 — rich without being too dense
   rosetteBloom:  0.75, // generous pen extension — vivid spirograph petal shapes
   rosetteGlow:   0.72, // moderate trail — mandala layering without full smear
+  // Feedback Loop-specific
+  feedbackZoom:   0.55, // moderate convergence — neither too tight nor too slow
+  feedbackSpiral: 0.20, // gentle rotation — soft spiral rather than concentric
+  feedbackGlow:   0.60, // solid ring brightness with visible glow
 };
 
 // FFT and decay constants

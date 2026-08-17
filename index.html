@@ -301,6 +301,7 @@
           <option value="kintsugi">Kintsugi</option>
           <option value="klimt">Klimt</option>
           <option value="rosette">Rosette</option>
+          <option value="feedbackloop">Feedback</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2816,6 +2817,45 @@
               step="0.01"
               value="0.72"
               aria-label="Trail persistence (0 = crisp instant curves, 1 = dense layered mandala buildup)"
+            />
+          </div>
+        </div>
+
+        <div id="feedbackloop-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="feedback-zoom">Zoom</label>
+            <input
+              type="range"
+              id="feedback-zoom"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Feedback scale factor (0 = tight vortex converges quickly, 1 = very slow fade)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="feedback-spiral">Spiral</label>
+            <input
+              type="range"
+              id="feedback-spiral"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.20"
+              aria-label="Rotation per frame (0 = concentric rings, 1 = tight inward spiral)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="feedback-glow">Glow</label>
+            <input
+              type="range"
+              id="feedback-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.60"
+              aria-label="Ring stroke weight and bloom intensity (0 = thin sharp lines, 1 = wide bright bloom)"
             />
           </div>
         </div>
