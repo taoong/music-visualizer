@@ -247,6 +247,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'feedback-zoom',   key: 'feedbackZoom' },
     { id: 'feedback-spiral', key: 'feedbackSpiral' },
     { id: 'feedback-glow',   key: 'feedbackGlow' },
+    { id: 'kandinsky-forms', key: 'kandinskyForms' },
+    { id: 'kandinsky-chaos', key: 'kandinskyChaos' },
+    { id: 'kandinsky-glow',  key: 'kandinskyGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

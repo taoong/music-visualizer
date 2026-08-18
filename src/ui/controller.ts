@@ -126,6 +126,7 @@ const ALL_CONTROL_IDS = [
   'klimt-controls-group',
   'rosette-controls-group',
   'feedbackloop-controls-group',
+  'kandinsky-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -205,6 +206,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   klimt:         { show: ['klimt-controls-group'] },
   rosette:       { show: ['rosette-controls-group'] },
   feedbackloop:  { show: ['feedbackloop-controls-group'] },
+  kandinsky:     { show: ['kandinsky-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

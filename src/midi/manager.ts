@@ -208,6 +208,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   feedbackZoom:   'feedback-zoom',
   feedbackSpiral: 'feedback-spiral',
   feedbackGlow:   'feedback-glow',
+  kandinskyForms: 'kandinsky-forms',
+  kandinskyChaos: 'kandinsky-chaos',
+  kandinskyGlow:  'kandinsky-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

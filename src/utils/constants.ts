@@ -415,6 +415,10 @@ export const DEFAULT_CONFIG = {
   feedbackZoom:   0.55, // moderate convergence — neither too tight nor too slow
   feedbackSpiral: 0.20, // gentle rotation — soft spiral rather than concentric
   feedbackGlow:   0.60, // solid ring brightness with visible glow
+  // Kandinsky-specific
+  kandinskyForms: 8,    // 8 forms per band (56 total) — painterly density
+  kandinskyChaos: 0.40, // moderate drift — contemplative but alive
+  kandinskyGlow:  0.65, // vivid glow and gentle trail persistence
 };
 
 // FFT and decay constants
