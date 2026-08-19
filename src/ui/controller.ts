@@ -127,6 +127,7 @@ const ALL_CONTROL_IDS = [
   'rosette-controls-group',
   'feedbackloop-controls-group',
   'kandinsky-controls-group',
+  'cobweb-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -207,6 +208,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   rosette:       { show: ['rosette-controls-group'] },
   feedbackloop:  { show: ['feedbackloop-controls-group'] },
   kandinsky:     { show: ['kandinsky-controls-group'] },
+  cobweb:        { show: ['cobweb-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

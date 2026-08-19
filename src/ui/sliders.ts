@@ -250,6 +250,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'kandinsky-forms', key: 'kandinskyForms' },
     { id: 'kandinsky-chaos', key: 'kandinskyChaos' },
     { id: 'kandinsky-glow',  key: 'kandinskyGlow' },
+    { id: 'cobweb-density', key: 'cobwebDensity' },
+    { id: 'cobweb-dew',     key: 'cobwebDew' },
+    { id: 'cobweb-tension', key: 'cobwebTension' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -419,6 +419,10 @@ export const DEFAULT_CONFIG = {
   kandinskyForms: 8,    // 8 forms per band (56 total) — painterly density
   kandinskyChaos: 0.40, // moderate drift — contemplative but alive
   kandinskyGlow:  0.65, // vivid glow and gentle trail persistence
+  // Cobweb-specific
+  cobwebDensity: 0.50, // mid complexity — 16 spokes, 10 rings
+  cobwebDew:     0.55, // moderate dew-drop glow
+  cobwebTension: 0.55, // moderate strand vibration
 };
 
 // FFT and decay constants

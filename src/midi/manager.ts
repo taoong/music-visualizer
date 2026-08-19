@@ -211,6 +211,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   kandinskyForms: 'kandinsky-forms',
   kandinskyChaos: 'kandinsky-chaos',
   kandinskyGlow:  'kandinsky-glow',
+  cobwebDensity: 'cobweb-density',
+  cobwebDew:     'cobweb-dew',
+  cobwebTension: 'cobweb-tension',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

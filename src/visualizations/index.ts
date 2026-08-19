@@ -78,3 +78,4 @@ export { drawKlimt, resetKlimt } from './klimt';
 export { drawRosette, resetRosette } from './rosette';
 export { drawFeedbackLoop, resetFeedbackLoop } from './feedbackloop';
 export { drawKandinsky, resetKandinsky } from './kandinsky';
+export { drawCobweb, resetCobweb } from './cobweb';

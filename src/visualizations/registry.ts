@@ -76,6 +76,7 @@ import { drawKlimt, resetKlimt } from './klimt';
 import { drawRosette, resetRosette } from './rosette';
 import { drawFeedbackLoop, resetFeedbackLoop } from './feedbackloop';
 import { drawKandinsky, resetKandinsky } from './kandinsky';
+import { drawCobweb, resetCobweb } from './cobweb';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -206,4 +207,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   rosette:       { draw: drawRosette,      reset: resetRosette,       key: 'J',  label: 'Rosette' },
   feedbackloop:  { draw: drawFeedbackLoop, reset: resetFeedbackLoop,  key: '<',  label: 'Feedback' },
   kandinsky:     { draw: drawKandinsky,    reset: resetKandinsky,     key: 'C',  label: 'Kandinsky' },
+  cobweb:        { draw: drawCobweb,       reset: resetCobweb,        key: 'E',  label: 'Cobweb' },
 };
