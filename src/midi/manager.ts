@@ -214,6 +214,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cobwebDensity: 'cobweb-density',
   cobwebDew:     'cobweb-dew',
   cobwebTension: 'cobweb-tension',
+  frostSymmetry: 'frost-symmetry',
+  frostGrowth:   'frost-growth',
+  frostGlow:     'frost-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

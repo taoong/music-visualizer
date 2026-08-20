@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann' | 'glyphs' | 'prism' | 'cloth' | 'veil' | 'suminagashi' | 'isometric' | 'pursuit' | 'arboreal' | 'etching' | 'kintsugi' | 'klimt' | 'rosette' | 'feedbackloop' | 'kandinsky' | 'cobweb';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann' | 'glyphs' | 'prism' | 'cloth' | 'veil' | 'suminagashi' | 'isometric' | 'pursuit' | 'arboreal' | 'etching' | 'kintsugi' | 'klimt' | 'rosette' | 'feedbackloop' | 'kandinsky' | 'cobweb' | 'frost';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -302,6 +302,10 @@ export interface Config {
   cobwebDensity: number;
   cobwebDew: number;
   cobwebTension: number;
+  // Frost-specific
+  frostSymmetry: number;
+  frostGrowth: number;
+  frostGlow: number;
 }
 
 // Interaction event dispatched to visualizations in interactive mode

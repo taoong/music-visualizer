@@ -304,6 +304,7 @@
           <option value="feedbackloop">Feedback</option>
           <option value="kandinsky">Kandinsky</option>
           <option value="cobweb">Cobweb</option>
+          <option value="frost">Frost</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -2936,6 +2937,45 @@
               step="0.01"
               value="0.55"
               aria-label="Strand vibration amplitude driven by audio (0 = rigid geometric web, 1 = wild audio-reactive oscillation)"
+            />
+          </div>
+        </div>
+
+        <div id="frost-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="frost-symmetry">Symmetry</label>
+            <input
+              type="range"
+              id="frost-symmetry"
+              min="3"
+              max="12"
+              step="1"
+              value="6"
+              aria-label="Crystallographic fold count — 3 = triangular, 4 = square, 6 = hexagonal snowflake, 8–12 = exotic high-symmetry crystals"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="frost-growth">Growth</label>
+            <input
+              type="range"
+              id="frost-growth"
+              min="0"
+              max="2"
+              step="0.05"
+              value="1"
+              aria-label="Branch density and extension speed — low = sparse slow-growing needles, high = rapid dense dendritic frost"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="frost-glow">Glow</label>
+            <input
+              type="range"
+              id="frost-glow"
+              min="0"
+              max="2"
+              step="0.05"
+              value="1"
+              aria-label="Bloom halo intensity and trail persistence — low = crisp white lines that fade quickly, high = luminous icy glow that lingers"
             />
           </div>
         </div>

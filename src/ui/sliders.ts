@@ -253,6 +253,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'cobweb-density', key: 'cobwebDensity' },
     { id: 'cobweb-dew',     key: 'cobwebDew' },
     { id: 'cobweb-tension', key: 'cobwebTension' },
+    { id: 'frost-symmetry', key: 'frostSymmetry' },
+    { id: 'frost-growth',   key: 'frostGrowth' },
+    { id: 'frost-glow',     key: 'frostGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

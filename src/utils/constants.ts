@@ -423,6 +423,10 @@ export const DEFAULT_CONFIG = {
   cobwebDensity: 0.50, // mid complexity — 16 spokes, 10 rings
   cobwebDew:     0.55, // moderate dew-drop glow
   cobwebTension: 0.55, // moderate strand vibration
+  // Frost
+  frostSymmetry: 6,    // hexagonal (snowflake) symmetry
+  frostGrowth:   1.0,  // medium branch density
+  frostGlow:     1.0,  // medium bloom intensity
 };
 
 // FFT and decay constants
