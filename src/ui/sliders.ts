@@ -256,6 +256,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'frost-symmetry', key: 'frostSymmetry' },
     { id: 'frost-growth',   key: 'frostGrowth' },
     { id: 'frost-glow',     key: 'frostGlow' },
+    { id: 'boogie-grid',    key: 'boogieGrid' },
+    { id: 'boogie-pulse',   key: 'boogiePulse' },
+    { id: 'boogie-palette', key: 'boogiePalette' },
   ] as const;
 
   for (const { id, key } of configs) {

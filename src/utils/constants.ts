@@ -427,6 +427,10 @@ export const DEFAULT_CONFIG = {
   frostSymmetry: 6,    // hexagonal (snowflake) symmetry
   frostGrowth:   1.0,  // medium branch density
   frostGlow:     1.0,  // medium bloom intensity
+  // Boogie Woogie
+  boogieGrid:    0.4,  // medium grid density
+  boogiePulse:   0.6,  // moderate beat-burst intensity
+  boogiePalette: 0.0,  // classic Mondrian (light mode)
 };
 
 // FFT and decay constants

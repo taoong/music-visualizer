@@ -80,3 +80,4 @@ export { drawFeedbackLoop, resetFeedbackLoop } from './feedbackloop';
 export { drawKandinsky, resetKandinsky } from './kandinsky';
 export { drawCobweb, resetCobweb } from './cobweb';
 export { drawFrost, resetFrost } from './frost';
+export { drawBoogie, resetBoogie } from './boogie';

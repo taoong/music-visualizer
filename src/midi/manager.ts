@@ -217,6 +217,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   frostSymmetry: 'frost-symmetry',
   frostGrowth:   'frost-growth',
   frostGlow:     'frost-glow',
+  boogieGrid:    'boogie-grid',
+  boogiePulse:   'boogie-pulse',
+  boogiePalette: 'boogie-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

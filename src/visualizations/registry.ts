@@ -78,6 +78,7 @@ import { drawFeedbackLoop, resetFeedbackLoop } from './feedbackloop';
 import { drawKandinsky, resetKandinsky } from './kandinsky';
 import { drawCobweb, resetCobweb } from './cobweb';
 import { drawFrost, resetFrost } from './frost';
+import { drawBoogie, resetBoogie } from './boogie';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -210,4 +211,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   kandinsky:     { draw: drawKandinsky,    reset: resetKandinsky,     key: 'C',  label: 'Kandinsky' },
   cobweb:        { draw: drawCobweb,       reset: resetCobweb,        key: 'E',  label: 'Cobweb' },
   frost:         { draw: drawFrost,        reset: resetFrost,         key: 'L',  label: 'Frost' },
+  boogie:        { draw: drawBoogie,       reset: resetBoogie,        key: 'M',  label: 'Boogie Woogie' },
 };
