@@ -306,6 +306,7 @@
           <option value="cobweb">Cobweb</option>
           <option value="frost">Frost</option>
           <option value="boogie">Boogie Woogie</option>
+          <option value="patchwork">Patchwork</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3016,6 +3017,45 @@
               step="0.01"
               value="0"
               aria-label="Colour palette — 0 = classic Mondrian (warm white background, primary red/yellow/blue), 1 = dark neon riff"
+            />
+          </div>
+        </div>
+
+        <div id="patchwork-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="patchwork-grid">Grid</label>
+            <input
+              type="range"
+              id="patchwork-grid"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Cell density — 0 = large fabric squares, 1 = fine patchwork grid"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="patchwork-palette">Palette</label>
+            <input
+              type="range"
+              id="patchwork-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.2"
+              aria-label="Colour palette — 0 = warm folk quilt (reds/golds), 1 = cool graphic (teals/indigo)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="patchwork-motion">Motion</label>
+            <input
+              type="range"
+              id="patchwork-motion"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Pattern animation — 0 = static blocks, 1 = animated breathing, rotation, and stripe shift"
             />
           </div>
         </div>

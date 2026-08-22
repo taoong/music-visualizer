@@ -217,9 +217,12 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   frostSymmetry: 'frost-symmetry',
   frostGrowth:   'frost-growth',
   frostGlow:     'frost-glow',
-  boogieGrid:    'boogie-grid',
-  boogiePulse:   'boogie-pulse',
-  boogiePalette: 'boogie-palette',
+  boogieGrid:      'boogie-grid',
+  boogiePulse:     'boogie-pulse',
+  boogiePalette:   'boogie-palette',
+  patchworkGrid:   'patchwork-grid',
+  patchworkPalette:'patchwork-palette',
+  patchworkMotion: 'patchwork-motion',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

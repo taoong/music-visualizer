@@ -431,6 +431,10 @@ export const DEFAULT_CONFIG = {
   boogieGrid:    0.4,  // medium grid density
   boogiePulse:   0.6,  // moderate beat-burst intensity
   boogiePalette: 0.0,  // classic Mondrian (light mode)
+  // Patchwork
+  patchworkGrid:    0.35, // medium-coarse cell density
+  patchworkPalette: 0.2,  // warm folk quilt palette
+  patchworkMotion:  0.5,  // moderate pattern animation
 };
 
 // FFT and decay constants
