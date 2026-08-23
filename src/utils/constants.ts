@@ -435,6 +435,10 @@ export const DEFAULT_CONFIG = {
   patchworkGrid:    0.35, // medium-coarse cell density
   patchworkPalette: 0.2,  // warm folk quilt palette
   patchworkMotion:  0.5,  // moderate pattern animation
+
+  risographShapes: 2,    // 2 shapes per ink layer
+  risographShift:  0.5,  // moderate mis-registration on beats
+  risographBloom:  0.5,  // moderate glow halo
 };
 
 // FFT and decay constants

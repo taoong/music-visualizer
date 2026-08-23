@@ -262,6 +262,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'patchwork-grid',   key: 'patchworkGrid' },
     { id: 'patchwork-palette',key: 'patchworkPalette' },
     { id: 'patchwork-motion', key: 'patchworkMotion' },
+    { id: 'risograph-shapes', key: 'risographShapes' },
+    { id: 'risograph-shift',  key: 'risographShift' },
+    { id: 'risograph-bloom',  key: 'risographBloom' },
   ] as const;
 
   for (const { id, key } of configs) {

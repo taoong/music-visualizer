@@ -131,6 +131,7 @@ const ALL_CONTROL_IDS = [
   'frost-controls-group',
   'boogie-controls-group',
   'patchwork-controls-group',
+  'risograph-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -215,6 +216,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   frost:         { show: ['frost-controls-group'] },
   boogie:        { show: ['boogie-controls-group'] },
   patchwork:     { show: ['patchwork-controls-group'] },
+  risograph:     { show: ['risograph-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

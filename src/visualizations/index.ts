@@ -82,3 +82,4 @@ export { drawCobweb, resetCobweb } from './cobweb';
 export { drawFrost, resetFrost } from './frost';
 export { drawBoogie, resetBoogie } from './boogie';
 export { drawPatchwork, resetPatchwork } from './patchwork';
+export { drawRisograph, resetRisograph } from './risograph';

@@ -80,6 +80,7 @@ import { drawCobweb, resetCobweb } from './cobweb';
 import { drawFrost, resetFrost } from './frost';
 import { drawBoogie, resetBoogie } from './boogie';
 import { drawPatchwork, resetPatchwork } from './patchwork';
+import { drawRisograph, resetRisograph } from './risograph';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -214,4 +215,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   frost:         { draw: drawFrost,        reset: resetFrost,         key: 'L',  label: 'Frost' },
   boogie:        { draw: drawBoogie,       reset: resetBoogie,        key: 'M',  label: 'Boogie Woogie' },
   patchwork:     { draw: drawPatchwork,    reset: resetPatchwork,     key: 'N',  label: 'Patchwork' },
+  risograph:     { draw: drawRisograph,   reset: resetRisograph,     key: 'G',  label: 'Risograph' },
 };

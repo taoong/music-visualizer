@@ -307,6 +307,7 @@
           <option value="frost">Frost</option>
           <option value="boogie">Boogie Woogie</option>
           <option value="patchwork">Patchwork</option>
+          <option value="risograph">Risograph</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3056,6 +3057,45 @@
               step="0.01"
               value="0.5"
               aria-label="Pattern animation — 0 = static blocks, 1 = animated breathing, rotation, and stripe shift"
+            />
+          </div>
+        </div>
+
+        <div id="risograph-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="risograph-shapes">Shapes</label>
+            <input
+              type="range"
+              id="risograph-shapes"
+              min="1"
+              max="4"
+              step="1"
+              value="2"
+              aria-label="Shapes per ink layer — 1 = one large form, 4 = dense overlapping geometry"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="risograph-shift">Shift</label>
+            <input
+              type="range"
+              id="risograph-shift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Mis-registration on beats — 0 = layers stay aligned, 1 = wild registration shift"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="risograph-bloom">Bloom</label>
+            <input
+              type="range"
+              id="risograph-bloom"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Glow bloom — 0 = sharp flat ink, 1 = luminous neon halo"
             />
           </div>
         </div>
