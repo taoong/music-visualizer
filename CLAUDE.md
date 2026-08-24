@@ -10,6 +10,8 @@ Real-time audio-reactive visualizer built with TypeScript, p5.js, and Tone.js. S
 - `npm run test` — run Vitest tests
 - `npm run test:watch` — run Vitest in watch mode
 - `npm run typecheck` — `tsc --noEmit`
+- `npm run cap:sync` — build the web app and sync it into the iOS native project (`ios/`)
+- `npm run cap:open:ios` — open the iOS project in Xcode
 
 ## Architecture
 
@@ -213,6 +215,10 @@ Note: per-viz keyboard shortcuts have been removed. Users cycle vizzes with the 
 - **p5.js 1.9.0** — CDN-loaded, 2D canvas rendering. Global `p5` constructor, instance passed as `P5Instance`.
 - **Tone.js 14.8.49** — CDN-loaded, Web Audio wrapper. `Tone.Player`, `Tone.Gain`, `Tone.FFT`.
 - Both have type stubs in `src/types/globals.d.ts` (no `@types` packages).
+
+### iOS app (Capacitor)
+
+`ios/` is a Capacitor-wrapped native iOS project (bundle ID `com.taoong.musicvisualizer`, configured in `capacitor.config.ts`). It loads the same `dist/` production build inside a WKWebView — no visualization or rendering code is native-specific, and rendering performance matches the mobile web version exactly since it's the same web engine. `npm run cap:sync` rebuilds the web app and copies it into `ios/App/App/public`; run this after any web change before testing in Xcode (`npm run cap:open:ios`). Native deps resolve via Swift Package Manager (`ios/App/CapApp-SPM/Package.swift`) — no CocoaPods. `ios/App/App/Info.plist` carries `NSMicrophoneUsageDescription` for mic-mode access; Web MIDI is unsupported in iOS WKWebView, so MIDI mapping is unavailable there. `ios/App/App/public`, `DerivedData/`, and `xcuserdata/` are gitignored via `ios/.gitignore` (Capacitor-generated).
 
 ## Maintenance
 

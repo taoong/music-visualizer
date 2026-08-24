@@ -123,6 +123,20 @@ Cycle through visualizations with the arrow keys, or pick one from the sidebar d
 - **p5.js** — 2D/3D canvas rendering (CDN)
 - **Tone.js** — Web Audio playback + FFT analysis (CDN)
 - **Vite** — Build tool and dev server
+- **Capacitor** — Native iOS wrapper (`ios/`)
+
+## Mobile App (iOS)
+
+The web app is wrapped as a native iOS app via [Capacitor](https://capacitorjs.com), bundle ID `com.taoong.musicvisualizer`. No visualization code changes — Capacitor loads the same production build (`dist/`) inside a WKWebView, so rendering performance is identical to the mobile web version.
+
+```bash
+npm run cap:sync       # tsc + vite build, then copy dist/ into ios/App/App/public and sync plugins
+npm run cap:open:ios   # open the native project in Xcode
+```
+
+From Xcode, select a simulator or device and hit Run. Swift Package Manager resolves Capacitor's native dependencies automatically on first build (no CocoaPods needed). Re-run `npm run cap:sync` after any web app change to pick it up in the native shell.
+
+Microphone access (for the Microphone analysis mode) requires the `NSMicrophoneUsageDescription` entry already set in `ios/App/App/Info.plist`. Web MIDI is not available in iOS WKWebView, so the MIDI mapping overlay is a no-op there.
 
 ## Project Structure
 
@@ -156,6 +170,8 @@ Cycle through visualizations with the arrow keys, or pick one from the sidebar d
 | `npm run test` | Run Vitest tests |
 | `npm run test:watch` | Run Vitest in watch mode |
 | `npm run typecheck` | Type-check without emitting |
+| `npm run cap:sync` | Build the web app and sync it into the iOS native project |
+| `npm run cap:open:ios` | Open the iOS project in Xcode |
 
 ## License
 
