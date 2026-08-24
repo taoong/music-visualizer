@@ -265,6 +265,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'risograph-shapes', key: 'risographShapes' },
     { id: 'risograph-shift',  key: 'risographShift' },
     { id: 'risograph-bloom',  key: 'risographBloom' },
+    { id: 'lensflare-streak', key: 'lensflareStreak' },
+    { id: 'lensflare-ghosts', key: 'lensflareGhosts' },
+    { id: 'lensflare-bloom',  key: 'lensflareBloom' },
   ] as const;
 
   for (const { id, key } of configs) {

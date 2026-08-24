@@ -308,6 +308,7 @@
           <option value="boogie">Boogie Woogie</option>
           <option value="patchwork">Patchwork</option>
           <option value="risograph">Risograph</option>
+          <option value="lensflare">Lens Flare</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3096,6 +3097,45 @@
               step="0.01"
               value="0.5"
               aria-label="Glow bloom — 0 = sharp flat ink, 1 = luminous neon halo"
+            />
+          </div>
+        </div>
+
+        <div id="lensflare-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="lensflare-streak">Streak</label>
+            <input
+              type="range"
+              id="lensflare-streak"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Anamorphic streak length — 0 = no horizontal streaks, 1 = full-width cinema streaks"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lensflare-ghosts">Ghosts</label>
+            <input
+              type="range"
+              id="lensflare-ghosts"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Ghost bokeh — 0 = no ghosts, 1 = vivid ghost circles along the flare axis"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lensflare-bloom">Bloom</label>
+            <input
+              type="range"
+              id="lensflare-bloom"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Central bloom radius — 0 = tight bright point, 1 = large diffuse light cloud"
             />
           </div>
         </div>

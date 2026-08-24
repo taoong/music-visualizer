@@ -439,6 +439,10 @@ export const DEFAULT_CONFIG = {
   risographShapes: 2,    // 2 shapes per ink layer
   risographShift:  0.5,  // moderate mis-registration on beats
   risographBloom:  0.5,  // moderate glow halo
+  // Lens Flare defaults
+  lensflareStreak: 0.55, // moderate anamorphic streak length
+  lensflareGhosts: 0.5,  // moderate ghost bokeh
+  lensflareBloom:  0.5,  // moderate central bloom radius
 };
 
 // FFT and decay constants

@@ -223,9 +223,12 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   patchworkGrid:   'patchwork-grid',
   patchworkPalette:'patchwork-palette',
   patchworkMotion: 'patchwork-motion',
-  risographShapes: 'risograph-shapes',
-  risographShift:  'risograph-shift',
-  risographBloom:  'risograph-bloom',
+  risographShapes:  'risograph-shapes',
+  risographShift:   'risograph-shift',
+  risographBloom:   'risograph-bloom',
+  lensflareStreak:  'lensflare-streak',
+  lensflareGhosts:  'lensflare-ghosts',
+  lensflareBloom:   'lensflare-bloom',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
