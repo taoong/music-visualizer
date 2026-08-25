@@ -133,6 +133,7 @@ const ALL_CONTROL_IDS = [
   'patchwork-controls-group',
   'risograph-controls-group',
   'lensflare-controls-group',
+  'radiolaria-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -219,6 +220,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   patchwork:     { show: ['patchwork-controls-group'] },
   risograph:     { show: ['risograph-controls-group'] },
   lensflare:     { show: ['lensflare-controls-group'] },
+  radiolaria:    { show: ['radiolaria-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

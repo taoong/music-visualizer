@@ -443,6 +443,10 @@ export const DEFAULT_CONFIG = {
   lensflareStreak: 0.55, // moderate anamorphic streak length
   lensflareGhosts: 0.5,  // moderate ghost bokeh
   lensflareBloom:  0.5,  // moderate central bloom radius
+  // Radiolaria defaults
+  radiolariaSymmetry: 12, // 12-fold symmetry (like a radiolarian diatom)
+  radiolariaShells:    4, // 4 concentric shells
+  radiolariaGlow:    0.6, // vivid phosphor glow with moderate trail
 };
 
 // FFT and decay constants

@@ -84,3 +84,4 @@ export { drawBoogie, resetBoogie } from './boogie';
 export { drawPatchwork, resetPatchwork } from './patchwork';
 export { drawRisograph, resetRisograph } from './risograph';
 export { drawLensflare, resetLensflare } from './lensflare';
+export { drawRadiolaria, resetRadiolaria } from './radiolaria';

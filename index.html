@@ -309,6 +309,7 @@
           <option value="patchwork">Patchwork</option>
           <option value="risograph">Risograph</option>
           <option value="lensflare">Lens Flare</option>
+          <option value="radiolaria">Radiolaria</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3136,6 +3137,45 @@
               step="0.01"
               value="0.5"
               aria-label="Central bloom radius — 0 = tight bright point, 1 = large diffuse light cloud"
+            />
+          </div>
+        </div>
+
+        <div id="radiolaria-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="radiolaria-symmetry">Symmetry</label>
+            <input
+              type="range"
+              id="radiolaria-symmetry"
+              min="6"
+              max="24"
+              step="2"
+              value="12"
+              aria-label="N-fold radial symmetry — 6 = hexagonal, 12 = dodecagonal, 24 = fine lattice"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="radiolaria-shells">Shells</label>
+            <input
+              type="range"
+              id="radiolaria-shells"
+              min="2"
+              max="6"
+              step="1"
+              value="4"
+              aria-label="Concentric shell count — 2 = minimal, 6 = full nested structure"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="radiolaria-glow">Glow</label>
+            <input
+              type="range"
+              id="radiolaria-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Phosphor glow intensity and trail persistence — 0 = sharp minimal, 1 = vivid bloom with long trails"
             />
           </div>
         </div>

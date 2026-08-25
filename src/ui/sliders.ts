@@ -268,6 +268,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'lensflare-streak', key: 'lensflareStreak' },
     { id: 'lensflare-ghosts', key: 'lensflareGhosts' },
     { id: 'lensflare-bloom',  key: 'lensflareBloom' },
+    { id: 'radiolaria-symmetry', key: 'radiolariaSymmetry' },
+    { id: 'radiolaria-shells',   key: 'radiolariaShells' },
+    { id: 'radiolaria-glow',     key: 'radiolariaGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

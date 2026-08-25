@@ -229,6 +229,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   lensflareStreak:  'lensflare-streak',
   lensflareGhosts:  'lensflare-ghosts',
   lensflareBloom:   'lensflare-bloom',
+  radiolariaSymmetry: 'radiolaria-symmetry',
+  radiolariaShells:   'radiolaria-shells',
+  radiolariaGlow:     'radiolaria-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -82,6 +82,7 @@ import { drawBoogie, resetBoogie } from './boogie';
 import { drawPatchwork, resetPatchwork } from './patchwork';
 import { drawRisograph, resetRisograph } from './risograph';
 import { drawLensflare, resetLensflare } from './lensflare';
+import { drawRadiolaria, resetRadiolaria } from './radiolaria';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -218,4 +219,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   patchwork:     { draw: drawPatchwork,    reset: resetPatchwork,     key: 'N',  label: 'Patchwork' },
   risograph:     { draw: drawRisograph,   reset: resetRisograph,     key: 'G',  label: 'Risograph' },
   lensflare:     { draw: drawLensflare,   reset: resetLensflare,     key: 'F',  label: 'Lens Flare' },
+  radiolaria:    { draw: drawRadiolaria,  reset: resetRadiolaria,    key: 'R',  label: 'Radiolaria' },
 };
