@@ -134,6 +134,7 @@ const ALL_CONTROL_IDS = [
   'risograph-controls-group',
   'lensflare-controls-group',
   'radiolaria-controls-group',
+  'stitch-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -221,6 +222,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   risograph:     { show: ['risograph-controls-group'] },
   lensflare:     { show: ['lensflare-controls-group'] },
   radiolaria:    { show: ['radiolaria-controls-group'] },
+  stitch:        { show: ['stitch-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

@@ -85,3 +85,4 @@ export { drawPatchwork, resetPatchwork } from './patchwork';
 export { drawRisograph, resetRisograph } from './risograph';
 export { drawLensflare, resetLensflare } from './lensflare';
 export { drawRadiolaria, resetRadiolaria } from './radiolaria';
+export { drawStitch, resetStitch } from './stitch';

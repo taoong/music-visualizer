@@ -83,6 +83,7 @@ import { drawPatchwork, resetPatchwork } from './patchwork';
 import { drawRisograph, resetRisograph } from './risograph';
 import { drawLensflare, resetLensflare } from './lensflare';
 import { drawRadiolaria, resetRadiolaria } from './radiolaria';
+import { drawStitch, resetStitch } from './stitch';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -220,4 +221,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   risograph:     { draw: drawRisograph,   reset: resetRisograph,     key: 'G',  label: 'Risograph' },
   lensflare:     { draw: drawLensflare,   reset: resetLensflare,     key: 'F',  label: 'Lens Flare' },
   radiolaria:    { draw: drawRadiolaria,  reset: resetRadiolaria,    key: 'R',  label: 'Radiolaria' },
+  stitch:        { draw: drawStitch,      reset: resetStitch,         key: 'O',  label: 'Stitch' },
 };

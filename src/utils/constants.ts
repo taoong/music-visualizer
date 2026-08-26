@@ -447,6 +447,10 @@ export const DEFAULT_CONFIG = {
   radiolariaSymmetry: 12, // 12-fold symmetry (like a radiolarian diatom)
   radiolariaShells:    4, // 4 concentric shells
   radiolariaGlow:    0.6, // vivid phosphor glow with moderate trail
+  // Stitch defaults
+  stitchGrid:  16,  // 16 px cell → medium-fine cross-stitch needlework
+  stitchTrail: 0.6, // moderate thread persistence
+  stitchGlow:  0.5, // moderate phosphor bloom around each X stitch
 };
 
 // FFT and decay constants

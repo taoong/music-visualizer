@@ -271,6 +271,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'radiolaria-symmetry', key: 'radiolariaSymmetry' },
     { id: 'radiolaria-shells',   key: 'radiolariaShells' },
     { id: 'radiolaria-glow',     key: 'radiolariaGlow' },
+    { id: 'stitch-grid',  key: 'stitchGrid' },
+    { id: 'stitch-trail', key: 'stitchTrail' },
+    { id: 'stitch-glow',  key: 'stitchGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

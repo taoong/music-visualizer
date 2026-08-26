@@ -232,6 +232,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   radiolariaSymmetry: 'radiolaria-symmetry',
   radiolariaShells:   'radiolaria-shells',
   radiolariaGlow:     'radiolaria-glow',
+  stitchGrid:  'stitch-grid',
+  stitchTrail: 'stitch-trail',
+  stitchGlow:  'stitch-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
