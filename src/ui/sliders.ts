@@ -274,6 +274,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'stitch-grid',  key: 'stitchGrid' },
     { id: 'stitch-trail', key: 'stitchTrail' },
     { id: 'stitch-glow',  key: 'stitchGlow' },
+    { id: 'magnetosphere-particles', key: 'magnetosphereParticles' },
+    { id: 'magnetosphere-gravity',   key: 'magnetosphereGravity' },
+    { id: 'magnetosphere-trail',     key: 'magnetosphereTrail' },
   ] as const;
 
   for (const { id, key } of configs) {

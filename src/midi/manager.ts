@@ -235,6 +235,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   stitchGrid:  'stitch-grid',
   stitchTrail: 'stitch-trail',
   stitchGlow:  'stitch-glow',
+  magnetosphereParticles: 'magnetosphere-particles',
+  magnetosphereGravity:   'magnetosphere-gravity',
+  magnetosphereTrail:     'magnetosphere-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

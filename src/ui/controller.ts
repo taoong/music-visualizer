@@ -135,6 +135,7 @@ const ALL_CONTROL_IDS = [
   'lensflare-controls-group',
   'radiolaria-controls-group',
   'stitch-controls-group',
+  'magnetosphere-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -223,6 +224,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   lensflare:     { show: ['lensflare-controls-group'] },
   radiolaria:    { show: ['radiolaria-controls-group'] },
   stitch:        { show: ['stitch-controls-group'] },
+  magnetosphere: { show: ['magnetosphere-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

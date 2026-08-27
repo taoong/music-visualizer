@@ -451,6 +451,11 @@ export const DEFAULT_CONFIG = {
   stitchGrid:  16,  // 16 px cell → medium-fine cross-stitch needlework
   stitchTrail: 0.6, // moderate thread persistence
   stitchGlow:  0.5, // moderate phosphor bloom around each X stitch
+
+  // Magnetosphere defaults
+  magnetosphereParticles: 0.45, // medium-density swarm
+  magnetosphereGravity:   0.45, // moderate attractor pull
+  magnetosphereTrail:     0.55, // medium comet tail persistence
 };
 
 // FFT and decay constants
