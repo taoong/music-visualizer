@@ -277,6 +277,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'magnetosphere-particles', key: 'magnetosphereParticles' },
     { id: 'magnetosphere-gravity',   key: 'magnetosphereGravity' },
     { id: 'magnetosphere-trail',     key: 'magnetosphereTrail' },
+    { id: 'substrate-density', key: 'substrateDensity' },
+    { id: 'substrate-speed',   key: 'substrateSpeed' },
+    { id: 'substrate-glow',    key: 'substrateGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -87,3 +87,4 @@ export { drawLensflare, resetLensflare } from './lensflare';
 export { drawRadiolaria, resetRadiolaria } from './radiolaria';
 export { drawStitch, resetStitch } from './stitch';
 export { drawMagnetosphere, resetMagnetosphere } from './magnetosphere';
+export { drawSubstrate, resetSubstrate } from './substrate';

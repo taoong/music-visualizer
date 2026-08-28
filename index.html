@@ -312,6 +312,7 @@
           <option value="radiolaria">Radiolaria</option>
           <option value="stitch">Stitch</option>
           <option value="magnetosphere">Magnetosphere</option>
+          <option value="substrate">Substrate</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3255,6 +3256,44 @@
               step="0.01"
               value="0.55"
               aria-label="Comet tail persistence — 0 = instant fade, 1 = long luminous streaks"
+            />
+          </div>
+        </div>
+        <div id="substrate-controls-group" class="controls-group hidden">
+          <div class="slider-row">
+            <label for="substrate-density">Density</label>
+            <input
+              type="range"
+              id="substrate-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Crystal branching rate and population — 0 = sparse isolated lines, 1 = dense crystalline web"
+            />
+          </div>
+          <div class="slider-row">
+            <label for="substrate-speed">Speed</label>
+            <input
+              type="range"
+              id="substrate-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Crystal growth velocity and line length — 0 = slow short segments, 1 = fast long streaks"
+            />
+          </div>
+          <div class="slider-row">
+            <label for="substrate-glow">Glow</label>
+            <input
+              type="range"
+              id="substrate-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.60"
+              aria-label="Neon bloom brightness and trail persistence — 0 = sharp dark lines, 1 = vivid neon with long trails"
             />
           </div>
         </div>

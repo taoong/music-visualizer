@@ -85,6 +85,7 @@ import { drawLensflare, resetLensflare } from './lensflare';
 import { drawRadiolaria, resetRadiolaria } from './radiolaria';
 import { drawStitch, resetStitch } from './stitch';
 import { drawMagnetosphere, resetMagnetosphere } from './magnetosphere';
+import { drawSubstrate, resetSubstrate } from './substrate';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -224,4 +225,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   radiolaria:    { draw: drawRadiolaria,  reset: resetRadiolaria,    key: 'R',  label: 'Radiolaria' },
   stitch:        { draw: drawStitch,      reset: resetStitch,         key: 'O',  label: 'Stitch' },
   magnetosphere: { draw: drawMagnetosphere, reset: resetMagnetosphere, key: 'X',  label: 'Magnetosphere' },
+  substrate:     { draw: drawSubstrate,   reset: resetSubstrate,      key: 'S',  label: 'Substrate' },
 };

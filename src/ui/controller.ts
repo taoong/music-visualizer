@@ -136,6 +136,7 @@ const ALL_CONTROL_IDS = [
   'radiolaria-controls-group',
   'stitch-controls-group',
   'magnetosphere-controls-group',
+  'substrate-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -225,6 +226,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   radiolaria:    { show: ['radiolaria-controls-group'] },
   stitch:        { show: ['stitch-controls-group'] },
   magnetosphere: { show: ['magnetosphere-controls-group'] },
+  substrate:     { show: ['substrate-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

@@ -456,6 +456,10 @@ export const DEFAULT_CONFIG = {
   magnetosphereParticles: 0.45, // medium-density swarm
   magnetosphereGravity:   0.45, // moderate attractor pull
   magnetosphereTrail:     0.55, // medium comet tail persistence
+  // Substrate defaults
+  substrateDensity: 0.45, // medium crystal density
+  substrateSpeed:   0.45, // moderate growth speed
+  substrateGlow:    0.60, // vivid neon glow with moderate trail persistence
 };
 
 // FFT and decay constants

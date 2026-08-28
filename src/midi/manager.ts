@@ -238,6 +238,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   magnetosphereParticles: 'magnetosphere-particles',
   magnetosphereGravity:   'magnetosphere-gravity',
   magnetosphereTrail:     'magnetosphere-trail',
+  // Substrate
+  substrateDensity: 'substrate-density',
+  substrateSpeed:   'substrate-speed',
+  substrateGlow:    'substrate-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
