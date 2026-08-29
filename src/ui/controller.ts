@@ -137,6 +137,7 @@ const ALL_CONTROL_IDS = [
   'stitch-controls-group',
   'magnetosphere-controls-group',
   'substrate-controls-group',
+  'ferrofluid-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -227,6 +228,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   stitch:        { show: ['stitch-controls-group'] },
   magnetosphere: { show: ['magnetosphere-controls-group'] },
   substrate:     { show: ['substrate-controls-group'] },
+  ferrofluid:    { show: ['ferrofluid-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

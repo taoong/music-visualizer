@@ -242,6 +242,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   substrateDensity: 'substrate-density',
   substrateSpeed:   'substrate-speed',
   substrateGlow:    'substrate-glow',
+  ferrofluidDensity:     'ferrofluid-density',
+  ferrofluidHeight:      'ferrofluid-height',
+  ferrofluidIridescence: 'ferrofluid-iridescence',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

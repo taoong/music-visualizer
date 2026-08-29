@@ -280,6 +280,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'substrate-density', key: 'substrateDensity' },
     { id: 'substrate-speed',   key: 'substrateSpeed' },
     { id: 'substrate-glow',    key: 'substrateGlow' },
+    { id: 'ferrofluid-density',     key: 'ferrofluidDensity' },
+    { id: 'ferrofluid-height',      key: 'ferrofluidHeight' },
+    { id: 'ferrofluid-iridescence', key: 'ferrofluidIridescence' },
   ] as const;
 
   for (const { id, key } of configs) {

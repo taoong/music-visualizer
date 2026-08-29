@@ -460,6 +460,10 @@ export const DEFAULT_CONFIG = {
   substrateDensity: 0.45, // medium crystal density
   substrateSpeed:   0.45, // moderate growth speed
   substrateGlow:    0.60, // vivid neon glow with moderate trail persistence
+  // Ferrofluid defaults
+  ferrofluidDensity:     0.40, // medium hex grid — balanced spike count
+  ferrofluidHeight:      0.50, // moderate amplitude sensitivity
+  ferrofluidIridescence: 0.55, // lightly iridescent tips, still reads as dark liquid
 };
 
 // FFT and decay constants

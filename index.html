@@ -313,6 +313,7 @@
           <option value="stitch">Stitch</option>
           <option value="magnetosphere">Magnetosphere</option>
           <option value="substrate">Substrate</option>
+          <option value="ferrofluid">Ferrofluid</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3294,6 +3295,45 @@
               step="0.01"
               value="0.60"
               aria-label="Neon bloom brightness and trail persistence — 0 = sharp dark lines, 1 = vivid neon with long trails"
+            />
+          </div>
+        </div>
+
+        <div id="ferrofluid-controls-group" class="controls-group hidden">
+          <div class="slider-row">
+            <label for="ferrofluid-density">Density</label>
+            <input
+              type="range"
+              id="ferrofluid-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.40"
+              aria-label="Hex grid spacing — 0 = few large spikes, 1 = many fine spikes"
+            />
+          </div>
+          <div class="slider-row">
+            <label for="ferrofluid-height">Height</label>
+            <input
+              type="range"
+              id="ferrofluid-height"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Amplitude sensitivity and maximum spike extension — 0 = flat, 1 = tall dramatic spikes"
+            />
+          </div>
+          <div class="slider-row">
+            <label for="ferrofluid-iridescence">Iridescence</label>
+            <input
+              type="range"
+              id="ferrofluid-iridescence"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Tip color sheen — 0 = dark monochrome ferrofluid, 1 = vivid rainbow iridescence"
             />
           </div>
         </div>
