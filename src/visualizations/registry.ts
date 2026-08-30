@@ -87,6 +87,7 @@ import { drawStitch, resetStitch } from './stitch';
 import { drawMagnetosphere, resetMagnetosphere } from './magnetosphere';
 import { drawSubstrate, resetSubstrate } from './substrate';
 import { drawFerrofluid, resetFerrofluid } from './ferrofluid';
+import { drawCataract, resetCataract } from './cataract';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -228,4 +229,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   magnetosphere: { draw: drawMagnetosphere, reset: resetMagnetosphere, key: 'X',  label: 'Magnetosphere' },
   substrate:     { draw: drawSubstrate,   reset: resetSubstrate,      key: 'S',  label: 'Substrate' },
   ferrofluid:    { draw: drawFerrofluid,  reset: resetFerrofluid,     key: 'Z',  label: 'Ferrofluid' },
+  cataract:      { draw: drawCataract,    reset: resetCataract,        key: '`',  label: 'Cataract' },
 };

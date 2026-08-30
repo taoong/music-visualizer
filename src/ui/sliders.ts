@@ -283,6 +283,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'ferrofluid-density',     key: 'ferrofluidDensity' },
     { id: 'ferrofluid-height',      key: 'ferrofluidHeight' },
     { id: 'ferrofluid-iridescence', key: 'ferrofluidIridescence' },
+    { id: 'cataract-lines',   key: 'cataractLines' },
+    { id: 'cataract-wave',    key: 'cataractWave' },
+    { id: 'cataract-palette', key: 'cataractPalette' },
   ] as const;
 
   for (const { id, key } of configs) {

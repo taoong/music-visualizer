@@ -464,6 +464,10 @@ export const DEFAULT_CONFIG = {
   ferrofluidDensity:     0.40, // medium hex grid — balanced spike count
   ferrofluidHeight:      0.50, // moderate amplitude sensitivity
   ferrofluidIridescence: 0.55, // lightly iridescent tips, still reads as dark liquid
+  // Cataract-specific
+  cataractLines:   20,   // 20 wave bands — clear bands without feeling congested
+  cataractWave:    0.55, // moderate amplitude — curves visible but don't cross
+  cataractPalette: 0.20, // mostly Riley monochrome with a hint of color
 };
 
 // FFT and decay constants

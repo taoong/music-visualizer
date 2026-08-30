@@ -245,6 +245,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   ferrofluidDensity:     'ferrofluid-density',
   ferrofluidHeight:      'ferrofluid-height',
   ferrofluidIridescence: 'ferrofluid-iridescence',
+  cataractLines:   'cataract-lines',
+  cataractWave:    'cataract-wave',
+  cataractPalette: 'cataract-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
