@@ -468,6 +468,10 @@ export const DEFAULT_CONFIG = {
   cataractLines:   20,   // 20 wave bands — clear bands without feeling congested
   cataractWave:    0.55, // moderate amplitude — curves visible but don't cross
   cataractPalette: 0.20, // mostly Riley monochrome with a hint of color
+  // Homage-specific
+  homageGrid:    1,    // single central composition by default
+  homageNesting: 6,    // 6 nested squares — rich but readable Albers study
+  homagePalette: 0.15, // warm Albers "Solar" palette with a hint of cool
 };
 
 // FFT and decay constants

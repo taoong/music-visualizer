@@ -248,6 +248,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cataractLines:   'cataract-lines',
   cataractWave:    'cataract-wave',
   cataractPalette: 'cataract-palette',
+  homageGrid:    'homage-grid',
+  homageNesting: 'homage-nesting',
+  homagePalette: 'homage-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

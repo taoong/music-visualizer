@@ -286,6 +286,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'cataract-lines',   key: 'cataractLines' },
     { id: 'cataract-wave',    key: 'cataractWave' },
     { id: 'cataract-palette', key: 'cataractPalette' },
+    { id: 'homage-grid',    key: 'homageGrid' },
+    { id: 'homage-nesting', key: 'homageNesting' },
+    { id: 'homage-palette', key: 'homagePalette' },
   ] as const;
 
   for (const { id, key } of configs) {
