@@ -472,6 +472,10 @@ export const DEFAULT_CONFIG = {
   homageGrid:    1,    // single central composition by default
   homageNesting: 6,    // 6 nested squares — rich but readable Albers study
   homagePalette: 0.15, // warm Albers "Solar" palette with a hint of cool
+  // Tracery-specific
+  traceryPetals: 6,    // 6 radial divisions — classic Gothic triforium rhythm
+  traceryGlow:   0.6,  // vivid stained-glass inner light
+  tracerySpin:   0.3,  // gentle clockwise drift
 };
 
 // FFT and decay constants

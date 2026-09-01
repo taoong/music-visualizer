@@ -140,6 +140,7 @@ const ALL_CONTROL_IDS = [
   'ferrofluid-controls-group',
   'cataract-controls-group',
   'homage-controls-group',
+  'tracery-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -233,6 +234,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   ferrofluid:    { show: ['ferrofluid-controls-group'] },
   cataract:      { show: ['cataract-controls-group'] },
   homage:        { show: ['homage-controls-group'] },
+  tracery:       { show: ['tracery-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

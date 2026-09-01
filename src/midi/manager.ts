@@ -251,6 +251,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   homageGrid:    'homage-grid',
   homageNesting: 'homage-nesting',
   homagePalette: 'homage-palette',
+  traceryPetals: 'tracery-petals',
+  traceryGlow:   'tracery-glow',
+  tracerySpin:   'tracery-spin',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

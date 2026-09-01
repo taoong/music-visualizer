@@ -289,6 +289,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'homage-grid',    key: 'homageGrid' },
     { id: 'homage-nesting', key: 'homageNesting' },
     { id: 'homage-palette', key: 'homagePalette' },
+    { id: 'tracery-petals', key: 'traceryPetals' },
+    { id: 'tracery-glow',   key: 'traceryGlow' },
+    { id: 'tracery-spin',   key: 'tracerySpin' },
   ] as const;
 
   for (const { id, key } of configs) {

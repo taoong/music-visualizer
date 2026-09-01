@@ -89,6 +89,7 @@ import { drawSubstrate, resetSubstrate } from './substrate';
 import { drawFerrofluid, resetFerrofluid } from './ferrofluid';
 import { drawCataract, resetCataract } from './cataract';
 import { drawHomage, resetHomage } from './homage';
+import { drawTracery, resetTracery } from './tracery';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -232,4 +233,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   ferrofluid:    { draw: drawFerrofluid,  reset: resetFerrofluid,     key: 'Z',  label: 'Ferrofluid' },
   cataract:      { draw: drawCataract,    reset: resetCataract,        key: '`',  label: 'Cataract' },
   homage:        { draw: drawHomage,      reset: resetHomage,          key: 'I',  label: 'Homage' },
+  tracery:       { draw: drawTracery,     reset: resetTracery,          key: '(',  label: 'Tracery' },
 };

@@ -91,3 +91,4 @@ export { drawSubstrate, resetSubstrate } from './substrate';
 export { drawFerrofluid, resetFerrofluid } from './ferrofluid';
 export { drawCataract, resetCataract } from './cataract';
 export { drawHomage, resetHomage } from './homage';
+export { drawTracery, resetTracery } from './tracery';
