@@ -141,6 +141,7 @@ const ALL_CONTROL_IDS = [
   'cataract-controls-group',
   'homage-controls-group',
   'tracery-controls-group',
+  'protractor-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -235,6 +236,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   cataract:      { show: ['cataract-controls-group'] },
   homage:        { show: ['homage-controls-group'] },
   tracery:       { show: ['tracery-controls-group'] },
+  protractor:    { show: ['protractor-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

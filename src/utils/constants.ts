@@ -476,6 +476,10 @@ export const DEFAULT_CONFIG = {
   traceryPetals: 6,    // 6 radial divisions — classic Gothic triforium rhythm
   traceryGlow:   0.6,  // vivid stained-glass inner light
   tracerySpin:   0.3,  // gentle clockwise drift
+  // Protractor-specific
+  protractorFans:   5,   // 5 fans — full compass-rose aesthetic from the start
+  protractorRings:  12,  // 12 concentric arcs — rich rainbow banding
+  protractorSpread: 0.5, // 165° sweep — fans overlap and blend without fully merging
 };
 
 // FFT and decay constants

@@ -254,6 +254,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   traceryPetals: 'tracery-petals',
   traceryGlow:   'tracery-glow',
   tracerySpin:   'tracery-spin',
+  protractorFans:   'protractor-fans',
+  protractorRings:  'protractor-rings',
+  protractorSpread: 'protractor-spread',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

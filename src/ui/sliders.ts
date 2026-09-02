@@ -292,6 +292,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'tracery-petals', key: 'traceryPetals' },
     { id: 'tracery-glow',   key: 'traceryGlow' },
     { id: 'tracery-spin',   key: 'tracerySpin' },
+    { id: 'protractor-fans',   key: 'protractorFans' },
+    { id: 'protractor-rings',  key: 'protractorRings' },
+    { id: 'protractor-spread', key: 'protractorSpread' },
   ] as const;
 
   for (const { id, key } of configs) {
