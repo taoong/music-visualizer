@@ -36,46 +36,31 @@ class AudioEngine {
 
     let player: TonePlayer;
 
-    if (source instanceof File) {
-      // For File objects, convert to ArrayBuffer first
-      try {
-        const arrayBuffer = await source.arrayBuffer();
-        const audioBuffer = await Tone.context.decodeAudioData(arrayBuffer);
-        this.rawAudioBuffer = audioBuffer;
-        player = new Tone.Player(audioBuffer);
-        player.loop = true;
-      } catch (err) {
-        console.error('[AudioEngine] Failed to decode file:', err);
-        throw new Error(
-          `Failed to decode audio file: ${err instanceof Error ? err.message : 'Unknown error'}`
-        );
-      }
-    } else {
-      // For URLs (sample track), use Tone.js loading.
-      // Resolve to an absolute URL ourselves: Tone's buffer loader resolves
-      // relative paths via a detached <a> element's .href, which is unreliable
-      // in a WKWebView loaded through a custom URL scheme (Capacitor's iOS
-      // delivery mechanism) — see https://github.com/Tonejs/Tone.js/issues/713
-      const absoluteUrl = new URL(source, document.baseURI).href;
-      player = new Tone.Player({
-        url: absoluteUrl,
-        loop: true,
-        autostart: false,
-      });
-
-      try {
-        await Tone.loaded();
-        // Cache the decoded AudioBuffer for client-side BPM detection
-        if (player.buffer?.get) {
-          this.rawAudioBuffer = player.buffer.get() ?? null;
-        }
-        console.log('[AudioEngine] Audio loaded successfully');
-      } catch (err) {
-        console.error('[AudioEngine] Failed to load audio:', err);
-        throw new Error(
-          `Failed to load audio: ${err instanceof Error ? err.message : 'Unknown error'}. URL: ${source}`
-        );
-      }
+    // Fetch bytes ourselves and decode directly, for File uploads and the
+    // bundled sample track alike. Tone.Player's own URL loader (a detached
+    // <a> element resolving the path, then its own fetch) is unreliable for
+    // the multi-MB sample track inside a WKWebView loaded through Capacitor's
+    // custom URL scheme — fetches of that file come back non-ok even though
+    // the file is genuinely present in the bundle. Fetching it ourselves
+    // (the same path File uploads already used successfully) sidesteps
+    // whatever Tone's loader does differently.
+    try {
+      const arrayBuffer =
+        source instanceof File
+          ? await source.arrayBuffer()
+          : await fetch(new URL(source, document.baseURI).href).then(r => {
+              if (!r.ok) throw new Error(`could not load url: ${source} (${r.status})`);
+              return r.arrayBuffer();
+            });
+      const audioBuffer = await Tone.context.decodeAudioData(arrayBuffer);
+      this.rawAudioBuffer = audioBuffer;
+      player = new Tone.Player(audioBuffer);
+      player.loop = true;
+    } catch (err) {
+      console.error('[AudioEngine] Failed to load audio:', err);
+      throw new Error(
+        `Failed to load audio: ${err instanceof Error ? err.message : 'Unknown error'}. URL: ${source instanceof File ? source.name : source}`
+      );
     }
 
     const gainNode = new Tone.Gain(store.config.masterVolume);
