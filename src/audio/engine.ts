@@ -51,9 +51,14 @@ class AudioEngine {
         );
       }
     } else {
-      // For URLs (sample track), use Tone.js loading
+      // For URLs (sample track), use Tone.js loading.
+      // Resolve to an absolute URL ourselves: Tone's buffer loader resolves
+      // relative paths via a detached <a> element's .href, which is unreliable
+      // in a WKWebView loaded through a custom URL scheme (Capacitor's iOS
+      // delivery mechanism) — see https://github.com/Tonejs/Tone.js/issues/713
+      const absoluteUrl = new URL(source, document.baseURI).href;
       player = new Tone.Player({
-        url: source,
+        url: absoluteUrl,
         loop: true,
         autostart: false,
       });
