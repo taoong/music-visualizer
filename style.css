@@ -1104,8 +1104,11 @@ body {
 /* ── Sidebar Toggle ──────────────────────────────────────── */
 #sidebar-toggle {
   position: fixed;
-  top: 12px;
-  left: 12px;
+  /* Top-right, not top-left: iOS renders its "back to previous app" pill
+     (shown after an app-switch/deep-link) in the top-left corner, on top
+     of all app content, which made this button unreachable there. */
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
   z-index: 600;
   background: rgba(12, 12, 14, 0.7);
   border: 1px solid var(--border-subtle);
