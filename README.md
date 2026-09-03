@@ -162,9 +162,10 @@ Microphone access (for the Microphone analysis mode) requires the `NSMicrophoneU
 │   ├── midi/               # MIDI manager (Web MIDI API, CC routing) + overlay UI
 │   ├── ui/                 # Controller, splash, playback, sliders, keyboard
 │   ├── types/              # TypeScript interfaces + global type stubs
-│   └── utils/              # Constants, errors, formatting
-├── public/
-│   └── sample.mp3          # Built-in sample track
+│   ├── utils/              # Constants, errors, formatting
+│   └── assets/
+│       ├── sample-source.mp3  # Built-in sample track (source of truth)
+│       └── sampleAudio.ts     # Generated base64 embed of the above (gitignored)
 └── CLAUDE.md               # Architecture reference for AI-assisted development
 ```
 

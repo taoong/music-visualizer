@@ -4,6 +4,9 @@ node_modules/
 # Build output
 dist/
 
+# Generated from src/assets/sample-source.mp3 by scripts/embed-sample-audio.mjs
+src/assets/sampleAudio.ts
+
 # Environment files
 .env
 .env.local

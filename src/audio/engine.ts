@@ -5,6 +5,13 @@ import * as Tone from 'tone';
 import { store } from '../state/store';
 import { FFT_SIZE } from '../utils/constants';
 
+function base64ToArrayBuffer(base64: string): ArrayBuffer {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes.buffer;
+}
+
 export interface FreqModeAudio {
   player: TonePlayer;
   gainNode: ToneGain;
@@ -36,22 +43,21 @@ class AudioEngine {
 
     let player: TonePlayer;
 
-    // Fetch bytes ourselves and decode directly, for File uploads and the
-    // bundled sample track alike. Tone.Player's own URL loader (a detached
-    // <a> element resolving the path, then its own fetch) is unreliable for
-    // the multi-MB sample track inside a WKWebView loaded through Capacitor's
-    // custom URL scheme — fetches of that file come back non-ok even though
-    // the file is genuinely present in the bundle. Fetching it ourselves
-    // (the same path File uploads already used successfully) sidesteps
-    // whatever Tone's loader does differently.
+    // Get raw bytes and decode directly, for File uploads and the bundled
+    // sample track alike — never via fetch() of an .mp3 URL. On iOS,
+    // WKWebView's WKURLSchemeHandler returns an opaque (status 0) response
+    // for audio-file fetches through Capacitor's custom capacitor:// origin,
+    // even for same-origin requests — confirmed on-device, and true whether
+    // Tone.Player's own URL loader does the fetch or we do it ourselves.
+    // Plain JS chunk fetches work fine, though (same mechanism the
+    // Three.js-based lazy visualizations already rely on), so the sample
+    // track is embedded as base64 in its own dynamically-imported module
+    // instead — see src/assets/sampleAudio.ts.
     try {
       const arrayBuffer =
         source instanceof File
           ? await source.arrayBuffer()
-          : await fetch(new URL(source, document.baseURI).href).then(r => {
-              if (!r.ok) throw new Error(`could not load url: ${source} (${r.status})`);
-              return r.arrayBuffer();
-            });
+          : base64ToArrayBuffer((await import('../assets/sampleAudio')).default);
       const audioBuffer = await Tone.context.decodeAudioData(arrayBuffer);
       this.rawAudioBuffer = audioBuffer;
       player = new Tone.Player(audioBuffer);
@@ -59,7 +65,7 @@ class AudioEngine {
     } catch (err) {
       console.error('[AudioEngine] Failed to load audio:', err);
       throw new Error(
-        `Failed to load audio: ${err instanceof Error ? err.message : 'Unknown error'}. URL: ${source instanceof File ? source.name : source}`
+        `Failed to load audio: ${err instanceof Error ? err.message : 'Unknown error'}. Source: ${source instanceof File ? source.name : source}`
       );
     }
 

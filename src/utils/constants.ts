@@ -491,6 +491,7 @@ export const FFT_SIZE = isMobile ? 128 : 256;
 export const DECAY_RATE_BASELINE = 0.88;
 export const DECAY_RATE_EXPONENT = 3;
 
-// Sample URL - use simple relative path for maximum compatibility
+// Sentinel identifying the bundled sample track (not a fetchable path —
+// engine.ts loads it via a dynamic import of src/assets/sampleAudio.ts).
 export const SAMPLE_URL = 'sample.mp3';
 export const SAMPLE_BPM = 140;

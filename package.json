@@ -4,7 +4,9 @@
   "description": "Interactive browser-based music visualizer with frequency analysis and AI-powered stem separation",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/embed-sample-audio.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/embed-sample-audio.mjs",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
