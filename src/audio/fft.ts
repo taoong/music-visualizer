@@ -1,6 +1,7 @@
 /**
  * FFT analysis helpers
  */
+import * as Tone from 'tone';
 import {
   BANDS,
   BAND_COUNT,

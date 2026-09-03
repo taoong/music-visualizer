@@ -42,7 +42,9 @@
     "@capacitor/ios": "^8.5.0",
     "@types/matter-js": "^0.20.2",
     "matter-js": "^0.20.0",
-    "three": "^0.170.0"
+    "p5": "^1.9.0",
+    "three": "^0.170.0",
+    "tone": "^14.8.49"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.0",

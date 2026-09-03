@@ -9,6 +9,7 @@
  * - Accessibility features including keyboard shortcuts
  */
 
+import p5 from 'p5';
 import { store } from './state/store';
 import { audioEngine } from './audio/engine';
 import {

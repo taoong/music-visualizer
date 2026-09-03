@@ -1,10 +1,8 @@
 /**
  * Unit tests for audio/fft.ts
- * Tone is a CDN global — stubbed here before the module is imported.
  */
 
-// Stub Tone global before fft.ts evaluates any call to Tone.context.sampleRate
-vi.stubGlobal('Tone', { context: { sampleRate: 44100 } });
+vi.mock('tone', () => ({ context: { sampleRate: 44100 } }));
 
 import { getFFTAmplitudes, computeSpectralCentroid } from '../../audio/fft';
 

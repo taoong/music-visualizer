@@ -1,14 +1,4 @@
-/**
- * Global type declarations for CDN-loaded libraries
- */
-
 declare global {
-  // p5.js type stubs for CDN usage
-  const p5: {
-    new (sketch: (p: P5Instance) => void): P5Instance;
-    prototype: P5Instance;
-  };
-
   interface P5Image {
     width: number;
     height: number;
@@ -159,27 +149,14 @@ declare global {
     draw: (() => void) | undefined;
   }
 
-  // Tone.js type stubs for CDN usage
-  const Tone: {
-    // Core
-    context: { sampleRate: number };
-    now(): number;
-    start(): Promise<void>;
-    loaded(): Promise<void>;
-
-    // Classes
-    Player: (new (options: { url: string; loop?: boolean; autostart?: boolean }) => TonePlayer) &
-      (new (buffer: AudioBuffer) => TonePlayer);
-
-    Gain: new (value?: number) => ToneGain;
-    FFT: new (size?: number) => ToneFFT;
-    Analyser: new (type: 'waveform' | 'fft', size?: number) => ToneAnalyser;
-    UserMedia: new (volume?: number) => ToneUserMedia;
-  };
-
+  // Minimal structural shapes for the Tone.js instances the codebase touches.
+  // `tone` ships its own real types now (imported directly); these interfaces
+  // just describe what engine.ts's own fields need, structurally satisfied
+  // by the real Tone.Player/Gain/FFT/Analyser/UserMedia instances.
   interface TonePlayer {
     state: string;
-    buffer: { duration: number; get?(): AudioBuffer } | null;
+    loop: boolean;
+    buffer: { duration: number; get?(): AudioBuffer | undefined } | null;
     start(time?: string, offset?: number): void;
     stop(): void;
     dispose(): void;
@@ -206,7 +183,7 @@ declare global {
   }
 
   interface ToneUserMedia {
-    open(): Promise<void>;
+    open(): Promise<unknown>;
     close(): void;
     dispose(): void;
     connect(destination: unknown): void;

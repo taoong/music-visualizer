@@ -1,6 +1,7 @@
 /**
  * Audio engine for managing Tone.js instances and audio playback
  */
+import * as Tone from 'tone';
 import { store } from '../state/store';
 import { FFT_SIZE } from '../utils/constants';
 
@@ -22,7 +23,7 @@ class AudioEngine {
   private micAudio: MicModeAudio | null = null;
   private blobUrls: string[] = [];
   private rawAudioBuffer: AudioBuffer | null = null;
-  private waveformAnalyser: ToneAnalyser | null = null;
+  private waveformAnalyser: Tone.Waveform | null = null;
 
   /**
    * Initialize frequency mode audio
@@ -39,11 +40,9 @@ class AudioEngine {
       // For File objects, convert to ArrayBuffer first
       try {
         const arrayBuffer = await source.arrayBuffer();
-        // @ts-expect-error - decodeAudioData exists on BaseAudioContext
         const audioBuffer = await Tone.context.decodeAudioData(arrayBuffer);
         this.rawAudioBuffer = audioBuffer;
         player = new Tone.Player(audioBuffer);
-        // @ts-expect-error - loop property exists
         player.loop = true;
       } catch (err) {
         console.error('[AudioEngine] Failed to decode file:', err);
@@ -63,7 +62,7 @@ class AudioEngine {
         await Tone.loaded();
         // Cache the decoded AudioBuffer for client-side BPM detection
         if (player.buffer?.get) {
-          this.rawAudioBuffer = player.buffer.get();
+          this.rawAudioBuffer = player.buffer.get() ?? null;
         }
         console.log('[AudioEngine] Audio loaded successfully');
       } catch (err) {
@@ -81,7 +80,7 @@ class AudioEngine {
     gainNode.toDestination();
     player.connect(fft);
 
-    this.waveformAnalyser = new Tone.Analyser('waveform', FFT_SIZE);
+    this.waveformAnalyser = new Tone.Waveform(FFT_SIZE);
     player.connect(this.waveformAnalyser);
 
     this.freqAudio = { player, gainNode, fft };
@@ -114,7 +113,7 @@ class AudioEngine {
     gainNode.connect(silentGain);
     silentGain.toDestination();
 
-    this.waveformAnalyser = new Tone.Analyser('waveform', FFT_SIZE);
+    this.waveformAnalyser = new Tone.Waveform(FFT_SIZE);
     mic.connect(this.waveformAnalyser);
 
     this.micAudio = { mic, gainNode, fft, silentGain };
@@ -253,7 +252,7 @@ class AudioEngine {
   /**
    * Get waveform analyser
    */
-  getWaveformAnalyser(): ToneAnalyser | null {
+  getWaveformAnalyser(): Tone.Waveform | null {
     return this.waveformAnalyser;
   }
 
