@@ -1,5 +1,6 @@
 import UIKit
 import Capacitor
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -7,6 +8,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Without this, the app's audio session defaults to a
+        // playback-only category (.soloAmbient) — WKWebView's
+        // getUserMedia() then reports success (OS-level mic permission is
+        // separate from the app's audio session) but Core Audio never
+        // actually routes microphone samples in, so the resulting
+        // MediaStream is silent with no error anywhere in JS.
+        try? AVAudioSession.sharedInstance().setCategory(
+            .playAndRecord,
+            options: [.defaultToSpeaker, .allowBluetooth]
+        )
+        try? AVAudioSession.sharedInstance().setActive(true)
+
         // Override point for customization after application launch.
         return true
     }
