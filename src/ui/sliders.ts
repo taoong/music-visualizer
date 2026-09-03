@@ -295,6 +295,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'protractor-fans',   key: 'protractorFans' },
     { id: 'protractor-rings',  key: 'protractorRings' },
     { id: 'protractor-spread', key: 'protractorSpread' },
+    { id: 'phyllotaxis-seeds', key: 'phyllotaxisSeeds' },
+    { id: 'phyllotaxis-spin',  key: 'phyllotaxisSpin' },
+    { id: 'phyllotaxis-bloom', key: 'phyllotaxisBloom' },
   ] as const;
 
   for (const { id, key } of configs) {

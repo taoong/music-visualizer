@@ -93,3 +93,4 @@ export { drawCataract, resetCataract } from './cataract';
 export { drawHomage, resetHomage } from './homage';
 export { drawTracery, resetTracery } from './tracery';
 export { drawProtractor, resetProtractor } from './protractor';
+export { drawPhyllotaxis, resetPhyllotaxis } from './phyllotaxis';

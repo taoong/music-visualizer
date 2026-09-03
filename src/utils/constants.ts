@@ -480,6 +480,10 @@ export const DEFAULT_CONFIG = {
   protractorFans:   5,   // 5 fans — full compass-rose aesthetic from the start
   protractorRings:  12,  // 12 concentric arcs — rich rainbow banding
   protractorSpread: 0.5, // 165° sweep — fans overlap and blend without fully merging
+  // Phyllotaxis defaults
+  phyllotaxisSeeds: 500, // rich lattice showing clear Fibonacci spiral arms
+  phyllotaxisSpin:  0.4, // gentle rotation — arms emerge without dizzying spin
+  phyllotaxisBloom: 0.6, // responsive blooming without overwhelming at rest
 };
 
 // FFT and decay constants

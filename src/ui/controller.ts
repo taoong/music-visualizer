@@ -142,6 +142,7 @@ const ALL_CONTROL_IDS = [
   'homage-controls-group',
   'tracery-controls-group',
   'protractor-controls-group',
+  'phyllotaxis-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -237,6 +238,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   homage:        { show: ['homage-controls-group'] },
   tracery:       { show: ['tracery-controls-group'] },
   protractor:    { show: ['protractor-controls-group'] },
+  phyllotaxis:   { show: ['phyllotaxis-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

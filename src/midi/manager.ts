@@ -257,6 +257,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   protractorFans:   'protractor-fans',
   protractorRings:  'protractor-rings',
   protractorSpread: 'protractor-spread',
+  phyllotaxisSeeds: 'phyllotaxis-seeds',
+  phyllotaxisSpin:  'phyllotaxis-spin',
+  phyllotaxisBloom: 'phyllotaxis-bloom',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
