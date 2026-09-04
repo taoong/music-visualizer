@@ -484,6 +484,10 @@ export const DEFAULT_CONFIG = {
   phyllotaxisSeeds: 500, // rich lattice showing clear Fibonacci spiral arms
   phyllotaxisSpin:  0.4, // gentle rotation — arms emerge without dizzying spin
   phyllotaxisBloom: 0.6, // responsive blooming without overwhelming at rest
+
+  aetherTurbulence: 0.5, // moderate warp — shows both smooth and complex zones
+  aetherFlow:       0.4, // gentle drift — patterns evolve without dizzying churn
+  aetherPalette:    0.9, // vivid chromatic — full nebula colour field from the start
 };
 
 // FFT and decay constants

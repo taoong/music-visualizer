@@ -260,6 +260,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   phyllotaxisSeeds: 'phyllotaxis-seeds',
   phyllotaxisSpin:  'phyllotaxis-spin',
   phyllotaxisBloom: 'phyllotaxis-bloom',
+  aetherTurbulence: 'aether-turbulence',
+  aetherFlow:       'aether-flow',
+  aetherPalette:    'aether-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

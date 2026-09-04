@@ -298,6 +298,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'phyllotaxis-seeds', key: 'phyllotaxisSeeds' },
     { id: 'phyllotaxis-spin',  key: 'phyllotaxisSpin' },
     { id: 'phyllotaxis-bloom', key: 'phyllotaxisBloom' },
+    { id: 'aether-turbulence', key: 'aetherTurbulence' },
+    { id: 'aether-flow',       key: 'aetherFlow' },
+    { id: 'aether-palette',    key: 'aetherPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
