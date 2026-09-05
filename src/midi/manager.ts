@@ -263,6 +263,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   aetherTurbulence: 'aether-turbulence',
   aetherFlow:       'aether-flow',
   aetherPalette:    'aether-palette',
+  chromaticDensity: 'chromatic-density',
+  chromaticSpin:    'chromatic-spin',
+  chromaticShimmer: 'chromatic-shimmer',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

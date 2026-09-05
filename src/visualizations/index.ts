@@ -95,3 +95,4 @@ export { drawTracery, resetTracery } from './tracery';
 export { drawProtractor, resetProtractor } from './protractor';
 export { drawPhyllotaxis, resetPhyllotaxis } from './phyllotaxis';
 export { drawAether, resetAether } from './aether';
+export { drawChromatic, resetChromatic } from './chromatic';

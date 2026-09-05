@@ -488,6 +488,11 @@ export const DEFAULT_CONFIG = {
   aetherTurbulence: 0.5, // moderate warp — shows both smooth and complex zones
   aetherFlow:       0.4, // gentle drift — patterns evolve without dizzying churn
   aetherPalette:    0.9, // vivid chromatic — full nebula colour field from the start
+
+  // Chromatic defaults
+  chromaticDensity: 0.35, // medium stripe count — clear rainbow bands without fine moiré
+  chromaticSpin:    0.30, // gentle rotation — gratings slowly orbit each other
+  chromaticShimmer: 0.60, // vivid but not blown-out
 };
 
 // FFT and decay constants

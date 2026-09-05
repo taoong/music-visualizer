@@ -301,6 +301,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'aether-turbulence', key: 'aetherTurbulence' },
     { id: 'aether-flow',       key: 'aetherFlow' },
     { id: 'aether-palette',    key: 'aetherPalette' },
+    { id: 'chromatic-density', key: 'chromaticDensity' },
+    { id: 'chromatic-spin',    key: 'chromaticSpin' },
+    { id: 'chromatic-shimmer', key: 'chromaticShimmer' },
   ] as const;
 
   for (const { id, key } of configs) {
