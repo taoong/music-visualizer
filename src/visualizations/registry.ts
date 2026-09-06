@@ -94,6 +94,7 @@ import { drawProtractor, resetProtractor } from './protractor';
 import { drawPhyllotaxis, resetPhyllotaxis } from './phyllotaxis';
 import { drawAether, resetAether } from './aether';
 import { drawChromatic, resetChromatic } from './chromatic';
+import { drawParticlelife, resetParticlelife } from './particlelife';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -242,4 +243,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   phyllotaxis:   { draw: drawPhyllotaxis, reset: resetPhyllotaxis,      key: '+',  label: 'Phyllotaxis' },
   aether:        { draw: drawAether,      reset: resetAether,            key: ')',  label: 'Aether' },
   chromatic:     { draw: drawChromatic,  reset: resetChromatic,         key: '{',  label: 'Chromatic' },
+  particlelife:  { draw: drawParticlelife, reset: resetParticlelife,    key: "'",  label: 'Particle Life' },
 };

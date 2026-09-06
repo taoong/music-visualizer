@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann' | 'glyphs' | 'prism' | 'cloth' | 'veil' | 'suminagashi' | 'isometric' | 'pursuit' | 'arboreal' | 'etching' | 'kintsugi' | 'klimt' | 'rosette' | 'feedbackloop' | 'kandinsky' | 'cobweb' | 'frost' | 'boogie' | 'patchwork' | 'risograph' | 'lensflare' | 'radiolaria' | 'stitch' | 'magnetosphere' | 'substrate' | 'ferrofluid' | 'cataract' | 'homage' | 'tracery' | 'protractor' | 'phyllotaxis' | 'aether' | 'chromatic';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann' | 'glyphs' | 'prism' | 'cloth' | 'veil' | 'suminagashi' | 'isometric' | 'pursuit' | 'arboreal' | 'etching' | 'kintsugi' | 'klimt' | 'rosette' | 'feedbackloop' | 'kandinsky' | 'cobweb' | 'frost' | 'boogie' | 'patchwork' | 'risograph' | 'lensflare' | 'radiolaria' | 'stitch' | 'magnetosphere' | 'substrate' | 'ferrofluid' | 'cataract' | 'homage' | 'tracery' | 'protractor' | 'phyllotaxis' | 'aether' | 'chromatic' | 'particlelife';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -371,6 +371,10 @@ export interface Config {
   chromaticDensity: number;
   chromaticSpin: number;
   chromaticShimmer: number;
+  // Particle Life-specific
+  particlelifePopulation: number;
+  particlelifeForce: number;
+  particlelifeRange: number;
 }
 
 // Interaction event dispatched to visualizations in interactive mode

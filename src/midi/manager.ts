@@ -266,6 +266,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   chromaticDensity: 'chromatic-density',
   chromaticSpin:    'chromatic-spin',
   chromaticShimmer: 'chromatic-shimmer',
+  particlelifePopulation: 'particlelife-population',
+  particlelifeForce:      'particlelife-force',
+  particlelifeRange:      'particlelife-range',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

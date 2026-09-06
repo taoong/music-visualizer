@@ -96,3 +96,4 @@ export { drawProtractor, resetProtractor } from './protractor';
 export { drawPhyllotaxis, resetPhyllotaxis } from './phyllotaxis';
 export { drawAether, resetAether } from './aether';
 export { drawChromatic, resetChromatic } from './chromatic';
+export { drawParticlelife, resetParticlelife } from './particlelife';

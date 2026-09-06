@@ -493,6 +493,10 @@ export const DEFAULT_CONFIG = {
   chromaticDensity: 0.35, // medium stripe count — clear rainbow bands without fine moiré
   chromaticSpin:    0.30, // gentle rotation — gratings slowly orbit each other
   chromaticShimmer: 0.60, // vivid but not blown-out
+  // Particle Life
+  particlelifePopulation: 0.45, // moderate swarm density
+  particlelifeForce:      0.50, // balanced attraction/repulsion
+  particlelifeRange:      0.40, // ~136px range — local clusters
 };
 
 // FFT and decay constants

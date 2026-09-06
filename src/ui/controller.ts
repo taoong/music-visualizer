@@ -145,6 +145,7 @@ const ALL_CONTROL_IDS = [
   'phyllotaxis-controls-group',
   'aether-controls-group',
   'chromatic-controls-group',
+  'particlelife-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -243,6 +244,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   phyllotaxis:   { show: ['phyllotaxis-controls-group'] },
   aether:        { show: ['aether-controls-group'] },
   chromatic:     { show: ['chromatic-controls-group'] },
+  particlelife:  { show: ['particlelife-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

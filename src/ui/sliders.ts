@@ -304,6 +304,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'chromatic-density', key: 'chromaticDensity' },
     { id: 'chromatic-spin',    key: 'chromaticSpin' },
     { id: 'chromatic-shimmer', key: 'chromaticShimmer' },
+    { id: 'particlelife-population', key: 'particlelifePopulation' },
+    { id: 'particlelife-force',      key: 'particlelifeForce' },
+    { id: 'particlelife-range',      key: 'particlelifeRange' },
   ] as const;
 
   for (const { id, key } of configs) {
