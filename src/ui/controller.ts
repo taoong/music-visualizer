@@ -146,6 +146,7 @@ const ALL_CONTROL_IDS = [
   'aether-controls-group',
   'chromatic-controls-group',
   'particlelife-controls-group',
+  'tableau-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -245,6 +246,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   aether:        { show: ['aether-controls-group'] },
   chromatic:     { show: ['chromatic-controls-group'] },
   particlelife:  { show: ['particlelife-controls-group'] },
+  tableau:       { show: ['tableau-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

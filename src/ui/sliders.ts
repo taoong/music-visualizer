@@ -307,6 +307,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'particlelife-population', key: 'particlelifePopulation' },
     { id: 'particlelife-force',      key: 'particlelifeForce' },
     { id: 'particlelife-range',      key: 'particlelifeRange' },
+    { id: 'tableau-count', key: 'tableauCount' },
+    { id: 'tableau-morph', key: 'tableauMorph' },
+    { id: 'tableau-flow',  key: 'tableauFlow' },
   ] as const;
 
   for (const { id, key } of configs) {

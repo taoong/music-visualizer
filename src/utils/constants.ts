@@ -497,6 +497,10 @@ export const DEFAULT_CONFIG = {
   particlelifePopulation: 0.45, // moderate swarm density
   particlelifeForce:      0.50, // balanced attraction/repulsion
   particlelifeRange:      0.40, // ~136px range — local clusters
+  // Tableau
+  tableauCount: 0.35, // ~10 shapes per ensemble — crisp formations without clutter
+  tableauMorph: 0.50, // medium morph speed — snappy but readable transitions
+  tableauFlow:  0.45, // gentle drift — compositions float without dizziness
 };
 
 // FFT and decay constants

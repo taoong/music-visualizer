@@ -319,6 +319,7 @@
           <option value="aether">Aether</option>
           <option value="chromatic">Chromatic</option>
           <option value="particlelife">Particle Life</option>
+          <option value="tableau">Tableau</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3612,6 +3613,45 @@
               step="0.01"
               value="0.4"
               aria-label="Range — interaction radius (0 = tight local clusters, 1 = long-range global order)"
+            />
+          </div>
+        </div>
+
+        <div id="tableau-controls-group" class="controls-group hidden">
+          <div class="control-row">
+            <label for="tableau-count">Count</label>
+            <input
+              type="range"
+              id="tableau-count"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Count — shapes per ensemble (0 = sparse 3, 1 = dense 24)"
+            />
+          </div>
+          <div class="control-row">
+            <label for="tableau-morph">Morph</label>
+            <input
+              type="range"
+              id="tableau-morph"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Morph — formation-shift speed on beats (0 = slow ripple, 1 = instant snap)"
+            />
+          </div>
+          <div class="control-row">
+            <label for="tableau-flow">Flow</label>
+            <input
+              type="range"
+              id="tableau-flow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Flow — ensemble drift and oscillation speed (0 = near-still, 1 = lively float)"
             />
           </div>
         </div>

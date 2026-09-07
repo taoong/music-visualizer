@@ -269,6 +269,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   particlelifePopulation: 'particlelife-population',
   particlelifeForce:      'particlelife-force',
   particlelifeRange:      'particlelife-range',
+  tableauCount: 'tableau-count',
+  tableauMorph: 'tableau-morph',
+  tableauFlow:  'tableau-flow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
