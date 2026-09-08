@@ -310,6 +310,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'tableau-count', key: 'tableauCount' },
     { id: 'tableau-morph', key: 'tableauMorph' },
     { id: 'tableau-flow',  key: 'tableauFlow' },
+    { id: 'rorschach-drip',    key: 'rorschachDrip' },
+    { id: 'rorschach-spread',  key: 'rorschachSpread' },
+    { id: 'rorschach-palette', key: 'rorschachPalette' },
   ] as const;
 
   for (const { id, key } of configs) {

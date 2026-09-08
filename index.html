@@ -320,6 +320,7 @@
           <option value="chromatic">Chromatic</option>
           <option value="particlelife">Particle Life</option>
           <option value="tableau">Tableau</option>
+          <option value="rorschach">Rorschach</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3652,6 +3653,45 @@
               step="0.01"
               value="0.45"
               aria-label="Flow — ensemble drift and oscillation speed (0 = near-still, 1 = lively float)"
+            />
+          </div>
+        </div>
+
+        <div id="rorschach-controls-group" class="controls-group hidden">
+          <div class="control-row">
+            <label for="rorschach-drip">Drip</label>
+            <input
+              type="range"
+              id="rorschach-drip"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Drip — ink flow rate and drop size (0 = sparse fine drops, 1 = heavy saturated pour)"
+            />
+          </div>
+          <div class="control-row">
+            <label for="rorschach-spread">Spread</label>
+            <input
+              type="range"
+              id="rorschach-spread"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Spread — ink feathering / bleed radius (0 = crisp hard-edge drops, 1 = diffused soft halo)"
+            />
+          </div>
+          <div class="control-row">
+            <label for="rorschach-palette">Palette</label>
+            <input
+              type="range"
+              id="rorschach-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.05"
+              aria-label="Palette — ink color (0 = monochrome black on cream, 1 = full chromatic per-band hues)"
             />
           </div>
         </div>

@@ -501,6 +501,10 @@ export const DEFAULT_CONFIG = {
   tableauCount: 0.35, // ~10 shapes per ensemble — crisp formations without clutter
   tableauMorph: 0.50, // medium morph speed — snappy but readable transitions
   tableauFlow:  0.45, // gentle drift — compositions float without dizziness
+  // Rorschach
+  rorschachDrip:    0.55, // moderate flow — ink builds without flooding
+  rorschachSpread:  0.50, // half bleed — organic edges without losing shape definition
+  rorschachPalette: 0.05, // near-monochrome — classic Warhol black ink, faint chromatic tint
 };
 
 // FFT and decay constants

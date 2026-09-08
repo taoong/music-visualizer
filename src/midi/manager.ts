@@ -272,6 +272,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   tableauCount: 'tableau-count',
   tableauMorph: 'tableau-morph',
   tableauFlow:  'tableau-flow',
+  rorschachDrip:    'rorschach-drip',
+  rorschachSpread:  'rorschach-spread',
+  rorschachPalette: 'rorschach-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

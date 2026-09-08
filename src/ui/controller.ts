@@ -147,6 +147,7 @@ const ALL_CONTROL_IDS = [
   'chromatic-controls-group',
   'particlelife-controls-group',
   'tableau-controls-group',
+  'rorschach-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -247,6 +248,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   chromatic:     { show: ['chromatic-controls-group'] },
   particlelife:  { show: ['particlelife-controls-group'] },
   tableau:       { show: ['tableau-controls-group'] },
+  rorschach:     { show: ['rorschach-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
