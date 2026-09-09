@@ -275,6 +275,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   rorschachDrip:    'rorschach-drip',
   rorschachSpread:  'rorschach-spread',
   rorschachPalette: 'rorschach-palette',
+  pollockViscosity: 'pollock-viscosity',
+  pollockChaos:     'pollock-chaos',
+  pollockPalette:   'pollock-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -505,6 +505,10 @@ export const DEFAULT_CONFIG = {
   rorschachDrip:    0.55, // moderate flow — ink builds without flooding
   rorschachSpread:  0.50, // half bleed — organic edges without losing shape definition
   rorschachPalette: 0.05, // near-monochrome — classic Warhol black ink, faint chromatic tint
+  // Pollock defaults
+  pollockViscosity: 0.50, // medium-weight drips — visible strokes without flooding
+  pollockChaos:     0.40, // moderate turbulence — some wobble, no full splatter chaos
+  pollockPalette:   0.20, // mostly Pollock earth tones with slight chromatic tint
 };
 
 // FFT and decay constants

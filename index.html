@@ -321,6 +321,7 @@
           <option value="particlelife">Particle Life</option>
           <option value="tableau">Tableau</option>
           <option value="rorschach">Rorschach</option>
+          <option value="pollock">Pollock</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3692,6 +3693,45 @@
               step="0.01"
               value="0.05"
               aria-label="Palette — ink color (0 = monochrome black on cream, 1 = full chromatic per-band hues)"
+            />
+          </div>
+        </div>
+
+        <div id="pollock-controls-group" class="controls-group hidden">
+          <div class="control-row">
+            <label for="pollock-viscosity">Viscosity</label>
+            <input
+              type="range"
+              id="pollock-viscosity"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Viscosity — paint consistency (0 = watery thin streams, 1 = heavy thick drips)"
+            />
+          </div>
+          <div class="control-row">
+            <label for="pollock-chaos">Chaos</label>
+            <input
+              type="range"
+              id="pollock-chaos"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Chaos — gesture turbulence (0 = controlled straight drips, 1 = wild explosive splatter)"
+            />
+          </div>
+          <div class="control-row">
+            <label for="pollock-palette">Palette</label>
+            <input
+              type="range"
+              id="pollock-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.2"
+              aria-label="Palette — color and persistence (0 = Pollock earth tones / slow accumulation, 1 = vivid neon / fast fading)"
             />
           </div>
         </div>

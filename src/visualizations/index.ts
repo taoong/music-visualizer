@@ -99,3 +99,4 @@ export { drawChromatic, resetChromatic } from './chromatic';
 export { drawParticlelife, resetParticlelife } from './particlelife';
 export { drawTableau, resetTableau } from './tableau';
 export { drawRorschach, resetRorschach } from './rorschach';
+export { drawPollock, resetPollock } from './pollock';

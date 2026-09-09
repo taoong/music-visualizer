@@ -313,6 +313,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'rorschach-drip',    key: 'rorschachDrip' },
     { id: 'rorschach-spread',  key: 'rorschachSpread' },
     { id: 'rorschach-palette', key: 'rorschachPalette' },
+    { id: 'pollock-viscosity', key: 'pollockViscosity' },
+    { id: 'pollock-chaos',     key: 'pollockChaos' },
+    { id: 'pollock-palette',   key: 'pollockPalette' },
   ] as const;
 
   for (const { id, key } of configs) {
