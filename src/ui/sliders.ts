@@ -316,6 +316,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'pollock-viscosity', key: 'pollockViscosity' },
     { id: 'pollock-chaos',     key: 'pollockChaos' },
     { id: 'pollock-palette',   key: 'pollockPalette' },
+    { id: 'julia-detail',      key: 'juliaDetail' },
+    { id: 'julia-zoom',        key: 'juliaZoom' },
+    { id: 'julia-morph',       key: 'juliaMorph' },
   ] as const;
 
   for (const { id, key } of configs) {

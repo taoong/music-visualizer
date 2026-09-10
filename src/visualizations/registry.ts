@@ -98,6 +98,7 @@ import { drawParticlelife, resetParticlelife } from './particlelife';
 import { drawTableau, resetTableau } from './tableau';
 import { drawRorschach, resetRorschach } from './rorschach';
 import { drawPollock, resetPollock } from './pollock';
+import { drawJulia, resetJulia } from './julia';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -250,4 +251,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   tableau:       { draw: drawTableau,      reset: resetTableau,          key: '"',  label: 'Tableau' },
   rorschach:     { draw: drawRorschach,    reset: resetRorschach,        key: 'Tab', label: 'Rorschach' },
   pollock:       { draw: drawPollock,      reset: resetPollock,           key: '2',   label: 'Pollock' },
+  julia:         { draw: drawJulia,        reset: resetJulia,             key: 'F2',  label: 'Julia' },
 };

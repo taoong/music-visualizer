@@ -278,6 +278,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   pollockViscosity: 'pollock-viscosity',
   pollockChaos:     'pollock-chaos',
   pollockPalette:   'pollock-palette',
+  juliaDetail:      'julia-detail',
+  juliaZoom:        'julia-zoom',
+  juliaMorph:       'julia-morph',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -100,3 +100,4 @@ export { drawParticlelife, resetParticlelife } from './particlelife';
 export { drawTableau, resetTableau } from './tableau';
 export { drawRorschach, resetRorschach } from './rorschach';
 export { drawPollock, resetPollock } from './pollock';
+export { drawJulia, resetJulia } from './julia';

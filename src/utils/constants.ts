@@ -509,6 +509,10 @@ export const DEFAULT_CONFIG = {
   pollockViscosity: 0.50, // medium-weight drips — visible strokes without flooding
   pollockChaos:     0.40, // moderate turbulence — some wobble, no full splatter chaos
   pollockPalette:   0.20, // mostly Pollock earth tones with slight chromatic tint
+  // Julia defaults
+  juliaDetail: 0.45, // ~56 iterations — crisp fractal boundary, smooth enough for 60fps
+  juliaZoom:   0.15, // ~2.7× zoom — shows full fractal with room to zoom in
+  juliaMorph:  0.50, // moderate audio warp — responsive without wild distortion
 };
 
 // FFT and decay constants

@@ -149,6 +149,7 @@ const ALL_CONTROL_IDS = [
   'tableau-controls-group',
   'rorschach-controls-group',
   'pollock-controls-group',
+  'julia-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -251,6 +252,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   tableau:       { show: ['tableau-controls-group'] },
   rorschach:     { show: ['rorschach-controls-group'] },
   pollock:       { show: ['pollock-controls-group'] },
+  julia:         { show: ['julia-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
