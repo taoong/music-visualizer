@@ -281,6 +281,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   juliaDetail:      'julia-detail',
   juliaZoom:        'julia-zoom',
   juliaMorph:       'julia-morph',
+  langtonSpeed:     'langton-speed',
+  langtonChaos:     'langton-chaos',
+  langtonTrail:     'langton-trail',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

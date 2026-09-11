@@ -101,3 +101,4 @@ export { drawTableau, resetTableau } from './tableau';
 export { drawRorschach, resetRorschach } from './rorschach';
 export { drawPollock, resetPollock } from './pollock';
 export { drawJulia, resetJulia } from './julia';
+export { drawLangton, resetLangton } from './langton';

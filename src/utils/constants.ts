@@ -513,6 +513,10 @@ export const DEFAULT_CONFIG = {
   juliaDetail: 0.45, // ~56 iterations — crisp fractal boundary, smooth enough for 60fps
   juliaZoom:   0.15, // ~2.7× zoom — shows full fractal with room to zoom in
   juliaMorph:  0.50, // moderate audio warp — responsive without wild distortion
+  // Langton's Ant defaults
+  langtonSpeed: 0.40, // moderate step rate — highways emerge without dizzying blur
+  langtonChaos: 0.10, // slight rule deviation — mostly deterministic Langton behavior
+  langtonTrail: 0.65, // persistent trails — tapestry accumulates while old paths gently fade
 };
 
 // FFT and decay constants

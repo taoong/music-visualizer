@@ -319,6 +319,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'julia-detail',      key: 'juliaDetail' },
     { id: 'julia-zoom',        key: 'juliaZoom' },
     { id: 'julia-morph',       key: 'juliaMorph' },
+    { id: 'langton-speed',     key: 'langtonSpeed' },
+    { id: 'langton-chaos',     key: 'langtonChaos' },
+    { id: 'langton-trail',     key: 'langtonTrail' },
   ] as const;
 
   for (const { id, key } of configs) {
