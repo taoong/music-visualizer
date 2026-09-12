@@ -517,6 +517,9 @@ export const DEFAULT_CONFIG = {
   langtonSpeed: 0.40, // moderate step rate — highways emerge without dizzying blur
   langtonChaos: 0.10, // slight rule deviation — mostly deterministic Langton behavior
   langtonTrail: 0.65, // persistent trails — tapestry accumulates while old paths gently fade
+  anemoneArms: 0.40,  // 5 arms per band — rich but not overcrowded
+  anemoneWave: 0.40,  // gentle organic undulation
+  anemoneGlow: 0.55,  // vivid bioluminescent bloom
 };
 
 // FFT and decay constants

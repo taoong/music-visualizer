@@ -284,6 +284,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   langtonSpeed:     'langton-speed',
   langtonChaos:     'langton-chaos',
   langtonTrail:     'langton-trail',
+  anemoneArms:      'anemone-arms',
+  anemoneWave:      'anemone-wave',
+  anemoneGlow:      'anemone-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

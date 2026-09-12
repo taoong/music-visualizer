@@ -322,6 +322,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'langton-speed',     key: 'langtonSpeed' },
     { id: 'langton-chaos',     key: 'langtonChaos' },
     { id: 'langton-trail',     key: 'langtonTrail' },
+    { id: 'anemone-arms',      key: 'anemoneArms' },
+    { id: 'anemone-wave',      key: 'anemoneWave' },
+    { id: 'anemone-glow',      key: 'anemoneGlow' },
   ] as const;
 
   for (const { id, key } of configs) {
