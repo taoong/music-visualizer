@@ -325,6 +325,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'anemone-arms',      key: 'anemoneArms' },
     { id: 'anemone-wave',      key: 'anemoneWave' },
     { id: 'anemone-glow',      key: 'anemoneGlow' },
+    { id: 'meander-scatter',   key: 'meanderScatter' },
+    { id: 'meander-density',   key: 'meanderDensity' },
+    { id: 'meander-flow',      key: 'meanderFlow' },
   ] as const;
 
   for (const { id, key } of configs) {

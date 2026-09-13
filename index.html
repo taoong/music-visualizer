@@ -325,6 +325,7 @@
           <option value="julia">Julia</option>
           <option value="langton">Langton's Ant</option>
           <option value="anemone">Anemone</option>
+          <option value="meander">Meander</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3852,6 +3853,45 @@
               step="0.01"
               value="0.55"
               aria-label="Glow — bloom halo size and trail persistence (0 = crisp, 1 = lush)"
+            />
+          </div>
+        </div>
+
+        <div id="meander-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="meander-scatter">Scatter</label>
+            <input
+              type="range"
+              id="meander-scatter"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Scatter — perpendicular spread; 0 = hairline, 1 = diffuse cloud"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="meander-density">Density</label>
+            <input
+              type="range"
+              id="meander-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.6"
+              aria-label="Density — particles per frame; 0 = sparse dots, 1 = solid fill"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="meander-flow">Flow</label>
+            <input
+              type="range"
+              id="meander-flow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Flow — path drift speed; 0 = nearly still, 1 = dynamic"
             />
           </div>
         </div>

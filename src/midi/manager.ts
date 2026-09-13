@@ -287,6 +287,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   anemoneArms:      'anemone-arms',
   anemoneWave:      'anemone-wave',
   anemoneGlow:      'anemone-glow',
+  meanderScatter:   'meander-scatter',
+  meanderDensity:   'meander-density',
+  meanderFlow:      'meander-flow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -152,6 +152,7 @@ const ALL_CONTROL_IDS = [
   'julia-controls-group',
   'langton-controls-group',
   'anemone-controls-group',
+  'meander-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -257,6 +258,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   julia:         { show: ['julia-controls-group'] },
   langton:       { show: ['langton-controls-group'] },
   anemone:       { show: ['anemone-controls-group'] },
+  meander:       { show: ['meander-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

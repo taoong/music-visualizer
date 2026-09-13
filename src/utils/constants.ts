@@ -520,6 +520,10 @@ export const DEFAULT_CONFIG = {
   anemoneArms: 0.40,  // 5 arms per band — rich but not overcrowded
   anemoneWave: 0.40,  // gentle organic undulation
   anemoneGlow: 0.55,  // vivid bioluminescent bloom
+  // Meander defaults
+  meanderScatter: 0.50, // balanced scatter — visible diffusion without losing line identity
+  meanderDensity: 0.60, // enough particles to build up richly within a few seconds
+  meanderFlow:    0.40, // moderate drift — paths evolve but hold their shape
 };
 
 // FFT and decay constants
