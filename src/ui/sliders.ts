@@ -325,9 +325,12 @@ export function bindDisplaySliders(): () => void {
     { id: 'anemone-arms',      key: 'anemoneArms' },
     { id: 'anemone-wave',      key: 'anemoneWave' },
     { id: 'anemone-glow',      key: 'anemoneGlow' },
-    { id: 'meander-scatter',   key: 'meanderScatter' },
-    { id: 'meander-density',   key: 'meanderDensity' },
-    { id: 'meander-flow',      key: 'meanderFlow' },
+    { id: 'meander-scatter',      key: 'meanderScatter' },
+    { id: 'meander-density',      key: 'meanderDensity' },
+    { id: 'meander-flow',         key: 'meanderFlow' },
+    { id: 'aggregation-growth',   key: 'aggregationGrowth' },
+    { id: 'aggregation-decay',    key: 'aggregationDecay' },
+    { id: 'aggregation-glow',     key: 'aggregationGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

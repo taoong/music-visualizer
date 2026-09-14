@@ -524,6 +524,10 @@ export const DEFAULT_CONFIG = {
   meanderScatter: 0.50, // balanced scatter — visible diffusion without losing line identity
   meanderDensity: 0.60, // enough particles to build up richly within a few seconds
   meanderFlow:    0.40, // moderate drift — paths evolve but hold their shape
+  // Aggregation
+  aggregationGrowth: 1.0, // mid-range expansion rate
+  aggregationDecay:  0.4, // moderate age fade
+  aggregationGlow:   0.5, // moderate bloom halo
 };
 
 // FFT and decay constants

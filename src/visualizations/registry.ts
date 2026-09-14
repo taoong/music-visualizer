@@ -102,6 +102,7 @@ import { drawJulia, resetJulia } from './julia';
 import { drawLangton, resetLangton } from './langton';
 import { drawAnemone, resetAnemone } from './anemone';
 import { drawMeander, resetMeander } from './meander';
+import { drawAggregation, resetAggregation } from './aggregation';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -257,5 +258,6 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   julia:         { draw: drawJulia,        reset: resetJulia,             key: 'F2',  label: 'Julia' },
   langton:       { draw: drawLangton,      reset: resetLangton,           key: 'F3',  label: "Langton's Ant" },
   anemone:       { draw: drawAnemone,     reset: resetAnemone,            key: 'F4',  label: 'Anemone' },
-  meander:       { draw: drawMeander,    reset: resetMeander,            key: 'F5',  label: 'Meander' },
+  meander:       { draw: drawMeander,       reset: resetMeander,       key: 'F5',  label: 'Meander' },
+  aggregation:   { draw: drawAggregation,   reset: resetAggregation,   key: 'F6',  label: 'Aggregation' },
 };

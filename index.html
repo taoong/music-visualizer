@@ -326,6 +326,7 @@
           <option value="langton">Langton's Ant</option>
           <option value="anemone">Anemone</option>
           <option value="meander">Meander</option>
+          <option value="aggregation">Aggregation</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3892,6 +3893,45 @@
               step="0.01"
               value="0.4"
               aria-label="Flow — path drift speed; 0 = nearly still, 1 = dynamic"
+            />
+          </div>
+        </div>
+
+        <div id="aggregation-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="aggregation-growth">Growth</label>
+            <input
+              type="range"
+              id="aggregation-growth"
+              min="0.1"
+              max="3"
+              step="0.05"
+              value="1"
+              aria-label="Growth — colony expansion rate; 0.1 = slow creep, 3 = aggressive surge"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="aggregation-decay">Decay</label>
+            <input
+              type="range"
+              id="aggregation-decay"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Decay — age-fade speed; 0 = long glow, 1 = rapid dimming"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="aggregation-glow">Glow</label>
+            <input
+              type="range"
+              id="aggregation-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Glow — bloom halo radius and brightness"
             />
           </div>
         </div>
