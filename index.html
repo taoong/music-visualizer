@@ -327,6 +327,7 @@
           <option value="anemone">Anemone</option>
           <option value="meander">Meander</option>
           <option value="aggregation">Aggregation</option>
+          <option value="hopf">Hopf Fibers</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3932,6 +3933,45 @@
               step="0.01"
               value="0.5"
               aria-label="Glow — bloom halo radius and brightness"
+            />
+          </div>
+        </div>
+
+        <div id="hopf-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="hopf-fibers">Fibers</label>
+            <input
+              type="range"
+              id="hopf-fibers"
+              min="8"
+              max="48"
+              step="1"
+              value="16"
+              aria-label="Fibers — fibers per band ring; 8 = sparse airy lattice, 48 = dense woven torus"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="hopf-spin">Spin</label>
+            <input
+              type="range"
+              id="hopf-spin"
+              min="0"
+              max="2"
+              step="0.01"
+              value="0.5"
+              aria-label="Spin — rotation speed; 0 = nearly still, 2 = fast orbit"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="hopf-glow">Glow</label>
+            <input
+              type="range"
+              id="hopf-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Glow — neon bloom brightness and trail persistence"
             />
           </div>
         </div>

@@ -293,6 +293,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   aggregationGrowth:    'aggregation-growth',
   aggregationDecay:     'aggregation-decay',
   aggregationGlow:      'aggregation-glow',
+  hopfFibers:           'hopf-fibers',
+  hopfSpin:             'hopf-spin',
+  hopfGlow:             'hopf-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

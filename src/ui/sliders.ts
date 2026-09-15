@@ -331,6 +331,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'aggregation-growth',   key: 'aggregationGrowth' },
     { id: 'aggregation-decay',    key: 'aggregationDecay' },
     { id: 'aggregation-glow',     key: 'aggregationGlow' },
+    { id: 'hopf-fibers',          key: 'hopfFibers' },
+    { id: 'hopf-spin',            key: 'hopfSpin' },
+    { id: 'hopf-glow',            key: 'hopfGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

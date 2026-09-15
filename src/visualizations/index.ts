@@ -105,3 +105,4 @@ export { drawLangton, resetLangton } from './langton';
 export { drawAnemone, resetAnemone } from './anemone';
 export { drawMeander, resetMeander } from './meander';
 export { drawAggregation, resetAggregation } from './aggregation';
+export { drawHopf, resetHopf } from './hopf';

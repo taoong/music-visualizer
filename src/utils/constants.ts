@@ -528,6 +528,10 @@ export const DEFAULT_CONFIG = {
   aggregationGrowth: 1.0, // mid-range expansion rate
   aggregationDecay:  0.4, // moderate age fade
   aggregationGlow:   0.5, // moderate bloom halo
+  // Hopf Fibers defaults
+  hopfFibers: 16,   // fibers per band — rich but not overwhelming
+  hopfSpin:   0.50, // gentle rotation — topology is visible without dizzying spin
+  hopfGlow:   0.55, // warm neon persistence
 };
 
 // FFT and decay constants

@@ -154,6 +154,7 @@ const ALL_CONTROL_IDS = [
   'anemone-controls-group',
   'meander-controls-group',
   'aggregation-controls-group',
+  'hopf-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -261,6 +262,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   anemone:       { show: ['anemone-controls-group'] },
   meander:       { show: ['meander-controls-group'] },
   aggregation:   { show: ['aggregation-controls-group'] },
+  hopf:          { show: ['hopf-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
