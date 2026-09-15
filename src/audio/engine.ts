@@ -270,3 +270,13 @@ class AudioEngine {
 // Export singleton
 export const audioEngine = new AudioEngine();
 export default audioEngine;
+
+// iOS suspends the Web Audio context on backgrounding, independently of
+// the native AVAudioSession (which AppDelegate reactivates on its own) —
+// without resuming this too, playback/mic stay silently dead after
+// leaving and reopening the app even though the session itself is active.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && Tone.context.state === 'suspended') {
+    Tone.context.resume().catch(err => console.error('[AudioEngine] Failed to resume audio context:', err));
+  }
+});

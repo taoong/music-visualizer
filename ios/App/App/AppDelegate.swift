@@ -39,7 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        // iOS deactivates the audio session on backgrounding (and on
+        // interruptions like phone calls) without reactivating it when the
+        // app returns — without this, playback/mic silently stop working
+        // after leaving and reopening the app.
+        try? AVAudioSession.sharedInstance().setActive(true)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
