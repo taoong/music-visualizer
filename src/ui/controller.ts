@@ -155,6 +155,7 @@ const ALL_CONTROL_IDS = [
   'meander-controls-group',
   'aggregation-controls-group',
   'hopf-controls-group',
+  'reticulae-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -263,6 +264,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   meander:       { show: ['meander-controls-group'] },
   aggregation:   { show: ['aggregation-controls-group'] },
   hopf:          { show: ['hopf-controls-group'] },
+  reticulae:     { show: ['reticulae-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

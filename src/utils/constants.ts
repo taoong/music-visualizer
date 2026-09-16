@@ -532,6 +532,10 @@ export const DEFAULT_CONFIG = {
   hopfFibers: 16,   // fibers per band — rich but not overwhelming
   hopfSpin:   0.50, // gentle rotation — topology is visible without dizzying spin
   hopfGlow:   0.55, // warm neon persistence
+  // Reticulae defaults
+  reticulaeDensity:   0.50, // mid-range mesh — ~15×9 grid
+  reticulaeVibration: 0.50, // moderate node oscillation
+  reticulaeGlow:      0.55, // vivid metallic bloom without washing out
 };
 
 // FFT and decay constants

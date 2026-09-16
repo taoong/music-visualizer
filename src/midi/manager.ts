@@ -296,6 +296,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   hopfFibers:           'hopf-fibers',
   hopfSpin:             'hopf-spin',
   hopfGlow:             'hopf-glow',
+  reticulaeDensity:     'reticulae-density',
+  reticulaeVibration:   'reticulae-vibration',
+  reticulaeGlow:        'reticulae-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

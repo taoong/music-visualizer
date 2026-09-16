@@ -104,6 +104,7 @@ import { drawAnemone, resetAnemone } from './anemone';
 import { drawMeander, resetMeander } from './meander';
 import { drawAggregation, resetAggregation } from './aggregation';
 import { drawHopf, resetHopf } from './hopf';
+import { drawReticulae, resetReticulae } from './reticulae';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -262,4 +263,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   meander:       { draw: drawMeander,       reset: resetMeander,       key: 'F5',  label: 'Meander' },
   aggregation:   { draw: drawAggregation,   reset: resetAggregation,   key: 'F6',  label: 'Aggregation' },
   hopf:          { draw: drawHopf,          reset: resetHopf,          key: 'F7',  label: 'Hopf Fibers' },
+  reticulae:     { draw: drawReticulae,    reset: resetReticulae,     key: 'F8',  label: 'Reticulae' },
 };

@@ -328,6 +328,7 @@
           <option value="meander">Meander</option>
           <option value="aggregation">Aggregation</option>
           <option value="hopf">Hopf Fibers</option>
+          <option value="reticulae">Reticulae</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -3972,6 +3973,45 @@
               step="0.01"
               value="0.55"
               aria-label="Glow — neon bloom brightness and trail persistence"
+            />
+          </div>
+        </div>
+
+        <div id="reticulae-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="reticulae-density">Density</label>
+            <input
+              type="range"
+              id="reticulae-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Density — mesh grid resolution (0 = sparse open lattice, 1 = fine dense weave)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="reticulae-vibration">Vibration</label>
+            <input
+              type="range"
+              id="reticulae-vibration"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Vibration — node oscillation amplitude driven by audio (0 = rigid static mesh, 1 = wildly oscillating wires)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="reticulae-glow">Glow</label>
+            <input
+              type="range"
+              id="reticulae-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Glow — neon bloom intensity around each wire (0 = bare metallic lines, 1 = vivid luminous bloom)"
             />
           </div>
         </div>

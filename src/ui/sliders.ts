@@ -334,6 +334,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'hopf-fibers',          key: 'hopfFibers' },
     { id: 'hopf-spin',            key: 'hopfSpin' },
     { id: 'hopf-glow',            key: 'hopfGlow' },
+    { id: 'reticulae-density',    key: 'reticulaeDensity' },
+    { id: 'reticulae-vibration',  key: 'reticulaeVibration' },
+    { id: 'reticulae-glow',       key: 'reticulaeGlow' },
   ] as const;
 
   for (const { id, key } of configs) {
