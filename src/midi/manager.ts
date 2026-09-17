@@ -299,6 +299,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   reticulaeDensity:     'reticulae-density',
   reticulaeVibration:   'reticulae-vibration',
   reticulaeGlow:        'reticulae-glow',
+  solidlightBeams:      'solidlight-beams',
+  solidlightHaze:       'solidlight-haze',
+  solidlightDrift:      'solidlight-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

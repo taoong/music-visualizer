@@ -156,6 +156,7 @@ const ALL_CONTROL_IDS = [
   'aggregation-controls-group',
   'hopf-controls-group',
   'reticulae-controls-group',
+  'solidlight-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -265,6 +266,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   aggregation:   { show: ['aggregation-controls-group'] },
   hopf:          { show: ['hopf-controls-group'] },
   reticulae:     { show: ['reticulae-controls-group'] },
+  solidlight:    { show: ['solidlight-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

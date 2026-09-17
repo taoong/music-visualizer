@@ -536,6 +536,10 @@ export const DEFAULT_CONFIG = {
   reticulaeDensity:   0.50, // mid-range mesh — ~15×9 grid
   reticulaeVibration: 0.50, // moderate node oscillation
   reticulaeGlow:      0.55, // vivid metallic bloom without washing out
+  // Solid Light defaults
+  solidlightBeams: 0.5,  // ~4 beams at default
+  solidlightHaze:  0.55, // moderate particle density
+  solidlightDrift: 0.35, // gentle camera drift
 };
 
 // FFT and decay constants

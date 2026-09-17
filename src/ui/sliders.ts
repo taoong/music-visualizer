@@ -337,6 +337,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'reticulae-density',    key: 'reticulaeDensity' },
     { id: 'reticulae-vibration',  key: 'reticulaeVibration' },
     { id: 'reticulae-glow',       key: 'reticulaeGlow' },
+    { id: 'solidlight-beams',     key: 'solidlightBeams' },
+    { id: 'solidlight-haze',      key: 'solidlightHaze' },
+    { id: 'solidlight-drift',     key: 'solidlightDrift' },
   ] as const;
 
   for (const { id, key } of configs) {
