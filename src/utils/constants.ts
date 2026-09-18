@@ -540,6 +540,10 @@ export const DEFAULT_CONFIG = {
   solidlightBeams: 0.5,  // ~4 beams at default
   solidlightHaze:  0.55, // moderate particle density
   solidlightDrift: 0.35, // gentle camera drift
+  // Crystal Universe defaults
+  crystaluniverseGlow:  0.55, // moderate point size and halo
+  crystaluniverseFlow:  0.40, // gentle drift and forward travel
+  crystaluniverseDrift: 0.45, // moderate lateral camera sweep
 };
 
 // FFT and decay constants

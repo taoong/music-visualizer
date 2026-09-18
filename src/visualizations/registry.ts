@@ -264,5 +264,6 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   aggregation:   { draw: drawAggregation,   reset: resetAggregation,   key: 'F6',  label: 'Aggregation' },
   hopf:          { draw: drawHopf,          reset: resetHopf,          key: 'F7',  label: 'Hopf Fibers' },
   reticulae:     { draw: drawReticulae,    reset: resetReticulae,     key: 'F8',  label: 'Reticulae' },
-  solidlight:    lazyViz(async () => { const { drawSolidLight: draw, resetSolidLight: reset, disposeSolidLight: dispose } = await import('./solidlight'); return { draw, reset, dispose }; }, 'F9', 'Solid Light'),
+  solidlight:       lazyViz(async () => { const { drawSolidLight: draw, resetSolidLight: reset, disposeSolidLight: dispose } = await import('./solidlight'); return { draw, reset, dispose }; }, 'F9', 'Solid Light'),
+  crystaluniverse:  lazyViz(async () => { const { drawCrystalUniverse: draw, resetCrystalUniverse: reset, disposeCrystalUniverse: dispose } = await import('./crystaluniverse'); return { draw, reset, dispose }; }, 'F10', 'Crystal Universe'),
 };

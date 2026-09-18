@@ -302,6 +302,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   solidlightBeams:      'solidlight-beams',
   solidlightHaze:       'solidlight-haze',
   solidlightDrift:      'solidlight-drift',
+  crystaluniverseGlow:  'crystaluniverse-glow',
+  crystaluniverseFlow:  'crystaluniverse-flow',
+  crystaluniverseDrift: 'crystaluniverse-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

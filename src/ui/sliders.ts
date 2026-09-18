@@ -340,6 +340,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'solidlight-beams',     key: 'solidlightBeams' },
     { id: 'solidlight-haze',      key: 'solidlightHaze' },
     { id: 'solidlight-drift',     key: 'solidlightDrift' },
+    { id: 'crystaluniverse-glow',  key: 'crystaluniverseGlow' },
+    { id: 'crystaluniverse-flow',  key: 'crystaluniverseFlow' },
+    { id: 'crystaluniverse-drift', key: 'crystaluniverseDrift' },
   ] as const;
 
   for (const { id, key } of configs) {
