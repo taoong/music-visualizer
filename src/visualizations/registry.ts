@@ -266,4 +266,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   reticulae:     { draw: drawReticulae,    reset: resetReticulae,     key: 'F8',  label: 'Reticulae' },
   solidlight:       lazyViz(async () => { const { drawSolidLight: draw, resetSolidLight: reset, disposeSolidLight: dispose } = await import('./solidlight'); return { draw, reset, dispose }; }, 'F9', 'Solid Light'),
   crystaluniverse:  lazyViz(async () => { const { drawCrystalUniverse: draw, resetCrystalUniverse: reset, disposeCrystalUniverse: dispose } = await import('./crystaluniverse'); return { draw, reset, dispose }; }, 'F10', 'Crystal Universe'),
+  skyspace:         lazyViz(async () => { const { drawSkyspace: draw, resetSkyspace: reset, disposeSkyspace: dispose } = await import('./skyspace'); return { draw, reset, dispose }; }, 'F11', 'Skyspace'),
 };

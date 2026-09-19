@@ -331,6 +331,7 @@
           <option value="reticulae">Reticulae</option>
           <option value="solidlight">Solid Light</option>
           <option value="crystaluniverse">Crystal Universe</option>
+          <option value="skyspace">Skyspace</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4131,6 +4132,45 @@
               step="0.01"
               value="0.45"
               aria-label="Drift — camera path width (0 = straight tunnel flight, 1 = wide spiraling sweep through the field)"
+            />
+          </div>
+        </div>
+
+        <div id="skyspace-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="skyspace-aperture">Aperture</label>
+            <input
+              type="range"
+              id="skyspace-aperture"
+              min="0.1"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Aperture — radius of the ceiling opening (0.1 = narrow pinhole of sky, 1 = nearly open ceiling)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="skyspace-warmth">Warmth</label>
+            <input
+              type="range"
+              id="skyspace-warmth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Warmth — sky color temperature (0 = cool moonlight blue, 1 = warm sunrise amber)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="skyspace-drift">Drift</label>
+            <input
+              type="range"
+              id="skyspace-drift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.3"
+              aria-label="Drift — camera movement speed (0 = nearly still, 1 = fluid slow sweep)"
             />
           </div>
         </div>

@@ -544,6 +544,10 @@ export const DEFAULT_CONFIG = {
   crystaluniverseGlow:  0.55, // moderate point size and halo
   crystaluniverseFlow:  0.40, // gentle drift and forward travel
   crystaluniverseDrift: 0.45, // moderate lateral camera sweep
+  // Skyspace defaults
+  skyspaceAperture: 0.45, // mid-size opening — a generous skylight
+  skyspaceWarmth:   0.40, // slightly warm — pre-dawn golden light
+  skyspaceDrift:    0.30, // gentle meditative camera drift
 };
 
 // FFT and decay constants

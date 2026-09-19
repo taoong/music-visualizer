@@ -158,6 +158,7 @@ const ALL_CONTROL_IDS = [
   'reticulae-controls-group',
   'solidlight-controls-group',
   'crystaluniverse-controls-group',
+  'skyspace-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -269,6 +270,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   reticulae:     { show: ['reticulae-controls-group'] },
   solidlight:       { show: ['solidlight-controls-group'] },
   crystaluniverse:  { show: ['crystaluniverse-controls-group'] },
+  skyspace:         { show: ['skyspace-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

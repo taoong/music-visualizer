@@ -343,6 +343,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'crystaluniverse-glow',  key: 'crystaluniverseGlow' },
     { id: 'crystaluniverse-flow',  key: 'crystaluniverseFlow' },
     { id: 'crystaluniverse-drift', key: 'crystaluniverseDrift' },
+    { id: 'skyspace-aperture', key: 'skyspaceAperture' },
+    { id: 'skyspace-warmth',   key: 'skyspaceWarmth' },
+    { id: 'skyspace-drift',    key: 'skyspaceDrift' },
   ] as const;
 
   for (const { id, key } of configs) {

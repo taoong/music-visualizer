@@ -305,6 +305,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   crystaluniverseGlow:  'crystaluniverse-glow',
   crystaluniverseFlow:  'crystaluniverse-flow',
   crystaluniverseDrift: 'crystaluniverse-drift',
+  skyspaceAperture: 'skyspace-aperture',
+  skyspaceWarmth:   'skyspace-warmth',
+  skyspaceDrift:    'skyspace-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
