@@ -548,6 +548,10 @@ export const DEFAULT_CONFIG = {
   skyspaceAperture: 0.45, // mid-size opening — a generous skylight
   skyspaceWarmth:   0.40, // slightly warm — pre-dawn golden light
   skyspaceDrift:    0.30, // gentle meditative camera drift
+  // Torus Knot defaults
+  torusKnotForm:  0.0,  // (2,3) trefoil — the simplest classic knot
+  torusKnotBore:  0.5,  // mid-sized tube cross-section
+  torusKnotSpeed: 0.4,  // moderate flight speed
 };
 
 // FFT and decay constants

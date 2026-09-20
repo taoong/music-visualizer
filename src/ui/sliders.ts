@@ -346,6 +346,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'skyspace-aperture', key: 'skyspaceAperture' },
     { id: 'skyspace-warmth',   key: 'skyspaceWarmth' },
     { id: 'skyspace-drift',    key: 'skyspaceDrift' },
+    { id: 'torusknot-form',  key: 'torusKnotForm' },
+    { id: 'torusknot-bore',  key: 'torusKnotBore' },
+    { id: 'torusknot-speed', key: 'torusKnotSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

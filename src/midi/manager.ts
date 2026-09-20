@@ -308,6 +308,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   skyspaceAperture: 'skyspace-aperture',
   skyspaceWarmth:   'skyspace-warmth',
   skyspaceDrift:    'skyspace-drift',
+  torusKnotForm:  'torusknot-form',
+  torusKnotBore:  'torusknot-bore',
+  torusKnotSpeed: 'torusknot-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

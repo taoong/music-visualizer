@@ -159,6 +159,7 @@ const ALL_CONTROL_IDS = [
   'solidlight-controls-group',
   'crystaluniverse-controls-group',
   'skyspace-controls-group',
+  'torusknot-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -271,6 +272,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   solidlight:       { show: ['solidlight-controls-group'] },
   crystaluniverse:  { show: ['crystaluniverse-controls-group'] },
   skyspace:         { show: ['skyspace-controls-group'] },
+  torusknot:        { show: ['torusknot-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
