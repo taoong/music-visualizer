@@ -311,6 +311,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   torusKnotForm:  'torusknot-form',
   torusKnotBore:  'torusknot-bore',
   torusKnotSpeed: 'torusknot-speed',
+  cloisterFormation: 'cloister-formation',
+  cloisterHeight:    'cloister-height',
+  cloisterOrbit:     'cloister-orbit',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

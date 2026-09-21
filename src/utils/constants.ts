@@ -552,6 +552,10 @@ export const DEFAULT_CONFIG = {
   torusKnotForm:  0.0,  // (2,3) trefoil — the simplest classic knot
   torusKnotBore:  0.5,  // mid-sized tube cross-section
   torusKnotSpeed: 0.4,  // moderate flight speed
+
+  cloisterFormation: 0.66, // ~3 rows of columns
+  cloisterHeight:    0.70, // amplitude-to-height sensitivity
+  cloisterOrbit:     0.40, // camera orbit speed
 };
 
 // FFT and decay constants

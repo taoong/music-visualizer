@@ -349,6 +349,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'torusknot-form',  key: 'torusKnotForm' },
     { id: 'torusknot-bore',  key: 'torusKnotBore' },
     { id: 'torusknot-speed', key: 'torusKnotSpeed' },
+    { id: 'cloister-formation', key: 'cloisterFormation' },
+    { id: 'cloister-height',    key: 'cloisterHeight' },
+    { id: 'cloister-orbit',     key: 'cloisterOrbit' },
   ] as const;
 
   for (const { id, key } of configs) {
