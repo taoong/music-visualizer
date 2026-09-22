@@ -556,6 +556,10 @@ export const DEFAULT_CONFIG = {
   cloisterFormation: 0.66, // ~3 rows of columns
   cloisterHeight:    0.70, // amplitude-to-height sensitivity
   cloisterOrbit:     0.40, // camera orbit speed
+  // Melt defaults
+  meltMerge:  0.40, // smooth-min k — 0=distinct spheres, 1=deeply fused
+  meltDrift:  0.40, // animation / orbit speed
+  meltWarmth: 0.50, // subsurface warmth intensity
 };
 
 // FFT and decay constants

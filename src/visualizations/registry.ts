@@ -269,4 +269,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   skyspace:         lazyViz(async () => { const { drawSkyspace: draw, resetSkyspace: reset, disposeSkyspace: dispose } = await import('./skyspace'); return { draw, reset, dispose }; }, 'F11', 'Skyspace'),
   torusknot:        lazyViz(async () => { const { drawTorusKnot: draw, resetTorusKnot: reset, disposeTorusKnot: dispose } = await import('./torusknot'); return { draw, reset, dispose }; }, 'F12', 'Torus Knot'),
   cloister:         lazyViz(async () => { const { drawCloister: draw, resetCloister: reset, disposeCloister: dispose } = await import('./cloister'); return { draw, reset, dispose }; }, 'F1', 'Cloister'),
+  melt:             lazyViz(async () => { const { drawMelt: draw, resetMelt: reset, disposeMelt: dispose } = await import('./melt'); return { draw, reset, dispose }; }, ']', 'Melt'),
 };

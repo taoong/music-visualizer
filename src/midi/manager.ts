@@ -314,6 +314,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cloisterFormation: 'cloister-formation',
   cloisterHeight:    'cloister-height',
   cloisterOrbit:     'cloister-orbit',
+  meltMerge:  'melt-merge',
+  meltDrift:  'melt-drift',
+  meltWarmth: 'melt-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

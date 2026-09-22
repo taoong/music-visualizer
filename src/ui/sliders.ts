@@ -352,6 +352,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'cloister-formation', key: 'cloisterFormation' },
     { id: 'cloister-height',    key: 'cloisterHeight' },
     { id: 'cloister-orbit',     key: 'cloisterOrbit' },
+    { id: 'melt-merge',  key: 'meltMerge' },
+    { id: 'melt-drift',  key: 'meltDrift' },
+    { id: 'melt-warmth', key: 'meltWarmth' },
   ] as const;
 
   for (const { id, key } of configs) {
