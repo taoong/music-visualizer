@@ -109,3 +109,4 @@ export { drawHopf, resetHopf } from './hopf';
 export { drawReticulae, resetReticulae } from './reticulae';
 export { drawSolidLight, resetSolidLight, disposeSolidLight } from './solidlight';
 export { drawSkyspace, resetSkyspace, disposeSkyspace } from './skyspace';
+export { drawShard, resetShard, disposeShard } from './shard';

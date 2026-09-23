@@ -355,6 +355,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'melt-merge',  key: 'meltMerge' },
     { id: 'melt-drift',  key: 'meltDrift' },
     { id: 'melt-warmth', key: 'meltWarmth' },
+    { id: 'shard-facets',  key: 'shardFacets' },
+    { id: 'shard-scatter', key: 'shardScatter' },
+    { id: 'shard-clarity', key: 'shardClarity' },
   ] as const;
 
   for (const { id, key } of configs) {

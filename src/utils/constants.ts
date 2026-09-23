@@ -560,6 +560,10 @@ export const DEFAULT_CONFIG = {
   meltMerge:  0.40, // smooth-min k — 0=distinct spheres, 1=deeply fused
   meltDrift:  0.40, // animation / orbit speed
   meltWarmth: 0.50, // subsurface warmth intensity
+  // Shard defaults
+  shardFacets:  0.45, // 0=few faces (angular) → 1=many faces (complex crystal)
+  shardScatter: 0.50, // orbital radius (tight cluster → spread field)
+  shardClarity: 0.70, // 0=frosted opaque → 1=clear glass transmission
 };
 
 // FFT and decay constants

@@ -335,6 +335,7 @@
           <option value="torusknot">Torus Knot</option>
           <option value="cloister">Cloister</option>
           <option value="melt">Melt</option>
+          <option value="shard">Shard</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4291,6 +4292,45 @@
               step="0.01"
               value="0.50"
               aria-label="Warmth — inner subsurface glow driven by audio energy (0=cool alabaster, 1=molten amber)"
+            />
+          </div>
+        </div>
+
+        <div id="shard-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="shard-facets">Facets</label>
+            <input
+              type="range"
+              id="shard-facets"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Facets — crystal geometry complexity (0=angular few-face shards, 1=intricate multi-face crystals)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="shard-scatter">Scatter</label>
+            <input
+              type="range"
+              id="shard-scatter"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Scatter — orbital radius of shards (0=tight cluster, 1=wide constellation)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="shard-clarity">Clarity</label>
+            <input
+              type="range"
+              id="shard-clarity"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.70"
+              aria-label="Clarity — material transparency (0=frosted opaque crystal, 1=clear glass with transmission)"
             />
           </div>
         </div>

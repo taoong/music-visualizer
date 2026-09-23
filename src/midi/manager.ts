@@ -317,6 +317,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   meltMerge:  'melt-merge',
   meltDrift:  'melt-drift',
   meltWarmth: 'melt-warmth',
+  shardFacets:  'shard-facets',
+  shardScatter: 'shard-scatter',
+  shardClarity: 'shard-clarity',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

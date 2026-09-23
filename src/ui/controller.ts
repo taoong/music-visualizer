@@ -162,6 +162,7 @@ const ALL_CONTROL_IDS = [
   'torusknot-controls-group',
   'cloister-controls-group',
   'melt-controls-group',
+  'shard-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -277,6 +278,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   torusknot:        { show: ['torusknot-controls-group'] },
   cloister:         { show: ['cloister-controls-group'] },
   melt:             { show: ['melt-controls-group'] },
+  shard:            { show: ['shard-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
