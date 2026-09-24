@@ -564,6 +564,9 @@ export const DEFAULT_CONFIG = {
   shardFacets:  0.45, // 0=few faces (angular) → 1=many faces (complex crystal)
   shardScatter: 0.50, // orbital radius (tight cluster → spread field)
   shardClarity: 0.70, // 0=frosted opaque → 1=clear glass transmission
+  stelaeGrid:   0.50, // 0–1 → 4–16 columns per side
+  stelaeHeight: 1.00, // amplitude sensitivity
+  stelaeWarmth: 0.55, // 0=cool overcast → 1=warm golden hour
 };
 
 // FFT and decay constants

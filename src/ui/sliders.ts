@@ -358,6 +358,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'shard-facets',  key: 'shardFacets' },
     { id: 'shard-scatter', key: 'shardScatter' },
     { id: 'shard-clarity', key: 'shardClarity' },
+    { id: 'stelae-grid',    key: 'stelaeGrid' },
+    { id: 'stelae-height',  key: 'stelaeHeight' },
+    { id: 'stelae-warmth',  key: 'stelaeWarmth' },
   ] as const;
 
   for (const { id, key } of configs) {

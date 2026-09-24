@@ -336,6 +336,7 @@
           <option value="cloister">Cloister</option>
           <option value="melt">Melt</option>
           <option value="shard">Shard</option>
+          <option value="stelae">Stelae</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4292,6 +4293,45 @@
               step="0.01"
               value="0.50"
               aria-label="Warmth — inner subsurface glow driven by audio energy (0=cool alabaster, 1=molten amber)"
+            />
+          </div>
+        </div>
+
+        <div id="stelae-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="stelae-grid">Grid</label>
+            <input
+              type="range"
+              id="stelae-grid"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Grid — column density (0=sparse 4×4, 1=dense 16×16 labyrinth)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="stelae-height">Height</label>
+            <input
+              type="range"
+              id="stelae-height"
+              min="0"
+              max="2"
+              step="0.01"
+              value="1.00"
+              aria-label="Height — amplitude sensitivity (0=flat plain, 2=towering columns)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="stelae-warmth">Warmth</label>
+            <input
+              type="range"
+              id="stelae-warmth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Warmth — light temperature (0=cool overcast, 1=warm golden hour)"
             />
           </div>
         </div>

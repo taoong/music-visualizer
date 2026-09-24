@@ -320,6 +320,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   shardFacets:  'shard-facets',
   shardScatter: 'shard-scatter',
   shardClarity: 'shard-clarity',
+  stelaeGrid:   'stelae-grid',
+  stelaeHeight: 'stelae-height',
+  stelaeWarmth: 'stelae-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
