@@ -164,6 +164,7 @@ const ALL_CONTROL_IDS = [
   'melt-controls-group',
   'shard-controls-group',
   'stelae-controls-group',
+  'orrery-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -281,6 +282,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   melt:             { show: ['melt-controls-group'] },
   shard:            { show: ['shard-controls-group'] },
   stelae:           { show: ['stelae-controls-group'] },
+  orrery:           { show: ['orrery-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

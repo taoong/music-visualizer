@@ -567,6 +567,9 @@ export const DEFAULT_CONFIG = {
   stelaeGrid:   0.50, // 0–1 → 4–16 columns per side
   stelaeHeight: 1.00, // amplitude sensitivity
   stelaeWarmth: 0.55, // 0=cool overcast → 1=warm golden hour
+  orreryRings:  0.50, // 0–1 → 2–7 orbital rings
+  orreryPatina: 0.20, // 0=bright brass → 1=aged verdigris
+  orreryTempo:  0.40, // base orbital speed
 };
 
 // FFT and decay constants

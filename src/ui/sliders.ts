@@ -361,6 +361,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'stelae-grid',    key: 'stelaeGrid' },
     { id: 'stelae-height',  key: 'stelaeHeight' },
     { id: 'stelae-warmth',  key: 'stelaeWarmth' },
+    { id: 'orrery-rings',   key: 'orreryRings' },
+    { id: 'orrery-patina',  key: 'orreryPatina' },
+    { id: 'orrery-tempo',   key: 'orreryTempo' },
   ] as const;
 
   for (const { id, key } of configs) {

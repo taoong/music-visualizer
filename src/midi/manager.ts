@@ -323,6 +323,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   stelaeGrid:   'stelae-grid',
   stelaeHeight: 'stelae-height',
   stelaeWarmth: 'stelae-warmth',
+  orreryRings:  'orrery-rings',
+  orreryPatina: 'orrery-patina',
+  orreryTempo:  'orrery-tempo',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
