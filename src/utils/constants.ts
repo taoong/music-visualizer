@@ -570,6 +570,10 @@ export const DEFAULT_CONFIG = {
   orreryRings:  0.50, // 0–1 → 2–7 orbital rings
   orreryPatina: 0.20, // 0=bright brass → 1=aged verdigris
   orreryTempo:  0.40, // base orbital speed
+  // Kinetic defaults
+  kineticArms:  0.50, // 0–1 → 2–7 arms
+  kineticSway:  1.00, // 0–2 sway amplitude
+  kineticOrbit: 0.50, // 0–2 camera/mobile orbit speed
 };
 
 // FFT and decay constants

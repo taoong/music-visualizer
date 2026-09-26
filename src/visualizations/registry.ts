@@ -273,4 +273,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   shard:            lazyViz(async () => { const { drawShard: draw, resetShard: reset, disposeShard: dispose } = await import('./shard'); return { draw, reset, dispose }; }, 'F13', 'Shard'),
   stelae:           lazyViz(async () => { const { drawStelae: draw, resetStelae: reset, disposeStelae: dispose } = await import('./stelae'); return { draw, reset, dispose }; }, 'F14', 'Stelae'),
   orrery:           lazyViz(async () => { const { drawOrrery: draw, resetOrrery: reset, disposeOrrery: dispose } = await import('./orrery'); return { draw, reset, dispose }; }, 'F15', 'Orrery'),
+  kinetic:          lazyViz(async () => { const { drawKinetic: draw, resetKinetic: reset, disposeKinetic: dispose } = await import('./kinetic'); return { draw, reset, dispose }; }, 'F16', 'Kinetic'),
 };

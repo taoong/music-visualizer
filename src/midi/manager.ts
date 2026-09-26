@@ -326,6 +326,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   orreryRings:  'orrery-rings',
   orreryPatina: 'orrery-patina',
   orreryTempo:  'orrery-tempo',
+  kineticArms:  'kinetic-arms',
+  kineticSway:  'kinetic-sway',
+  kineticOrbit: 'kinetic-orbit',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

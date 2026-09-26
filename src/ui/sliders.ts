@@ -364,6 +364,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'orrery-rings',   key: 'orreryRings' },
     { id: 'orrery-patina',  key: 'orreryPatina' },
     { id: 'orrery-tempo',   key: 'orreryTempo' },
+    { id: 'kinetic-arms',   key: 'kineticArms' },
+    { id: 'kinetic-sway',   key: 'kineticSway' },
+    { id: 'kinetic-orbit',  key: 'kineticOrbit' },
   ] as const;
 
   for (const { id, key } of configs) {
