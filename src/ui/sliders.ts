@@ -367,6 +367,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'kinetic-arms',   key: 'kineticArms' },
     { id: 'kinetic-sway',   key: 'kineticSway' },
     { id: 'kinetic-orbit',  key: 'kineticOrbit' },
+    { id: 'braid-strands',  key: 'braidStrands' },
+    { id: 'braid-twist',    key: 'braidTwist' },
+    { id: 'braid-tension',  key: 'braidTension' },
+    { id: 'braid-orbit',    key: 'braidOrbit' },
   ] as const;
 
   for (const { id, key } of configs) {

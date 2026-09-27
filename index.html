@@ -339,6 +339,7 @@
           <option value="stelae">Stelae</option>
           <option value="orrery">Orrery</option>
           <option value="kinetic">Kinetic</option>
+          <option value="braid">Braid</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4451,6 +4452,57 @@
               step="0.01"
               value="0.50"
               aria-label="Drift — camera and mobile rotation speed"
+            />
+          </div>
+        </div>
+
+        <div id="braid-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="braid-strands">Strands</label>
+            <input
+              type="range"
+              id="braid-strands"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.67"
+              aria-label="Strands — number of helical fiber strands (0=3, 1=7 — structural)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="braid-twist">Twist</label>
+            <input
+              type="range"
+              id="braid-twist"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.30"
+              aria-label="Twist — helix turns (0=loose parallel fibers, 1=tightly coiled)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="braid-tension">Tension</label>
+            <input
+              type="range"
+              id="braid-tension"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.60"
+              aria-label="Tension — how strongly audio amplitude expands strand radius"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="braid-orbit">Orbit</label>
+            <input
+              type="range"
+              id="braid-orbit"
+              min="0"
+              max="2"
+              step="0.01"
+              value="0.50"
+              aria-label="Orbit — camera rotation speed around the braid"
             />
           </div>
         </div>

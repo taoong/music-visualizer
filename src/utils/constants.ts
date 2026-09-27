@@ -574,6 +574,11 @@ export const DEFAULT_CONFIG = {
   kineticArms:  0.50, // 0–1 → 2–7 arms
   kineticSway:  1.00, // 0–2 sway amplitude
   kineticOrbit: 0.50, // 0–2 camera/mobile orbit speed
+  // Braid defaults
+  braidStrands: 0.67, // 0–1 → 3–7 strands (structural)
+  braidTwist:   0.30, // 0–1 → 1–7.5 twist turns
+  braidTension: 0.60, // 0–1 amplitude-to-radius scale
+  braidOrbit:   0.50, // 0–2 camera orbit speed
 };
 
 // FFT and decay constants

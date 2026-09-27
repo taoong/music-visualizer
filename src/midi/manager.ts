@@ -329,6 +329,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   kineticArms:  'kinetic-arms',
   kineticSway:  'kinetic-sway',
   kineticOrbit: 'kinetic-orbit',
+  braidStrands: 'braid-strands',
+  braidTwist:   'braid-twist',
+  braidTension: 'braid-tension',
+  braidOrbit:   'braid-orbit',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
