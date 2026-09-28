@@ -579,6 +579,9 @@ export const DEFAULT_CONFIG = {
   braidTwist:   0.30, // 0–1 → 1–7.5 twist turns
   braidTension: 0.60, // 0–1 amplitude-to-radius scale
   braidOrbit:   0.50, // 0–2 camera orbit speed
+  vesselsFill:    0.45, // 0–1 base liquid level + amplitude sensitivity
+  vesselsClarity: 0.70, // 0–1 glass clarity (0=frosted, 1=crystal clear)
+  vesselsOrbit:   0.40, // 0–1 camera drift speed
 };
 
 // FFT and decay constants

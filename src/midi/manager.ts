@@ -333,6 +333,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   braidTwist:   'braid-twist',
   braidTension: 'braid-tension',
   braidOrbit:   'braid-orbit',
+  vesselsFill:    'vessels-fill',
+  vesselsClarity: 'vessels-clarity',
+  vesselsOrbit:   'vessels-orbit',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

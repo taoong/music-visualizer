@@ -167,6 +167,7 @@ const ALL_CONTROL_IDS = [
   'orrery-controls-group',
   'kinetic-controls-group',
   'braid-controls-group',
+  'vessels-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -287,6 +288,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   orrery:           { show: ['orrery-controls-group'] },
   kinetic:          { show: ['kinetic-controls-group'] },
   braid:            { show: ['braid-controls-group'] },
+  vessels:          { show: ['vessels-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
