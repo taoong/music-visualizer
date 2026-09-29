@@ -374,6 +374,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'vessels-fill',    key: 'vesselsFill' },
     { id: 'vessels-clarity', key: 'vesselsClarity' },
     { id: 'vessels-orbit',   key: 'vesselsOrbit' },
+    { id: 'massless-suns',  key: 'masslessSuns' },
+    { id: 'massless-void',  key: 'masslessVoid' },
+    { id: 'massless-drift', key: 'masslessDrift' },
+    { id: 'massless-glow',  key: 'masslessGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

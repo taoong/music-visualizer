@@ -341,6 +341,7 @@
           <option value="kinetic">Kinetic</option>
           <option value="braid">Braid</option>
           <option value="vessels">Vessels</option>
+          <option value="massless">Massless Suns</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4492,6 +4493,57 @@
               step="0.01"
               value="0.40"
               aria-label="Orbit — camera drift speed across the vessel arc"
+            />
+          </div>
+        </div>
+
+        <div id="massless-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="massless-suns">Suns</label>
+            <input
+              type="range"
+              id="massless-suns"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Suns — number of volumetric light spheres (0=8 sparse, 1=36 dense — structural)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="massless-void">Void</label>
+            <input
+              type="range"
+              id="massless-void"
+              min="0"
+              max="0.5"
+              step="0.01"
+              value="0.18"
+              aria-label="Void — fraction of dark anti-suns that absorb light (0=none, 0.5=half — structural)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="massless-drift">Drift</label>
+            <input
+              type="range"
+              id="massless-drift"
+              min="0"
+              max="2"
+              step="0.01"
+              value="0.50"
+              aria-label="Drift — camera and sphere drift speed"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="massless-glow">Glow</label>
+            <input
+              type="range"
+              id="massless-glow"
+              min="0"
+              max="2"
+              step="0.01"
+              value="0.60"
+              aria-label="Glow — bloom strength and halo radius"
             />
           </div>
         </div>

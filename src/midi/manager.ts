@@ -336,6 +336,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   vesselsFill:    'vessels-fill',
   vesselsClarity: 'vessels-clarity',
   vesselsOrbit:   'vessels-orbit',
+  masslessSuns:  'massless-suns',
+  masslessVoid:  'massless-void',
+  masslessDrift: 'massless-drift',
+  masslessGlow:  'massless-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

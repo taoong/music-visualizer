@@ -582,6 +582,11 @@ export const DEFAULT_CONFIG = {
   vesselsFill:    0.45, // 0–1 base liquid level + amplitude sensitivity
   vesselsClarity: 0.70, // 0–1 glass clarity (0=frosted, 1=crystal clear)
   vesselsOrbit:   0.40, // 0–1 camera drift speed
+  // Massless Suns-specific
+  masslessSuns:  0.55, // 0–1 → 8–36 sun count (structural)
+  masslessVoid:  0.18, // 0–0.5 fraction of dark/void anti-suns (structural)
+  masslessDrift: 0.50, // 0–2 camera + sphere drift speed
+  masslessGlow:  0.60, // 0–2 bloom strength and halo radius
 };
 
 // FFT and decay constants
