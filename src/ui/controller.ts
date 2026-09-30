@@ -169,6 +169,7 @@ const ALL_CONTROL_IDS = [
   'braid-controls-group',
   'vessels-controls-group',
   'massless-controls-group',
+  'gossamer-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -291,6 +292,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   braid:            { show: ['braid-controls-group'] },
   vessels:          { show: ['vessels-controls-group'] },
   massless:         { show: ['massless-controls-group'] },
+  gossamer:         { show: ['gossamer-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

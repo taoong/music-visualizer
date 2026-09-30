@@ -587,6 +587,10 @@ export const DEFAULT_CONFIG = {
   masslessVoid:  0.18, // 0–0.5 fraction of dark/void anti-suns (structural)
   masslessDrift: 0.50, // 0–2 camera + sphere drift speed
   masslessGlow:  0.60, // 0–2 bloom strength and halo radius
+  // Gossamer
+  gossamerCount:       0.42, // 0–1 → 4–21 membrane planes (structural)
+  gossamerFlutter:     0.50, // 0–1 audio displacement amplitude
+  gossamerIridescence: 0.65, // 0–1 thin-film iridescence vividness
 };
 
 // FFT and decay constants

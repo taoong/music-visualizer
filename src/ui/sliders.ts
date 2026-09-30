@@ -378,6 +378,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'massless-void',  key: 'masslessVoid' },
     { id: 'massless-drift', key: 'masslessDrift' },
     { id: 'massless-glow',  key: 'masslessGlow' },
+    { id: 'gossamer-count',       key: 'gossamerCount' },
+    { id: 'gossamer-flutter',     key: 'gossamerFlutter' },
+    { id: 'gossamer-iridescence', key: 'gossamerIridescence' },
   ] as const;
 
   for (const { id, key } of configs) {

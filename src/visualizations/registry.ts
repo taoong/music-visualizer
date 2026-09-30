@@ -277,4 +277,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   braid:            lazyViz(async () => { const { drawBraid: draw, resetBraid: reset, disposeBraid: dispose } = await import('./braid'); return { draw, reset, dispose }; }, '4', 'Braid'),
   vessels:          lazyViz(async () => { const { drawVessels: draw, resetVessels: reset, disposeVessels: dispose } = await import('./vessels'); return { draw, reset, dispose }; }, 'F17', 'Vessels'),
   massless:         lazyViz(async () => { const { drawMassless: draw, resetMassless: reset, disposeMassless: dispose } = await import('./massless'); return { draw, reset, dispose }; }, 'F18', 'Massless Suns'),
+  gossamer:         lazyViz(async () => { const { drawGossamer: draw, resetGossamer: reset, disposeGossamer: dispose } = await import('./gossamer'); return { draw, reset, dispose }; }, 'F19', 'Gossamer'),
 };

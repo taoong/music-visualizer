@@ -340,6 +340,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   masslessVoid:  'massless-void',
   masslessDrift: 'massless-drift',
   masslessGlow:  'massless-glow',
+  gossamerCount:       'gossamer-count',
+  gossamerFlutter:     'gossamer-flutter',
+  gossamerIridescence: 'gossamer-iridescence',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

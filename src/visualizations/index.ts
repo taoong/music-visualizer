@@ -115,3 +115,4 @@ export { drawKinetic, resetKinetic, disposeKinetic } from './kinetic';
 
 export { drawVessels, resetVessels, disposeVessels } from './vessels';
 export { drawMassless, resetMassless, disposeMassless } from './massless';
+export { drawGossamer, resetGossamer, disposeGossamer } from './gossamer';
