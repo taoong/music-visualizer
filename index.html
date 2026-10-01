@@ -343,6 +343,7 @@
           <option value="vessels">Vessels</option>
           <option value="massless">Massless Suns</option>
           <option value="gossamer">Gossamer</option>
+          <option value="dome">Dome</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4584,6 +4585,45 @@
               step="0.01"
               value="0.65"
               aria-label="Iridescence — thin-film color vividness (0=white glass, 1=vivid soap-bubble)"
+            />
+          </div>
+        </div>
+
+        <div id="dome-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="dome-density">Density</label>
+            <input
+              type="range"
+              id="dome-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Density — geodesic subdivision level (0=coarse 80 faces, 0.5=320, 1=1280 — structural)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="dome-palette">Palette</label>
+            <input
+              type="range"
+              id="dome-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.00"
+              aria-label="Palette — colour temperature (0=warm amber, 1=cool sapphire)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="dome-glow">Glow</label>
+            <input
+              type="range"
+              id="dome-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.60"
+              aria-label="Glow — emissive and bloom intensity (0=dim, 1=full luminance)"
             />
           </div>
         </div>

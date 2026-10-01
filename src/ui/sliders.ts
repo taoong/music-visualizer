@@ -381,6 +381,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'gossamer-count',       key: 'gossamerCount' },
     { id: 'gossamer-flutter',     key: 'gossamerFlutter' },
     { id: 'gossamer-iridescence', key: 'gossamerIridescence' },
+    { id: 'dome-density', key: 'domeDensity' },
+    { id: 'dome-palette', key: 'domePalette' },
+    { id: 'dome-glow',    key: 'domeGlow' },
   ] as const;
 
   for (const { id, key } of configs) {

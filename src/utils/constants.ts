@@ -591,6 +591,10 @@ export const DEFAULT_CONFIG = {
   gossamerCount:       0.42, // 0–1 → 4–21 membrane planes (structural)
   gossamerFlutter:     0.50, // 0–1 audio displacement amplitude
   gossamerIridescence: 0.65, // 0–1 thin-film iridescence vividness
+  // Dome
+  domeDensity: 0.45, // 0–1 → geodesic subdivision detail 1/2/3 (structural)
+  domePalette: 0.00, // 0–1 warm amber → cool sapphire colour temperature
+  domeGlow:    0.60, // 0–1 emissive + bloom intensity
 };
 
 // FFT and decay constants

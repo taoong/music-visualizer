@@ -343,6 +343,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   gossamerCount:       'gossamer-count',
   gossamerFlutter:     'gossamer-flutter',
   gossamerIridescence: 'gossamer-iridescence',
+  domeDensity: 'dome-density',
+  domePalette: 'dome-palette',
+  domeGlow:    'dome-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
