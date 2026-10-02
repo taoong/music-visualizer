@@ -595,6 +595,10 @@ export const DEFAULT_CONFIG = {
   domeDensity: 0.45, // 0–1 → geodesic subdivision detail 1/2/3 (structural)
   domePalette: 0.00, // 0–1 warm amber → cool sapphire colour temperature
   domeGlow:    0.60, // 0–1 emissive + bloom intensity
+  // Torque
+  torquePlates: 0.50,
+  torqueLean:   0.55,
+  torquePatina: 0.35,
 };
 
 // FFT and decay constants

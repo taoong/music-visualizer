@@ -384,6 +384,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'dome-density', key: 'domeDensity' },
     { id: 'dome-palette', key: 'domePalette' },
     { id: 'dome-glow',    key: 'domeGlow' },
+    { id: 'torque-plates', key: 'torquePlates' },
+    { id: 'torque-lean',   key: 'torqueLean'   },
+    { id: 'torque-patina', key: 'torquePatina' },
   ] as const;
 
   for (const { id, key } of configs) {

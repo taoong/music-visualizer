@@ -346,6 +346,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   domeDensity: 'dome-density',
   domePalette: 'dome-palette',
   domeGlow:    'dome-glow',
+  torquePlates: 'torque-plates',
+  torqueLean:   'torque-lean',
+  torquePatina: 'torque-patina',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
