@@ -387,6 +387,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'torque-plates', key: 'torquePlates' },
     { id: 'torque-lean',   key: 'torqueLean'   },
     { id: 'torque-patina', key: 'torquePatina' },
+    { id: 'tomography-density', key: 'tomographyDensity' },
+    { id: 'tomography-shape',   key: 'tomographyShape'   },
+    { id: 'tomography-glow',    key: 'tomographyGlow'    },
+    { id: 'tomography-palette', key: 'tomographyPalette' },
   ] as const;
 
   for (const { id, key } of configs) {

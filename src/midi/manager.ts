@@ -349,6 +349,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   torquePlates: 'torque-plates',
   torqueLean:   'torque-lean',
   torquePatina: 'torque-patina',
+  tomographyDensity: 'tomography-density',
+  tomographyShape:   'tomography-shape',
+  tomographyGlow:    'tomography-glow',
+  tomographyPalette: 'tomography-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -599,6 +599,11 @@ export const DEFAULT_CONFIG = {
   torquePlates: 0.50,
   torqueLean:   0.55,
   torquePatina: 0.35,
+
+  tomographyDensity: 0.50, // 0–1 → 3–20 scan planes (structural)
+  tomographyShape:   0.30, // 0–1 → sphere → torus → figure-8 (structural)
+  tomographyGlow:    0.30, // 0–1 → contour line width
+  tomographyPalette: 0.00, // 0–1 → cold blue → phosphor green → warm amber
 };
 
 // FFT and decay constants

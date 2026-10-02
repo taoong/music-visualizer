@@ -172,6 +172,7 @@ const ALL_CONTROL_IDS = [
   'gossamer-controls-group',
   'dome-controls-group',
   'torque-controls-group',
+  'tomography-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -297,6 +298,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   gossamer:         { show: ['gossamer-controls-group'] },
   dome:             { show: ['dome-controls-group'] },
   torque:           { show: ['torque-controls-group'] },
+  tomography:       { show: ['tomography-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
