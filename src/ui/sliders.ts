@@ -391,6 +391,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'tomography-shape',   key: 'tomographyShape'   },
     { id: 'tomography-glow',    key: 'tomographyGlow'    },
     { id: 'tomography-palette', key: 'tomographyPalette' },
+
+    { id: 'gyroid-scale', key: 'gyroidScale' },
+    { id: 'gyroid-warp',  key: 'gyroidWarp'  },
+    { id: 'gyroid-film',  key: 'gyroidFilm'  },
   ] as const;
 
   for (const { id, key } of configs) {

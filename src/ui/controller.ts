@@ -173,6 +173,7 @@ const ALL_CONTROL_IDS = [
   'dome-controls-group',
   'torque-controls-group',
   'tomography-controls-group',
+  'gyroid-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -299,6 +300,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   dome:             { show: ['dome-controls-group'] },
   torque:           { show: ['torque-controls-group'] },
   tomography:       { show: ['tomography-controls-group'] },
+  gyroid:           { show: ['gyroid-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

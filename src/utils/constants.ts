@@ -604,6 +604,10 @@ export const DEFAULT_CONFIG = {
   tomographyShape:   0.30, // 0–1 → sphere → torus → figure-8 (structural)
   tomographyGlow:    0.30, // 0–1 → contour line width
   tomographyPalette: 0.00, // 0–1 → cold blue → phosphor green → warm amber
+
+  gyroidScale: 0.50, // 0–1 → gyroid spatial frequency (small=wide tunnels, large=tight lattice)
+  gyroidWarp:  0.50, // 0–1 → audio warp strength
+  gyroidFilm:  0.50, // 0–1 → thin-film iridescence intensity
 };
 
 // FFT and decay constants

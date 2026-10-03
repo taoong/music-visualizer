@@ -353,6 +353,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   tomographyShape:   'tomography-shape',
   tomographyGlow:    'tomography-glow',
   tomographyPalette: 'tomography-palette',
+
+  gyroidScale: 'gyroid-scale',
+  gyroidWarp:  'gyroid-warp',
+  gyroidFilm:  'gyroid-film',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
