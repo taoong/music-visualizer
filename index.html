@@ -347,6 +347,7 @@
           <option value="torque">Torque</option>
           <option value="tomography">Tomography</option>
           <option value="gyroid">Gyroid</option>
+          <option value="descent">Descent</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4677,6 +4678,21 @@
           <div class="slider-group">
             <label for="gyroid-film">Film</label>
             <input type="range" id="gyroid-film" min="0" max="1" step="0.01" value="0.5" aria-label="Film — thin-film iridescence intensity and thickness">
+          </div>
+        </div>
+
+        <div id="descent-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="descent-depth">Depth</label>
+            <input type="range" id="descent-depth" min="0" max="1" step="0.01" value="0.6" aria-label="Depth — fold iterations 3–6 (structural: fewer=fast loose geometry, more=intricate crystal detail)">
+          </div>
+          <div class="slider-group">
+            <label for="descent-warp">Warp</label>
+            <input type="range" id="descent-warp" min="0" max="1" step="0.01" value="0.5" aria-label="Warp — audio deformation strength; 0=static crystal lattice, 1=music fully controls the geometry">
+          </div>
+          <div class="slider-group">
+            <label for="descent-speed">Speed</label>
+            <input type="range" id="descent-speed" min="0" max="1" step="0.01" value="0.35" aria-label="Speed — camera flight velocity through the fractal">
           </div>
         </div>
 

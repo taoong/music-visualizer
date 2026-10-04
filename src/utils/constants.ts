@@ -608,6 +608,10 @@ export const DEFAULT_CONFIG = {
   gyroidScale: 0.50, // 0–1 → gyroid spatial frequency (small=wide tunnels, large=tight lattice)
   gyroidWarp:  0.50, // 0–1 → audio warp strength
   gyroidFilm:  0.50, // 0–1 → thin-film iridescence intensity
+
+  descentDepth: 0.60, // 0–1 → fold iterations 3–6 (structural: fewer=fast, more=intricate)
+  descentWarp:  0.50, // 0–1 → audio deformation strength
+  descentSpeed: 0.35, // 0–1 → camera flight velocity
 };
 
 // FFT and decay constants

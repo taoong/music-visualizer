@@ -395,6 +395,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'gyroid-scale', key: 'gyroidScale' },
     { id: 'gyroid-warp',  key: 'gyroidWarp'  },
     { id: 'gyroid-film',  key: 'gyroidFilm'  },
+
+    { id: 'descent-depth', key: 'descentDepth' },
+    { id: 'descent-warp',  key: 'descentWarp'  },
+    { id: 'descent-speed', key: 'descentSpeed' },
   ] as const;
 
   for (const { id, key } of configs) {

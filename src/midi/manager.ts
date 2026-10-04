@@ -357,6 +357,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   gyroidScale: 'gyroid-scale',
   gyroidWarp:  'gyroid-warp',
   gyroidFilm:  'gyroid-film',
+
+  descentDepth: 'descent-depth',
+  descentWarp:  'descent-warp',
+  descentSpeed: 'descent-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -140,6 +140,7 @@ Open http://localhost:3000. Upload a track or use the built-in sample.
 | F21 | Torque | Richard Serra "Torqued Ellipses" — curved Corten-steel walls, interior camera path, warm sidelight |
 | F22 | Tomography | SDF-based volumetric scan; N GLSL slice planes cut through a morphing implicit surface (sphere→torus→figure-8); orbital camera with beat velocity impulse; cold-blue → phosphor-green → warm-amber palette; UnrealBloomPass + chromatic aberration; sliders: Density (structural), Shape (structural), Glow, Palette |
 | F23 | Gyroid | First-person fly-through of Alan Schoen's gyroid triply-periodic minimal surface; GLSL raymarching; 7 audio bands warp the surface equation; thin-film iridescence; warm white on near-black palette; sliders: Scale (structural), Warp, Film |
+| F24 | Descent | First-person descent into a Mandelbox IFS fractal; GLSL raymarching through infinite box-folded crystal lattice; bass drives fold geometry, mid drives scale; warm key + cool fill lighting; near-monochrome pale-blue on deep indigo-black; sliders: Depth (structural), Warp, Speed |
 
 ## Keyboard Shortcuts
 
