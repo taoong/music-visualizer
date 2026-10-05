@@ -361,6 +361,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   descentDepth: 'descent-depth',
   descentWarp:  'descent-warp',
   descentSpeed: 'descent-speed',
+  driftForm:  'drift-form',
+  driftDecay: 'drift-decay',
+  driftWarp:  'drift-warp',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

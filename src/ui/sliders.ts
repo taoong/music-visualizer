@@ -399,6 +399,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'descent-depth', key: 'descentDepth' },
     { id: 'descent-warp',  key: 'descentWarp'  },
     { id: 'descent-speed', key: 'descentSpeed' },
+
+    { id: 'drift-form',  key: 'driftForm'  },
+    { id: 'drift-decay', key: 'driftDecay' },
+    { id: 'drift-warp',  key: 'driftWarp'  },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -283,4 +283,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   tomography:       lazyViz(async () => { const { drawTomography: draw, resetTomography: reset, disposeTomography: dispose } = await import('./tomography'); return { draw, reset, dispose }; }, 'F22', 'Tomography'),
   gyroid:           lazyViz(async () => { const { drawGyroid: draw, resetGyroid: reset, disposeGyroid: dispose } = await import('./gyroid'); return { draw, reset, dispose }; }, 'F23', 'Gyroid'),
   descent:          lazyViz(async () => { const { drawDescent: draw, resetDescent: reset, disposeDescent: dispose } = await import('./descent'); return { draw, reset, dispose }; }, 'F24', 'Descent'),
+  drift:            lazyViz(async () => { const { drawDrift: draw, resetDrift: reset, disposeDrift: dispose } = await import('./drift'); return { draw, reset, dispose }; }, 'F25', 'Drift'),
 };

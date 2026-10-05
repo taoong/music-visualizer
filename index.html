@@ -348,6 +348,7 @@
           <option value="tomography">Tomography</option>
           <option value="gyroid">Gyroid</option>
           <option value="descent">Descent</option>
+          <option value="drift">Drift</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4693,6 +4694,21 @@
           <div class="slider-group">
             <label for="descent-speed">Speed</label>
             <input type="range" id="descent-speed" min="0" max="1" step="0.01" value="0.35" aria-label="Speed — camera flight velocity through the fractal">
+          </div>
+        </div>
+
+        <div id="drift-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="drift-form">Form</label>
+            <input type="range" id="drift-form" min="0" max="1" step="0.01" value="0.3" aria-label="Form — torus tube radius (structural); 0=razor-thin ring, 1=fat donut">
+          </div>
+          <div class="slider-group">
+            <label for="drift-decay">Decay</label>
+            <input type="range" id="drift-decay" min="0" max="1" step="0.01" value="0.72" aria-label="Decay — feedback persistence; 0=fast fade (clean), 1=very slow fade (accumulating trails)">
+          </div>
+          <div class="slider-group">
+            <label for="drift-warp">Warp</label>
+            <input type="range" id="drift-warp" min="0" max="1" step="0.01" value="0.5" aria-label="Warp — vertex displacement amplitude driven by feedback brightness; 0=smooth surface, 1=turbulent ripple">
           </div>
         </div>
 
