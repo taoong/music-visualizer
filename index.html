@@ -349,6 +349,7 @@
           <option value="gyroid">Gyroid</option>
           <option value="descent">Descent</option>
           <option value="drift">Drift</option>
+          <option value="gridwarp">Grid Warp</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4709,6 +4710,21 @@
           <div class="slider-group">
             <label for="drift-warp">Warp</label>
             <input type="range" id="drift-warp" min="0" max="1" step="0.01" value="0.5" aria-label="Warp — vertex displacement amplitude driven by feedback brightness; 0=smooth surface, 1=turbulent ripple">
+          </div>
+        </div>
+
+        <div id="gridwarp-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="gridwarp-density">Density</label>
+            <input type="range" id="gridwarp-density" min="0" max="1" step="0.01" value="0.45" aria-label="Density — grid resolution (structural); 0=coarse lattice, 1=fine mesh">
+          </div>
+          <div class="slider-group">
+            <label for="gridwarp-warp">Warp</label>
+            <input type="range" id="gridwarp-warp" min="0" max="1" step="0.01" value="0.55" aria-label="Warp — displacement budget and audio pull sensitivity; 0=subtle, 1=extreme bulge">
+          </div>
+          <div class="slider-group">
+            <label for="gridwarp-flow">Flow</label>
+            <input type="range" id="gridwarp-flow" min="0" max="1" step="0.01" value="0.35" aria-label="Flow — ambient drift speed and node response rate; 0=slow settle, 1=fast snap">
           </div>
         </div>
 

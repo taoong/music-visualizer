@@ -176,6 +176,7 @@ const ALL_CONTROL_IDS = [
   'gyroid-controls-group',
   'descent-controls-group',
   'drift-controls-group',
+  'gridwarp-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -305,6 +306,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   gyroid:           { show: ['gyroid-controls-group'] },
   descent:          { show: ['descent-controls-group'] },
   drift:            { show: ['drift-controls-group'] },
+  gridwarp:         { show: ['gridwarp-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

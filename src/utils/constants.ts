@@ -616,6 +616,10 @@ export const DEFAULT_CONFIG = {
   driftForm:  0.30, // 0–1 → torus tube radius 0.20–1.10 (structural)
   driftDecay: 0.72, // 0–1 → feedback persistence (0=fast fade, 1=very long)
   driftWarp:  0.50, // 0–1 → vertex displacement amplitude from feedback brightness
+  // Grid Warp
+  gridwarpDensity: 0.45, // 0–1 → grid resolution (structural)
+  gridwarpWarp:    0.55, // 0–1 → displacement budget / audio pull sensitivity
+  gridwarpFlow:    0.35, // 0–1 → ambient drift speed / node response rate
 };
 
 // FFT and decay constants

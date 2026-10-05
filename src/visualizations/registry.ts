@@ -105,6 +105,7 @@ import { drawMeander, resetMeander } from './meander';
 import { drawAggregation, resetAggregation } from './aggregation';
 import { drawHopf, resetHopf } from './hopf';
 import { drawReticulae, resetReticulae } from './reticulae';
+import { drawGridwarp, resetGridwarp } from './gridwarp';
 import { interactBlobs } from './blobs';
 import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
@@ -284,4 +285,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   gyroid:           lazyViz(async () => { const { drawGyroid: draw, resetGyroid: reset, disposeGyroid: dispose } = await import('./gyroid'); return { draw, reset, dispose }; }, 'F23', 'Gyroid'),
   descent:          lazyViz(async () => { const { drawDescent: draw, resetDescent: reset, disposeDescent: dispose } = await import('./descent'); return { draw, reset, dispose }; }, 'F24', 'Descent'),
   drift:            lazyViz(async () => { const { drawDrift: draw, resetDrift: reset, disposeDrift: dispose } = await import('./drift'); return { draw, reset, dispose }; }, 'F25', 'Drift'),
+  gridwarp:         { draw: drawGridwarp,     reset: resetGridwarp,      key: 'F9', label: 'Grid Warp' },
 };

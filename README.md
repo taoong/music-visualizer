@@ -142,6 +142,7 @@ Open http://localhost:3000. Upload a track or use the built-in sample.
 | F23 | Gyroid | First-person fly-through of Alan Schoen's gyroid triply-periodic minimal surface; GLSL raymarching; 7 audio bands warp the surface equation; thin-film iridescence; warm white on near-black palette; sliders: Scale (structural), Warp, Film |
 | F24 | Descent | First-person descent into a Mandelbox IFS fractal; GLSL raymarching through infinite box-folded crystal lattice; bass drives fold geometry, mid drives scale; warm key + cool fill lighting; near-monochrome pale-blue on deep indigo-black; sliders: Depth (structural), Warp, Speed |
 | — | Drift | Ping-pong FBO feedback texture mapped onto a 3D torus; freq bands inject warm-amber (bass) → cool blue-white (treble) streaks into the feedback loop; UV scroll creates orbiting color wash on the surface; vertex displacement from feedback brightness corrugates the mesh; UnrealBloomPass desktop; sliders: Form (tube radius — structural), Decay, Warp |
+| F9 | Grid Warp | Live mesh grid bends space itself; nodes ease continuously toward a target built from Perlin drift plus a per-band pull (sub-bass=left → brilliance=right); beats add a decaying radial pressure wave instead of snapping; no image = glowing cyan/white wireframe lattice; with an uploaded image, the image warps through the mesh via per-triangle affine texture mapping; sliders: Density (grid resolution — structural), Warp, Flow |
 
 ## Keyboard Shortcuts
 

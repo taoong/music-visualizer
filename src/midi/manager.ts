@@ -364,6 +364,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   driftForm:  'drift-form',
   driftDecay: 'drift-decay',
   driftWarp:  'drift-warp',
+  gridwarpDensity: 'gridwarp-density',
+  gridwarpWarp:    'gridwarp-warp',
+  gridwarpFlow:    'gridwarp-flow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
