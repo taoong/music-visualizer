@@ -177,6 +177,7 @@ const ALL_CONTROL_IDS = [
   'descent-controls-group',
   'drift-controls-group',
   'gridwarp-controls-group',
+  'heliograph-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -307,6 +308,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   descent:          { show: ['descent-controls-group'] },
   drift:            { show: ['drift-controls-group'] },
   gridwarp:         { show: ['gridwarp-controls-group'] },
+  heliograph:       { show: ['heliograph-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

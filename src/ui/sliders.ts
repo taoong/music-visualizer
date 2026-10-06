@@ -406,6 +406,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'gridwarp-density', key: 'gridwarpDensity' },
     { id: 'gridwarp-warp',    key: 'gridwarpWarp'    },
     { id: 'gridwarp-flow',    key: 'gridwarpFlow'    },
+    { id: 'heliograph-spread', key: 'heliographSpread' },
+    { id: 'heliograph-polish', key: 'heliographPolish' },
+    { id: 'heliograph-depth',  key: 'heliographDepth'  },
   ] as const;
 
   for (const { id, key } of configs) {

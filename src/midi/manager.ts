@@ -367,6 +367,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   gridwarpDensity: 'gridwarp-density',
   gridwarpWarp:    'gridwarp-warp',
   gridwarpFlow:    'gridwarp-flow',
+  heliographSpread: 'heliograph-spread',
+  heliographPolish: 'heliograph-polish',
+  heliographDepth:  'heliograph-depth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

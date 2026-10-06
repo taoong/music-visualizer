@@ -620,6 +620,10 @@ export const DEFAULT_CONFIG = {
   gridwarpDensity: 0.45, // 0–1 → grid resolution (structural)
   gridwarpWarp:    0.55, // 0–1 → displacement budget / audio pull sensitivity
   gridwarpFlow:    0.35, // 0–1 → ambient drift speed / node response rate
+  // Heliograph
+  heliographSpread: 0.55, // 0–1 → arc span 28°–144° (structural)
+  heliographPolish: 0.70, // 0–1 → roughness: 0=matte aluminium, 1=perfect mirror (structural)
+  heliographDepth:  0.60, // 0–1 → audio-driven vertex displacement amplitude
 };
 
 // FFT and decay constants

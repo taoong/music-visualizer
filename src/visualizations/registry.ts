@@ -286,4 +286,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   descent:          lazyViz(async () => { const { drawDescent: draw, resetDescent: reset, disposeDescent: dispose } = await import('./descent'); return { draw, reset, dispose }; }, 'F24', 'Descent'),
   drift:            lazyViz(async () => { const { drawDrift: draw, resetDrift: reset, disposeDrift: dispose } = await import('./drift'); return { draw, reset, dispose }; }, 'F25', 'Drift'),
   gridwarp:         { draw: drawGridwarp,     reset: resetGridwarp,      key: 'F9', label: 'Grid Warp' },
+  heliograph:       lazyViz(async () => { const { drawHeliograph: draw, resetHeliograph: reset, disposeHeliograph: dispose } = await import('./heliograph'); return { draw, reset, dispose }; }, 'F26', 'Heliograph'),
 };
