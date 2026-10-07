@@ -624,6 +624,10 @@ export const DEFAULT_CONFIG = {
   heliographSpread: 0.55, // 0–1 → arc span 28°–144° (structural)
   heliographPolish: 0.70, // 0–1 → roughness: 0=matte aluminium, 1=perfect mirror (structural)
   heliographDepth:  0.60, // 0–1 → audio-driven vertex displacement amplitude
+  // Tidal
+  tidalSwell:   0.40, // 0–1 → 0=long deep swells, 1=short choppy chop (structural)
+  tidalScale:   0.45, // 0–1 → wave height amplitude
+  tidalShimmer: 0.60, // 0–1 → specular shininess + bloom intensity
 };
 
 // FFT and decay constants

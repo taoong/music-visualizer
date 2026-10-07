@@ -351,6 +351,7 @@
           <option value="drift">Drift</option>
           <option value="gridwarp">Grid Warp</option>
           <option value="heliograph">Heliograph</option>
+          <option value="tidal">Tidal</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4741,6 +4742,21 @@
           <div class="slider-group">
             <label for="heliograph-depth">Depth</label>
             <input type="range" id="heliograph-depth" min="0" max="1" step="0.01" value="0.6" aria-label="Depth — audio vertex-displacement amplitude; 0=flat panels, 1=deeply deformed waves">
+          </div>
+        </div>
+
+        <div id="tidal-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="tidal-swell">Swell</label>
+            <input type="range" id="tidal-swell" min="0" max="1" step="0.01" value="0.4" aria-label="Swell — wave spatial frequency (structural); 0=long deep ocean swells, 1=short choppy chop">
+          </div>
+          <div class="slider-group">
+            <label for="tidal-scale">Scale</label>
+            <input type="range" id="tidal-scale" min="0" max="1" step="0.01" value="0.45" aria-label="Scale — wave height amplitude; 0=mirror-calm, 1=storm surge">
+          </div>
+          <div class="slider-group">
+            <label for="tidal-shimmer">Shimmer</label>
+            <input type="range" id="tidal-shimmer" min="0" max="1" step="0.01" value="0.6" aria-label="Shimmer — specular shininess and bloom intensity; 0=matte, 1=mirror highlights with strong bloom">
           </div>
         </div>
 

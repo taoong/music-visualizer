@@ -409,6 +409,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'heliograph-spread', key: 'heliographSpread' },
     { id: 'heliograph-polish', key: 'heliographPolish' },
     { id: 'heliograph-depth',  key: 'heliographDepth'  },
+    { id: 'tidal-swell',   key: 'tidalSwell'   },
+    { id: 'tidal-scale',   key: 'tidalScale'   },
+    { id: 'tidal-shimmer', key: 'tidalShimmer' },
   ] as const;
 
   for (const { id, key } of configs) {

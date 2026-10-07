@@ -370,6 +370,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   heliographSpread: 'heliograph-spread',
   heliographPolish: 'heliograph-polish',
   heliographDepth:  'heliograph-depth',
+  tidalSwell:   'tidal-swell',
+  tidalScale:   'tidal-scale',
+  tidalShimmer: 'tidal-shimmer',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
