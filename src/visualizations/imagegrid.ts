@@ -167,7 +167,7 @@ function setup(): void {
   const res = new THREE.Vector2(window.innerWidth, window.innerHeight);
   composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  composer.addPass(new UnrealBloomPass(res, 1.2, 0.4, 0.1));
+  composer.addPass(new UnrealBloomPass(res, 1.2, 0.4, 0.3));
   composer.addPass(new OutputPass());
 
   // Hide canvas when switching away from this viz
@@ -271,7 +271,7 @@ export function drawImageGrid(_p: unknown, dt: number): void {
 
     targetH += wave;
     mesh.scale.y += (targetH - mesh.scale.y) * 0.25 * dt;
-    topMat.emissiveIntensity = Math.max(0, Math.min(2, 0.15 + amp * 1.5 + (wave / BEAT_LIFT) * 1.2));
+    topMat.emissiveIntensity = Math.max(0, Math.min(1.1, 0.12 + amp * 0.75 + (wave / BEAT_LIFT) * 0.6));
   }
 
   // Camera orbit — bird's-eye angle, slow rotation driven by rotationSpeed

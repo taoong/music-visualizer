@@ -56,3 +56,23 @@ export function getBandAverages(bandCount: number): { amps: number[]; transients
 export function getFillDim(w: number, h: number): number {
   return w >= h ? Math.min(w, h) : w + (h - w) * 0.5;
 }
+
+/**
+ * A fixed vertical FOV gives a much narrower horizontal FOV on a tall
+ * portrait screen than on a wide desktop one, so a Three.js subject framed
+ * comfortably on desktop can fall partly or entirely outside the horizontal
+ * frustum on mobile — leaving the camera filling the screen with the
+ * subject's surface edge-to-edge, or cropping it out of frame. Widens the
+ * vertical FOV as aspect narrows so the effective horizontal FOV — and thus
+ * how much of the subject is actually in view — stays roughly constant.
+ *
+ * @param baseFov    vertical FOV (degrees) the scene was tuned against
+ * @param aspect     camera.aspect (width / height)
+ * @param refAspect  the aspect baseFov was tuned for (default: a typical desktop ~16:9-ish canvas)
+ */
+export function fovForAspect(baseFov: number, aspect: number, refAspect = 1.7): number {
+  if (aspect >= refAspect) return baseFov;
+  const refHorizHalf = Math.atan(Math.tan((baseFov * Math.PI / 180) / 2) * refAspect);
+  const vFovRad = 2 * Math.atan(Math.tan(refHorizHalf) / aspect);
+  return Math.min(100, vFovRad * 180 / Math.PI);
+}

@@ -8,7 +8,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GlitchPass } from 'three/addons/postprocessing/GlitchPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { store } from '../state/store';
-import { getBandAverages } from './helpers';
+import { getBandAverages, fovForAspect } from './helpers';
 import { getUserImageUrl } from './userImage';
 import { isMobile } from '../utils/constants';
 
@@ -106,7 +106,10 @@ function setup(): void {
 
   // Scene + camera
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+  {
+    const aspect = window.innerWidth / window.innerHeight;
+    camera = new THREE.PerspectiveCamera(fovForAspect(45, aspect), aspect, 0.1, 100);
+  }
   camera.position.set(0, 0, 3.5);
 
   // Environment map (interior HDR, no file needed)
@@ -284,7 +287,11 @@ export function resetLiquidMetal(): void {
   const w = window.innerWidth;
   const h = window.innerHeight;
   renderer?.setSize(w, h);
-  if (camera) { camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  if (camera) {
+    camera.aspect = w / h;
+    camera.fov    = fovForAspect(45, camera.aspect);
+    camera.updateProjectionMatrix();
+  }
   composer?.setSize(w, h);
 }
 

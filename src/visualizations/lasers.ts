@@ -101,6 +101,10 @@ function drawSegment(
   hue: number, brightness: number
 ): void {
   const b = Math.min(brightness, 1.0);
+  // Stroke weights below were tuned against a ~1600px-wide desktop canvas;
+  // scale them to the actual canvas width so beams stay thin, distinct lines
+  // instead of fusing into a couple of solid blocks on a narrow mobile canvas.
+  const swScale = Math.min(1, p.width / 1600);
   // Passes: [strokeWeight, alpha%, saturation%]
   const passes: [number, number, number][] = [
     [60,  2 * b,  70],  // very wide outer haze
@@ -112,7 +116,7 @@ function drawSegment(
   ];
   for (const [sw, alpha, sat] of passes) {
     (p as any).stroke(hue, sat, 100, alpha);
-    p.strokeWeight(sw);
+    p.strokeWeight(Math.max(sw * swScale, sw * 0.25));
     p.line(x1, y1, x2, y2);
   }
   // Bright dot at start point to simulate scanner aperture

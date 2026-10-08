@@ -193,7 +193,7 @@ export function drawBlobs(p: P5Instance, dt: number): void {
         const dx = fx - blobs[i].x;
         const dy = fy - blobs[i].y;
         const r2 = dx * dx + dy * dy;
-        const radius = 0.05 + amps[i] * 0.18;
+        const radius = isMobile ? 0.03 + amps[i] * 0.10 : 0.05 + amps[i] * 0.18;
         const w = (radius * radius) / (r2 + 0.0001);
         field += w;
         if (w > dominantW) { dominantW = w; dominantBand = i; }

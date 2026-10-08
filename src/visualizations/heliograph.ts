@@ -20,7 +20,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { store } from '../state/store';
-import { getBandAverages } from './helpers';
+import { getBandAverages, fovForAspect } from './helpers';
 import { isMobile } from '../utils/constants';
 
 // ── Module state ──────────────────────────────────────────────────────────────
@@ -250,7 +250,10 @@ function setup(): void {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x060606);
 
-  camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 60);
+  {
+    const aspect = window.innerWidth / window.innerHeight;
+    camera = new THREE.PerspectiveCamera(fovForAspect(52, aspect), aspect, 0.1, 60);
+  }
   camera.position.set(0, 1.5, 9.5);
   camera.lookAt(0, 0.5, 0);
 
@@ -351,7 +354,11 @@ export function resetHeliograph(): void {
   const w = window.innerWidth;
   const h = window.innerHeight;
   renderer?.setSize(w, h);
-  if (camera) { camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  if (camera) {
+    camera.aspect = w / h;
+    camera.fov    = fovForAspect(52, camera.aspect);
+    camera.updateProjectionMatrix();
+  }
   composer?.setSize(w, h);
 }
 

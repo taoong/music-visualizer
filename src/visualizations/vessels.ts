@@ -11,7 +11,7 @@
 import * as THREE from 'three';
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, fovForAspect } from './helpers';
 import { isMobile } from '../utils/constants';
 
 // ── Palette: 7 liquid hues from warm amber to cold crystal ──────────────────
@@ -103,9 +103,10 @@ function setup(): void {
   scene.background = new THREE.Color(0x07090d);
   scene.fog = new THREE.FogExp2(0x07090d, 0.07);
 
-  camera = new THREE.PerspectiveCamera(
-    42, window.innerWidth / window.innerHeight, 0.1, 80,
-  );
+  {
+    const aspect = window.innerWidth / window.innerHeight;
+    camera = new THREE.PerspectiveCamera(fovForAspect(42, aspect), aspect, 0.1, 80);
+  }
 
   // ── Lights ───────────────────────────────────────────────────────────────
 
@@ -318,6 +319,7 @@ export function resetVessels(): void {
   renderer?.setSize(w, h);
   if (camera) {
     camera.aspect = w / h;
+    camera.fov    = fovForAspect(42, camera.aspect);
     camera.updateProjectionMatrix();
   }
 }

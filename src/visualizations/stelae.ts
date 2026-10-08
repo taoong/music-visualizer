@@ -17,7 +17,7 @@
 import * as THREE from 'three';
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, fovForAspect } from './helpers';
 import { isMobile } from '../utils/constants';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -129,7 +129,7 @@ function setup(): void {
   sceneFog    = new THREE.Fog(0x07060a, 6, 36);
   scene.fog   = sceneFog;
 
-  camera = new THREE.PerspectiveCamera(CAM_FOV, w / h, 0.2, 60);
+  camera = new THREE.PerspectiveCamera(fovForAspect(CAM_FOV, w / h), w / h, 0.2, 60);
   camera.position.set(0, CAM_EYE_Y, 0);
 
   // Hemisphere fill — very dim
@@ -279,7 +279,11 @@ export function resetStelae(): void {
   const w = window.innerWidth;
   const h = window.innerHeight;
   renderer?.setSize(w, h);
-  if (camera) { camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  if (camera) {
+    camera.aspect = w / h;
+    camera.fov    = fovForAspect(CAM_FOV, camera.aspect);
+    camera.updateProjectionMatrix();
+  }
 }
 
 // ── Dispose ───────────────────────────────────────────────────────────────────

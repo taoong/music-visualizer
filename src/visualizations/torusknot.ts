@@ -125,7 +125,7 @@ const FRAGMENT_SHADER = /* glsl */`
   vec3 phong(vec3 N, vec3 fragPos, vec3 lPos, vec3 lCol, vec3 viewPos) {
     vec3  L    = normalize(lPos - fragPos);
     float dist = length(lPos - fragPos);
-    float att  = 1.0 / (1.0 + 0.04 * dist + 0.0018 * dist * dist);
+    float att  = 1.0 / (1.0 + 0.02 * dist + 0.0007 * dist * dist);
     float diff = max(dot(N, L), 0.0);
     vec3  V    = normalize(viewPos - fragPos);
     vec3  R    = reflect(-L, N);
@@ -148,7 +148,7 @@ const FRAGMENT_SHADER = /* glsl */`
     );
 
     // Ambient fill (very dark)
-    vec3 color = base * 0.09;
+    vec3 color = base * 0.55;
 
     // Key light (warm, ahead)  +  fill light (cool, behind)
     color += base * phong(N, vWorldPos, uLightAPos, uLightACol, uCamPos);

@@ -21,7 +21,7 @@
 
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, getFillDim } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // Per-band hues: sub-bass=violet → bass=magenta → lo-mid=red → mid=amber → hi-mid=chartreuse → presence=cyan → brilliance=azure
@@ -68,7 +68,7 @@ export function drawIsometric(p: P5Instance, dt: number): void {
   const palette    = config.isometricPalette;  // 0 = night, 1 = day
 
   // Tile width: density=0 → larger tiles (zoomed in), density=1 → smaller (zoomed out)
-  const TILE_W  = (p.width / GRID) * (1.35 - density * 0.60);
+  const TILE_W  = (getFillDim(p.width, p.height) / GRID) * (1.35 - density * 0.60);
   const TILE_H  = TILE_W * 0.5;  // 2:1 isometric ratio
   const MAX_H   = TILE_W * (0.4 + heightSens * 3.8);
 
