@@ -412,6 +412,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'tidal-swell',   key: 'tidalSwell'   },
     { id: 'tidal-scale',   key: 'tidalScale'   },
     { id: 'tidal-shimmer', key: 'tidalShimmer' },
+    { id: 'specter-complexity',   key: 'specterComplexity'   },
+    { id: 'specter-displacement', key: 'specterDisplacement' },
+    { id: 'specter-glow',         key: 'specterGlow'         },
   ] as const;
 
   for (const { id, key } of configs) {

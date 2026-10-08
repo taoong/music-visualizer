@@ -373,6 +373,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   tidalSwell:   'tidal-swell',
   tidalScale:   'tidal-scale',
   tidalShimmer: 'tidal-shimmer',
+  specterComplexity:   'specter-complexity',
+  specterDisplacement: 'specter-displacement',
+  specterGlow:         'specter-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
