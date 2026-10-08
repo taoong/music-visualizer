@@ -212,8 +212,9 @@ export function drawAether(p: P5Instance, dt: number): void {
 
   offscreenCtx.putImageData(imgData, 0, 0);
 
-  (p.drawingContext as CanvasRenderingContext2D).imageSmoothingEnabled = true;
-  p.image(offscreenCanvas as unknown as P5Image, 0, 0, w, h);
+  const ctx = p.drawingContext as CanvasRenderingContext2D;
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(offscreenCanvas!, 0, 0, w, h);
 }
 
 // ── Reset ─────────────────────────────────────────────────────────────────────

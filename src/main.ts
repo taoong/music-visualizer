@@ -27,6 +27,7 @@ import {
   smoothBandBins,
 } from './audio/pipeline';
 import { VIZ_REGISTRY, loadUserImage } from './visualizations';
+import type { VizMode } from './types';
 import { initUI, updateScrubberUI } from './ui/controller';
 import { initKeyboardShortcuts, initSwipeGestures, announceToScreenReader } from './ui/keyboard';
 import { initInteraction } from './ui/interaction';
@@ -76,9 +77,23 @@ const sketch = (p: P5Instance) => {
       VIZ_REGISTRY.highway.reset?.();
     });
 
+    // Three.js visualizations mount their own fixed, full-screen WebGL canvas
+    // on top of the p5 canvas (see e.g. torque.ts). Nothing else ever removes
+    // it, so switching away without disposing the outgoing viz leaves its
+    // last frame permanently stacked over whatever is selected next.
+    let previousVizMode: VizMode = store.state.vizMode;
+    const unsubVizModeChange = store.on('vizModeChange', (data?: unknown) => {
+      const vizMode = data as VizMode;
+      if (vizMode !== previousVizMode) {
+        VIZ_REGISTRY[previousVizMode].dispose?.();
+        previousVizMode = vizMode;
+      }
+    });
+
     // Cleanup on page unload
     window.addEventListener('beforeunload', () => {
       unsubAudioReady();
+      unsubVizModeChange();
       cleanupUI();
       cleanupKeyboard();
       cleanupSwipe();
