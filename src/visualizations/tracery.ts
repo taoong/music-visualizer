@@ -23,7 +23,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, getFillDim } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
 const TWO_PI = Math.PI * 2;
@@ -91,7 +91,7 @@ export function drawTracery(p: P5Instance, dt: number): void {
   // Layout
   const cx   = p.width  / 2;
   const cy   = p.height / 2;
-  const maxR = Math.min(cx, cy) * 0.93;
+  const maxR = getFillDim(cx, cy) * 0.93;
   const rw   = maxR / BAND_COUNT;   // width of each ring
 
   // Reduce panel count on mobile for performance

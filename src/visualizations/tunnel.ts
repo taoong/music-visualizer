@@ -12,13 +12,14 @@ import {
   DELTA_BRIGHTNESS_BOOST,
 } from '../utils/constants';
 import { getUserImage } from './userImage';
+import { getFillDim } from './helpers';
 
 export function drawTunnel(p: P5Instance): void {
   const { audioState } = store;
 
   const cx = p.width / 2;
   const cy = p.height / 2;
-  const minDim = Math.min(p.width, p.height);
+  const minDim = getFillDim(p.width, p.height);
   const maxRadius = minDim * 0.32;
   const minRadius = minDim * 0.03;
   const radiusRange = maxRadius - minRadius;

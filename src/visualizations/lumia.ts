@@ -21,7 +21,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, getFillDim } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
 const BASE_HUES: readonly number[] = [15, 40, 60, 170, 220, 275, 325];
@@ -109,7 +109,7 @@ export function drawLumia(p: P5Instance, dt: number): void {
 
   const w = p.width;
   const h = p.height;
-  const minDim = Math.min(w, h);
+  const minDim = getFillDim(w, h);
 
   const formCount = Math.round(4 + config.lumiaForms * 10);
   const driftSpeed = 0.001 + config.lumiaDrift * 0.006;

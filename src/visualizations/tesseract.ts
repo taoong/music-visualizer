@@ -16,7 +16,7 @@
 
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, getFillDim } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // ── Tesseract geometry ─────────────────────────────────────────────────────
@@ -185,7 +185,7 @@ export function drawTesseract(p: P5Instance, dt: number): void {
 
   const cx    = p.width  * 0.5;
   const cy    = p.height * 0.5;
-  const baseR = Math.min(p.width, p.height) * 0.38;
+  const baseR = getFillDim(p.width, p.height) * 0.38;
   const w4d   = 2.5;  // 4D viewer distance
   const z3d   = 2.5;  // 3D viewer distance
 

@@ -107,14 +107,14 @@ const FEEDBACK_FRAG = /* glsl */`
       float bandU = (float(b) + 0.5) / 7.0;
       float dist  = abs(vUv.x - bandU);
       // Gaussian stripe; sigma controls width
-      float stripe = exp(-dist * dist * 3500.0) * uBands[b] * 3.0;
+      float stripe = exp(-dist * dist * 3500.0) * uBands[b] * 0.35;
       inject += bandColor(b) * stripe;
     }
 
     // Beat: warm white flash injected uniformly across the surface
-    inject += vec3(1.0, 0.88, 0.65) * uBeatPulse * 0.65;
+    inject += vec3(1.0, 0.88, 0.65) * uBeatPulse * 0.05;
 
-    gl_FragColor = vec4(clamp(prev + inject, 0.0, 4.0), 1.0);
+    gl_FragColor = vec4(clamp(prev + inject, 0.0, 1.3), 1.0);
   }
 `;
 
@@ -340,7 +340,7 @@ export function drawDrift(_p: unknown, dt: number): void {
   uScrollV.value = scrollV;
 
   // Decay: 0 → fast fade (0.88), 1 → very persistent (0.99)
-  uDecay.value = 0.88 + store.config.driftDecay * 0.11;
+  uDecay.value = 0.75 + store.config.driftDecay * 0.15;
 
   // Warp: vertex displacement driven by feedback brightness
   uWarp.value = store.config.driftWarp * 0.55;

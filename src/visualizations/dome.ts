@@ -102,11 +102,11 @@ const FRAG = /* glsl */`
     vec3  col  = bandColor(idx);
 
     // minimal structure ambient
-    float ambient  = 0.018;
+    float ambient  = 0.035;
     // audio-driven emissive
-    float emissive = amp * uGlow * 2.2;
+    float emissive = amp * uGlow * 0.32;
     // beat flash: warm white surge across entire dome
-    float flash    = uBeatFlash * 0.55;
+    float flash    = uBeatFlash * 0.18;
     // subtle normal shading for face depth (virtual top-left key light)
     vec3  ld       = normalize(vec3(0.4, 1.0, 0.6));
     float diffuse  = max(0.0, dot(vNormal, ld)) * 0.10;
@@ -183,7 +183,7 @@ function setup(): void {
     vertexShader:   VERT,
     fragmentShader: FRAG,
     uniforms: { uBands, uBeatFlash, uPalette, uGlow },
-    side: THREE.FrontSide,
+    side: THREE.BackSide,
   });
 
   domeMesh = new THREE.Mesh(domeGeo, domeMat);
@@ -202,7 +202,7 @@ function setup(): void {
   composer.addPass(new RenderPass(scene, camera));
   if (!isMobile) {
     const res = new THREE.Vector2(window.innerWidth, window.innerHeight);
-    composer.addPass(new UnrealBloomPass(res, 0.5, 0.45, 0.08));
+    composer.addPass(new UnrealBloomPass(res, 0.25, 0.45, 0.5));
   }
   composer.addPass(new OutputPass());
 

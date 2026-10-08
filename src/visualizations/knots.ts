@@ -24,7 +24,7 @@
  */
 
 import { store } from '../state/store';
-import { getBandAverages } from './helpers';
+import { getBandAverages, getFillDim } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
 const CURVE_PTS = isMobile ? 150 : 300;
@@ -118,7 +118,7 @@ export function drawKnots(p: P5Instance, dt: number): void {
 
   const w = p.width, h = p.height;
   const cx = w / 2, cy = h / 2;
-  const minDim = Math.min(w, h);
+  const minDim = getFillDim(w, h);
   const fov = minDim * 0.9;
 
   // Audio-reactive torus radii: bass drives overall size, sub drives tube girth

@@ -23,8 +23,24 @@ const PANEL_HEIGHT    = 20;
 const CIRCLE_RADIUS   = 22;
 const CAMERA_DIST_FAR  = 55;     // zoom slider = 0
 const CAMERA_DIST_NEAR = 25;     // zoom slider = 1
-const FOV             = 45;
+const FOV             = 45;   // vertical FOV, tuned for a desktop-wide aspect
+const FOV_REF_ASPECT  = 1.7;  // the aspect FOV was tuned against
 const CAMERA_LERP     = 0.04;
+
+/**
+ * A fixed vertical FOV gives a much narrower horizontal FOV on a tall portrait
+ * screen than on a wide desktop one, so panels framed comfortably on desktop
+ * can fall almost entirely outside the frustum on mobile — leaving the camera
+ * staring at nothing but one panel's flat colour edge-to-edge. Widen the
+ * vertical FOV as aspect narrows so the effective horizontal FOV — and thus
+ * how much of a panel is actually in view — stays roughly constant.
+ */
+function fovForAspect(aspect: number): number {
+  if (aspect >= FOV_REF_ASPECT) return FOV;
+  const refHorizHalf = Math.atan(Math.tan((FOV * Math.PI / 180) / 2) * FOV_REF_ASPECT);
+  const vFovRad = 2 * Math.atan(Math.tan(refHorizHalf) / aspect);
+  return Math.min(100, vFovRad * 180 / Math.PI);
+}
 const INWARD_TILT     = 0.26;    // ~15° inward tilt
 const TILT_RANGE      = 0.087;   // ±5° Y-rotation from audio
 const SPACING_PULSE   = 2;       // max radius increase on bass hit
@@ -112,7 +128,10 @@ function setup(): void {
   scene.background = new THREE.Color(0x050510);
 
   // Camera
-  camera = new THREE.PerspectiveCamera(FOV, window.innerWidth / window.innerHeight, 0.1, 500);
+  {
+    const aspect = window.innerWidth / window.innerHeight;
+    camera = new THREE.PerspectiveCamera(fovForAspect(aspect), aspect, 0.1, 500);
+  }
 
   // Lights — bright enough to clearly show image textures on vertical panels
   ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
@@ -394,7 +413,11 @@ export function resetSculpture(): void {
   const w = window.innerWidth;
   const h = window.innerHeight;
   renderer?.setSize(w, h);
-  if (camera) { camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  if (camera) {
+    camera.aspect = w / h;
+    camera.fov    = fovForAspect(camera.aspect);
+    camera.updateProjectionMatrix();
+  }
   composer?.setSize(w, h);
 }
 

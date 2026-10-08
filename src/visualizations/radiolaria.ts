@@ -15,7 +15,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, getFillDim } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // ── Palette: warm amber core → teal → violet rim ────────────────────────────
@@ -52,7 +52,7 @@ export function drawRadiolaria(p: P5Instance, dt: number): void {
 
   const cx   = p.width  * 0.5;
   const cy   = p.height * 0.5;
-  const maxR = Math.min(p.width, p.height) * (isMobile ? 0.38 : 0.43);
+  const maxR = getFillDim(p.width, p.height) * (isMobile ? 0.38 : 0.43);
 
   // Ring layout: innermost ring radius + spacing between rings
   const innerR = maxR * 0.10;

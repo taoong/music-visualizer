@@ -69,7 +69,7 @@ function buildCamPath(n: number): void {
   for (let i = 0; i < STEPS; i++) {
     const t   = i / STEPS;
     const ang = t * Math.PI * 2 * 2.3;              // 2.3 orbits total
-    const weave = 0.45 * Math.sin(t * Math.PI * 2 * n); // weave count = plate count
+    const weave = 0.2 * Math.sin(t * Math.PI * 2 * n); // weave count = plate count
     const r = rBase + weave;
     camPathPoints.push(new THREE.Vector3(
       Math.cos(ang) * r,
@@ -93,7 +93,7 @@ function rebuildPlates(n: number, patina: number): void {
   plateBaseRotZ.length  = 0;
   platePosAngle.length  = 0;
 
-  const PLATE_RADIUS = 3.1;
+  const PLATE_RADIUS = 4.8;
 
   for (let i = 0; i < n; i++) {
     const ang = (i / n) * Math.PI * 2;
@@ -157,7 +157,7 @@ function setup(): void {
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x050506);
-  scene.fog        = new THREE.FogExp2(0x050506, 0.075);
+  scene.fog        = new THREE.FogExp2(0x050506, 0.05);
 
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 50);
 

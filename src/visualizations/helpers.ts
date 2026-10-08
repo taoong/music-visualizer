@@ -42,3 +42,17 @@ export function getBandAverages(bandCount: number): { amps: number[]; transients
 
   return { amps, transients, deltas };
 }
+
+/**
+ * A "fill dimension" for sizing centred compositions (circles, mandalas,
+ * grids) against the canvas. Plain `Math.min(w, h)` looks right on a wide
+ * desktop canvas (sizes to the height, fills nicely) but on a tall portrait
+ * mobile canvas it sizes to the much narrower width, leaving the composition
+ * small and centred with large empty margins top and bottom. On portrait
+ * canvases this blends the dimension halfway toward height so the
+ * composition fills noticeably more of the screen; landscape canvases are
+ * returned unchanged (`Math.min(w, h)`, identical to the old behaviour).
+ */
+export function getFillDim(w: number, h: number): number {
+  return w >= h ? Math.min(w, h) : w + (h - w) * 0.5;
+}

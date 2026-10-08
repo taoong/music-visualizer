@@ -4,6 +4,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
+import { getFillDim } from './helpers';
 
 let lastBeatIndex = -1;
 let lastBeatGroupIndex = -1;
@@ -41,7 +42,7 @@ function renderZoomPulse(
   flash: number,
   bass: number
 ): void {
-  const baseSize = Math.min(w, h) * 0.12;
+  const baseSize = getFillDim(w, h) * 0.12;
   const scale = 1 + bass * 0.5 + flash * 0.7;
 
   p.push();
@@ -66,8 +67,8 @@ function renderDiagonalRush(
   bass: number,
   config: PatternConfig
 ): void {
-  const baseSize = Math.min(w, h) * 0.12;
-  const amp = Math.min(w, h) * 0.25 + bass * Math.min(w, h) * 0.1;
+  const baseSize = getFillDim(w, h) * 0.12;
+  const amp = getFillDim(w, h) * 0.25 + bass * getFillDim(w, h) * 0.1;
   const offset = Math.sin(t * 1.1) * amp;
   const dx = Math.cos(config.angle);
   const dy = Math.sin(config.angle);
@@ -101,7 +102,7 @@ function renderQuadMirror(
   flash: number,
   bass: number
 ): void {
-  const baseSize = Math.min(w, h) * 0.10;
+  const baseSize = getFillDim(w, h) * 0.10;
   const baseOffsetX = w * 0.22 + bass * w * 0.04;
   const baseOffsetY = h * 0.18 + Math.sin(t * 0.7) * h * 0.04;
   const brightness = 85 + flash * 15;
@@ -130,8 +131,8 @@ function renderRadialCrown(
   bass: number,
   config: PatternConfig
 ): void {
-  const baseSize = Math.min(w, h) * 0.08;
-  const radius = Math.min(w, h) * (config.orbitRadius + bass * 0.05);
+  const baseSize = getFillDim(w, h) * 0.08;
+  const radius = getFillDim(w, h) * (config.orbitRadius + bass * 0.05);
   const ringAngle = t * 0.2;
   const brightness = 85 + flash * 15;
 
@@ -165,7 +166,7 @@ function renderEchoRings(
   for (let i = 0; i < echoCount; i++) {
     const t2 = i / (echoCount - 1);
     const sc = 0.35 + t2 * 1.15 + flash * t2 * 0.4;
-    const baseSize = Math.min(w, h) * 0.12;
+    const baseSize = getFillDim(w, h) * 0.12;
     const alpha = (1 - t2 * 0.75) * 100;
     const brightness = 80 + bass * 20;
 
@@ -190,7 +191,7 @@ function renderBilateralReflect(
   flash: number,
   bass: number
 ): void {
-  const baseSize = Math.min(w, h) * 0.12;
+  const baseSize = getFillDim(w, h) * 0.12;
   const gap = h * 0.08 + bass * h * 0.05 + Math.sin(t * 1.2) * h * 0.02;
   const brightness = 85 + flash * 15;
 
@@ -224,8 +225,8 @@ function renderKaleidoscope(
   bass: number,
   config: PatternConfig
 ): void {
-  const baseSize = Math.min(w, h) * 0.09;
-  const radius = Math.min(w, h) * (config.orbitRadius + bass * 0.04);
+  const baseSize = getFillDim(w, h) * 0.09;
+  const radius = getFillDim(w, h) * (config.orbitRadius + bass * 0.04);
   const ringAngle = t * 0.15;
   const brightness = 85 + flash * 15;
   const total = config.count * 2;

@@ -18,7 +18,7 @@
 
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, getFillDim } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // ── Icosahedron base geometry ──────────────────────────────────────────────
@@ -192,7 +192,7 @@ export function drawGeodesic(p: P5Instance, dt: number): void {
 
   const cx    = p.width  * 0.5;
   const cy    = p.height * 0.5;
-  const baseR = Math.min(p.width, p.height) * 0.45;
+  const baseR = getFillDim(p.width, p.height) * 0.45;
   const fov   = 3.2; // perspective eye distance from origin
 
   // Per-frame projected vertex arrays (reused per shell to avoid allocation)

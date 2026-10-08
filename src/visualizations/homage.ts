@@ -34,7 +34,7 @@
  */
 import { store } from '../state/store';
 import { audioEngine } from '../audio/engine';
-import { getBandAverages } from './helpers';
+import { getBandAverages, getFillDim } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // ── Palettes ───────────────────────────────────────────────────────────────
@@ -127,10 +127,9 @@ export function drawHomage(p: P5Instance, dt: number): void {
   ctx.fillRect(0, 0, W, H);
 
   // Compute tile geometry
-  const tileMargin = Math.min(W, H) * 0.02;
-  const tileW = (W - tileMargin * (gridN + 1)) / gridN;
-  const tileH = (H - tileMargin * (gridN + 1)) / gridN;
-  const tileSize = Math.min(tileW, tileH);
+  const fillDim = getFillDim(W, H);
+  const tileMargin = fillDim * 0.02;
+  const tileSize = (fillDim - tileMargin * (gridN + 1)) / gridN;
   const gridW = gridN * tileSize + (gridN + 1) * tileMargin;
   const gridH = gridN * tileSize + (gridN + 1) * tileMargin;
   const originX = (W - gridW) / 2 + tileMargin;
