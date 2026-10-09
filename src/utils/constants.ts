@@ -632,6 +632,10 @@ export const DEFAULT_CONFIG = {
   specterComplexity:   0.70, // 0–1 → harmonic complexity: 0=simple dipoles only, 1=all 7 modes active (structural)
   specterDisplacement: 0.40, // 0–1 → amplitude sensitivity / displacement scale
   specterGlow:         0.60, // 0–1 → emissive ridge brightness + bloom strength
+  // Flux
+  fluxGrid:       isMobile ? 5 : 7, // needles per axis (structural: 3–10)
+  fluxLength:     0.40,             // 0–1 → field half-size (controls spread of lattice)
+  fluxTurbulence: 0.55,             // 0–1 → turbulence amplitude (how violently bands twist needles)
 };
 
 // FFT and decay constants

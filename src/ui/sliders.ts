@@ -415,6 +415,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'specter-complexity',   key: 'specterComplexity'   },
     { id: 'specter-displacement', key: 'specterDisplacement' },
     { id: 'specter-glow',         key: 'specterGlow'         },
+    { id: 'flux-grid',        key: 'fluxGrid'        },
+    { id: 'flux-length',      key: 'fluxLength'      },
+    { id: 'flux-turbulence',  key: 'fluxTurbulence'  },
   ] as const;
 
   for (const { id, key } of configs) {

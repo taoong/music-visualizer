@@ -376,6 +376,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   specterComplexity:   'specter-complexity',
   specterDisplacement: 'specter-displacement',
   specterGlow:         'specter-glow',
+  fluxGrid:        'flux-grid',
+  fluxLength:      'flux-length',
+  fluxTurbulence:  'flux-turbulence',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
