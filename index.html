@@ -354,6 +354,7 @@
           <option value="tidal">Tidal</option>
           <option value="specter">Specter</option>
           <option value="flux">Flux</option>
+          <option value="oscillograph">Oscillograph</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4789,6 +4790,21 @@
           <div class="slider-group">
             <label for="flux-turbulence">Turbulence</label>
             <input type="range" id="flux-turbulence" min="0" max="1" step="0.01" value="0.55" aria-label="Turbulence — audio twist intensity: 0=needles stay nearly parallel, 1=maximum chaotic divergence">
+          </div>
+        </div>
+
+        <div id="oscillograph-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="oscillograph-complexity">Complexity</label>
+            <input type="range" id="oscillograph-complexity" min="1" max="5" step="1" value="3" aria-label="Complexity — Lissajous frequency ratio tier (structural): 1=simple ellipses, 5=septimal harmonics">
+          </div>
+          <div class="slider-group">
+            <label for="oscillograph-trace">Trace</label>
+            <input type="range" id="oscillograph-trace" min="0" max="1" step="0.01" value="0.5" aria-label="Trace — phosphor persistence: 0=fast fade, 1=long trail accumulation">
+          </div>
+          <div class="slider-group">
+            <label for="oscillograph-scale">Scale</label>
+            <input type="range" id="oscillograph-scale" min="0" max="1" step="0.01" value="0.5" aria-label="Scale — audio amplitude sensitivity: 0=subtle response, 1=maximum audio-driven deformation">
           </div>
         </div>
 

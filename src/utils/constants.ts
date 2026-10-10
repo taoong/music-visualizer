@@ -636,6 +636,9 @@ export const DEFAULT_CONFIG = {
   fluxGrid:       isMobile ? 5 : 7, // needles per axis (structural: 3–10)
   fluxLength:     0.40,             // 0–1 → field half-size (controls spread of lattice)
   fluxTurbulence: 0.55,             // 0–1 → turbulence amplitude (how violently bands twist needles)
+  oscillographComplexity: isMobile ? 2 : 3, // 1–5 integer, Lissajous ratio tier (structural)
+  oscillographTrace:      0.50,             // 0–1 → phosphor persistence (0=fast decay, 1=long trail)
+  oscillographScale:      0.50,             // 0–1 → audio amplitude sensitivity
 };
 
 // FFT and decay constants

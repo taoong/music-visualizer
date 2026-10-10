@@ -379,6 +379,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   fluxGrid:        'flux-grid',
   fluxLength:      'flux-length',
   fluxTurbulence:  'flux-turbulence',
+  oscillographComplexity: 'oscillograph-complexity',
+  oscillographTrace:      'oscillograph-trace',
+  oscillographScale:      'oscillograph-scale',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

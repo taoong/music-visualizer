@@ -418,6 +418,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'flux-grid',        key: 'fluxGrid'        },
     { id: 'flux-length',      key: 'fluxLength'      },
     { id: 'flux-turbulence',  key: 'fluxTurbulence'  },
+    { id: 'oscillograph-complexity', key: 'oscillographComplexity' },
+    { id: 'oscillograph-trace',      key: 'oscillographTrace'      },
+    { id: 'oscillograph-scale',      key: 'oscillographScale'      },
   ] as const;
 
   for (const { id, key } of configs) {

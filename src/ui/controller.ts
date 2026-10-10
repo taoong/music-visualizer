@@ -181,6 +181,7 @@ const ALL_CONTROL_IDS = [
   'tidal-controls-group',
   'specter-controls-group',
   'flux-controls-group',
+  'oscillograph-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -315,6 +316,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   tidal:            { show: ['tidal-controls-group'] },
   specter:          { show: ['specter-controls-group'] },
   flux:             { show: ['flux-controls-group'] },
+  oscillograph:     { show: ['oscillograph-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
