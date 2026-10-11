@@ -355,6 +355,7 @@
           <option value="specter">Specter</option>
           <option value="flux">Flux</option>
           <option value="oscillograph">Oscillograph</option>
+          <option value="strata">Strata</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4805,6 +4806,21 @@
           <div class="slider-group">
             <label for="oscillograph-scale">Scale</label>
             <input type="range" id="oscillograph-scale" min="0" max="1" step="0.01" value="0.5" aria-label="Scale — audio amplitude sensitivity: 0=subtle response, 1=maximum audio-driven deformation">
+          </div>
+        </div>
+
+        <div id="strata-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="strata-scale">Terrain</label>
+            <input type="range" id="strata-scale" min="0" max="1" step="0.01" value="0.4" aria-label="Terrain — spatial scale: 0=zoomed-in rugged canyon, 1=wide panoramic plain (structural)">
+          </div>
+          <div class="slider-group">
+            <label for="strata-warp">Warp</label>
+            <input type="range" id="strata-warp" min="0" max="1" step="0.01" value="0.3" aria-label="Warp — domain-warp chaos: 0=clean smooth geological strata, 1=heavily fractured alien rock">
+          </div>
+          <div class="slider-group">
+            <label for="strata-height">Altitude</label>
+            <input type="range" id="strata-height" min="0" max="1" step="0.01" value="0.4" aria-label="Altitude — camera orbit height: 0=low dramatic sidelight angle, 1=high overhead view">
           </div>
         </div>
 

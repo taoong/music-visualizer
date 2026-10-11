@@ -291,4 +291,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   specter:          lazyViz(async () => { const { drawSpecter: draw, resetSpecter: reset, disposeSpecter: dispose } = await import('./specter'); return { draw, reset, dispose }; }, 'F28', 'Specter'),
   flux:             lazyViz(async () => { const { drawFlux: draw, resetFlux: reset, disposeFlux: dispose } = await import('./flux'); return { draw, reset, dispose }; }, 'F29', 'Flux'),
   oscillograph:     lazyViz(async () => { const { drawOscillograph: draw, resetOscillograph: reset, disposeOscillograph: dispose } = await import('./oscillograph'); return { draw, reset, dispose }; }, 'F30', 'Oscillograph'),
+  strata:           lazyViz(async () => { const { drawStrata: draw, resetStrata: reset, disposeStrata: dispose } = await import('./strata'); return { draw, reset, dispose }; }, 'F31', 'Strata'),
 };

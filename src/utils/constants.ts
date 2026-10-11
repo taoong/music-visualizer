@@ -639,6 +639,9 @@ export const DEFAULT_CONFIG = {
   oscillographComplexity: isMobile ? 2 : 3, // 1–5 integer, Lissajous ratio tier (structural)
   oscillographTrace:      0.50,             // 0–1 → phosphor persistence (0=fast decay, 1=long trail)
   oscillographScale:      0.50,             // 0–1 → audio amplitude sensitivity
+  strataScale:            0.40,             // 0–1 → terrain zoom (0=zoomed-in, 1=wide panorama; structural)
+  strataWarp:             0.30,             // 0–1 → domain-warp chaos (0=smooth, 1=fractured)
+  strataHeight:           0.40,             // 0–1 → camera altitude (0=low dramatic, 1=high overhead)
 };
 
 // FFT and decay constants

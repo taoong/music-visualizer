@@ -421,6 +421,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'oscillograph-complexity', key: 'oscillographComplexity' },
     { id: 'oscillograph-trace',      key: 'oscillographTrace'      },
     { id: 'oscillograph-scale',      key: 'oscillographScale'      },
+    { id: 'strata-scale',   key: 'strataScale'   },
+    { id: 'strata-warp',    key: 'strataWarp'    },
+    { id: 'strata-height',  key: 'strataHeight'  },
   ] as const;
 
   for (const { id, key } of configs) {

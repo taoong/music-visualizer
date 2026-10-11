@@ -382,6 +382,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   oscillographComplexity: 'oscillograph-complexity',
   oscillographTrace:      'oscillograph-trace',
   oscillographScale:      'oscillograph-scale',
+  strataScale:            'strata-scale',
+  strataWarp:             'strata-warp',
+  strataHeight:           'strata-height',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
