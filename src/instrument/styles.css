@@ -1,0 +1,960 @@
+/**
+ * Wobble prototype styles — scoped under #wobble-app so nothing leaks
+ * into the main app. DrumBoii-inspired: candy colors, cream background,
+ * chunky rounded cards, 3px ink borders, bouncy toy-like controls.
+ */
+
+#wobble-app {
+  --cream: #fff7ec;
+  --ink: #33264a;
+  --pink: #ff5ca8;
+  --blue: #4d7cfe;
+  --yellow: #ffc53d;
+  --mint: #35e0a1;
+  --purple: #a06bff;
+  --card: #ffffff;
+  --radius: 24px;
+  font-family:
+    'Baloo 2', ui-rounded, 'SF Pro Rounded', 'Nunito', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+#wobble-app *,
+#wobble-app *::before,
+#wobble-app *::after {
+  box-sizing: border-box;
+}
+
+#wobble-app button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ---------------- top bar ---------------- */
+
+#wobble-app .wb-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: var(--card);
+  border-bottom: 3px solid var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  flex-wrap: wrap;
+}
+
+#wobble-app .wb-logo {
+  font-size: 28px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.5px;
+}
+
+#wobble-app .wb-logo-blob {
+  width: 34px;
+  height: 34px;
+  border-radius: 48% 52% 55% 45% / 55% 48% 52% 45%;
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  border: 3px solid var(--ink);
+  animation: wb-blobwob 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes wb-blobwob {
+  0%,
+  100% {
+    border-radius: 48% 52% 55% 45% / 55% 48% 52% 45%;
+    transform: rotate(-6deg) scale(1);
+  }
+  50% {
+    border-radius: 55% 45% 48% 52% / 45% 55% 48% 52%;
+    transform: rotate(6deg) scale(1.08);
+  }
+}
+
+#wobble-app .wb-tabs {
+  display: flex;
+  gap: 8px;
+  background: var(--cream);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+#wobble-app .wb-tab {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 16px;
+  padding: 8px 22px;
+  border-radius: 999px;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#wobble-app .wb-tab.active {
+  background: var(--ink);
+  color: var(--cream);
+  transform: scale(1.04);
+}
+
+#wobble-app .wb-audiobar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#wobble-app .wb-btn {
+  border: 3px solid var(--ink);
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s;
+}
+
+#wobble-app .wb-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+#wobble-app .wb-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+#wobble-app .wb-btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+#wobble-app .wb-btn-primary {
+  background: var(--pink);
+  color: #fff;
+}
+
+#wobble-app .wb-play {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  font-size: 18px;
+  border-radius: 50%;
+  background: var(--mint);
+  position: relative;
+}
+
+#wobble-app .wb-play.playing {
+  background: var(--yellow);
+}
+
+#wobble-app .wb-play.beat {
+  animation: wb-beatpop 0.25s ease-out;
+}
+
+@keyframes wb-beatpop {
+  0% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#wobble-app .wb-track {
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0.75;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#wobble-app .wb-bpm {
+  font-size: 14px;
+  font-weight: 800;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 999px;
+  padding: 6px 14px;
+  min-width: 86px;
+  text-align: center;
+}
+
+/* ---------------- main / views ---------------- */
+
+#wobble-app .wb-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#wobble-app .wb-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#wobble-app .wb-view[hidden] {
+  display: none;
+}
+
+/* ---------------- patch bay ---------------- */
+
+#wobble-app .wb-patchbay {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 12px 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+  flex-wrap: wrap;
+}
+
+#wobble-app .wb-patchbay-label {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+#wobble-app .wb-chips {
+  display: flex;
+  gap: 8px;
+}
+
+#wobble-app .wb-chip {
+  border: 3px solid var(--ink);
+  background: var(--card);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#wobble-app .wb-chip-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cc);
+  border: 2px solid var(--ink);
+  animation: wb-pulse 1s ease-in-out infinite;
+}
+
+@keyframes wb-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+}
+
+#wobble-app .wb-chip.armed {
+  background: var(--cc);
+  color: #fff;
+  transform: scale(1.08) rotate(-2deg);
+  animation: wb-wiggle 0.5s ease-in-out infinite;
+}
+
+@keyframes wb-wiggle {
+  0%,
+  100% {
+    transform: scale(1.08) rotate(-2deg);
+  }
+  50% {
+    transform: scale(1.08) rotate(2deg);
+  }
+}
+
+#wobble-app .wb-patchbay-hint {
+  font-size: 13px;
+  opacity: 0.65;
+  font-weight: 600;
+}
+
+/* ---------------- chain ---------------- */
+
+#wobble-app .wb-chainwrap {
+  overflow-x: auto;
+  padding: 8px 4px 16px;
+}
+
+#wobble-app .wb-chain {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  min-width: max-content;
+  padding: 6px;
+}
+
+#wobble-app .wb-block {
+  --blk: var(--pink);
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 5px 5px 0 var(--ink);
+  padding: 14px;
+  min-width: 210px;
+  max-width: 250px;
+  border-top: 10px solid var(--blk);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+}
+
+#wobble-app .wb-block:hover {
+  transform: translateY(-3px) rotate(-0.5deg);
+}
+
+#wobble-app .wb-block.off {
+  opacity: 0.55;
+  filter: grayscale(0.7);
+}
+
+#wobble-app .wb-block-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+#wobble-app .wb-block-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 48% 52% 55% 45% / 55% 48% 52% 45%;
+  background: var(--blk);
+  border: 2px solid var(--ink);
+  flex-shrink: 0;
+}
+
+#wobble-app .wb-block-name {
+  font-weight: 800;
+  font-size: 17px;
+  flex: 1;
+}
+
+#wobble-app .wb-block-tools {
+  display: flex;
+  gap: 2px;
+}
+
+#wobble-app .wb-block-tools button {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  line-height: 1;
+}
+
+#wobble-app .wb-block-tools button:hover {
+  background: var(--cream);
+}
+
+#wobble-app .wb-block-kind {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  opacity: 0.55;
+  margin-bottom: 10px;
+}
+
+#wobble-app .wb-block-knobs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 40px;
+}
+
+#wobble-app .wb-gap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+#wobble-app .wb-cable {
+  width: 64px;
+  height: 80px;
+  overflow: visible;
+}
+
+#wobble-app .wb-cable path {
+  stroke-dasharray: 10 8;
+  animation: wb-cableflow 1s linear infinite;
+}
+
+@keyframes wb-cableflow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+#wobble-app .wb-insert {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#wobble-app .wb-insert:hover {
+  transform: scale(1.25) rotate(90deg);
+}
+
+/* ---------------- knobs ---------------- */
+
+#wobble-app .wb-knob {
+  --kc: var(--purple);
+  --pv: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  padding: 6px;
+  border-radius: 18px;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+#wobble-app .wb-knob:focus-visible {
+  box-shadow: 0 0 0 3px var(--kc);
+}
+
+#wobble-app .wb-knob-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  border: 4px solid var(--pink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+#wobble-app .wb-knob.patched .wb-knob-ring {
+  opacity: calc(0.25 + var(--pv) * 0.75);
+  transform: scale(calc(1 + var(--pv) * 0.08));
+}
+
+#wobble-app.patch-arming .wb-knob {
+  cursor: copy;
+}
+
+#wobble-app.patch-arming .wb-knob:hover {
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--pink);
+}
+
+#wobble-app .wb-knob-dial {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--kc) 75%);
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  position: relative;
+  cursor: ns-resize;
+  transition: box-shadow 0.12s;
+}
+
+#wobble-app .wb-knob-dial:active {
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+#wobble-app .wb-knob-pointer {
+  position: absolute;
+  left: 50%;
+  top: 6%;
+  width: 6px;
+  height: 38%;
+  margin-left: -3px;
+  background: var(--ink);
+  border-radius: 3px;
+  transform-origin: 50% 130%;
+}
+
+#wobble-app .wb-knob-label {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+#wobble-app .wb-knob-patchtag {
+  display: none;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--pink);
+}
+
+#wobble-app .wb-knob-midi {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--card);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  padding: 0;
+}
+
+#wobble-app .wb-knob-midi.bound {
+  background: var(--blue);
+  color: #fff;
+}
+
+#wobble-app .wb-knob-midi.armed {
+  background: var(--pink);
+  color: #fff;
+  animation: wb-pulse 0.6s ease-in-out infinite;
+}
+
+#wobble-app .wb-macro .wb-knob-dial {
+  width: 76px;
+  height: 76px;
+}
+
+/* ---------------- tray ---------------- */
+
+#wobble-app .wb-tray {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 24px;
+  width: min(680px, calc(100vw - 32px));
+  max-height: 60vh;
+  overflow-y: auto;
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--ink);
+  z-index: 60;
+  padding: 18px;
+}
+
+#wobble-app .wb-tray[hidden] {
+  display: none;
+}
+
+#wobble-app .wb-tray-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+#wobble-app .wb-tray-group {
+  margin-bottom: 14px;
+}
+
+#wobble-app .wb-tray-label {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+#wobble-app .wb-tray-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+#wobble-app .wb-tray-item {
+  --blk: var(--pink);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+  border: 3px solid var(--ink);
+  border-left: 10px solid var(--blk);
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 10px 12px;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#wobble-app .wb-tray-item:hover {
+  transform: scale(1.03) rotate(-0.5deg);
+}
+
+#wobble-app .wb-tray-item b {
+  display: block;
+  font-size: 14px;
+}
+
+#wobble-app .wb-tray-item i {
+  display: block;
+  font-style: normal;
+  font-size: 11px;
+  opacity: 0.65;
+  font-weight: 600;
+}
+
+/* ---------------- perform view ---------------- */
+
+#wobble-app .wb-stagewrap {
+  position: relative;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 5px 5px 0 var(--ink);
+  background: #111;
+  aspect-ratio: 16 / 9;
+  max-height: 62vh;
+}
+
+#wobble-app #wb-stage {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#wobble-app .wb-stage-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 20px;
+  text-shadow: 2px 2px 0 var(--ink);
+  pointer-events: none;
+}
+
+#wobble-app .wb-audience-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+}
+
+#wobble-app .wb-exit-audience {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+}
+
+#wobble-app .wb-deck {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 5px 5px 0 var(--ink);
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+
+#wobble-app .wb-macros {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+#wobble-app .wb-xypad {
+  position: relative;
+  width: 170px;
+  min-height: 130px;
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% 50%, #fff8, transparent 70%),
+    linear-gradient(135deg, var(--blue), var(--purple));
+  box-shadow: inset 3px 3px 0 #0002;
+  touch-action: none;
+  cursor: crosshair;
+  flex-shrink: 0;
+  outline: none;
+}
+
+#wobble-app .wb-xypad:focus-visible {
+  box-shadow: 0 0 0 3px var(--pink), inset 3px 3px 0 #0002;
+}
+
+#wobble-app .wb-xypad-dot {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+#wobble-app .wb-xypad-x,
+#wobble-app .wb-xypad-y {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 1px 1px 0 var(--ink);
+}
+
+#wobble-app .wb-xypad-x {
+  right: 8px;
+  bottom: 6px;
+}
+
+#wobble-app .wb-xypad-y {
+  left: 8px;
+  top: 6px;
+}
+
+#wobble-app .wb-scenes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: auto;
+}
+
+#wobble-app .wb-scene {
+  border: 3px solid var(--ink);
+  background: var(--cream);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#wobble-app .wb-scene:hover {
+  transform: scale(1.05);
+}
+
+#wobble-app .wb-scene.active {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+#wobble-app .wb-scene-dots {
+  display: flex;
+}
+
+#wobble-app .wb-scene-dots i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  margin-left: -5px;
+}
+
+#wobble-app .wb-scene-dots i:nth-child(1) {
+  background: var(--s0);
+  margin-left: 0;
+}
+
+#wobble-app .wb-scene-dots i:nth-child(2) {
+  background: var(--s1);
+}
+
+#wobble-app .wb-scene-dots i:nth-child(3) {
+  background: var(--s2);
+}
+
+/* ---------------- audience mode ---------------- */
+
+#wobble-app.audience .wb-topbar,
+#wobble-app.audience .wb-deck,
+#wobble-app.audience .wb-footer,
+#wobble-app.audience .wb-audience-btn,
+#wobble-app.audience .wb-stage-hint {
+  display: none;
+}
+
+#wobble-app.audience .wb-main {
+  padding: 0;
+  max-width: none;
+}
+
+#wobble-app.audience .wb-stagewrap {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  max-height: none;
+  aspect-ratio: auto;
+  z-index: 90;
+  background: #000;
+}
+
+/* ---------------- onboarding ---------------- */
+
+#wobble-app .wb-onboard {
+  position: fixed;
+  inset: 0;
+  background: rgba(51, 38, 74, 0.55);
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#wobble-app .wb-onboard[hidden] {
+  display: none;
+}
+
+#wobble-app .wb-onboard-card {
+  background: var(--cream);
+  border: 4px solid var(--ink);
+  border-radius: 28px;
+  box-shadow: 8px 8px 0 var(--ink);
+  padding: 28px;
+  max-width: 440px;
+  width: 100%;
+  animation: wb-popin 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes wb-popin {
+  from {
+    transform: scale(0.85) rotate(-2deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+#wobble-app .wb-onboard-card h2 {
+  margin: 0 0 12px;
+  font-size: 24px;
+}
+
+#wobble-app .wb-onboard-steps {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+#wobble-app .wb-onboard-steps li.active b {
+  font-size: 17px;
+}
+
+#wobble-app .wb-onboard-steps li.active p {
+  margin: 6px 0 12px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+#wobble-app .wb-onboard-presets {
+  display: flex;
+  gap: 8px;
+}
+
+#wobble-app .wb-onboard-progress {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.55;
+  margin-top: 10px;
+}
+
+#wobble-app .wb-onboard-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ---------------- footer ---------------- */
+
+#wobble-app .wb-footer {
+  padding: 14px 20px 22px;
+  font-size: 12px;
+  opacity: 0.6;
+  text-align: center;
+  font-weight: 600;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 760px) {
+  #wobble-app .wb-topbar {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  #wobble-app .wb-logo {
+    font-size: 22px;
+  }
+
+  #wobble-app .wb-main {
+    padding: 12px;
+  }
+
+  #wobble-app .wb-deck {
+    flex-direction: column;
+  }
+
+  #wobble-app .wb-xypad {
+    width: 100%;
+    min-height: 120px;
+  }
+
+  #wobble-app .wb-scenes {
+    margin-left: 0;
+  }
+
+  #wobble-app .wb-stagewrap {
+    aspect-ratio: 4 / 3;
+  }
+}
