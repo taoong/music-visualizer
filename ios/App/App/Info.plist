@@ -26,6 +26,8 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Vizzlord can use your camera as a live video layer composited with the visualization.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Vizzlord uses your microphone for live audio-reactive visualization.</string>
 	<key>UIApplicationSceneManifest</key>

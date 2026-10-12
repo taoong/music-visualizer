@@ -357,6 +357,12 @@
           <option value="oscillograph">Oscillograph</option>
           <option value="strata">Strata</option>
           <option value="sonambient">Sonambient</option>
+          <optgroup label="GLSL Shaders">
+            <option value="sdftunnel">SDF Tunnel</option>
+            <option value="nebula">Nebula</option>
+            <option value="turing">Turing</option>
+            <option value="kifs">KIFS Fractal</option>
+          </optgroup>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4840,6 +4846,66 @@
           </div>
         </div>
 
+        <div id="sdftunnel-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="sdftunnel-speed">Speed</label>
+            <input type="range" id="sdftunnel-speed" min="0" max="1" step="0.01" value="0.4" aria-label="Speed — flight speed through the tunnel">
+          </div>
+          <div class="slider-group">
+            <label for="sdftunnel-morph">Morph</label>
+            <input type="range" id="sdftunnel-morph" min="0" max="1" step="0.01" value="0.3" aria-label="Morph — smooth rings to twisted square frames">
+          </div>
+          <div class="slider-group">
+            <label for="sdftunnel-glow">Glow</label>
+            <input type="range" id="sdftunnel-glow" min="0" max="1" step="0.01" value="0.5" aria-label="Glow — volumetric glow intensity">
+          </div>
+        </div>
+
+        <div id="nebula-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="nebula-warp">Warp</label>
+            <input type="range" id="nebula-warp" min="0" max="1" step="0.01" value="0.5" aria-label="Warp — domain-warp strength: 0=soft clouds, 1=swirling tendrils">
+          </div>
+          <div class="slider-group">
+            <label for="nebula-scale">Scale</label>
+            <input type="range" id="nebula-scale" min="0" max="1" step="0.01" value="0.4" aria-label="Scale — 0=large clouds, 1=fine detail">
+          </div>
+          <div class="slider-group">
+            <label for="nebula-flow">Flow</label>
+            <input type="range" id="nebula-flow" min="0" max="1" step="0.01" value="0.35" aria-label="Flow — animation speed">
+          </div>
+        </div>
+
+        <div id="turing-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="turing-scale">Scale</label>
+            <input type="range" id="turing-scale" min="0" max="1" step="0.01" value="0.4" aria-label="Scale — pattern wavelength: 0=coarse, 1=fine">
+          </div>
+          <div class="slider-group">
+            <label for="turing-sharp">Sharpness</label>
+            <input type="range" id="turing-sharp" min="0" max="1" step="0.01" value="0.6" aria-label="Sharpness — 0=soft gradients, 1=crisp cells">
+          </div>
+          <div class="slider-group">
+            <label for="turing-flow">Flow</label>
+            <input type="range" id="turing-flow" min="0" max="1" step="0.01" value="0.3" aria-label="Flow — animation speed">
+          </div>
+        </div>
+
+        <div id="kifs-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="kifs-folds">Folds</label>
+            <input type="range" id="kifs-folds" min="0" max="1" step="0.01" value="0.4" aria-label="Folds — radial symmetry from 3 to 12">
+          </div>
+          <div class="slider-group">
+            <label for="kifs-zoom">Zoom</label>
+            <input type="range" id="kifs-zoom" min="0" max="1" step="0.01" value="0.4" aria-label="Zoom">
+          </div>
+          <div class="slider-group">
+            <label for="kifs-glow">Glow</label>
+            <input type="range" id="kifs-glow" min="0" max="1" step="0.01" value="0.5" aria-label="Glow — line glow width">
+          </div>
+        </div>
+
         <div id="braid-controls-group" class="controls-group hidden">
           <div class="slider-group">
             <label for="braid-strands">Strands</label>
@@ -4891,6 +4957,104 @@
           </div>
         </div>
 
+      </section>
+
+      <section aria-labelledby="postfx-heading" id="postfx-section">
+        <h3 id="postfx-heading">Post FX</h3>
+        <div class="slider-group">
+          <label for="postfx-preset">Preset</label>
+          <select id="postfx-preset" class="sidebar-select" aria-label="Post FX preset">
+            <option value="">— choose —</option>
+            <option value="off">Off</option>
+            <option value="subtle">Subtle</option>
+            <option value="cinematic">Cinematic</option>
+            <option value="dream">Dream Trails</option>
+            <option value="tunnel">Feedback Tunnel</option>
+            <option value="vhs">Lo-Fi</option>
+          </select>
+        </div>
+        <div class="slider-group">
+          <label for="post-bloom">Bloom</label>
+          <input type="range" id="post-bloom" min="0" max="3" step="0.01" value="0.6" aria-label="Bloom intensity">
+        </div>
+        <div class="slider-group">
+          <label for="post-bloom-threshold">Bloom Threshold</label>
+          <input type="range" id="post-bloom-threshold" min="0" max="1" step="0.01" value="0.6" aria-label="Bloom threshold — brightness above which pixels glow">
+        </div>
+        <div class="slider-group">
+          <label for="post-tonemap">Filmic (ACES)</label>
+          <input type="range" id="post-tonemap" min="0" max="1" step="0.01" value="0" aria-label="Filmic tone mapping amount (ACES)">
+        </div>
+        <div class="slider-group">
+          <label for="post-exposure">Exposure</label>
+          <input type="range" id="post-exposure" min="0.25" max="2.5" step="0.01" value="1" aria-label="Exposure">
+        </div>
+        <div class="slider-group">
+          <label for="post-chroma">Chromatic Aberration</label>
+          <input type="range" id="post-chroma" min="0" max="1" step="0.01" value="0.08" aria-label="Chromatic aberration">
+        </div>
+        <div class="slider-group">
+          <label for="post-grain">Film Grain</label>
+          <input type="range" id="post-grain" min="0" max="1" step="0.01" value="0.12" aria-label="Animated film grain">
+        </div>
+        <div class="slider-group">
+          <label for="post-vignette">Vignette</label>
+          <input type="range" id="post-vignette" min="0" max="1" step="0.01" value="0.3" aria-label="Vignette">
+        </div>
+        <div class="slider-group">
+          <label for="post-trails">Trails / Feedback</label>
+          <input type="range" id="post-trails" min="0" max="0.98" step="0.01" value="0" aria-label="Frame feedback decay — 0 off, higher = longer trails">
+        </div>
+        <div class="slider-group">
+          <label for="post-feedback-zoom">Feedback Zoom</label>
+          <input type="range" id="post-feedback-zoom" min="-1" max="1" step="0.01" value="0" aria-label="Feedback zoom per frame — negative zooms out, positive zooms in">
+        </div>
+        <div class="slider-group">
+          <label for="post-feedback-rotate">Feedback Rotate</label>
+          <input type="range" id="post-feedback-rotate" min="-1" max="1" step="0.01" value="0" aria-label="Feedback rotation per frame">
+        </div>
+        <div class="slider-group">
+          <label for="post-react">Beat React</label>
+          <input type="range" id="post-react" min="0" max="1" step="0.01" value="0.35" aria-label="How strongly beats pump bloom, chromatic aberration and feedback zoom">
+        </div>
+      </section>
+
+      <section aria-labelledby="palette-heading" id="palette-section">
+        <h3 id="palette-heading">Palette</h3>
+        <div class="slider-group">
+          <label for="post-palette">Palette <span class="fx-readout" id="post-palette-readout"></span></label>
+          <input type="range" id="post-palette" min="0" max="9" step="1" value="0" aria-label="Global palette — remaps every visualization to one colour story">
+        </div>
+        <div class="slider-group">
+          <label for="post-palette-mix">Palette Strength</label>
+          <input type="range" id="post-palette-mix" min="0" max="1" step="0.01" value="0.85" aria-label="Palette remap strength">
+        </div>
+        <div id="palette-swatch" class="palette-swatch" aria-hidden="true"></div>
+      </section>
+
+      <section aria-labelledby="layers-heading" id="layers-section">
+        <h3 id="layers-heading">Layers</h3>
+        <div class="slider-group">
+          <label for="layer-source">Source</label>
+          <select id="layer-source" class="sidebar-select" aria-label="Content layer source">
+            <option value="none">None</option>
+            <option value="webcam">Webcam</option>
+            <option value="image">Image…</option>
+          </select>
+          <input type="file" id="layer-image-input" accept="image/*" class="sr-only" aria-label="Choose layer image" />
+        </div>
+        <div class="slider-group">
+          <label for="layer-opacity">Opacity</label>
+          <input type="range" id="layer-opacity" min="0" max="1" step="0.01" value="0.8" aria-label="Layer opacity">
+        </div>
+        <div class="slider-group">
+          <label for="layer-blend">Blend <span class="fx-readout" id="layer-blend-readout"></span></label>
+          <input type="range" id="layer-blend" min="0" max="5" step="1" value="1" aria-label="Layer blend mode: normal, screen, multiply, overlay, add, difference">
+        </div>
+        <div class="slider-group">
+          <label for="layer-order">Position <span class="fx-readout" id="layer-order-readout"></span></label>
+          <input type="range" id="layer-order" min="0" max="1" step="1" value="0" aria-label="Layer position: under or over the visualization">
+        </div>
       </section>
 
       <section>

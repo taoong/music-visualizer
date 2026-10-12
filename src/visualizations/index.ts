@@ -118,3 +118,4 @@ export { drawMassless, resetMassless, disposeMassless } from './massless';
 export { drawGossamer, resetGossamer, disposeGossamer } from './gossamer';
 export { drawGridwarp, resetGridwarp } from './gridwarp';
 export { drawHeliograph, resetHeliograph, disposeHeliograph } from './heliograph';
+export { drawSdfTunnel, drawNebula, drawTuring, drawKifs, resetShader, disposeShader } from './shaders';

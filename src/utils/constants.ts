@@ -646,6 +646,36 @@ export const DEFAULT_CONFIG = {
   sonambientDensity:   0.50,  // 0–1 → rod grid density (structural: 10–20 per side desktop, 8–14 mobile)
   sonambientResonance: 0.50,  // 0–1 → oscillation amplitude (audio sensitivity)
   sonambientPatina:    0.30,  // 0–1 → material roughness (0=mirror polished, 1=brushed matte)
+  // Post-FX chain
+  postBloom: 0.60, // 0–3 → bloom intensity
+  postBloomThreshold: 0.60, // 0–1 → bloom bright-pass threshold
+  postTonemap: 0.00, // 0–1 → mix toward ACES filmic tone mapping
+  postExposure: 1.00, // 0.25–2.5 → exposure multiplier (pre-tonemap)
+  postChroma: 0.08, // 0–1 → radial chromatic aberration
+  postGrain: 0.12, // 0–1 → animated film grain
+  postVignette: 0.30, // 0–1 → vignette strength
+  postTrails: 0.00, // 0–0.98 → frame-feedback decay (0 = off)
+  postFeedbackZoom: 0.00, // -1–1 → feedback zoom per frame (out ↔ in)
+  postFeedbackRotate: 0.00, // -1–1 → feedback rotation per frame
+  postPalette: 0, // index into PALETTES (0 = Original, no remap)
+  postPaletteMix: 0.85, // 0–1 → palette gradient-map strength
+  postReact: 0.35, // 0–1 → beat pulse pumps bloom / chroma / feedback zoom
+  layerOpacity: 0.80, // 0–1 → content layer opacity
+  layerBlend: 1, // 0–5 → normal, screen, multiply, overlay, add, difference
+  layerOrder: 0, // 0 = under the viz, 1 = over the viz
+  // GLSL shader modes
+  sdftunnelSpeed: 0.40, // 0–1 → flight speed
+  sdftunnelMorph: 0.30, // 0–1 → rings ↔ twisted square frames
+  sdftunnelGlow: 0.50, // 0–1 → volumetric glow
+  nebulaWarp: 0.50, // 0–1 → domain-warp strength
+  nebulaScale: 0.40, // 0–1 → pattern scale (0=large clouds, 1=fine detail)
+  nebulaFlow: 0.35, // 0–1 → animation speed
+  turingScale: 0.40, // 0–1 → pattern wavelength (0=coarse, 1=fine)
+  turingSharp: 0.60, // 0–1 → edge sharpness (soft gradients → crisp cells)
+  turingFlow: 0.30, // 0–1 → animation speed
+  kifsFolds: 0.40, // 0–1 → radial symmetry (3–12 folds)
+  kifsZoom: 0.40, // 0–1 → zoom
+  kifsGlow: 0.50, // 0–1 → line glow width
 };
 
 // FFT and decay constants

@@ -41,6 +41,25 @@ const DISPLAY_ROWS: ControlRow[] = [
   { label: 'Highway: Road Width', configKey: 'highwayRoadWidth' },
 ];
 
+const POSTFX_ROWS: ControlRow[] = [
+  { label: 'Bloom', configKey: 'postBloom' },
+  { label: 'Bloom Threshold', configKey: 'postBloomThreshold' },
+  { label: 'Filmic (ACES)', configKey: 'postTonemap' },
+  { label: 'Exposure', configKey: 'postExposure' },
+  { label: 'Chromatic Aberration', configKey: 'postChroma' },
+  { label: 'Film Grain', configKey: 'postGrain' },
+  { label: 'Vignette', configKey: 'postVignette' },
+  { label: 'Trails / Feedback', configKey: 'postTrails' },
+  { label: 'Feedback Zoom', configKey: 'postFeedbackZoom' },
+  { label: 'Feedback Rotate', configKey: 'postFeedbackRotate' },
+  { label: 'Beat React', configKey: 'postReact' },
+  { label: 'Palette', configKey: 'postPalette' },
+  { label: 'Palette Strength', configKey: 'postPaletteMix' },
+  { label: 'Layer Opacity', configKey: 'layerOpacity' },
+  { label: 'Layer Blend', configKey: 'layerBlend' },
+  { label: 'Layer Position', configKey: 'layerOrder' },
+];
+
 function getMappingLabel(configKey: keyof Config): string {
   const mappings = getMappings();
   const m = mappings[configKey];
@@ -86,6 +105,7 @@ function injectOverlayHTML(): void {
       <div id="midi-controls-list">
         ${buildSectionHTML('Freq Sensitivity', FREQ_ROWS)}
         ${buildSectionHTML('Display', DISPLAY_ROWS)}
+        ${buildSectionHTML('Post FX / Palette / Layers', POSTFX_ROWS)}
       </div>
       <div class="midi-footer">
         <button id="midi-clear-all" type="button">Clear All</button>

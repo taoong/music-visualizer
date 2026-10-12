@@ -31,6 +31,9 @@ import type { VizMode } from './types';
 import { initUI, updateScrubberUI } from './ui/controller';
 import { initKeyboardShortcuts, initSwipeGestures, announceToScreenReader } from './ui/keyboard';
 import { initInteraction } from './ui/interaction';
+import { updateBeatClock } from './audio/beatClock';
+import { renderPostFX, disposePostFX, clearPostFeedback } from './post/postfx';
+import { disposeLayers } from './post/layers';
 import { showError } from './utils/errors';
 import {
   BANDS,
@@ -87,6 +90,7 @@ const sketch = (p: P5Instance) => {
       if (vizMode !== previousVizMode) {
         VIZ_REGISTRY[previousVizMode].dispose?.();
         previousVizMode = vizMode;
+        clearPostFeedback();
       }
     });
 
@@ -99,6 +103,8 @@ const sketch = (p: P5Instance) => {
       cleanupSwipe();
       cleanupInteraction();
       audioEngine.disposeAll();
+      disposePostFX();
+      disposeLayers();
       Object.values(VIZ_REGISTRY).forEach(entry => entry.dispose?.());
     });
 
@@ -129,6 +135,8 @@ const sketch = (p: P5Instance) => {
       processInteractiveAudio(dt);
     }
 
+    updateBeatClock(dt);
+
     // Update UI
     updateScrubberUI();
 
@@ -149,6 +157,10 @@ const sketch = (p: P5Instance) => {
         store.setVizMode('circle');
       }
     }
+
+    // Post-processing runs last, in the same task the viz rendered in, so
+    // Three.js overlay canvases still hold their drawing buffer.
+    renderPostFX(p.drawingContext.canvas as HTMLCanvasElement, dt);
   };
 
   p.windowResized = () => {

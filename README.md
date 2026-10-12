@@ -6,7 +6,10 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Liquid Metal, Neon Grid, Blobs, Gray-Scott, Physarum, Murmuration, Riemann Sphere, Glyphs, Prism, Tapestry, Veil, Suminagashi, Isometric City, Pursuit, Arboreal, Etching, Kintsugi, Klimt, Rosette, Feedback, Kandinsky, Cobweb, Frost, Boogie Woogie, Patchwork, Risograph, Lens Flare, Radiolaria, Stitch, Magnetosphere, Substrate, Ferrofluid, Tidal, Specter, Flux, Oscillograph, Strata, Sonambient, and many more (91 total)
+- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Liquid Metal, Neon Grid, Blobs, Gray-Scott, Physarum, Murmuration, Riemann Sphere, Glyphs, Prism, Tapestry, Veil, Suminagashi, Isometric City, Pursuit, Arboreal, Etching, Kintsugi, Klimt, Rosette, Feedback, Kandinsky, Cobweb, Frost, Boogie Woogie, Patchwork, Risograph, Lens Flare, Radiolaria, Stitch, Magnetosphere, Substrate, Ferrofluid, Tidal, Specter, Flux, Oscillograph, Strata, Sonambient, and many more (91 total), plus 4 GLSL shader modes (SDF Tunnel, Nebula, Turing, KIFS Fractal)
+- **Post-processing chain** — Bloom, ACES filmic tone mapping, chromatic aberration, film grain, vignette, and frame feedback/trails (zoom + rotate) applied to every mode; one-click presets; beat-reactive pumping
+- **Global palettes** — Pick one of 9 curated 5-colour palettes and every mode (p5, Three.js, shader) is gradient-mapped to it, so a whole session shares one colour story
+- **Content layers** — Webcam or an uploaded image composited under or over the visuals with normal / screen / multiply / overlay / add / difference blending
 - **Three analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Microphone** — Live audio input from your mic for real-time visualization
@@ -14,7 +17,7 @@ Created by Tao Ong with Claude Code.
 - **Beat synchronization** — BPM detection with beat-reactive animations; BPM input, TAP tempo, and BEAT phase sync in the playback bar
 - **Real-time audio processing** — Transient detection, auto-gain normalization, spectral centroid tracking
 - **Full keyboard controls** — Switch visualizations, seek, volume, fullscreen, and more
-- **MIDI mapping** — Map physical controller knobs to any slider via Web MIDI API; mappings persist via localStorage
+- **MIDI mapping** — Map physical controller knobs to any slider via Web MIDI API (including every Post FX, palette and layer control); mappings persist via localStorage
 - **Responsive design** — Works on desktop and mobile
 - **Accessible** — ARIA labels, screen reader announcements, keyboard navigation
 
@@ -150,6 +153,27 @@ Open http://localhost:3000. Upload a track or use the built-in sample.
 | F31 | Strata | GLSL sphere-traced alien terrain; single fullscreen quad + ShaderMaterial; 7 freq bands drive distinct geological layer heights at octave-spaced spatial frequencies (sub-bass=large rolling hills, brilliance=fine crystal facets); warm amber directional sidelight + soft shadow march; exponential depth fog into deep-indigo void; camera orbits steadily at configurable altitude, looking down at the landscape; beat fires a brief ground-heave transient; restrained geological palette (dark basalt → rust iron → warm ochre → pale limestone, no rainbow); mobile guard (0.6 dpr, 90 vs 150 ray-march steps); inspired by "Elevated" (Rgba & TBC, Breakpoint 2009, https://www.pouet.net/prod.php?which=52938) and VJ terrain aesthetics in live electronic music performance; sliders: Terrain (spatial zoom — structural: 0=close-up canyons, 1=wide panorama), Warp (domain-warp chaos), Altitude (camera height) |
 | F32 | Sonambient | Dense grid of thin metallic rods in a darkened space; each rod continuously oscillates by tilting from its base — 7 radial frequency zones (sub-bass=slow wide sway at centre, brilliance=rapid fine tremor at rim) driven as CHOP-style continuous signals; two-point studio lighting (warm amber key + cold steel fill) on physical MeshStandardMaterial chrome with no emissive glow; InstancedMesh with per-frame matrix updates; beat fires an outward ring-wave that briefly amplifies each rod as the wavefront passes; camera orbits at ground level revealing the field in perspective; mobile guard (8–14 vs 10–20 rods per side); inspired by Harry Bertoia "Sonambient" sculptures (1960s–70s, Chinati Foundation permanent collection, Marfa TX, https://www.bertoia.org/sonambient.html) and TouchDesigner instanced-cylinder audio-reactive community patches; sliders: Density (grid size — structural), Resonance (tilt amplitude), Patina (surface roughness 0=mirror chrome → 1=brushed matte) |
 
+### GLSL shader modes
+
+Fullscreen fragment shaders fed audio uniforms every frame (7 band amplitudes, beat phase, beat pulse, BPM, time, spectral centroid, the active palette, and the last interactive touch point). They render at an adaptive resolution and are blitted onto the main canvas, so post FX, layers and interactive mode all apply.
+
+| Mode | Description |
+|------|-------------|
+| SDF Tunnel | Raymarched corridor of rings that morph into twisted square frames, smooth-min blended into the tunnel walls; each ring's size and glow follow one frequency band; beats punch the FOV; sliders: Speed, Morph, Glow |
+| Nebula | Inigo Quilez-style double domain-warped fbm; bass drives warp strength, brilliance lights the highlights; sliders: Warp, Scale, Flow |
+| Turing | Reaction-diffusion-style labyrinth — a ring of plane waves thresholded into spots and stripes; bass pushes toward spots; taps send ripples; sliders: Scale, Sharpness, Flow |
+| KIFS Fractal | 2D kaleidoscopic IFS fractal with glowing fold lines; each fold iteration follows one band; sliders: Folds, Zoom, Glow |
+
+## Post FX, Palette & Layers
+
+Sidebar sections apply to every mode:
+
+- **Post FX** — Bloom, Bloom Threshold, Filmic (ACES), Exposure, Chromatic Aberration, Film Grain, Vignette, Trails / Feedback, Feedback Zoom, Feedback Rotate, Beat React; presets: Off, Subtle (default), Cinematic, Dream Trails, Feedback Tunnel, Lo-Fi
+- **Palette** — global palette (Original = no remap) and strength
+- **Layers** — source (None / Webcam / Image), opacity, blend mode, under/over
+
+When every effect is neutral (the "Off" preset with Palette = Original and no layer) the chain is bypassed entirely.
+
 ## Keyboard Shortcuts
 
 Cycle through visualizations with the arrow keys, or pick one from the sidebar dropdown.
@@ -187,7 +211,7 @@ npm run cap:open:ios   # open the native project in Xcode
 
 From Xcode, select a simulator or device and hit Run. Swift Package Manager resolves Capacitor's native dependencies automatically on first build (no CocoaPods needed). Re-run `npm run cap:sync` after any web app change to pick it up in the native shell.
 
-Microphone access (for the Microphone analysis mode) requires the `NSMicrophoneUsageDescription` entry already set in `ios/App/App/Info.plist`. Web MIDI is not available in iOS WKWebView, so the MIDI mapping overlay is a no-op there.
+Microphone access (for the Microphone analysis mode) and camera access (for the webcam layer) require the `NSMicrophoneUsageDescription` and `NSCameraUsageDescription` entries already set in `ios/App/App/Info.plist`. Web MIDI is not available in iOS WKWebView, so the MIDI mapping overlay is a no-op there.
 
 ## Project Structure
 
@@ -198,7 +222,8 @@ Microphone access (for the Microphone analysis mode) requires the `NSMicrophoneU
 │   ├── main.ts             # p5 sketch entry, render loop, audio pipeline
 │   ├── state/store.ts      # Centralized state (EventEmitter singleton)
 │   ├── audio/              # Engine, FFT, processing, BPM detection (client-side)
-│   ├── visualizations/     # One file per viz mode + shared helpers
+│   ├── visualizations/     # One file per viz mode + shared helpers; shaders/ holds the GLSL modes
+│   ├── post/               # Post-FX pipeline, global palettes, webcam/image layers
 │   ├── midi/               # MIDI manager (Web MIDI API, CC routing) + overlay UI
 │   ├── ui/                 # Controller, splash, playback, sliders, keyboard
 │   ├── types/              # TypeScript interfaces + global type stubs

@@ -1137,7 +1137,8 @@ body {
 }
 
 /* ── Viz Selector (sidebar dropdown) ─────────────────────── */
-#viz-selector {
+#viz-selector,
+.sidebar-select {
   width: 100%;
   padding: 8px 12px;
   border: 1px solid var(--border-default);
@@ -1157,18 +1158,33 @@ body {
   padding-right: 28px;
 }
 
-#viz-selector:hover {
+#viz-selector:hover,
+.sidebar-select:hover {
   border-color: var(--accent);
 }
 
-#viz-selector:focus-visible {
+#viz-selector:focus-visible,
+.sidebar-select:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
-#viz-selector option {
+#viz-selector option,
+#viz-selector optgroup,
+.sidebar-select option {
   background: var(--bg-elevated);
   color: var(--text-primary);
+}
+
+/* ── Post FX / Palette / Layers ──────────────────────────── */
+.fx-readout {
+  color: var(--text-secondary);
+}
+
+.palette-swatch {
+  height: 6px;
+  border-radius: 3px;
+  margin: 0.2rem 0 0.6rem;
 }
 
 /* ── Scrollbar ───────────────────────────────────────────── */

@@ -26,7 +26,12 @@ src/
 │   ├── fft.ts                 # FFT analysis: log-band amplitudes, octave amplitudes, spectral centroid
 │   ├── processing.ts          # Auto-gain normalization, transient detection, delta (rate of change)
 │   ├── pipeline.ts            # Decay, octave processing, band smoothing with attack/release
-│   └── bpm.ts                 # BPM detection: client-side onset/autocorrelation
+│   ├── bpm.ts                 # BPM detection: client-side onset/autocorrelation
+│   └── beatClock.ts           # Per-frame beat phase/pulse/BPM shared by post FX + shader modes; locked to playback when a BPM is known, free-running + transient-triggered pulse in mic/interactive mode; updateBeatClock(dt) called once per frame in main.ts
+├── post/
+│   ├── postfx.ts              # WebGL2 post chain on the final frame: composite (p5 canvas + Three.js overlay canvas + content layer + frame feedback) → soft-knee bright pass → dual-Kawase bloom mips → final (chromatic aberration, bloom, exposure + ACES, palette gradient map, vignette, grain); draws to #postfx-canvas (z-index 11, pointer-events none); bypassed + hidden when all params neutral (isPostNeutral); half-res bloom desktop / quarter-res mobile; clearPostFeedback() on viz switch
+│   ├── palettes.ts            # PALETTES: 5-stop dark→light palettes (index 0 = Original/no remap); used by the post gradient map and as uPal uniforms in shader modes
+│   └── layers.ts              # Content layer source: webcam (getUserMedia, mirrored) or uploaded image; getLayerSource() polled by postfx each frame
 ├── __tests__/
 │   ├── setup.ts               # Global test setup: browser global stubs for Node environment
 │   ├── mocks/
@@ -181,6 +186,10 @@ src/
 │   └── oscillograph.ts        # (lazy) Oscillograph: 3D Lissajous curve field rendered into a ping-pong phosphor FBO; 7 parametric curves (one per freq band) trace [a,b,c]-ratio Lissajous paths in perspective 3D space with additive blending, accumulating into glowing oscilloscope phosphor trails; warmth-gradient palette (amber sub-bass → neutral mid → cool blue-white brilliance — no rainbow); CHOP-style continuous easing of phase drift and beat-flash decay; EffectComposer UnrealBloomPass on desktop; beat fires camera-angle impulse + flash; mobile guard (half-res FBO, 256 vs 512 points/curve); inspired by Jerobeam Fenderson & Hansi Raber "n-spheres" oscilloscope music (2024, https://oscilloscopemusic.com/) and their technique of encoding 3D geometry directly in stereo audio waveforms; sliders: Complexity (Lissajous ratio tier 1–5 — structural), Trace (phosphor persistence), Scale (audio amplitude sensitivity); keyboard: F30
 │   └── strata.ts              # (lazy) Strata: GLSL sphere-traced alien terrain; single fullscreen quad + ShaderMaterial; 7 freq bands drive distinct geological strata heights at octave-spaced spatial frequencies (sub-bass=large rolling hills, brilliance=fine crystal facets); warm amber single directional light + soft shadows; exponential depth fog; camera orbits steadily at configurable altitude; beat fires ground-heave transient; restrained geological palette (dark basalt→rust iron→warm ochre→pale limestone, no rainbow); mobile guard (0.6 dpr, 90 vs 150 ray steps); inspired by "Elevated" (Rgba & TBC, Breakpoint 2009, https://www.pouet.net/prod.php?which=52938) and VJ terrain aesthetics; sliders: Terrain (spatial zoom — structural), Warp (domain-warp chaos 0=smooth strata→1=fractured), Altitude (camera height 0=low dramatic→1=overhead); keyboard: F31
 │   └── sonambient.ts          # (lazy) Sonambient: dense grid of thin metallic rods viewed from low angle; each rod continuously oscillates by tilting from its base driven by 7 radial frequency zones (sub-bass=slow wide sway at centre, brilliance=rapid fine tremor at rim); warm amber key + cold steel fill two-point studio lighting on physical MeshStandardMaterial; InstancedMesh with O(N²) updates; beat fires outward ring wave that briefly amplifies each rod as wavefront passes; restrained near-monochrome chrome palette, no rainbow; camera orbits at ground level; mobile guard (8–14 vs 10–20 per side); inspired by Harry Bertoia "Sonambient" sculptures (1960s–70s, Chinati Foundation, https://www.bertoia.org/sonambient.html) and TouchDesigner instanced-cylinder audio patches; sliders: Density (grid size 0=sparse→1=fine, structural), Resonance (tilt amplitude), Patina (roughness 0=mirror→1=brushed matte); keyboard: F32
+│   ├── shaders/               # GLSL shader modes (VizModes sdftunnel, nebula, turing, kifs)
+│   │   ├── runner.ts          # Shared WebGL2 context: SHADER_PRELUDE (audio uniforms + pal/noise/fbm helpers), adaptive render scale, blits onto the p5 canvas so post FX/layers/interactive apply; interactShader sets uTouch
+│   │   ├── library.ts         # SHADER_DEFS: frag source + default palette + params()/speed() per mode
+│   │   └── index.ts           # draw*/resetShader/disposeShader/interactShader for the registry; disposeShader is a no-op when switching between shader modes
 │   └── __tests__/             # Visualization tests (image drawing, userImage lifecycle)
 ├── midi/
 │   ├── manager.ts             # Web MIDI API access, CC listener, mapping storage (localStorage), startMappingMode
@@ -191,6 +200,7 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, 7-band frequency sensitivity, display sliders
+│   ├── postfx.ts              # Post FX / Palette / Layers sidebar sections: presets, stepped-slider readouts, palette swatch, layer source picker (the sliders themselves are ordinary config sliders)
 │   └── keyboard.ts            # Keyboard shortcuts: arrows cycle vizzes (via viz-selector option order), space play/pause, ↑↓ volume, m/f/s/r/i/?/h/Esc utility. Viz hotkeys were removed — the `key` field on registry entries is currently unused, but kept for potential future reintroduction
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
@@ -215,6 +225,7 @@ src/
    - Beat tracking: `floor(playbackPosition / beatInterval)` to detect beat changes
    - Dispatch to active visualization's draw function
 5. **Visualization** — Each viz reads `store.audioState` and `store.config` directly. p5.js handles all 2D/3D rendering to a full-screen canvas.
+6. **Post FX** — At the end of `p.draw`, `renderPostFX()` uploads the p5 canvas (and any Three.js overlay canvas on `<body>`) to WebGL2 and runs the post chain, in the same task so WebGL overlay drawing buffers are still valid. All post/palette/layer params are `Config` keys (`post*`, `layer*`), so they are sliders and MIDI-mappable.
 
 ### State management
 
@@ -260,6 +271,10 @@ Events: `stateChange`, `audioReady`, `playbackStart`, `playbackStop`, `modeChang
 13. Update CLAUDE.md and README.md in the same commit.
 14. Add any missing p5.js methods to `src/types/globals.d.ts`.
 
+### Adding a GLSL shader mode
+
+Follow the steps above, but instead of a p5 viz file add a `ShaderDef` to `SHADER_DEFS` in `src/visualizations/shaders/library.ts` (frag source defining `mainImage(out vec4, in vec2)`, a default `palette`, `params()` returning the 3 sliders 0–1 as `uParams`, and `speed()` which integrates into `uFlow`), export a `draw<Name>` wrapper from `shaders/index.ts`, and register it with `reset: resetShader, dispose: disposeShader, interact: interactShader`. Add its `<option>` inside the `GLSL Shaders` optgroup. Use `pal(t)` for colour so the shader follows the global palette.
+
 Note: per-viz keyboard shortcuts have been removed. Users cycle vizzes with the arrow keys (which iterate over the `#viz-selector` `<option>` list) or pick one directly from the sidebar dropdown. The `key` field on registry entries is kept for potential future reintroduction but is not currently registered.
 
 ### External libraries
@@ -270,7 +285,7 @@ Note: per-viz keyboard shortcuts have been removed. Users cycle vizzes with the 
 
 ### iOS app (Capacitor)
 
-`ios/` is a Capacitor-wrapped native iOS project (bundle ID `com.taoong.musicvisualizer`, configured in `capacitor.config.ts`). It loads the same `dist/` production build inside a WKWebView — no visualization or rendering code is native-specific, and rendering performance matches the mobile web version exactly since it's the same web engine. `npm run cap:sync` rebuilds the web app and copies it into `ios/App/App/public`; run this after any web change before testing in Xcode (`npm run cap:open:ios`). Native deps resolve via Swift Package Manager (`ios/App/CapApp-SPM/Package.swift`) — no CocoaPods. `ios/App/App/Info.plist` carries `NSMicrophoneUsageDescription` for mic-mode access; Web MIDI is unsupported in iOS WKWebView, so MIDI mapping is unavailable there. `ios/App/App/public`, `DerivedData/`, and `xcuserdata/` are gitignored via `ios/.gitignore` (Capacitor-generated).
+`ios/` is a Capacitor-wrapped native iOS project (bundle ID `com.taoong.musicvisualizer`, configured in `capacitor.config.ts`). It loads the same `dist/` production build inside a WKWebView — no visualization or rendering code is native-specific, and rendering performance matches the mobile web version exactly since it's the same web engine. `npm run cap:sync` rebuilds the web app and copies it into `ios/App/App/public`; run this after any web change before testing in Xcode (`npm run cap:open:ios`). Native deps resolve via Swift Package Manager (`ios/App/CapApp-SPM/Package.swift`) — no CocoaPods. `ios/App/App/Info.plist` carries `NSMicrophoneUsageDescription` for mic-mode access and `NSCameraUsageDescription` for the webcam layer; Web MIDI is unsupported in iOS WKWebView, so MIDI mapping is unavailable there. `ios/App/App/public`, `DerivedData/`, and `xcuserdata/` are gitignored via `ios/.gitignore` (Capacitor-generated).
 
 ## Maintenance
 

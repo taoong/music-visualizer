@@ -120,6 +120,7 @@ import { interactLasers } from './lasers';
 import { interactSynthwave } from './synthwave';
 import { interactText } from './text';
 import { interactHighway } from './highway';
+import { drawSdfTunnel, drawNebula, drawTuring, drawKifs, resetShader, disposeShader, interactShader } from './shaders';
 
 /**
  * Wraps a dynamically-imported visualization so Three.js is only loaded when
@@ -293,4 +294,9 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   oscillograph:     lazyViz(async () => { const { drawOscillograph: draw, resetOscillograph: reset, disposeOscillograph: dispose } = await import('./oscillograph'); return { draw, reset, dispose }; }, 'F30', 'Oscillograph'),
   strata:           lazyViz(async () => { const { drawStrata: draw, resetStrata: reset, disposeStrata: dispose } = await import('./strata'); return { draw, reset, dispose }; }, 'F31', 'Strata'),
   sonambient:       lazyViz(async () => { const { drawSonambient: draw, resetSonambient: reset, disposeSonambient: dispose } = await import('./sonambient'); return { draw, reset, dispose }; }, 'F32', 'Sonambient'),
+  // GLSL shader modes — fullscreen fragment shaders fed audio uniforms (see shaders/runner.ts)
+  sdftunnel:        { draw: drawSdfTunnel, reset: resetShader, dispose: disposeShader, interact: interactShader, key: '', label: 'SDF Tunnel' },
+  nebula:           { draw: drawNebula,    reset: resetShader, dispose: disposeShader, interact: interactShader, key: '', label: 'Nebula' },
+  turing:           { draw: drawTuring,    reset: resetShader, dispose: disposeShader, interact: interactShader, key: '', label: 'Turing' },
+  kifs:             { draw: drawKifs,      reset: resetShader, dispose: disposeShader, interact: interactShader, key: '', label: 'KIFS Fractal' },
 };

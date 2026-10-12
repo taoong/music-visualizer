@@ -106,3 +106,24 @@ describe('Visualization wiring — controls-groups', () => {
     ).toHaveLength(0);
   });
 });
+
+describe('MIDI wiring — CONFIG_TO_SLIDER ↔ index.html', () => {
+  const html = readFile('index.html');
+  const htmlIds = new Set([...html.matchAll(/id="([^"]+)"/g)].map(m => m[1]));
+  const manager = readFile('src/midi/manager.ts');
+  const block = manager.match(/const CONFIG_TO_SLIDER[^=]*=\s*\{([\s\S]*?)\n\};/);
+  if (!block) throw new Error('CONFIG_TO_SLIDER not found in src/midi/manager.ts');
+  const sliderIds = [...block[1].matchAll(/:\s*'([^']+)'/g)].map(m => m[1]);
+
+  it('every MIDI-mappable slider id exists in index.html', () => {
+    const missing = sliderIds.filter(id => !htmlIds.has(id));
+    expect(missing, `CONFIG_TO_SLIDER ids missing from index.html: ${missing.join(', ')}`).toHaveLength(0);
+  });
+
+  it('post-FX, palette and layer params are MIDI-mappable', () => {
+    for (const id of ['post-bloom', 'post-tonemap', 'post-grain', 'post-vignette', 'post-chroma',
+                      'post-trails', 'post-palette', 'layer-opacity', 'layer-blend', 'layer-order']) {
+      expect(sliderIds).toContain(id);
+    }
+  });
+});

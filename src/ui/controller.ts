@@ -11,6 +11,7 @@ import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlide
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
 import { bindBPMControls } from './bpm';
+import { bindPostFXControls } from './postfx';
 
 export { updateScrubberUI };
 
@@ -44,6 +45,8 @@ export function initUI(): () => void {
   cleanupFns.push(bindVolumeControl());
   cleanupFns.push(bindSensitivitySliders());
   cleanupFns.push(bindDisplaySliders());
+  // Post FX / palette / layers (after slider bindings so config updates first)
+  cleanupFns.push(bindPostFXControls());
 
   // Visualization selector
   cleanupFns.push(bindVizSelector());
@@ -184,6 +187,10 @@ const ALL_CONTROL_IDS = [
   'oscillograph-controls-group',
   'strata-controls-group',
   'sonambient-controls-group',
+  'sdftunnel-controls-group',
+  'nebula-controls-group',
+  'turing-controls-group',
+  'kifs-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -321,6 +328,10 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   oscillograph:     { show: ['oscillograph-controls-group'] },
   strata:           { show: ['strata-controls-group'] },
   sonambient:       { show: ['sonambient-controls-group'] },
+  sdftunnel:        { show: ['sdftunnel-controls-group'] },
+  nebula:           { show: ['nebula-controls-group'] },
+  turing:           { show: ['turing-controls-group'] },
+  kifs:             { show: ['kifs-controls-group'] },
 };
 
 function bindVizSelector(): () => void {
