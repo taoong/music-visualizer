@@ -27,6 +27,10 @@ npm run dev
 
 Open http://localhost:3000. Upload a track or use the built-in sample.
 
+## Prototype: Wobble instrument
+
+A "friendly Hydra" visual instrument lives at `/instrument.html` (run `npm run dev`, then open http://localhost:3000/instrument.html). Chain 8 candy-colored blocks (sources → transforms → fx), patch Kick/Bass/Hats onto any knob, map a DJ controller over Web MIDI, and perform from the macro deck with palette scenes and an XY pad. Chain, patches, MIDI bindings, and palette persist in localStorage. Code is additive under `src/instrument/` and does not touch the main app.
+
 ### Prerequisites
 
 - **Node.js** (v18+)
