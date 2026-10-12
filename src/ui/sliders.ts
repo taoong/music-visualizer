@@ -424,6 +424,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'strata-scale',   key: 'strataScale'   },
     { id: 'strata-warp',    key: 'strataWarp'    },
     { id: 'strata-height',  key: 'strataHeight'  },
+    { id: 'sonambient-density',   key: 'sonambientDensity'   },
+    { id: 'sonambient-resonance', key: 'sonambientResonance' },
+    { id: 'sonambient-patina',    key: 'sonambientPatina'    },
   ] as const;
 
   for (const { id, key } of configs) {

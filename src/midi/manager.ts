@@ -385,6 +385,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   strataScale:            'strata-scale',
   strataWarp:             'strata-warp',
   strataHeight:           'strata-height',
+  sonambientDensity:   'sonambient-density',
+  sonambientResonance: 'sonambient-resonance',
+  sonambientPatina:    'sonambient-patina',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

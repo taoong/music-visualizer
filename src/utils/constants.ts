@@ -642,6 +642,10 @@ export const DEFAULT_CONFIG = {
   strataScale:            0.40,             // 0–1 → terrain zoom (0=zoomed-in, 1=wide panorama; structural)
   strataWarp:             0.30,             // 0–1 → domain-warp chaos (0=smooth, 1=fractured)
   strataHeight:           0.40,             // 0–1 → camera altitude (0=low dramatic, 1=high overhead)
+  // Sonambient-specific
+  sonambientDensity:   0.50,  // 0–1 → rod grid density (structural: 10–20 per side desktop, 8–14 mobile)
+  sonambientResonance: 0.50,  // 0–1 → oscillation amplitude (audio sensitivity)
+  sonambientPatina:    0.30,  // 0–1 → material roughness (0=mirror polished, 1=brushed matte)
 };
 
 // FFT and decay constants
