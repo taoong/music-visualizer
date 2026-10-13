@@ -388,6 +388,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   sonambientDensity:   'sonambient-density',
   sonambientResonance: 'sonambient-resonance',
   sonambientPatina:    'sonambient-patina',
+  apertureDensity:   'aperture-density',
+  apertureBreathing: 'aperture-breathing',
+  apertureWarmth:    'aperture-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

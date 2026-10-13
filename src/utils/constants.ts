@@ -646,6 +646,10 @@ export const DEFAULT_CONFIG = {
   sonambientDensity:   0.50,  // 0–1 → rod grid density (structural: 10–20 per side desktop, 8–14 mobile)
   sonambientResonance: 0.50,  // 0–1 → oscillation amplitude (audio sensitivity)
   sonambientPatina:    0.30,  // 0–1 → material roughness (0=mirror polished, 1=brushed matte)
+  // Aperture-specific
+  apertureDensity:   0.45,  // 0–1 → hole grid scale (coarse few-large → fine many-small; structural)
+  apertureBreathing: 0.55,  // 0–1 → audio hole-dilation sensitivity
+  apertureWarmth:    0.60,  // 0–1 → inner glow intensity
 };
 
 // FFT and decay constants

@@ -427,6 +427,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'sonambient-density',   key: 'sonambientDensity'   },
     { id: 'sonambient-resonance', key: 'sonambientResonance' },
     { id: 'sonambient-patina',    key: 'sonambientPatina'    },
+    { id: 'aperture-density',   key: 'apertureDensity'   },
+    { id: 'aperture-breathing', key: 'apertureBreathing' },
+    { id: 'aperture-warmth',    key: 'apertureWarmth'    },
   ] as const;
 
   for (const { id, key } of configs) {
