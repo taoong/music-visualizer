@@ -294,4 +294,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   strata:           lazyViz(async () => { const { drawStrata: draw, resetStrata: reset, disposeStrata: dispose } = await import('./strata'); return { draw, reset, dispose }; }, 'F31', 'Strata'),
   sonambient:       lazyViz(async () => { const { drawSonambient: draw, resetSonambient: reset, disposeSonambient: dispose } = await import('./sonambient'); return { draw, reset, dispose }; }, 'F32', 'Sonambient'),
   aperture:         lazyViz(async () => { const { drawAperture: draw, resetAperture: reset, disposeAperture: dispose } = await import('./aperture'); return { draw, reset, dispose }; }, 'F33', 'Aperture'),
+  nimbus:           lazyViz(async () => { const { drawNimbus: draw, resetNimbus: reset, disposeNimbus: dispose } = await import('./nimbus'); return { draw, reset, dispose }; }, 'F34', 'Nimbus'),
 };

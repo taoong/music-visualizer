@@ -185,6 +185,7 @@ const ALL_CONTROL_IDS = [
   'strata-controls-group',
   'sonambient-controls-group',
   'aperture-controls-group',
+  'nimbus-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -323,6 +324,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   strata:           { show: ['strata-controls-group'] },
   sonambient:       { show: ['sonambient-controls-group'] },
   aperture:         { show: ['aperture-controls-group'] },
+  nimbus:           { show: ['nimbus-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

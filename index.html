@@ -358,6 +358,7 @@
           <option value="strata">Strata</option>
           <option value="sonambient">Sonambient</option>
           <option value="aperture">Aperture</option>
+          <option value="nimbus">Nimbus</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4853,6 +4854,21 @@
           <div class="slider-group">
             <label for="aperture-warmth">Warmth</label>
             <input type="range" id="aperture-warmth" min="0" max="1" step="0.01" value="0.6" aria-label="Warmth — inner glow intensity: 0=dark cold interior, 1=blazing amber glow">
+          </div>
+        </div>
+
+        <div id="nimbus-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="nimbus-coverage">Coverage</label>
+            <input type="range" id="nimbus-coverage" min="0" max="1" step="0.01" value="0.5" aria-label="Coverage — cloud density: 0=near-empty wisps, 1=dense overcast (structural)">
+          </div>
+          <div class="slider-group">
+            <label for="nimbus-turbulence">Turbulence</label>
+            <input type="range" id="nimbus-turbulence" min="0" max="1" step="0.01" value="0.4" aria-label="Turbulence — domain-warp chaos: 0=calm smooth billows, 1=violent storm">
+          </div>
+          <div class="slider-group">
+            <label for="nimbus-lightning">Lightning</label>
+            <input type="range" id="nimbus-lightning" min="0" max="1" step="0.01" value="0.55" aria-label="Lightning — beat flash and internal backlight intensity">
           </div>
         </div>
 

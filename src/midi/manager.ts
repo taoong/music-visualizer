@@ -391,6 +391,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   apertureDensity:   'aperture-density',
   apertureBreathing: 'aperture-breathing',
   apertureWarmth:    'aperture-warmth',
+  nimbusCoverage:   'nimbus-coverage',
+  nimbusTurbulence: 'nimbus-turbulence',
+  nimbusLightning:  'nimbus-lightning',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

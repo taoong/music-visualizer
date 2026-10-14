@@ -430,6 +430,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'aperture-density',   key: 'apertureDensity'   },
     { id: 'aperture-breathing', key: 'apertureBreathing' },
     { id: 'aperture-warmth',    key: 'apertureWarmth'    },
+    { id: 'nimbus-coverage',   key: 'nimbusCoverage'   },
+    { id: 'nimbus-turbulence', key: 'nimbusTurbulence' },
+    { id: 'nimbus-lightning',  key: 'nimbusLightning'  },
   ] as const;
 
   for (const { id, key } of configs) {

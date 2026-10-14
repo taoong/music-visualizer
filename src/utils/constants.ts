@@ -650,6 +650,10 @@ export const DEFAULT_CONFIG = {
   apertureDensity:   0.45,  // 0–1 → hole grid scale (coarse few-large → fine many-small; structural)
   apertureBreathing: 0.55,  // 0–1 → audio hole-dilation sensitivity
   apertureWarmth:    0.60,  // 0–1 → inner glow intensity
+  // Nimbus-specific
+  nimbusCoverage:   0.50,   // 0–1 → cloud density / opacity (near-empty wisps → dense overcast; structural)
+  nimbusTurbulence: 0.40,   // 0–1 → domain-warp chaos (calm smooth billows → violent storm)
+  nimbusLightning:  0.55,   // 0–1 → beat flash + internal backlight intensity
 };
 
 // FFT and decay constants
