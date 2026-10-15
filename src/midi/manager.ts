@@ -394,6 +394,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   nimbusCoverage:   'nimbus-coverage',
   nimbusTurbulence: 'nimbus-turbulence',
   nimbusLightning:  'nimbus-lightning',
+
+  relayFormation:  'relay-formation',
+  relayCascade:    'relay-cascade',
+  relayAberration: 'relay-aberration',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

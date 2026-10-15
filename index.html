@@ -359,6 +359,7 @@
           <option value="sonambient">Sonambient</option>
           <option value="aperture">Aperture</option>
           <option value="nimbus">Nimbus</option>
+          <option value="relay">Relay</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4869,6 +4870,21 @@
           <div class="slider-group">
             <label for="nimbus-lightning">Lightning</label>
             <input type="range" id="nimbus-lightning" min="0" max="1" step="0.01" value="0.55" aria-label="Lightning — beat flash and internal backlight intensity">
+          </div>
+        </div>
+
+        <div id="relay-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="relay-formation">Formation</label>
+            <input type="range" id="relay-formation" min="0" max="1" step="0.01" value="0.4" aria-label="Formation — node cluster spread: 0=tight 3D ball, 1=wide open constellation (structural)">
+          </div>
+          <div class="slider-group">
+            <label for="relay-cascade">Cascade</label>
+            <input type="range" id="relay-cascade" min="0" max="1" step="0.01" value="0.65" aria-label="Cascade — feedback depth: 0=fast signal fade, 1=deep cascading memory">
+          </div>
+          <div class="slider-group">
+            <label for="relay-aberration">Aberration</label>
+            <input type="range" id="relay-aberration" min="0" max="1" step="0.01" value="0.35" aria-label="Aberration — chromatic RGB channel separation: 0=clean, 1=heavy VHS aberration">
           </div>
         </div>
 

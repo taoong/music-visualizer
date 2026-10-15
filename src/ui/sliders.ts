@@ -433,6 +433,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'nimbus-coverage',   key: 'nimbusCoverage'   },
     { id: 'nimbus-turbulence', key: 'nimbusTurbulence' },
     { id: 'nimbus-lightning',  key: 'nimbusLightning'  },
+
+    { id: 'relay-formation',  key: 'relayFormation'  },
+    { id: 'relay-cascade',    key: 'relayCascade'    },
+    { id: 'relay-aberration', key: 'relayAberration' },
   ] as const;
 
   for (const { id, key } of configs) {

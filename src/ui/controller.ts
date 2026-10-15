@@ -186,6 +186,7 @@ const ALL_CONTROL_IDS = [
   'sonambient-controls-group',
   'aperture-controls-group',
   'nimbus-controls-group',
+  'relay-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -325,6 +326,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   sonambient:       { show: ['sonambient-controls-group'] },
   aperture:         { show: ['aperture-controls-group'] },
   nimbus:           { show: ['nimbus-controls-group'] },
+  relay:            { show: ['relay-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

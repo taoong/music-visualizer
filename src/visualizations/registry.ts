@@ -295,4 +295,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   sonambient:       lazyViz(async () => { const { drawSonambient: draw, resetSonambient: reset, disposeSonambient: dispose } = await import('./sonambient'); return { draw, reset, dispose }; }, 'F32', 'Sonambient'),
   aperture:         lazyViz(async () => { const { drawAperture: draw, resetAperture: reset, disposeAperture: dispose } = await import('./aperture'); return { draw, reset, dispose }; }, 'F33', 'Aperture'),
   nimbus:           lazyViz(async () => { const { drawNimbus: draw, resetNimbus: reset, disposeNimbus: dispose } = await import('./nimbus'); return { draw, reset, dispose }; }, 'F34', 'Nimbus'),
+  relay:            lazyViz(async () => { const { drawRelay: draw, resetRelay: reset, disposeRelay: dispose } = await import('./relay'); return { draw, reset, dispose }; }, 'F35', 'Relay'),
 };

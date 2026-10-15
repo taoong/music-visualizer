@@ -654,6 +654,10 @@ export const DEFAULT_CONFIG = {
   nimbusCoverage:   0.50,   // 0–1 → cloud density / opacity (near-empty wisps → dense overcast; structural)
   nimbusTurbulence: 0.40,   // 0–1 → domain-warp chaos (calm smooth billows → violent storm)
   nimbusLightning:  0.55,   // 0–1 → beat flash + internal backlight intensity
+
+  relayFormation:  0.40,    // 0–1 → node cluster spread (tight 3D ball → wide open constellation; structural)
+  relayCascade:    0.65,    // 0–1 → feedback cascade depth (fast fade → deep signal memory)
+  relayAberration: 0.35,    // 0–1 → chromatic RGB channel separation (clean → heavy VHS aberration)
 };
 
 // FFT and decay constants
