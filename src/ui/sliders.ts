@@ -437,6 +437,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'relay-formation',  key: 'relayFormation'  },
     { id: 'relay-cascade',    key: 'relayCascade'    },
     { id: 'relay-aberration', key: 'relayAberration' },
+
+    { id: 'reeds-vantage', key: 'reedsVantage' },
+    { id: 'reeds-glow',    key: 'reedsGlow'    },
+    { id: 'reeds-flow',    key: 'reedsFlow'    },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -360,6 +360,7 @@
           <option value="aperture">Aperture</option>
           <option value="nimbus">Nimbus</option>
           <option value="relay">Relay</option>
+          <option value="reeds">Reeds</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4885,6 +4886,21 @@
           <div class="slider-group">
             <label for="relay-aberration">Aberration</label>
             <input type="range" id="relay-aberration" min="0" max="1" step="0.01" value="0.35" aria-label="Aberration — chromatic RGB channel separation: 0=clean, 1=heavy VHS aberration">
+          </div>
+        </div>
+
+        <div id="reeds-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="reeds-vantage">Vantage</label>
+            <input type="range" id="reeds-vantage" min="0" max="1" step="0.01" value="0.2" aria-label="Vantage — camera elevation: 0=inside the field at eye level, 1=overhead sunflower view (structural)">
+          </div>
+          <div class="slider-group">
+            <label for="reeds-glow">Glow</label>
+            <input type="range" id="reeds-glow" min="0" max="1" step="0.01" value="0.65" aria-label="Glow — bloom strength and emissive brightness scale">
+          </div>
+          <div class="slider-group">
+            <label for="reeds-flow">Flow</label>
+            <input type="range" id="reeds-flow" min="0" max="1" step="0.01" value="0.4" aria-label="Flow — sway/bend amplitude and camera orbit speed">
           </div>
         </div>
 

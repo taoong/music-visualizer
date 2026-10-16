@@ -398,6 +398,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   relayFormation:  'relay-formation',
   relayCascade:    'relay-cascade',
   relayAberration: 'relay-aberration',
+
+  reedsVantage: 'reeds-vantage',
+  reedsGlow:    'reeds-glow',
+  reedsFlow:    'reeds-flow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

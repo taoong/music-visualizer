@@ -658,6 +658,10 @@ export const DEFAULT_CONFIG = {
   relayFormation:  0.40,    // 0–1 → node cluster spread (tight 3D ball → wide open constellation; structural)
   relayCascade:    0.65,    // 0–1 → feedback cascade depth (fast fade → deep signal memory)
   relayAberration: 0.35,    // 0–1 → chromatic RGB channel separation (clean → heavy VHS aberration)
+
+  reedsVantage: 0.20,   // 0–1 → camera elevation: 0=inside field at eye level, 1=overhead (structural)
+  reedsGlow:    0.65,   // 0–1 → bloom strength + emissive brightness scale
+  reedsFlow:    0.40,   // 0–1 → sway/bend amplitude + camera orbit speed
 };
 
 // FFT and decay constants
