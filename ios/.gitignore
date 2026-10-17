@@ -18,3 +18,9 @@ App/fastlane/README.md
 App/fastlane/Preview.html
 App/fastlane/screenshots
 App/fastlane/.env
+
+# Signing artifacts (cert/sigh output — never commit private keys or profiles)
+App/*.p12
+App/*.cer
+App/*.certSigningRequest
+App/*.mobileprovision

@@ -9,6 +9,20 @@ platform :ios do
       key_filepath: ENV.fetch("ASC_KEY_FILEPATH")
     )
 
+    # Provision signing via the App Store Connect API key instead of an
+    # Xcode-GUI Apple ID session — works headlessly, no login/2FA prompt.
+    cert(
+      api_key: api_key,
+      team_id: "SL9MBFK93P"
+    )
+
+    get_provisioning_profile(
+      api_key: api_key,
+      app_identifier: "com.taoong.musicvisualizer",
+      team_id: "SL9MBFK93P",
+      force: true
+    )
+
     build_app(
       project: "App.xcodeproj",
       scheme: "App",
