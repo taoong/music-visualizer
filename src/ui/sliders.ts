@@ -441,6 +441,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'reeds-vantage', key: 'reedsVantage' },
     { id: 'reeds-glow',    key: 'reedsGlow'    },
     { id: 'reeds-flow',    key: 'reedsFlow'    },
+    { id: 'chronicle-depth',  key: 'chronicleDepth'  },
+    { id: 'chronicle-height', key: 'chronicleHeight' },
+    { id: 'chronicle-orbit',  key: 'chronicleOrbit'  },
   ] as const;
 
   for (const { id, key } of configs) {

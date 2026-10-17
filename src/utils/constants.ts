@@ -662,6 +662,10 @@ export const DEFAULT_CONFIG = {
   reedsVantage: 0.20,   // 0–1 → camera elevation: 0=inside field at eye level, 1=overhead (structural)
   reedsGlow:    0.65,   // 0–1 → bloom strength + emissive brightness scale
   reedsFlow:    0.40,   // 0–1 → sway/bend amplitude + camera orbit speed
+  // Chronicle-specific
+  chronicleDepth:  0.45, // 0–1 → history depth MIN_ROWS–MAX_ROWS (structural)
+  chronicleHeight: 0.55, // 0–1 → amplitude-to-height sensitivity
+  chronicleOrbit:  0.40, // 0–1 → camera orbit speed + elevation
 };
 
 // FFT and decay constants

@@ -361,6 +361,7 @@
           <option value="nimbus">Nimbus</option>
           <option value="relay">Relay</option>
           <option value="reeds">Reeds</option>
+          <option value="chronicle">Chronicle</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4901,6 +4902,20 @@
           <div class="slider-group">
             <label for="reeds-flow">Flow</label>
             <input type="range" id="reeds-flow" min="0" max="1" step="0.01" value="0.4" aria-label="Flow — sway/bend amplitude and camera orbit speed">
+          </div>
+        </div>
+        <div id="chronicle-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="chronicle-depth">Depth</label>
+            <input type="range" id="chronicle-depth" min="0" max="1" step="0.01" value="0.45" aria-label="Depth — history depth: fewer rows=shallow recent sediment, more rows=deep time record (structural)">
+          </div>
+          <div class="slider-group">
+            <label for="chronicle-height">Height</label>
+            <input type="range" id="chronicle-height" min="0" max="1" step="0.01" value="0.55" aria-label="Height — amplitude-to-height sensitivity: low=flat plains, high=dramatic peaks">
+          </div>
+          <div class="slider-group">
+            <label for="chronicle-orbit">Orbit</label>
+            <input type="range" id="chronicle-orbit" min="0" max="1" step="0.01" value="0.4" aria-label="Orbit — camera orbit speed and elevation: low=slow dramatic angle, high=faster overhead view">
           </div>
         </div>
 

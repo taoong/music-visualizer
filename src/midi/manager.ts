@@ -402,6 +402,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   reedsVantage: 'reeds-vantage',
   reedsGlow:    'reeds-glow',
   reedsFlow:    'reeds-flow',
+  chronicleDepth:  'chronicle-depth',
+  chronicleHeight: 'chronicle-height',
+  chronicleOrbit:  'chronicle-orbit',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

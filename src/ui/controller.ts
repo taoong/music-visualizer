@@ -188,6 +188,7 @@ const ALL_CONTROL_IDS = [
   'nimbus-controls-group',
   'relay-controls-group',
   'reeds-controls-group',
+  'chronicle-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -329,6 +330,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   nimbus:           { show: ['nimbus-controls-group'] },
   relay:            { show: ['relay-controls-group'] },
   reeds:            { show: ['reeds-controls-group'] },
+  chronicle:        { show: ['chronicle-controls-group'] },
 };
 
 function bindVizSelector(): () => void {

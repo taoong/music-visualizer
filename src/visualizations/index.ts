@@ -120,3 +120,4 @@ export { drawGridwarp, resetGridwarp } from './gridwarp';
 export { drawHeliograph, resetHeliograph, disposeHeliograph } from './heliograph';
 export { drawRelay, resetRelay, disposeRelay } from './relay';
 export { drawReeds, resetReeds, disposeReeds } from './reeds';
+export { drawChronicle, resetChronicle, disposeChronicle } from './chronicle';
