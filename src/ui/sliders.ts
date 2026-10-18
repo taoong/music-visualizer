@@ -444,6 +444,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'chronicle-depth',  key: 'chronicleDepth'  },
     { id: 'chronicle-height', key: 'chronicleHeight' },
     { id: 'chronicle-orbit',  key: 'chronicleOrbit'  },
+    { id: 'filaments-density', key: 'filamentsDensity' },
+    { id: 'filaments-clarity', key: 'filamentsClarity' },
+    { id: 'filaments-sway',    key: 'filamentsSway'    },
   ] as const;
 
   for (const { id, key } of configs) {

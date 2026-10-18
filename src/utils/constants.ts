@@ -666,6 +666,10 @@ export const DEFAULT_CONFIG = {
   chronicleDepth:  0.45, // 0–1 → history depth MIN_ROWS–MAX_ROWS (structural)
   chronicleHeight: 0.55, // 0–1 → amplitude-to-height sensitivity
   chronicleOrbit:  0.40, // 0–1 → camera orbit speed + elevation
+  // Filaments-specific
+  filamentsDensity: 0.45, // 0–1 → strand count (sparse curtain → dense forest, structural)
+  filamentsClarity: 0.55, // 0–1 → transmission 0=frosted amber → 1=clear glass (material)
+  filamentsSway:    0.50, // 0–1 → audio sway displacement amplitude
 };
 
 // FFT and decay constants

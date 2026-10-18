@@ -405,6 +405,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   chronicleDepth:  'chronicle-depth',
   chronicleHeight: 'chronicle-height',
   chronicleOrbit:  'chronicle-orbit',
+  filamentsDensity: 'filaments-density',
+  filamentsClarity: 'filaments-clarity',
+  filamentsSway:    'filaments-sway',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
