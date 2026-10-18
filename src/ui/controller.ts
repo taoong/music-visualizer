@@ -5,6 +5,7 @@ import { store } from '../state/store';
 import type { VizMode } from '../types';
 import { injectErrorStyles } from '../utils/errors';
 import { setVisualizerText } from '../visualizations';
+import { VIZ_REGISTRY } from '../visualizations/registry';
 import { BANDS, isMobile } from '../utils/constants';
 import { bindFileUpload, bindSampleButton, bindMicButton, bindModeSelector, bindPlayButton, bindImageUpload, bindSplashKeyboard } from './splash';
 import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlider } from './sliders';
@@ -47,6 +48,7 @@ export function initUI(): () => void {
 
   // Visualization selector
   cleanupFns.push(bindVizSelector());
+  cleanupFns.push(bindVizNameTag());
 
   // Randomize button
   cleanupFns.push(bindRandomizeButton());
@@ -334,6 +336,19 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   chronicle:        { show: ['chronicle-controls-group'] },
   filaments:        { show: ['filaments-controls-group'] },
 };
+
+function bindVizNameTag(): () => void {
+  const tag = document.getElementById('viz-name-tag');
+  if (!tag) return () => {};
+
+  const update = (data?: unknown) => {
+    const mode = (data as VizMode) ?? store.state.vizMode;
+    tag.textContent = VIZ_REGISTRY[mode]?.label ?? mode;
+  };
+
+  update();
+  return store.on('vizModeChange', update);
+}
 
 function bindVizSelector(): () => void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;

@@ -1125,6 +1125,21 @@ body {
   background: rgba(26, 26, 30, 0.9);
 }
 
+/* ── Viz name tag (audit use only, kept barely visible) ──── */
+#viz-name-tag {
+  position: fixed;
+  top: calc(6px + env(safe-area-inset-top, 0px));
+  left: calc(6px + env(safe-area-inset-left, 0px));
+  z-index: 10;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  opacity: 0.4;
+  pointer-events: none;
+  user-select: none;
+}
+
 /* ── Canvas Container ────────────────────────────────────── */
 #canvas-container {
   position: fixed;
