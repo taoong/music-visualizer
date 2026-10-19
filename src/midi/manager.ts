@@ -408,6 +408,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   filamentsDensity: 'filaments-density',
   filamentsClarity: 'filaments-clarity',
   filamentsSway:    'filaments-sway',
+  stringerStrings:   'stringer-strings',
+  stringerResonance: 'stringer-resonance',
+  stringerGlow:      'stringer-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

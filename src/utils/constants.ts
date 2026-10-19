@@ -670,6 +670,10 @@ export const DEFAULT_CONFIG = {
   filamentsDensity: 0.45, // 0–1 → strand count (sparse curtain → dense forest, structural)
   filamentsClarity: 0.55, // 0–1 → transmission 0=frosted amber → 1=clear glass (material)
   filamentsSway:    0.50, // 0–1 → audio sway displacement amplitude
+  // Stringer-specific
+  stringerStrings:   0.35, // 0–1 → string count structural (20–200 desktop / 10–60 mobile)
+  stringerResonance: 0.50, // 0–1 → vibration amplitude sensitivity
+  stringerGlow:      0.55, // 0–1 → bloom strength + emissive brightness
 };
 
 // FFT and decay constants

@@ -192,6 +192,7 @@ const ALL_CONTROL_IDS = [
   'reeds-controls-group',
   'chronicle-controls-group',
   'filaments-controls-group',
+  'stringer-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -335,6 +336,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   reeds:            { show: ['reeds-controls-group'] },
   chronicle:        { show: ['chronicle-controls-group'] },
   filaments:        { show: ['filaments-controls-group'] },
+  stringer:         { show: ['stringer-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {
