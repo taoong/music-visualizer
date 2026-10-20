@@ -674,6 +674,10 @@ export const DEFAULT_CONFIG = {
   stringerStrings:   0.35, // 0–1 → string count structural (20–200 desktop / 10–60 mobile)
   stringerResonance: 0.50, // 0–1 → vibration amplitude sensitivity
   stringerGlow:      0.55, // 0–1 → bloom strength + emissive brightness
+  // Lamina-specific
+  laminaCount:   170,  // plate count (50–300 desktop; scaled on mobile)
+  laminaScatter: 0.55, // 0–1 → beat scatter impulse strength
+  laminaWarmth:  0.62, // 0–1 → 0=cool steel-blue, 1=warm amber-gold
 };
 
 // FFT and decay constants

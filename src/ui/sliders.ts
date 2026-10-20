@@ -450,6 +450,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'stringer-strings',   key: 'stringerStrings'   },
     { id: 'stringer-resonance', key: 'stringerResonance' },
     { id: 'stringer-glow',      key: 'stringerGlow'      },
+    { id: 'lamina-count',   key: 'laminaCount'   },
+    { id: 'lamina-scatter', key: 'laminaScatter' },
+    { id: 'lamina-warmth',  key: 'laminaWarmth'  },
   ] as const;
 
   for (const { id, key } of configs) {

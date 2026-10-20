@@ -364,6 +364,7 @@
           <option value="chronicle">Chronicle</option>
           <option value="filaments">Filaments</option>
           <option value="stringer">Stringer</option>
+          <option value="lamina">Lamina</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4947,6 +4948,21 @@
           <div class="slider-group">
             <label for="stringer-glow">Glow</label>
             <input type="range" id="stringer-glow" min="0" max="1" step="0.01" value="0.55" aria-label="Glow — bloom strength and emissive brightness: low=dim candlelight, high=blazing studio">
+          </div>
+        </div>
+
+        <div id="lamina-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="lamina-count">Count</label>
+            <input type="range" id="lamina-count" min="50" max="300" step="1" value="170" aria-label="Count — plate count (structural): 50=sparse individual plates, 300=dense crystalline mass">
+          </div>
+          <div class="slider-group">
+            <label for="lamina-scatter">Scatter</label>
+            <input type="range" id="lamina-scatter" min="0" max="1" step="0.01" value="0.55" aria-label="Scatter — beat scatter impulse: low=gentle ripple, high=explosive burst then easing back">
+          </div>
+          <div class="slider-group">
+            <label for="lamina-warmth">Warmth</label>
+            <input type="range" id="lamina-warmth" min="0" max="1" step="0.01" value="0.62" aria-label="Warmth — color temperature: 0=cool brushed steel-blue, 1=warm amber-gold">
           </div>
         </div>
 

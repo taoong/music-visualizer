@@ -411,6 +411,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   stringerStrings:   'stringer-strings',
   stringerResonance: 'stringer-resonance',
   stringerGlow:      'stringer-glow',
+  laminaCount:   'lamina-count',
+  laminaScatter: 'lamina-scatter',
+  laminaWarmth:  'lamina-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

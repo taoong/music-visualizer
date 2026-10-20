@@ -300,4 +300,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   chronicle:        lazyViz(async () => { const { drawChronicle: draw, resetChronicle: reset, disposeChronicle: dispose } = await import('./chronicle'); return { draw, reset, dispose }; }, 'F37', 'Chronicle'),
   filaments:        lazyViz(async () => { const { drawFilaments: draw, resetFilaments: reset, disposeFilaments: dispose } = await import('./filaments'); return { draw, reset, dispose }; }, 'F38', 'Filaments'),
   stringer:         lazyViz(async () => { const { drawStringer: draw, resetStringer: reset, disposeStringer: dispose } = await import('./stringer'); return { draw, reset, dispose }; }, 'F39', 'Stringer'),
+  lamina:           lazyViz(async () => { const { drawLamina: draw, resetLamina: reset, disposeLamina: dispose } = await import('./lamina'); return { draw, reset, dispose }; }, 'F40', 'Lamina'),
 };
