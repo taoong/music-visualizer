@@ -123,3 +123,4 @@ export { drawReeds, resetReeds, disposeReeds } from './reeds';
 export { drawChronicle, resetChronicle, disposeChronicle } from './chronicle';
 export { drawFilaments, resetFilaments, disposeFilaments } from './filaments';
 export { drawDispersion, resetDispersion, disposeDispersion } from './dispersion';
+export { drawFoam, resetFoam, disposeFoam } from './foam';

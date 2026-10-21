@@ -417,6 +417,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   dispersionRings:   'dispersion-rings',
   dispersionSpin:    'dispersion-spin',
   dispersionClarity: 'dispersion-clarity',
+  foamDensity: 'foam-density',
+  foamWall:    'foam-wall',
+  foamGlow:    'foam-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -456,6 +456,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'dispersion-rings',   key: 'dispersionRings'   },
     { id: 'dispersion-spin',    key: 'dispersionSpin'    },
     { id: 'dispersion-clarity', key: 'dispersionClarity' },
+    { id: 'foam-density', key: 'foamDensity' },
+    { id: 'foam-wall',    key: 'foamWall'    },
+    { id: 'foam-glow',    key: 'foamGlow'    },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -682,6 +682,10 @@ export const DEFAULT_CONFIG = {
   dispersionRings:   7,    // 2–7 concentric rings (structural)
   dispersionSpin:    0.55, // 0–1 audio sensitivity to rotation speed
   dispersionClarity: 0.6,  // 0–1 frosted → clear glass
+  // Foam-specific
+  foamDensity: 0.40, // 0–1 → Voronoi cell scale (structural)
+  foamWall:    0.55, // 0–1 → cell-wall brightness / thickness
+  foamGlow:    0.50, // 0–1 → overall luminosity + camera distance
 };
 
 // FFT and decay constants
