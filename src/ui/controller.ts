@@ -194,6 +194,7 @@ const ALL_CONTROL_IDS = [
   'filaments-controls-group',
   'stringer-controls-group',
   'lamina-controls-group',
+  'dispersion-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -339,6 +340,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   filaments:        { show: ['filaments-controls-group'] },
   stringer:         { show: ['stringer-controls-group'] },
   lamina:           { show: ['lamina-controls-group'] },
+  dispersion:       { show: ['dispersion-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

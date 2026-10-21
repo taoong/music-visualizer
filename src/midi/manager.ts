@@ -414,6 +414,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   laminaCount:   'lamina-count',
   laminaScatter: 'lamina-scatter',
   laminaWarmth:  'lamina-warmth',
+  dispersionRings:   'dispersion-rings',
+  dispersionSpin:    'dispersion-spin',
+  dispersionClarity: 'dispersion-clarity',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -678,6 +678,10 @@ export const DEFAULT_CONFIG = {
   laminaCount:   170,  // plate count (50–300 desktop; scaled on mobile)
   laminaScatter: 0.55, // 0–1 → beat scatter impulse strength
   laminaWarmth:  0.62, // 0–1 → 0=cool steel-blue, 1=warm amber-gold
+  // Dispersion
+  dispersionRings:   7,    // 2–7 concentric rings (structural)
+  dispersionSpin:    0.55, // 0–1 audio sensitivity to rotation speed
+  dispersionClarity: 0.6,  // 0–1 frosted → clear glass
 };
 
 // FFT and decay constants

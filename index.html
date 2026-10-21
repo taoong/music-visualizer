@@ -365,6 +365,7 @@
           <option value="filaments">Filaments</option>
           <option value="stringer">Stringer</option>
           <option value="lamina">Lamina</option>
+          <option value="dispersion">Dispersion</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -4963,6 +4964,21 @@
           <div class="slider-group">
             <label for="lamina-warmth">Warmth</label>
             <input type="range" id="lamina-warmth" min="0" max="1" step="0.01" value="0.62" aria-label="Warmth — color temperature: 0=cool brushed steel-blue, 1=warm amber-gold">
+          </div>
+        </div>
+
+        <div id="dispersion-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="dispersion-rings">Rings</label>
+            <input type="range" id="dispersion-rings" min="2" max="7" step="1" value="7" aria-label="Rings — concentric ring count (structural): 2=two sparse rings, 7=full barrel of seven rings">
+          </div>
+          <div class="slider-group">
+            <label for="dispersion-spin">Spin</label>
+            <input type="range" id="dispersion-spin" min="0" max="1" step="0.01" value="0.55" aria-label="Spin — audio sensitivity for rotation speed: 0=barely moves, 1=fast reactive spin">
+          </div>
+          <div class="slider-group">
+            <label for="dispersion-clarity">Clarity</label>
+            <input type="range" id="dispersion-clarity" min="0" max="1" step="0.01" value="0.6" aria-label="Clarity — glass material: 0=frosted opaque, 1=clear iridescent glass">
           </div>
         </div>
 

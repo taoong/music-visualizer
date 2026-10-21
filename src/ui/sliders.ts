@@ -453,6 +453,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'lamina-count',   key: 'laminaCount'   },
     { id: 'lamina-scatter', key: 'laminaScatter' },
     { id: 'lamina-warmth',  key: 'laminaWarmth'  },
+    { id: 'dispersion-rings',   key: 'dispersionRings'   },
+    { id: 'dispersion-spin',    key: 'dispersionSpin'    },
+    { id: 'dispersion-clarity', key: 'dispersionClarity' },
   ] as const;
 
   for (const { id, key } of configs) {
