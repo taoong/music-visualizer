@@ -420,6 +420,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   foamDensity: 'foam-density',
   foamWall:    'foam-wall',
   foamGlow:    'foam-glow',
+  duneDunes: 'dune-dunes',
+  duneDepth: 'dune-depth',
+  duneSun:   'dune-sun',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

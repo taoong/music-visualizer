@@ -686,6 +686,10 @@ export const DEFAULT_CONFIG = {
   foamDensity: 0.40, // 0–1 → Voronoi cell scale (structural)
   foamWall:    0.55, // 0–1 → cell-wall brightness / thickness
   foamGlow:    0.50, // 0–1 → overall luminosity + camera distance
+  // Dune
+  duneDunes: 0.40, // 0=long desert dunes, 1=fine beach ripples (structural)
+  duneDepth: 0.50, // 0–1 → audio amplitude sensitivity
+  duneSun:   0.20, // 0=near horizon (max drama), 1=overhead (flat)
 };
 
 // FFT and decay constants
