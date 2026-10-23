@@ -372,6 +372,7 @@
           <option value="dispersion">Dispersion</option>
           <option value="foam">Foam</option>
           <option value="dune">Dune</option>
+          <option value="spire">Spire</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5015,6 +5016,21 @@
           <div class="slider-group">
             <label for="dune-sun">Sun</label>
             <input type="range" id="dune-sun" min="0" max="1" step="0.01" value="0.20" aria-label="Sun — sun elevation: 0=near horizon (long dramatic shadows), 1=overhead (flat even light)">
+          </div>
+        </div>
+
+        <div id="spire-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="spire-formation">Formation</label>
+            <input type="range" id="spire-formation" min="0" max="1" step="0.01" value="0.50" aria-label="Formation — grid density (structural): 0=sparse 4×4 tall spires, 1=dense 12×12 field">
+          </div>
+          <div class="slider-group">
+            <label for="spire-height">Height</label>
+            <input type="range" id="spire-height" min="0" max="1" step="0.01" value="0.55" aria-label="Height — amplitude sensitivity: 0=subtle sway, 1=sky-reaching spires">
+          </div>
+          <div class="slider-group">
+            <label for="spire-warmth">Warmth</label>
+            <input type="range" id="spire-warmth" min="0" max="1" step="0.01" value="0.25" aria-label="Warmth — material and light temperature: 0=cold moonlit obsidian, 1=warm sundown sandstone">
           </div>
         </div>
 

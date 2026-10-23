@@ -690,6 +690,10 @@ export const DEFAULT_CONFIG = {
   duneDunes: 0.40, // 0=long desert dunes, 1=fine beach ripples (structural)
   duneDepth: 0.50, // 0–1 → audio amplitude sensitivity
   duneSun:   0.20, // 0=near horizon (max drama), 1=overhead (flat)
+  // Spire
+  spireFormation: 0.50, // 0–1 → 4–12 spires per side (structural)
+  spireHeight:    0.55, // 0–1 → amplitude sensitivity / max height
+  spireWarmth:    0.25, // 0=cold obsidian moonlight, 1=warm sandstone sundown
 };
 
 // FFT and decay constants

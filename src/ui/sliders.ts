@@ -462,6 +462,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'dune-dunes', key: 'duneDunes' },
     { id: 'dune-depth', key: 'duneDepth' },
     { id: 'dune-sun',   key: 'duneSun'   },
+    { id: 'spire-formation', key: 'spireFormation' },
+    { id: 'spire-height',    key: 'spireHeight'    },
+    { id: 'spire-warmth',    key: 'spireWarmth'    },
   ] as const;
 
   for (const { id, key } of configs) {

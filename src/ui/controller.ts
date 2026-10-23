@@ -197,6 +197,7 @@ const ALL_CONTROL_IDS = [
   'dispersion-controls-group',
   'foam-controls-group',
   'dune-controls-group',
+  'spire-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -345,6 +346,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   dispersion:       { show: ['dispersion-controls-group'] },
   foam:             { show: ['foam-controls-group'] },
   dune:             { show: ['dune-controls-group'] },
+  spire:            { show: ['spire-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

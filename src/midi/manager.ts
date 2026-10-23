@@ -423,6 +423,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   duneDunes: 'dune-dunes',
   duneDepth: 'dune-depth',
   duneSun:   'dune-sun',
+  spireFormation: 'spire-formation',
+  spireHeight:    'spire-height',
+  spireWarmth:    'spire-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
