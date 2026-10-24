@@ -426,6 +426,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   spireFormation: 'spire-formation',
   spireHeight:    'spire-height',
   spireWarmth:    'spire-warmth',
+  membraneDetail:    'membrane-detail',
+  membraneAmplitude: 'membrane-amplitude',
+  membraneFilm:      'membrane-film',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

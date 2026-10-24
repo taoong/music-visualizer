@@ -373,6 +373,7 @@
           <option value="foam">Foam</option>
           <option value="dune">Dune</option>
           <option value="spire">Spire</option>
+          <option value="membrane">Membrane</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5031,6 +5032,21 @@
           <div class="slider-group">
             <label for="spire-warmth">Warmth</label>
             <input type="range" id="spire-warmth" min="0" max="1" step="0.01" value="0.25" aria-label="Warmth — material and light temperature: 0=cold moonlit obsidian, 1=warm sundown sandstone">
+          </div>
+        </div>
+
+        <div id="membrane-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="membrane-detail">Detail</label>
+            <input type="range" id="membrane-detail" min="0" max="1" step="0.01" value="0.40" aria-label="Detail — mesh resolution (structural): 0=coarse 20×20, 1=fine 60×60">
+          </div>
+          <div class="slider-group">
+            <label for="membrane-amplitude">Amplitude</label>
+            <input type="range" id="membrane-amplitude" min="0" max="1" step="0.01" value="0.60" aria-label="Amplitude — wave displacement height: 0=barely rippling, 1=dramatic standing waves">
+          </div>
+          <div class="slider-group">
+            <label for="membrane-film">Film</label>
+            <input type="range" id="membrane-film" min="0" max="1" step="0.01" value="0.40" aria-label="Film — thin-film iridescence thickness: 0=thin blue-violet shimmer, 1=full soap-bubble spectrum">
           </div>
         </div>
 

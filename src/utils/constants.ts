@@ -694,6 +694,10 @@ export const DEFAULT_CONFIG = {
   spireFormation: 0.50, // 0–1 → 4–12 spires per side (structural)
   spireHeight:    0.55, // 0–1 → amplitude sensitivity / max height
   spireWarmth:    0.25, // 0=cold obsidian moonlight, 1=warm sandstone sundown
+  // Membrane
+  membraneDetail:    0.40, // 0–1 → mesh segment count (structural: 20–60 desktop, 16–28 mobile)
+  membraneAmplitude: 0.60, // 0–1 → wave displacement amplitude
+  membraneFilm:      0.40, // 0–1 → thin-film thickness 0=thin blue shimmer, 1=full soap-bubble spectrum
 };
 
 // FFT and decay constants

@@ -465,6 +465,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'spire-formation', key: 'spireFormation' },
     { id: 'spire-height',    key: 'spireHeight'    },
     { id: 'spire-warmth',    key: 'spireWarmth'    },
+    { id: 'membrane-detail',    key: 'membraneDetail'    },
+    { id: 'membrane-amplitude', key: 'membraneAmplitude' },
+    { id: 'membrane-film',      key: 'membraneFilm'      },
   ] as const;
 
   for (const { id, key } of configs) {
