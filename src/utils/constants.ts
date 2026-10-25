@@ -698,6 +698,11 @@ export const DEFAULT_CONFIG = {
   membraneDetail:    0.40, // 0–1 → mesh segment count (structural: 20–60 desktop, 16–28 mobile)
   membraneAmplitude: 0.60, // 0–1 → wave displacement amplitude
   membraneFilm:      0.40, // 0–1 → thin-film thickness 0=thin blue shimmer, 1=full soap-bubble spectrum
+  // Cinder
+  cinderDensity: 0.45, // 0–1 → ring buffer size (structural: sparse ember→dense cloud)
+  cinderChaos:   0.55, // 0–1 → sinusoidal nonlinearity blend (0=geometric IFS, 1=organic flame)
+  cinderWarmth:  0.65, // 0–1 → palette: 0=cool electric blue, 1=warm amber
+  cinderGlow:    0.60, // 0–1 → point brightness / bloom intensity
 };
 
 // FFT and decay constants

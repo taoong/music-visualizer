@@ -468,6 +468,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'membrane-detail',    key: 'membraneDetail'    },
     { id: 'membrane-amplitude', key: 'membraneAmplitude' },
     { id: 'membrane-film',      key: 'membraneFilm'      },
+    { id: 'cinder-density', key: 'cinderDensity' },
+    { id: 'cinder-chaos',   key: 'cinderChaos'   },
+    { id: 'cinder-warmth',  key: 'cinderWarmth'  },
+    { id: 'cinder-glow',    key: 'cinderGlow'    },
   ] as const;
 
   for (const { id, key } of configs) {

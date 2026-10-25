@@ -429,6 +429,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   membraneDetail:    'membrane-detail',
   membraneAmplitude: 'membrane-amplitude',
   membraneFilm:      'membrane-film',
+  cinderDensity: 'cinder-density',
+  cinderChaos:   'cinder-chaos',
+  cinderWarmth:  'cinder-warmth',
+  cinderGlow:    'cinder-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

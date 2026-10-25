@@ -374,6 +374,7 @@
           <option value="dune">Dune</option>
           <option value="spire">Spire</option>
           <option value="membrane">Membrane</option>
+          <option value="cinder">Cinder</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5047,6 +5048,25 @@
           <div class="slider-group">
             <label for="membrane-film">Film</label>
             <input type="range" id="membrane-film" min="0" max="1" step="0.01" value="0.40" aria-label="Film — thin-film iridescence thickness: 0=thin blue-violet shimmer, 1=full soap-bubble spectrum">
+          </div>
+        </div>
+
+        <div id="cinder-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="cinder-density">Density</label>
+            <input type="range" id="cinder-density" min="0" max="1" step="0.01" value="0.45" aria-label="Density — chaos-game iterations per frame: 0=sparse embers, 1=dense constellation">
+          </div>
+          <div class="slider-group">
+            <label for="cinder-chaos">Chaos</label>
+            <input type="range" id="cinder-chaos" min="0" max="1" step="0.01" value="0.55" aria-label="Chaos — IFS transform weight spread: 0=uniform (all transforms equally likely), 1=fully audio-driven (dominant band controls structure)">
+          </div>
+          <div class="slider-group">
+            <label for="cinder-warmth">Warmth</label>
+            <input type="range" id="cinder-warmth" min="0" max="1" step="0.01" value="0.65" aria-label="Warmth — palette temperature: 0=cool silver-blue embers, 1=warm amber-gold cinders">
+          </div>
+          <div class="slider-group">
+            <label for="cinder-glow">Glow</label>
+            <input type="range" id="cinder-glow" min="0" max="1" step="0.01" value="0.60" aria-label="Glow — bloom and trail persistence: 0=fast fade sharp sparks, 1=long luminous trails">
           </div>
         </div>
 
