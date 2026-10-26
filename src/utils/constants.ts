@@ -703,6 +703,10 @@ export const DEFAULT_CONFIG = {
   cinderChaos:   0.55, // 0–1 → sinusoidal nonlinearity blend (0=geometric IFS, 1=organic flame)
   cinderWarmth:  0.65, // 0–1 → palette: 0=cool electric blue, 1=warm amber
   cinderGlow:    0.60, // 0–1 → point brightness / bloom intensity
+  // Platter
+  platterSpread: 0.85, // 0.4–1.8 → Y separation between discs (structural)
+  platterTilt:   0.55, // 0–1 → audio tilt amplitude (structural)
+  platterGlow:   0.45, // 0–1 → inner emissive + bloom intensity
 };
 
 // FFT and decay constants

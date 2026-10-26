@@ -433,6 +433,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   cinderChaos:   'cinder-chaos',
   cinderWarmth:  'cinder-warmth',
   cinderGlow:    'cinder-glow',
+  platterSpread: 'platter-spread',
+  platterTilt:   'platter-tilt',
+  platterGlow:   'platter-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

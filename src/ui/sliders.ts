@@ -472,6 +472,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'cinder-chaos',   key: 'cinderChaos'   },
     { id: 'cinder-warmth',  key: 'cinderWarmth'  },
     { id: 'cinder-glow',    key: 'cinderGlow'    },
+    { id: 'platter-spread', key: 'platterSpread' },
+    { id: 'platter-tilt',   key: 'platterTilt'   },
+    { id: 'platter-glow',   key: 'platterGlow'   },
   ] as const;
 
   for (const { id, key } of configs) {

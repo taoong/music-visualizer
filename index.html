@@ -375,6 +375,7 @@
           <option value="spire">Spire</option>
           <option value="membrane">Membrane</option>
           <option value="cinder">Cinder</option>
+          <option value="platter">Platter</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5067,6 +5068,21 @@
           <div class="slider-group">
             <label for="cinder-glow">Glow</label>
             <input type="range" id="cinder-glow" min="0" max="1" step="0.01" value="0.60" aria-label="Glow — bloom and trail persistence: 0=fast fade sharp sparks, 1=long luminous trails">
+          </div>
+        </div>
+
+        <div id="platter-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="platter-spread">Spread</label>
+            <input type="range" id="platter-spread" min="0.4" max="1.8" step="0.01" value="0.85" aria-label="Spread — vertical disc separation: 0.4=tight stack, 1.8=spread column">
+          </div>
+          <div class="slider-group">
+            <label for="platter-tilt">Tilt</label>
+            <input type="range" id="platter-tilt" min="0" max="1" step="0.01" value="0.55" aria-label="Tilt — audio tilt amplitude: 0=discs stay horizontal, 1=dramatic 3D lean">
+          </div>
+          <div class="slider-group">
+            <label for="platter-glow">Glow</label>
+            <input type="range" id="platter-glow" min="0" max="1" step="0.01" value="0.45" aria-label="Glow — inner emissive warmth and bloom intensity">
           </div>
         </div>
 

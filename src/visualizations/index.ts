@@ -128,3 +128,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // spire is lazy-only (registry imports direct from './spire'); no barrel export here
 // membrane is lazy-only (registry imports direct from './membrane'); no barrel export here
 // cinder is lazy-only (registry imports direct from './cinder'); no barrel export here
+// platter is lazy-only (registry imports direct from './platter'); no barrel export here
