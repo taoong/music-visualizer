@@ -707,6 +707,10 @@ export const DEFAULT_CONFIG = {
   platterSpread: 0.85, // 0.4–1.8 → Y separation between discs (structural)
   platterTilt:   0.55, // 0–1 → audio tilt amplitude (structural)
   platterGlow:   0.45, // 0–1 → inner emissive + bloom intensity
+  // Typograph
+  typographColumns: 7,    // 4–10 → columns per row (structural)
+  typographRelief:  0.55, // 0–1 → amplitude pop-out scale
+  typographWarmth:  0.70, // 0–1 → key light warmth / emissive temperature
 };
 
 // FFT and decay constants

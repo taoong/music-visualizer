@@ -436,6 +436,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   platterSpread: 'platter-spread',
   platterTilt:   'platter-tilt',
   platterGlow:   'platter-glow',
+  typographColumns: 'typograph-columns',
+  typographRelief:  'typograph-relief',
+  typographWarmth:  'typograph-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

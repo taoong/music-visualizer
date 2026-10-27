@@ -475,6 +475,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'platter-spread', key: 'platterSpread' },
     { id: 'platter-tilt',   key: 'platterTilt'   },
     { id: 'platter-glow',   key: 'platterGlow'   },
+    { id: 'typograph-columns', key: 'typographColumns' },
+    { id: 'typograph-relief',  key: 'typographRelief'  },
+    { id: 'typograph-warmth',  key: 'typographWarmth'  },
   ] as const;
 
   for (const { id, key } of configs) {
