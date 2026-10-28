@@ -711,6 +711,10 @@ export const DEFAULT_CONFIG = {
   typographColumns: 7,    // 4–10 → columns per row (structural)
   typographRelief:  0.55, // 0–1 → amplitude pop-out scale
   typographWarmth:  0.70, // 0–1 → key light warmth / emissive temperature
+  // Tape
+  tapeCount:   0.45, // 0–1 → 3–12 ribbon strands (structural)
+  tapeFlutter: 0.55, // 0–1 → audio displacement amplitude
+  tapeSheen:   0.35, // 0–1 → material roughness (0=matte tape, 1=mirror chrome)
 };
 
 // FFT and decay constants

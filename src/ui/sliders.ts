@@ -478,6 +478,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'typograph-columns', key: 'typographColumns' },
     { id: 'typograph-relief',  key: 'typographRelief'  },
     { id: 'typograph-warmth',  key: 'typographWarmth'  },
+    { id: 'tape-count',   key: 'tapeCount'   },
+    { id: 'tape-flutter', key: 'tapeFlutter' },
+    { id: 'tape-sheen',   key: 'tapeSheen'   },
   ] as const;
 
   for (const { id, key } of configs) {

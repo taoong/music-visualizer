@@ -202,6 +202,7 @@ const ALL_CONTROL_IDS = [
   'cinder-controls-group',
   'platter-controls-group',
   'typograph-controls-group',
+  'tape-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -355,6 +356,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   cinder:           { show: ['cinder-controls-group'] },
   platter:          { show: ['platter-controls-group'] },
   typograph:        { show: ['typograph-controls-group'] },
+  tape:             { show: ['tape-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

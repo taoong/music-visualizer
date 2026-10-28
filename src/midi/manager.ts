@@ -439,6 +439,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   typographColumns: 'typograph-columns',
   typographRelief:  'typograph-relief',
   typographWarmth:  'typograph-warmth',
+  tapeCount:   'tape-count',
+  tapeFlutter: 'tape-flutter',
+  tapeSheen:   'tape-sheen',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

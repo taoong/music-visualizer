@@ -377,6 +377,7 @@
           <option value="cinder">Cinder</option>
           <option value="platter">Platter</option>
           <option value="typograph">Typograph</option>
+          <option value="tape">Tape</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5099,6 +5100,20 @@
           <div class="slider-group">
             <label for="typograph-warmth">Warmth</label>
             <input type="range" id="typograph-warmth" min="0" max="1" step="0.01" value="0.70" aria-label="Warmth — light and emissive color temperature: 0=cool white, 1=warm amber">
+          </div>
+        </div>
+        <div id="tape-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="tape-count">Count</label>
+            <input type="range" id="tape-count" min="0" max="1" step="0.01" value="0.45" aria-label="Count — ribbon strand count (structural): 0=3 sparse, 1=12 dense">
+          </div>
+          <div class="slider-group">
+            <label for="tape-flutter">Flutter</label>
+            <input type="range" id="tape-flutter" min="0" max="1" step="0.01" value="0.55" aria-label="Flutter — audio displacement amplitude: 0=barely moving, 1=wild thrashing">
+          </div>
+          <div class="slider-group">
+            <label for="tape-sheen">Sheen</label>
+            <input type="range" id="tape-sheen" min="0" max="1" step="0.01" value="0.35" aria-label="Sheen — material character: 0=rough matte tape, 1=polished mirror chrome">
           </div>
         </div>
 
