@@ -442,6 +442,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   tapeCount:   'tape-count',
   tapeFlutter: 'tape-flutter',
   tapeSheen:   'tape-sheen',
+  latticeScale: 'lattice-scale',
+  latticeWave:  'lattice-wave',
+  latticeGlow:  'lattice-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

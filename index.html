@@ -378,6 +378,7 @@
           <option value="platter">Platter</option>
           <option value="typograph">Typograph</option>
           <option value="tape">Tape</option>
+          <option value="lattice">Lattice</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5114,6 +5115,21 @@
           <div class="slider-group">
             <label for="tape-sheen">Sheen</label>
             <input type="range" id="tape-sheen" min="0" max="1" step="0.01" value="0.35" aria-label="Sheen — material character: 0=rough matte tape, 1=polished mirror chrome">
+          </div>
+        </div>
+
+        <div id="lattice-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="lattice-scale">Scale</label>
+            <input type="range" id="lattice-scale" min="0" max="1" step="0.01" value="0.5" aria-label="Scale — lattice size: 0=2×2×2 sparse, 1=5×5×5 dense (structural)">
+          </div>
+          <div class="slider-group">
+            <label for="lattice-wave">Wave</label>
+            <input type="range" id="lattice-wave" min="0" max="1" step="0.01" value="0.55" aria-label="Wave — audio displacement amplitude: 0=barely moving, 1=wild deformation">
+          </div>
+          <div class="slider-group">
+            <label for="lattice-glow">Glow</label>
+            <input type="range" id="lattice-glow" min="0" max="1" step="0.01" value="0.45" aria-label="Glow — bloom and emissive brightness: 0=dark matte, 1=radiant bloom">
           </div>
         </div>
 

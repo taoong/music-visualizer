@@ -481,6 +481,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'tape-count',   key: 'tapeCount'   },
     { id: 'tape-flutter', key: 'tapeFlutter' },
     { id: 'tape-sheen',   key: 'tapeSheen'   },
+    { id: 'lattice-scale', key: 'latticeScale' },
+    { id: 'lattice-wave',  key: 'latticeWave'  },
+    { id: 'lattice-glow',  key: 'latticeGlow'  },
   ] as const;
 
   for (const { id, key } of configs) {

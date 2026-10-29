@@ -715,6 +715,10 @@ export const DEFAULT_CONFIG = {
   tapeCount:   0.45, // 0–1 → 3–12 ribbon strands (structural)
   tapeFlutter: 0.55, // 0–1 → audio displacement amplitude
   tapeSheen:   0.35, // 0–1 → material roughness (0=matte tape, 1=mirror chrome)
+  // Lattice
+  latticeScale: 0.5,  // 0–1 → N = 2–5 nodes per axis (structural)
+  latticeWave:  0.55, // 0–1 → displacement amplitude
+  latticeGlow:  0.45, // 0–1 → bloom + emissive brightness
 };
 
 // FFT and decay constants

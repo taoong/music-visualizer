@@ -131,3 +131,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // platter is lazy-only (registry imports direct from './platter'); no barrel export here
 // typograph is lazy-only (registry imports direct from './typograph'); no barrel export here
 // tape is lazy-only (registry imports direct from './tape'); no barrel export here
+// lattice is lazy-only (registry imports direct from './lattice'); no barrel export here

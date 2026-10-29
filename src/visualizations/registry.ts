@@ -310,4 +310,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   platter:          lazyViz(async () => { const { drawPlatter: draw, resetPlatter: reset, disposePlatter: dispose } = await import('./platter'); return { draw, reset, dispose }; }, 'F47', 'Platter'),
   typograph:        lazyViz(async () => { const { drawTypograph: draw, resetTypograph: reset, disposeTypograph: dispose } = await import('./typograph'); return { draw, reset, dispose }; }, 'F48', 'Typograph'),
   tape:             lazyViz(async () => { const { drawTape: draw, resetTape: reset, disposeTape: dispose } = await import('./tape'); return { draw, reset, dispose }; }, 'F49', 'Tape'),
+  lattice:          lazyViz(async () => { const { drawLattice: draw, resetLattice: reset, disposeLattice: dispose } = await import('./lattice'); return { draw, reset, dispose }; }, 'F50', 'Lattice'),
 };
