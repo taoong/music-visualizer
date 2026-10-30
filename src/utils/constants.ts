@@ -719,6 +719,9 @@ export const DEFAULT_CONFIG = {
   latticeScale: 0.5,  // 0–1 → N = 2–5 nodes per axis (structural)
   latticeWave:  0.55, // 0–1 → displacement amplitude
   latticeGlow:  0.45, // 0–1 → bloom + emissive brightness
+  loomDensity: 0.5,  // 0–1 → thread count 6–MAX_DENSITY (structural)
+  loomRelief:  0.5,  // 0–1 → max crossing Z displacement
+  loomTexture: 0.5,  // 0–1 → roughness (silky → burlap)
 };
 
 // FFT and decay constants

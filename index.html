@@ -379,6 +379,7 @@
           <option value="typograph">Typograph</option>
           <option value="tape">Tape</option>
           <option value="lattice">Lattice</option>
+          <option value="loom">Loom</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5115,6 +5116,21 @@
           <div class="slider-group">
             <label for="tape-sheen">Sheen</label>
             <input type="range" id="tape-sheen" min="0" max="1" step="0.01" value="0.35" aria-label="Sheen — material character: 0=rough matte tape, 1=polished mirror chrome">
+          </div>
+        </div>
+
+        <div id="loom-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="loom-density">Density</label>
+            <input type="range" id="loom-density" min="0" max="1" step="0.01" value="0.5" aria-label="Density — thread count: 0=open 6-thread weave, 1=fine dense mesh (structural)">
+          </div>
+          <div class="slider-group">
+            <label for="loom-relief">Relief</label>
+            <input type="range" id="loom-relief" min="0" max="1" step="0.01" value="0.5" aria-label="Relief — over/under crossing depth: 0=flat, 1=deep woven relief">
+          </div>
+          <div class="slider-group">
+            <label for="loom-texture">Texture</label>
+            <input type="range" id="loom-texture" min="0" max="1" step="0.01" value="0.5" aria-label="Texture — thread surface roughness: 0=silky, 1=coarse burlap">
           </div>
         </div>
 

@@ -484,6 +484,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'lattice-scale', key: 'latticeScale' },
     { id: 'lattice-wave',  key: 'latticeWave'  },
     { id: 'lattice-glow',  key: 'latticeGlow'  },
+    { id: 'loom-density', key: 'loomDensity' },
+    { id: 'loom-relief',  key: 'loomRelief'  },
+    { id: 'loom-texture', key: 'loomTexture' },
   ] as const;
 
   for (const { id, key } of configs) {

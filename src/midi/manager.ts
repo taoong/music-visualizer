@@ -445,6 +445,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   latticeScale: 'lattice-scale',
   latticeWave:  'lattice-wave',
   latticeGlow:  'lattice-glow',
+  loomDensity: 'loom-density',
+  loomRelief:  'loom-relief',
+  loomTexture: 'loom-texture',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
