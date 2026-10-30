@@ -114,15 +114,8 @@ void main() {
 
   pos.y = heightAt(pos.x, pos.z);
 
-  // Finite-difference normals for proper lighting
-  float eps = 1.2;
-  float hR  = heightAt(pos.x + eps, pos.z);
-  float hL  = heightAt(pos.x - eps, pos.z);
-  float hF  = heightAt(pos.x, pos.z + eps);
-  float hB  = heightAt(pos.x, pos.z - eps);
-  vec3 norm = normalize(vec3(hL - hR, 2.0 * eps, hB - hF));
-
-  vNormal    = norm;   // not actually varying but we set it for passing
+  // Normals are computed in the fragment shader via dFdx/dFdy of vWorldPos
+  // instead (see below) — no need to compute them here too.
   vWorldPos  = pos;
   vHeight    = pos.y;
   vNormX     = (pos.x + 90.0) / 180.0;  // 0..1 for subtle cross-slope colour

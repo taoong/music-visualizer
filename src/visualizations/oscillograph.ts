@@ -188,7 +188,7 @@ function makeRT(w: number, h: number): THREE.WebGLRenderTarget {
     minFilter: THREE.LinearFilter,
     magFilter: THREE.LinearFilter,
     format: THREE.RGBAFormat,
-    type: THREE.HalfFloatType,
+    type: THREE.UnsignedByteType,
     depthBuffer: false,
   });
 }

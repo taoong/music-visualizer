@@ -324,12 +324,12 @@ export function drawStringer(_p: unknown, dt: number): void {
     camera.position.z = Math.cos(camTheta * 0.83) * wander + Math.cos(camTheta * 1.7 + 1.1) * wander * 0.40;
     camera.position.y = 2.5 + Math.sin(camPhi) * 0.9 + masterAmp * 0.4;
 
-    // Gaze slightly forward and upward — strings are ahead, not below
-    camera.lookAt(
-      camera.position.x + Math.sin(camTheta + 0.4) * 6,
-      2.8 + masterAmp * 0.3,
-      camera.position.z + Math.cos(camTheta + 0.4) * 6,
-    );
+    // Gaze toward the field's center — the lookAt target used to be offset
+    // in roughly the same radial direction as the camera's own orbital
+    // position, so it pointed past the edge of the scattered strings
+    // (radius ~11) instead of through them, leaving the field out of view
+    // for the entire orbit.
+    camera.lookAt(0, 2.8 + masterAmp * 0.3, 0);
   }
 
   composer?.render();
