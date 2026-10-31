@@ -722,6 +722,11 @@ export const DEFAULT_CONFIG = {
   loomDensity: 0.5,  // 0–1 → thread count 6–MAX_DENSITY (structural)
   loomRelief:  0.5,  // 0–1 → max crossing Z displacement
   loomTexture: 0.5,  // 0–1 → roughness (silky → burlap)
+  // Penumbra-specific
+  penumbraForms:    7,    // 1–7 floating forms (structural)
+  penumbraSoftness: 0.5,  // 0–1 → shadow softness
+  penumbraDrift:    0.3,  // 0–1 → orbital speed
+  penumbraWarmth:   0.6,  // 0–1 → key light warmth
 };
 
 // FFT and decay constants

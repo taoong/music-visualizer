@@ -312,4 +312,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   tape:             lazyViz(async () => { const { drawTape: draw, resetTape: reset, disposeTape: dispose } = await import('./tape'); return { draw, reset, dispose }; }, 'F49', 'Tape'),
   lattice:          lazyViz(async () => { const { drawLattice: draw, resetLattice: reset, disposeLattice: dispose } = await import('./lattice'); return { draw, reset, dispose }; }, 'F50', 'Lattice'),
   loom:             lazyViz(async () => { const { drawLoom: draw, resetLoom: reset, disposeLoom: dispose } = await import('./loom'); return { draw, reset, dispose }; }, 'F51', 'Loom'),
+  penumbra:         lazyViz(async () => { const { drawPenumbra: draw, resetPenumbra: reset, disposePenumbra: dispose } = await import('./penumbra'); return { draw, reset, dispose }; }, 'F52', 'Penumbra'),
 };

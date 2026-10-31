@@ -380,6 +380,7 @@
           <option value="tape">Tape</option>
           <option value="lattice">Lattice</option>
           <option value="loom">Loom</option>
+          <option value="penumbra">Penumbra</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5131,6 +5132,25 @@
           <div class="slider-group">
             <label for="loom-texture">Texture</label>
             <input type="range" id="loom-texture" min="0" max="1" step="0.01" value="0.5" aria-label="Texture — thread surface roughness: 0=silky, 1=coarse burlap">
+          </div>
+        </div>
+
+        <div id="penumbra-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="penumbra-forms">Forms</label>
+            <input type="range" id="penumbra-forms" min="1" max="7" step="1" value="7" aria-label="Forms — number of floating sculpture forms casting shadows (structural): 1=single solitary form, 7=full ensemble">
+          </div>
+          <div class="slider-group">
+            <label for="penumbra-softness">Softness</label>
+            <input type="range" id="penumbra-softness" min="0" max="1" step="0.01" value="0.5" aria-label="Softness — shadow penumbra width: 0=crisp hard shadow, 1=wide soft penumbra">
+          </div>
+          <div class="slider-group">
+            <label for="penumbra-drift">Drift</label>
+            <input type="range" id="penumbra-drift" min="0" max="1" step="0.01" value="0.3" aria-label="Drift — orbital speed of forms: 0=stationary, 1=fast orbit">
+          </div>
+          <div class="slider-group">
+            <label for="penumbra-warmth">Warmth</label>
+            <input type="range" id="penumbra-warmth" min="0" max="1" step="0.01" value="0.6" aria-label="Warmth — key light color temperature: 0=cool steel blue, 1=warm amber">
           </div>
         </div>
 

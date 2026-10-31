@@ -448,6 +448,11 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   loomDensity: 'loom-density',
   loomRelief:  'loom-relief',
   loomTexture: 'loom-texture',
+  // Penumbra-specific
+  penumbraForms:    'penumbra-forms',
+  penumbraSoftness: 'penumbra-softness',
+  penumbraDrift:    'penumbra-drift',
+  penumbraWarmth:   'penumbra-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

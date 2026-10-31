@@ -205,6 +205,7 @@ const ALL_CONTROL_IDS = [
   'tape-controls-group',
   'lattice-controls-group',
   'loom-controls-group',
+  'penumbra-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -361,6 +362,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   tape:             { show: ['tape-controls-group'] },
   lattice:          { show: ['lattice-controls-group'] },
   loom:             { show: ['loom-controls-group'] },
+  penumbra:         { show: ['penumbra-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

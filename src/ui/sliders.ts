@@ -487,6 +487,11 @@ export function bindDisplaySliders(): () => void {
     { id: 'loom-density', key: 'loomDensity' },
     { id: 'loom-relief',  key: 'loomRelief'  },
     { id: 'loom-texture', key: 'loomTexture' },
+    // Penumbra-specific
+    { id: 'penumbra-forms',    key: 'penumbraForms'    },
+    { id: 'penumbra-softness', key: 'penumbraSoftness' },
+    { id: 'penumbra-drift',    key: 'penumbraDrift'    },
+    { id: 'penumbra-warmth',   key: 'penumbraWarmth'   },
   ] as const;
 
   for (const { id, key } of configs) {
