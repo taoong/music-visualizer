@@ -192,13 +192,19 @@ export function drawKandinsky(p: P5Instance, dt: number): void {
     }
   }
 
-  // On beat — scatter all forms radially from centre
+  // On beat — scatter all forms radially from centre. The kick is tapered
+  // toward zero as a form gets further from centre: without this, every
+  // beat re-applies a fresh outward push with no restoring force, and at
+  // higher BPM (a beat every ~25-30 frames, not long enough for the old
+  // 0.90 per-frame decay to fully dissipate) that compounds beat after
+  // beat until every form is permanently pinned at the canvas edges.
   if (beatFired) {
     for (const f of forms) {
       const dx = f.x - 0.5;
       const dy = f.y - 0.5;
       const len = Math.sqrt(dx * dx + dy * dy) + 0.001;
-      const str = ((p as any).random(0.025, 0.06)) as number;
+      const falloff = Math.max(0, 1 - len / 0.2);
+      const str = (((p as any).random(0.01, 0.022)) as number) * falloff;
       f.bvx = (dx / len) * str;
       f.bvy = (dy / len) * str;
     }
@@ -220,8 +226,8 @@ export function drawKandinsky(p: P5Instance, dt: number): void {
     const moveSpeed = (0.0006 + chaos * 0.0024) * dt;
     f.x += nx * moveSpeed + f.bvx;
     f.y += ny * moveSpeed + f.bvy;
-    f.bvx *= 0.90;
-    f.bvy *= 0.90;
+    f.bvx *= 0.82;
+    f.bvy *= 0.82;
 
     // Wrap canvas
     if (f.x < -0.12) f.x += 1.24;
