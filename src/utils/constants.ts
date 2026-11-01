@@ -727,6 +727,10 @@ export const DEFAULT_CONFIG = {
   penumbraSoftness: 0.5,  // 0–1 → shadow softness
   penumbraDrift:    0.3,  // 0–1 → orbital speed
   penumbraWarmth:   0.6,  // 0–1 → key light warmth
+  // Confluence-specific
+  confluenceFuse:  0.45,  // 0–1 → isolation threshold (structural)
+  confluenceOrbit: 0.50,  // 0–1 → orbital radius (structural)
+  confluenceSheen: 0.30,  // 0–1 → material polish
 };
 
 // FFT and decay constants

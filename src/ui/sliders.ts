@@ -492,6 +492,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'penumbra-softness', key: 'penumbraSoftness' },
     { id: 'penumbra-drift',    key: 'penumbraDrift'    },
     { id: 'penumbra-warmth',   key: 'penumbraWarmth'   },
+    // Confluence-specific
+    { id: 'confluence-fuse',   key: 'confluenceFuse'   },
+    { id: 'confluence-orbit',  key: 'confluenceOrbit'  },
+    { id: 'confluence-sheen',  key: 'confluenceSheen'  },
   ] as const;
 
   for (const { id, key } of configs) {

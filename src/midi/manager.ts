@@ -453,6 +453,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   penumbraSoftness: 'penumbra-softness',
   penumbraDrift:    'penumbra-drift',
   penumbraWarmth:   'penumbra-warmth',
+  // Confluence-specific
+  confluenceFuse:  'confluence-fuse',
+  confluenceOrbit: 'confluence-orbit',
+  confluenceSheen: 'confluence-sheen',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

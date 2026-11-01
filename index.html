@@ -381,6 +381,7 @@
           <option value="lattice">Lattice</option>
           <option value="loom">Loom</option>
           <option value="penumbra">Penumbra</option>
+          <option value="confluence">Confluence</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5216,6 +5217,45 @@
               step="0.01"
               value="0.50"
               aria-label="Orbit — camera rotation speed around the braid"
+            />
+          </div>
+        </div>
+
+        <div id="confluence-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="confluence-fuse">Fuse</label>
+            <input
+              type="range"
+              id="confluence-fuse"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Fuse — isolation threshold: 0=separate spherical orbs, 1=tightly merged organic mass"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="confluence-orbit">Orbit</label>
+            <input
+              type="range"
+              id="confluence-orbit"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Orbit — orbital radius: 0=compact cluster, 1=spread out field"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="confluence-sheen">Sheen</label>
+            <input
+              type="range"
+              id="confluence-sheen"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.30"
+              aria-label="Sheen — material polish: 0=warm matte clay, 1=cool glossy mercury"
             />
           </div>
         </div>
