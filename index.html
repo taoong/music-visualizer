@@ -382,6 +382,7 @@
           <option value="loom">Loom</option>
           <option value="penumbra">Penumbra</option>
           <option value="confluence">Confluence</option>
+          <option value="scanfield">Scanfield</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5256,6 +5257,57 @@
               step="0.01"
               value="0.30"
               aria-label="Sheen — material polish: 0=warm matte clay, 1=cool glossy mercury"
+            />
+          </div>
+        </div>
+
+        <div id="scanfield-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="scanfield-lines">Lines</label>
+            <input
+              type="range"
+              id="scanfield-lines"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.75"
+              aria-label="Lines — scan line row count: 0=sparse low-res, 1=dense high-res (structural)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="scanfield-depth">Depth</label>
+            <input
+              type="range"
+              id="scanfield-depth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.60"
+              aria-label="Depth — Z displacement amplitude: 0=flat raster, 1=maximum 3D audio relief"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="scanfield-warmth">Warmth</label>
+            <input
+              type="range"
+              id="scanfield-warmth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.40"
+              aria-label="Warmth — phosphor color temperature: 0=cold blue-white, 0.5=phosphor green, 1=warm amber"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="scanfield-glow">Glow</label>
+            <input
+              type="range"
+              id="scanfield-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Glow — phosphor bloom brightness: 0=dim crisp lines, 1=full bloom halo"
             />
           </div>
         </div>

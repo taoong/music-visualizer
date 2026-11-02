@@ -457,6 +457,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   confluenceFuse:  'confluence-fuse',
   confluenceOrbit: 'confluence-orbit',
   confluenceSheen: 'confluence-sheen',
+  scanfieldLines:  'scanfield-lines',
+  scanfieldDepth:  'scanfield-depth',
+  scanfieldWarmth: 'scanfield-warmth',
+  scanfieldGlow:   'scanfield-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

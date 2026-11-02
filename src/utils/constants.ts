@@ -731,6 +731,11 @@ export const DEFAULT_CONFIG = {
   confluenceFuse:  0.45,  // 0–1 → isolation threshold (structural)
   confluenceOrbit: 0.50,  // 0–1 → orbital radius (structural)
   confluenceSheen: 0.30,  // 0–1 → material polish
+  // Scanfield-specific
+  scanfieldLines:  0.75,  // 0–1 → scan line row fraction (structural)
+  scanfieldDepth:  0.60,  // 0–1 → Z displacement amplitude
+  scanfieldWarmth: 0.40,  // 0–1 → phosphor color (0=cold, 0.5=green, 1=amber)
+  scanfieldGlow:   0.55,  // 0–1 → phosphor bloom brightness
 };
 
 // FFT and decay constants

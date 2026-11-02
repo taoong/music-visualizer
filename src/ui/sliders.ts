@@ -496,6 +496,11 @@ export function bindDisplaySliders(): () => void {
     { id: 'confluence-fuse',   key: 'confluenceFuse'   },
     { id: 'confluence-orbit',  key: 'confluenceOrbit'  },
     { id: 'confluence-sheen',  key: 'confluenceSheen'  },
+    // Scanfield-specific
+    { id: 'scanfield-lines',   key: 'scanfieldLines'   },
+    { id: 'scanfield-depth',   key: 'scanfieldDepth'   },
+    { id: 'scanfield-warmth',  key: 'scanfieldWarmth'  },
+    { id: 'scanfield-glow',    key: 'scanfieldGlow'    },
   ] as const;
 
   for (const { id, key } of configs) {

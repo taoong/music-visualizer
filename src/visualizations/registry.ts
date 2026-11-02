@@ -314,4 +314,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   loom:             lazyViz(async () => { const { drawLoom: draw, resetLoom: reset, disposeLoom: dispose } = await import('./loom'); return { draw, reset, dispose }; }, 'F51', 'Loom'),
   penumbra:         lazyViz(async () => { const { drawPenumbra: draw, resetPenumbra: reset, disposePenumbra: dispose } = await import('./penumbra'); return { draw, reset, dispose }; }, 'F52', 'Penumbra'),
   confluence:       lazyViz(async () => { const { drawConfluence: draw, resetConfluence: reset, disposeConfluence: dispose } = await import('./confluence'); return { draw, reset, dispose }; }, 'F53', 'Confluence'),
+  scanfield:        lazyViz(async () => { const { drawScanfield: draw, resetScanfield: reset, disposeScanfield: dispose } = await import('./scanfield'); return { draw, reset, dispose }; }, 'F54', 'Scanfield'),
 };
