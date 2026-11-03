@@ -461,6 +461,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   scanfieldDepth:  'scanfield-depth',
   scanfieldWarmth: 'scanfield-warmth',
   scanfieldGlow:   'scanfield-glow',
+  fieldlinesLines: 'fieldlines-lines',
+  fieldlinesGlow:  'fieldlines-glow',
+  fieldlinesDrift: 'fieldlines-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

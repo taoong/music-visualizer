@@ -736,6 +736,10 @@ export const DEFAULT_CONFIG = {
   scanfieldDepth:  0.60,  // 0–1 → Z displacement amplitude
   scanfieldWarmth: 0.40,  // 0–1 → phosphor color (0=cold, 0.5=green, 1=amber)
   scanfieldGlow:   0.55,  // 0–1 → phosphor bloom brightness
+  // Field Lines
+  fieldlinesLines: 0.50,  // 0–1 → lines per L-shell 2–10 (structural)
+  fieldlinesGlow:  0.60,  // 0–1 → bloom strength + line brightness
+  fieldlinesDrift: 0.40,  // 0–1 → camera orbit speed
 };
 
 // FFT and decay constants

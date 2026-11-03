@@ -136,3 +136,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // penumbra is lazy-only (registry imports direct from './penumbra'); no barrel export here
 // confluence is lazy-only (registry imports direct from './confluence'); no barrel export here
 // scanfield is lazy-only (registry imports direct from './scanfield'); no barrel export here
+// fieldlines is lazy-only (registry imports direct from './fieldlines'); no barrel export here

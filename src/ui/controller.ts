@@ -208,6 +208,7 @@ const ALL_CONTROL_IDS = [
   'penumbra-controls-group',
   'confluence-controls-group',
   'scanfield-controls-group',
+  'fieldlines-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -367,6 +368,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   penumbra:         { show: ['penumbra-controls-group'] },
   confluence:       { show: ['confluence-controls-group'] },
   scanfield:        { show: ['scanfield-controls-group'] },
+  fieldlines:       { show: ['fieldlines-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

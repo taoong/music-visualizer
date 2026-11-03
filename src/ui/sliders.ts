@@ -501,6 +501,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'scanfield-depth',   key: 'scanfieldDepth'   },
     { id: 'scanfield-warmth',  key: 'scanfieldWarmth'  },
     { id: 'scanfield-glow',    key: 'scanfieldGlow'    },
+    // Field Lines
+    { id: 'fieldlines-lines',  key: 'fieldlinesLines'  },
+    { id: 'fieldlines-glow',   key: 'fieldlinesGlow'   },
+    { id: 'fieldlines-drift',  key: 'fieldlinesDrift'  },
   ] as const;
 
   for (const { id, key } of configs) {
