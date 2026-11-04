@@ -209,6 +209,7 @@ const ALL_CONTROL_IDS = [
   'confluence-controls-group',
   'scanfield-controls-group',
   'fieldlines-controls-group',
+  'lamella-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -369,6 +370,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   confluence:       { show: ['confluence-controls-group'] },
   scanfield:        { show: ['scanfield-controls-group'] },
   fieldlines:       { show: ['fieldlines-controls-group'] },
+  lamella:          { show: ['lamella-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

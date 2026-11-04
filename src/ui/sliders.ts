@@ -505,6 +505,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'fieldlines-lines',  key: 'fieldlinesLines'  },
     { id: 'fieldlines-glow',   key: 'fieldlinesGlow'   },
     { id: 'fieldlines-drift',  key: 'fieldlinesDrift'  },
+    { id: 'lamella-density',      key: 'lamellaDensity'     },
+    { id: 'lamella-tilt',         key: 'lamellaTilt'        },
+    { id: 'lamella-iridescence',  key: 'lamellaIridescence' },
   ] as const;
 
   for (const { id, key } of configs) {

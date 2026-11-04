@@ -384,6 +384,7 @@
           <option value="confluence">Confluence</option>
           <option value="scanfield">Scanfield</option>
           <option value="fieldlines">Field Lines</option>
+          <option value="lamella">Lamella</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5348,6 +5349,45 @@
               step="0.01"
               value="0.40"
               aria-label="Drift — camera orbit speed: 0=slow drift, 1=fast orbit"
+            />
+          </div>
+        </div>
+
+        <div id="lamella-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="lamella-density">Density</label>
+            <input
+              type="range"
+              id="lamella-density"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.40"
+              aria-label="Density — grid panel count (structural): 0=few large panels, 1=fine louvre grid"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lamella-tilt">Tilt</label>
+            <input
+              type="range"
+              id="lamella-tilt"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Tilt — maximum panel rotation amplitude: 0=subtle flutter, 1=full 72° swing"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="lamella-iridescence">Iridescence</label>
+            <input
+              type="range"
+              id="lamella-iridescence"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.30"
+              aria-label="Iridescence — glass shimmer: 0=matte frosted glass, 1=vivid soap-bubble"
             />
           </div>
         </div>

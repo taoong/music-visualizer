@@ -740,6 +740,9 @@ export const DEFAULT_CONFIG = {
   fieldlinesLines: 0.50,  // 0–1 → lines per L-shell 2–10 (structural)
   fieldlinesGlow:  0.60,  // 0–1 → bloom strength + line brightness
   fieldlinesDrift: 0.40,  // 0–1 → camera orbit speed
+  lamellaDensity:  0.40,  // 0–1 → grid panel density (structural)
+  lamellaTilt:     0.55,  // 0–1 → maximum tilt angle 12°–72°
+  lamellaIridescence: 0.30, // 0–1 → glass iridescence
 };
 
 // FFT and decay constants

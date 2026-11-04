@@ -464,6 +464,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   fieldlinesLines: 'fieldlines-lines',
   fieldlinesGlow:  'fieldlines-glow',
   fieldlinesDrift: 'fieldlines-drift',
+  lamellaDensity:  'lamella-density',
+  lamellaTilt:     'lamella-tilt',
+  lamellaIridescence: 'lamella-iridescence',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
