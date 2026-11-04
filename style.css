@@ -1125,18 +1125,25 @@ body {
   background: rgba(26, 26, 30, 0.9);
 }
 
-/* ── Viz name tag (audit use only, kept inconspicuous) ───── */
+/* ── Viz name tag ─────────────────────────────────────────── */
 /* Lives in the playback bar instead of floating over the canvas — the
    bar already has its own solid backdrop, so this can't get lost behind
    bright/colorful visualization content the way a free-floating overlay
-   did (and isn't subject to the canvas's own repaint timing either). */
+   did (and isn't subject to the canvas's own repaint timing either). Its
+   own row, ahead of the scrubber, so it reads at a glance instead of
+   competing for space with the time display and scrubber. */
 #viz-name-tag {
-  font-size: 0.62rem;
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   pointer-events: none;
   user-select: none;
+  margin-bottom: 0.3rem;
 }
 
 /* ── Canvas Container ────────────────────────────────────── */
