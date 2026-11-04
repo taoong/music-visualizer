@@ -50,6 +50,15 @@ interface Form {
   scale: number;
   bvx: number; // burst velocity x
   bvy: number;
+  orbitDir: number; // +1 or -1, assigned once so orbit regime reads as deliberate motion, not noise
+}
+
+// Smoothed 0→1 ramp between two knob values — used to fade distinct motion
+// regimes in/out rather than snapping, while still making each regime feel
+// qualitatively different rather than a uniform speed multiplier.
+function smoothstep(edge0: number, edge1: number, x: number): number {
+  const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
 }
 
 let forms: Form[] = [];
@@ -76,6 +85,7 @@ function makeForm(bandIdx: number, p: P5Instance): Form {
     scale: ((p as any).random(0.6, 1.4)) as number,
     bvx: 0,
     bvy: 0,
+    orbitDir: ((p as any).random(0, 1) as number) < 0.5 ? -1 : 1,
   };
 }
 
@@ -212,22 +222,61 @@ export function drawKandinsky(p: P5Instance, dt: number): void {
 
   buf.colorMode(buf['HSB'] ?? 'hsb', 360, 100, 100, 100);
 
+  // Chaos is split into three overlapping motion regimes rather than one
+  // continuous speed multiplier, so turning the knob changes *how* forms
+  // move, not just how fast: calm Perlin drift (low) -> orbital sweep
+  // around the composition centre (mid) -> self-sustained radial scatter
+  // bursts, the same mechanic beats use, just fired probabilistically (high).
+  const orbitAmt = smoothstep(0.25, 0.65, chaos);
+  const scatterAmt = smoothstep(0.6, 1.0, chaos);
+
   for (const f of forms) {
     const amp = Math.min(1, amps[f.bandIdx] * 2.2);
     const trans = transients[f.bandIdx] - 1.0; // transientValues is a multiplier; subtract 1 for additive boost
 
-    // Perlin drift
-    const noiseSpeed = 0.002 * (0.5 + chaos * 2.5) * dt;
+    // Perlin drift — kept close to flat across the knob range so "calm"
+    // actually stays calm; the dramatic change with chaos comes from the
+    // orbit/scatter regimes below, not from this speeding up uniformly.
+    const noiseSpeed = 0.002 * (0.5 + chaos * 1.0) * dt;
     f.nx += noiseSpeed;
     f.ny += noiseSpeed * 0.7;
     const nx = ((p as any).noise(f.nx) as number) * 2 - 1;
     const ny = ((p as any).noise(f.ny) as number) * 2 - 1;
 
-    const moveSpeed = (0.0006 + chaos * 0.0024) * dt;
+    const moveSpeed = (0.0006 + chaos * 0.001) * dt;
     f.x += nx * moveSpeed + f.bvx;
     f.y += ny * moveSpeed + f.bvy;
     f.bvx *= 0.82;
     f.bvy *= 0.82;
+
+    // Orbit regime — sweep the form's existing position around the canvas
+    // centre at a rate driven by its own band amplitude, so louder bands
+    // visibly overtake quieter ones on the orbit.
+    if (orbitAmt > 0.001) {
+      const odx = f.x - 0.5;
+      const ody = f.y - 0.5;
+      const r = Math.sqrt(odx * odx + ody * ody);
+      if (r > 0.01) {
+        const theta = Math.atan2(ody, odx);
+        const orbitSpeed = 0.003 * orbitAmt * (0.4 + amp) * f.orbitDir;
+        const newTheta = theta + orbitSpeed * dt;
+        f.x = 0.5 + Math.cos(newTheta) * r;
+        f.y = 0.5 + Math.sin(newTheta) * r;
+      }
+    }
+
+    // Scatter regime — the same tapered radial kick beats use, fired
+    // probabilistically every frame instead of only on the beat grid, so
+    // high chaos reads as a self-sustained kinetic swarm.
+    if (scatterAmt > 0.001 && ((p as any).random(0, 1) as number) < scatterAmt * 0.02) {
+      const sdx = f.x - 0.5;
+      const sdy = f.y - 0.5;
+      const slen = Math.sqrt(sdx * sdx + sdy * sdy) + 0.001;
+      const sfalloff = Math.max(0, 1 - slen / 0.2);
+      const sstr = (((p as any).random(0.006, 0.014)) as number) * sfalloff * scatterAmt;
+      f.bvx += (sdx / slen) * sstr;
+      f.bvy += (sdy / slen) * sstr;
+    }
 
     // Wrap canvas
     if (f.x < -0.12) f.x += 1.24;
@@ -256,12 +305,18 @@ export function drawKandinsky(p: P5Instance, dt: number): void {
     buf.translate(cx, cy);
     buf.rotate(f.rot);
 
-    // 3-pass glow: outer halo → mid → bright core
-    const passes = [
-      { sw: sz * 0.55 * glowAmt, a: alpha * 0.15 },
-      { sw: sz * 0.25 * glowAmt, a: alpha * 0.30 },
-      { sw: 0, a: alpha },
-    ];
+    // Below ~0.12 the Glow knob drops the multi-pass bloom entirely rather
+    // than just thinning it to nothing — a crisp flat-poster look that reads
+    // as a distinct mode next to the luminous neon haze at the high end,
+    // instead of the two ends looking like faint/strong versions of the same thing.
+    const flatMode = glowAmt < 0.12;
+    const passes = flatMode
+      ? [{ sw: 0, a: Math.min(100, alpha * 1.3) }]
+      : [
+          { sw: sz * 0.55 * glowAmt, a: alpha * 0.15 },
+          { sw: sz * 0.25 * glowAmt, a: alpha * 0.30 },
+          { sw: 0, a: alpha },
+        ];
 
     for (const pass of passes) {
       if (isArc) {
