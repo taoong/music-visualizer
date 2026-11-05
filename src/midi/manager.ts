@@ -467,6 +467,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   lamellaDensity:  'lamella-density',
   lamellaTilt:     'lamella-tilt',
   lamellaIridescence: 'lamella-iridescence',
+  grottoTunnel:    'grotto-tunnel',
+  grottoFlux:      'grotto-flux',
+  grottoLuminance: 'grotto-luminance',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

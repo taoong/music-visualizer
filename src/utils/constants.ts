@@ -743,6 +743,11 @@ export const DEFAULT_CONFIG = {
   lamellaDensity:  0.40,  // 0–1 → grid panel density (structural)
   lamellaTilt:     0.55,  // 0–1 → maximum tilt angle 12°–72°
   lamellaIridescence: 0.30, // 0–1 → glass iridescence
+
+  // Grotto
+  grottoTunnel:    0.45,  // 0–1 → cave cross-section (structural)
+  grottoFlux:      0.45,  // 0–1 → caustic wave speed
+  grottoLuminance: 0.55,  // 0–1 → light intensity
 };
 
 // FFT and decay constants

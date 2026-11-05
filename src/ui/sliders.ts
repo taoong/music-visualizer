@@ -508,6 +508,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'lamella-density',      key: 'lamellaDensity'     },
     { id: 'lamella-tilt',         key: 'lamellaTilt'        },
     { id: 'lamella-iridescence',  key: 'lamellaIridescence' },
+    { id: 'grotto-tunnel',        key: 'grottoTunnel'       },
+    { id: 'grotto-flux',          key: 'grottoFlux'         },
+    { id: 'grotto-luminance',     key: 'grottoLuminance'    },
   ] as const;
 
   for (const { id, key } of configs) {
