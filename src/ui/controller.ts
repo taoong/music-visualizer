@@ -23,6 +23,13 @@ export function initUI(): () => void {
 
   const cleanupFns: (() => void)[] = [];
 
+  // Mobile: collapse the playback bar down to name + scrubber + a
+  // collapsible knob panel, moving everything else into the sidebar menu.
+  // Must run before the other binds touch these elements — they're all
+  // getElementById-based, so moving the nodes doesn't affect binding, but
+  // doing it first avoids a visible layout jump on the native app's first paint.
+  applyMobileLayout();
+
   // Sidebar toggle
   cleanupFns.push(bindSidebarToggle());
 
@@ -61,6 +68,90 @@ export function initUI(): () => void {
 
   // Return combined cleanup function
   return () => cleanupFns.forEach(fn => fn());
+}
+
+/**
+ * On touch/mobile devices, the playback bar used to carry everything —
+ * pause, track switching, image upload, BPM, volume — crammed into one
+ * row below the scrubber, with the full per-viz slider set only reachable
+ * through the sidebar drawer. That left nothing on screen but a wall of
+ * small icons, and no quick way to actually tweak the visualization you're
+ * looking at. This reparents the DOM (not duplicates it — every element
+ * keeps its id, so every existing getElementById-based binding still
+ * works) into: a minimal always-visible bar (viz name / play / scrubber)
+ * with a tap-to-expand knob panel for the active viz's own sliders, and
+ * moves the secondary, non-real-time controls into the sidebar menu.
+ * Desktop is untouched — there's room there for everything inline.
+ */
+function applyMobileLayout(): void {
+  if (!isMobile) return;
+
+  const playbackBar = document.getElementById('playback-bar');
+  const vizNameTag = document.getElementById('viz-name-tag');
+  const scrubberRow = document.getElementById('scrubber-row');
+  const controlsRow = document.getElementById('controls-row');
+  const pauseBtn = document.getElementById('pause-btn');
+  const sidebar = document.getElementById('sidebar');
+  const displaySection = document.getElementById('display-heading')?.closest('section') ?? null;
+  const textInputGroup = document.getElementById('text-input-group');
+  if (!playbackBar || !vizNameTag || !scrubberRow || !controlsRow || !pauseBtn || !sidebar) return;
+
+  document.body.classList.add('mobile-layout');
+
+  // Pause belongs with the scrubber — it's the one secondary control that's
+  // still real-time-essential (you can't usefully see/seek audio you can't
+  // also stop).
+  scrubberRow.insertBefore(pauseBtn, scrubberRow.firstChild);
+
+  // Wrap the name tag in a tappable handle that expands/collapses the knob
+  // panel, with a chevron indicating state.
+  const handle = document.createElement('button');
+  handle.id = 'viz-panel-handle';
+  handle.type = 'button';
+  handle.setAttribute('aria-expanded', 'false');
+  handle.setAttribute('aria-controls', 'mobile-knob-panel');
+  playbackBar.insertBefore(handle, vizNameTag);
+  handle.appendChild(vizNameTag);
+  const chevron = document.createElement('span');
+  chevron.id = 'viz-panel-chevron';
+  chevron.setAttribute('aria-hidden', 'true');
+  chevron.textContent = '▲';
+  handle.appendChild(chevron);
+
+  // The knob panel's content is the sidebar's existing "Display" section
+  // (every shared + per-viz slider group) plus the text-input group —
+  // reparented, so VIZ_CONTROLS show/hide and MIDI mapping keep working
+  // unchanged; they're all id lookups, not position-dependent.
+  const panel = document.createElement('div');
+  panel.id = 'mobile-knob-panel';
+  playbackBar.insertBefore(panel, scrubberRow);
+  if (textInputGroup) panel.appendChild(textInputGroup);
+  if (displaySection) panel.appendChild(displaySection);
+
+  const togglePanel = (): void => {
+    const isOpen = panel.classList.toggle('open');
+    handle.setAttribute('aria-expanded', String(isOpen));
+  };
+  handle.addEventListener('click', togglePanel);
+
+  // Everything else in the old controls row — track switching, image
+  // upload, BPM, volume — isn't needed to tweak the visualization in real
+  // time, so it moves into the sidebar menu instead of sitting on screen.
+  const secondary = document.createElement('section');
+  secondary.id = 'mobile-secondary-controls';
+  secondary.setAttribute('aria-label', 'Playback');
+  for (const id of ['track-info', 'image-group', 'bpm-group', 'volume-group']) {
+    const el = document.getElementById(id);
+    if (el) secondary.appendChild(el);
+  }
+  const sidebarHeading = sidebar.querySelector('h2');
+  if (sidebarHeading?.nextSibling) {
+    sidebar.insertBefore(secondary, sidebarHeading.nextSibling);
+  } else {
+    sidebar.appendChild(secondary);
+  }
+
+  controlsRow.remove();
 }
 
 function bindSidebarToggle(): () => void {

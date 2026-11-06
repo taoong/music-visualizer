@@ -762,7 +762,8 @@ body {
   border: 2px solid var(--bg-primary);
 }
 
-#sidebar input[type="text"] {
+#sidebar input[type="text"],
+#mobile-knob-panel input[type="text"] {
   width: 100%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1144,6 +1145,112 @@ body {
   pointer-events: none;
   user-select: none;
   margin-bottom: 0.3rem;
+}
+
+/* ── Mobile layout ────────────────────────────────────────── */
+/* Reparented at runtime (src/ui/controller.ts applyMobileLayout, gated on
+   isMobile) into: a minimal always-visible bar — name / play / scrubber —
+   plus a tap-to-expand knob panel holding the active viz's own sliders.
+   Everything else that used to live in the playback bar (track switching,
+   image upload, BPM, volume) moves into the sidebar menu instead, since
+   none of it is needed to tweak the visualization in real time. Desktop
+   keeps the original inline layout untouched — plenty of room there. */
+body.mobile-layout #viz-name-tag {
+  display: inline;
+  margin-bottom: 0;
+  pointer-events: auto;
+}
+
+body.mobile-layout #viz-panel-handle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.1rem 0 0.4rem;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.mobile-layout #viz-panel-chevron {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+body.mobile-layout #viz-panel-handle[aria-expanded="true"] #viz-panel-chevron {
+  transform: rotate(180deg);
+}
+
+body.mobile-layout #mobile-knob-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  gap: 0 1rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.28s ease, opacity 0.2s ease;
+}
+
+body.mobile-layout #mobile-knob-panel.open {
+  max-height: 44vh;
+  overflow-y: auto;
+  opacity: 1;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Flatten the moved "Display" section and each per-viz controls-group
+   wrapper into the grid — they carry no layout meaning of their own here,
+   .hidden must still win for whichever groups aren't the active viz. */
+body.mobile-layout #mobile-knob-panel > section {
+  display: contents;
+}
+
+body.mobile-layout #mobile-knob-panel .controls-group:not(.hidden) {
+  display: contents;
+}
+
+body.mobile-layout #mobile-knob-panel h3 {
+  display: none;
+}
+
+body.mobile-layout #mobile-knob-panel .slider-group {
+  min-width: 0;
+}
+
+body.mobile-layout #mobile-knob-panel #text-input-group {
+  grid-column: 1 / -1;
+}
+
+body.mobile-layout #scrubber-row {
+  margin-bottom: 0;
+}
+
+/* ── Mobile secondary controls (sidebar) ──────────────────── */
+/* Track switching / image upload / BPM / volume, relocated out of the
+   playback bar — not needed to tweak a visualization in real time. */
+#mobile-secondary-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+#mobile-secondary-controls #track-info {
+  flex: initial;
+  justify-content: flex-start;
 }
 
 /* ── Canvas Container ────────────────────────────────────── */
