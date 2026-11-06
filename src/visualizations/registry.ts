@@ -318,4 +318,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   fieldlines:       lazyViz(async () => { const { drawFieldlines: draw, resetFieldlines: reset, disposeFieldlines: dispose } = await import('./fieldlines'); return { draw, reset, dispose }; }, 'F55', 'Field Lines'),
   lamella:          lazyViz(async () => { const { drawLamella: draw, resetLamella: reset, disposeLamella: dispose } = await import('./lamella'); return { draw, reset, dispose }; }, 'F56', 'Lamella'),
   grotto:           lazyViz(async () => { const { drawGrotto: draw, resetGrotto: reset, disposeGrotto: dispose } = await import('./grotto'); return { draw, reset, dispose }; }, 'F57', 'Grotto'),
+  folio:            lazyViz(async () => { const { drawFolio: draw, resetFolio: reset, disposeFolio: dispose } = await import('./folio'); return { draw, reset, dispose }; }, 'F58', 'Folio'),
 };

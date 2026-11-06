@@ -748,6 +748,11 @@ export const DEFAULT_CONFIG = {
   grottoTunnel:    0.45,  // 0–1 → cave cross-section (structural)
   grottoFlux:      0.45,  // 0–1 → caustic wave speed
   grottoLuminance: 0.55,  // 0–1 → light intensity
+
+  // Folio
+  folioPlanes: 0.50, // 0–1 → plane count 3–7 (structural)
+  folioWarp:   0.50, // 0–1 → vertex displacement amplitude
+  folioDrift:  0.50, // 0–1 → animation speed
 };
 
 // FFT and decay constants

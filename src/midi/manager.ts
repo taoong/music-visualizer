@@ -470,6 +470,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   grottoTunnel:    'grotto-tunnel',
   grottoFlux:      'grotto-flux',
   grottoLuminance: 'grotto-luminance',
+  folioPlanes: 'folio-planes',
+  folioWarp:   'folio-warp',
+  folioDrift:  'folio-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

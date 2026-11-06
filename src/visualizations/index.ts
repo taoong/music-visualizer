@@ -139,3 +139,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // fieldlines is lazy-only (registry imports direct from './fieldlines'); no barrel export here
 // lamella is lazy-only (registry imports direct from './lamella'); no barrel export here
 // grotto is lazy-only (registry imports direct from './grotto'); no barrel export here
+// folio is lazy-only (registry imports direct from './folio'); no barrel export here

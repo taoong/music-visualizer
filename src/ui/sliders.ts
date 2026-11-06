@@ -511,6 +511,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'grotto-tunnel',        key: 'grottoTunnel'       },
     { id: 'grotto-flux',          key: 'grottoFlux'         },
     { id: 'grotto-luminance',     key: 'grottoLuminance'    },
+    { id: 'folio-planes',         key: 'folioPlanes'        },
+    { id: 'folio-warp',           key: 'folioWarp'          },
+    { id: 'folio-drift',          key: 'folioDrift'         },
   ] as const;
 
   for (const { id, key } of configs) {

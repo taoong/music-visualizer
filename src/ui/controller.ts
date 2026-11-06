@@ -211,6 +211,7 @@ const ALL_CONTROL_IDS = [
   'fieldlines-controls-group',
   'lamella-controls-group',
   'grotto-controls-group',
+  'folio-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -373,6 +374,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   fieldlines:       { show: ['fieldlines-controls-group'] },
   lamella:          { show: ['lamella-controls-group'] },
   grotto:           { show: ['grotto-controls-group'] },
+  folio:            { show: ['folio-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {
