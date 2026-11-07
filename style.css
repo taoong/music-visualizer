@@ -864,7 +864,7 @@ body {
   z-index: 500;
   display: flex;
   flex-direction: column;
-  padding: 0.4rem 1rem 0.6rem;
+  padding: 0.4rem 1rem calc(0.6rem + env(safe-area-inset-bottom, 0px));
   background: rgba(12, 12, 14, 0.95);
   backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-subtle);
@@ -1191,7 +1191,10 @@ body.mobile-layout #viz-panel-handle[aria-expanded="true"] #viz-panel-chevron {
 
 body.mobile-layout #mobile-knob-panel {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  /* Wide enough that a typical phone renders one column — a short, narrow
+     slider is much harder to drag precisely with a finger than a full-width
+     one. Room for a second column only shows up on a wider/landscape screen. */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0 1rem;
   max-height: 0;
   overflow: hidden;
@@ -1225,6 +1228,47 @@ body.mobile-layout #mobile-knob-panel h3 {
 
 body.mobile-layout #mobile-knob-panel .slider-group {
   min-width: 0;
+  margin-bottom: 0.9rem;
+}
+
+body.mobile-layout #mobile-knob-panel .slider-group label {
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+
+/* Touch-sized track: the input's own box is the drag/tap hit area, so it's
+   taller than the visible track, with the thumb centred inside it — a 4px
+   line is nearly impossible to reliably grab with a finger. touch-action:
+   none stops the browser's own gesture recognizer from treating the drag
+   as a page gesture (scroll/swipe) partway through instead of a slider drag. */
+body.mobile-layout #mobile-knob-panel .slider-group input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 32px;
+  background: transparent;
+  touch-action: none;
+}
+
+body.mobile-layout #mobile-knob-panel .slider-group input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-subtle);
+}
+
+body.mobile-layout #mobile-knob-panel .slider-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg-primary);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+body.mobile-layout #mobile-knob-panel .slider-group input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.35);
+  box-shadow: 0 0 8px var(--focus-ring);
 }
 
 body.mobile-layout #mobile-knob-panel #text-input-group {
