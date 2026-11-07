@@ -303,6 +303,7 @@ const ALL_CONTROL_IDS = [
   'lamella-controls-group',
   'grotto-controls-group',
   'folio-controls-group',
+  'worm-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -466,6 +467,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   lamella:          { show: ['lamella-controls-group'] },
   grotto:           { show: ['grotto-controls-group'] },
   folio:            { show: ['folio-controls-group'] },
+  worm:             { show: ['worm-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

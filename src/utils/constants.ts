@@ -753,6 +753,11 @@ export const DEFAULT_CONFIG = {
   folioPlanes: 0.50, // 0–1 → plane count 3–7 (structural)
   folioWarp:   0.50, // 0–1 → vertex displacement amplitude
   folioDrift:  0.50, // 0–1 → animation speed
+
+  // Worm
+  wormCoils:  0.17, // 0–1 → ~3 helix turns (structural)
+  wormScale:  0.55, // 0–1 → audio displacement amplitude
+  wormPolish: 0.30, // 0–1 → roughness (shiny copper → matte clay)
 };
 
 // FFT and decay constants

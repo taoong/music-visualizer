@@ -473,6 +473,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   folioPlanes: 'folio-planes',
   folioWarp:   'folio-warp',
   folioDrift:  'folio-drift',
+  wormCoils:   'worm-coils',
+  wormScale:   'worm-scale',
+  wormPolish:  'worm-polish',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

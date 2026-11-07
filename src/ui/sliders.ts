@@ -514,6 +514,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'folio-planes',         key: 'folioPlanes'        },
     { id: 'folio-warp',           key: 'folioWarp'          },
     { id: 'folio-drift',          key: 'folioDrift'         },
+    { id: 'worm-coils',           key: 'wormCoils'          },
+    { id: 'worm-scale',           key: 'wormScale'          },
+    { id: 'worm-polish',          key: 'wormPolish'         },
   ] as const;
 
   for (const { id, key } of configs) {
