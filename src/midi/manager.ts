@@ -476,6 +476,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   wormCoils:   'worm-coils',
   wormScale:   'worm-scale',
   wormPolish:  'worm-polish',
+  shimmerDepth:  'shimmer-depth',
+  shimmerChop:   'shimmer-chop',
+  shimmerWarmth: 'shimmer-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

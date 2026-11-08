@@ -758,6 +758,10 @@ export const DEFAULT_CONFIG = {
   wormCoils:  0.17, // 0–1 → ~3 helix turns (structural)
   wormScale:  0.55, // 0–1 → audio displacement amplitude
   wormPolish: 0.30, // 0–1 → roughness (shiny copper → matte clay)
+  // Shimmer
+  shimmerDepth:  0.40, // 0–1 → caustic focus depth (structural)
+  shimmerChop:   0.50, // 0–1 → wave amplitude sensitivity
+  shimmerWarmth: 0.50, // 0–1 → caustic colour temperature
 };
 
 // FFT and decay constants

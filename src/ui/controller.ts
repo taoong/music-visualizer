@@ -304,6 +304,7 @@ const ALL_CONTROL_IDS = [
   'grotto-controls-group',
   'folio-controls-group',
   'worm-controls-group',
+  'shimmer-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -468,6 +469,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   grotto:           { show: ['grotto-controls-group'] },
   folio:            { show: ['folio-controls-group'] },
   worm:             { show: ['worm-controls-group'] },
+  shimmer:          { show: ['shimmer-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

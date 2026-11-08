@@ -388,6 +388,7 @@
           <option value="grotto">Grotto</option>
           <option value="folio">Folio</option>
           <option value="worm">Worm</option>
+          <option value="shimmer">Shimmer</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5508,6 +5509,45 @@
               step="0.01"
               value="0.3"
               aria-label="Polish — material surface quality: 0=shiny copper glaze, 1=rough matte clay"
+            />
+          </div>
+        </div>
+
+        <div id="shimmer-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="shimmer-depth">Depth</label>
+            <input
+              type="range"
+              id="shimmer-depth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.4"
+              aria-label="Depth — caustic focus depth (structural): 0=diffuse wide glow, 1=sharp narrow caustic lines"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="shimmer-chop">Chop</label>
+            <input
+              type="range"
+              id="shimmer-chop"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Chop — wave amplitude sensitivity: 0=glassy calm surface, 1=turbulent choppy waves"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="shimmer-warmth">Warmth</label>
+            <input
+              type="range"
+              id="shimmer-warmth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Warmth — caustic colour temperature: 0=cool lunar silver-blue, 1=warm amber sunlight"
             />
           </div>
         </div>

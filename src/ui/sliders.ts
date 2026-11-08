@@ -517,6 +517,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'worm-coils',           key: 'wormCoils'          },
     { id: 'worm-scale',           key: 'wormScale'          },
     { id: 'worm-polish',          key: 'wormPolish'         },
+    { id: 'shimmer-depth',        key: 'shimmerDepth'       },
+    { id: 'shimmer-chop',         key: 'shimmerChop'        },
+    { id: 'shimmer-warmth',       key: 'shimmerWarmth'      },
   ] as const;
 
   for (const { id, key } of configs) {
