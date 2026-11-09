@@ -290,7 +290,7 @@ function cycleVizMode(direction: 1 | -1): void {
   const vizSelect = document.getElementById('viz-selector') as HTMLSelectElement | null;
   const available: VizMode[] = vizSelect
     ? Array.from(vizSelect.options).filter(o => !o.disabled && !o.hidden).map(o => o.value as VizMode)
-    : ['circle', 'spectrum', 'tunnel', 'lasers', 'text', 'highway', 'liquidmetal', 'neon', 'imagegrid', 'sculpture'];
+    : ['circle', 'spectrum', 'tunnel', 'lasers', 'text', 'highway', 'neon', 'sculpture'];
 
   const current = store.state.vizMode;
   const idx = available.indexOf(current);

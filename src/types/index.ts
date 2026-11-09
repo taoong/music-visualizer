@@ -4,7 +4,7 @@
 
 // Audio analysis modes
 export type AnalysisMode = 'freq' | 'mic' | 'interactive';
-export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'liquidmetal' | 'neon' | 'imagegrid' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'weave' | 'synthwave' | 'bloom' | 'hive' | 'marbling' | 'flowfield' | 'truchet' | 'topography' | 'interference' | 'voronoi' | 'blobs' | 'grayscott' | 'growth' | 'pixelsort' | 'echoes' | 'physarum' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann' | 'glyphs' | 'prism' | 'cloth' | 'veil' | 'suminagashi' | 'isometric' | 'pursuit' | 'arboreal' | 'etching' | 'kintsugi' | 'klimt' | 'rosette' | 'feedbackloop' | 'kandinsky' | 'cobweb' | 'frost' | 'boogie' | 'patchwork' | 'risograph' | 'lensflare' | 'radiolaria' | 'stitch' | 'magnetosphere' | 'substrate' | 'ferrofluid' | 'cataract' | 'homage' | 'tracery' | 'protractor' | 'phyllotaxis' | 'aether' | 'chromatic' | 'particlelife' | 'tableau' | 'rorschach' | 'pollock' | 'julia' | 'langton' | 'anemone' | 'meander' | 'aggregation' | 'hopf' | 'reticulae' | 'solidlight' | 'crystaluniverse' | 'skyspace' | 'torusknot' | 'cloister' | 'melt' | 'shard' | 'stelae' | 'orrery' | 'kinetic' | 'braid' | 'vessels' | 'massless' | 'gossamer' | 'dome' | 'torque' | 'tomography' | 'gyroid' | 'descent' | 'drift' | 'gridwarp' | 'heliograph' | 'tidal' | 'specter' | 'flux' | 'oscillograph' | 'strata' | 'sonambient' | 'aperture' | 'nimbus' | 'relay' | 'reeds' | 'chronicle' | 'filaments' | 'stringer' | 'lamina' | 'dispersion' | 'foam' | 'dune' | 'spire' | 'membrane' | 'cinder' | 'platter' | 'typograph' | 'tape' | 'lattice' | 'loom' | 'penumbra' | 'confluence' | 'scanfield' | 'fieldlines' | 'lamella' | 'grotto' | 'folio' | 'worm' | 'shimmer' | 'thermal';
+export type VizMode = 'circle' | 'spectrum' | 'tunnel' | 'tetris' | 'lasers' | 'text' | 'highway' | 'neon' | 'sculpture' | 'binary' | 'rippletank' | 'cymatics' | 'attractor' | 'stringart' | 'constellation' | 'waterfall' | 'marbling' | 'truchet' | 'topography' | 'growth' | 'pixelsort' | 'echoes' | 'geodesic' | 'ribbons' | 'infinitynet' | 'arabesque' | 'murmuration' | 'epicycles' | 'knots' | 'penrose' | 'flame' | 'disorders' | 'blackwave' | 'origami' | 'lightfield' | 'brush' | 'aurora' | 'glitch' | 'warp' | 'vortex' | 'lumia' | 'woodmirror' | 'moire' | 'noctiluca' | 'tesseract' | 'supershapes' | 'corridor' | 'riemann' | 'glyphs' | 'prism' | 'cloth' | 'veil' | 'suminagashi' | 'isometric' | 'pursuit' | 'arboreal' | 'etching' | 'kintsugi' | 'klimt' | 'rosette' | 'feedbackloop' | 'kandinsky' | 'cobweb' | 'frost' | 'boogie' | 'patchwork' | 'risograph' | 'lensflare' | 'radiolaria' | 'stitch' | 'magnetosphere' | 'substrate' | 'ferrofluid' | 'cataract' | 'homage' | 'tracery' | 'protractor' | 'phyllotaxis' | 'aether' | 'chromatic' | 'particlelife' | 'tableau' | 'rorschach' | 'pollock' | 'julia' | 'langton' | 'anemone' | 'meander' | 'aggregation' | 'hopf' | 'reticulae' | 'solidlight' | 'crystaluniverse' | 'skyspace' | 'torusknot' | 'cloister' | 'melt' | 'shard' | 'stelae' | 'orrery' | 'kinetic' | 'braid' | 'vessels' | 'massless' | 'gossamer' | 'dome' | 'torque' | 'tomography' | 'gyroid' | 'descent' | 'drift' | 'gridwarp' | 'heliograph' | 'tidal' | 'specter' | 'flux' | 'oscillograph' | 'strata' | 'sonambient' | 'aperture' | 'nimbus' | 'relay' | 'reeds' | 'chronicle' | 'filaments' | 'stringer' | 'lamina' | 'dispersion' | 'foam' | 'dune' | 'spire' | 'membrane' | 'cinder' | 'platter' | 'typograph' | 'tape' | 'lattice' | 'loom' | 'penumbra' | 'confluence' | 'scanfield' | 'fieldlines' | 'lamella' | 'grotto' | 'folio' | 'worm' | 'shimmer' | 'thermal';
 
 // Frequency band definitions
 export interface FrequencyBand {
@@ -74,30 +74,10 @@ export interface Config {
   waterfallScrollSpeed: number;
   waterfallGain: number;
   waterfallHue: number;
-  // Weave-specific
-  weaveThreads: number;
-  weaveGlow: number;
-  weavePulse: number;
-  // Synthwave-specific
-  synthwaveSpeed: number;
-  synthwaveHorizon: number;
-  synthwaveGlow: number;
-  // Bloom-specific
-  bloomDensity: number;
-  bloomLifespan: number;
-  bloomSpread: number;
-  // Hive-specific
-  hiveHexSize: number;
-  hiveGlow: number;
-  hiveRipple: number;
   // Marbling-specific
   marblingHue: number;
   marblingZoom: number;
   marblingSpeed: number;
-  // Flow Field-specific
-  flowfieldTurbulence: number;
-  flowfieldTrail: number;
-  flowfieldWidth: number;
   // Truchet-specific
   truchetGrid: number;
   truchetSpeed: number;
@@ -106,22 +86,6 @@ export interface Config {
   topographyResolution: number;
   topographyLevels: number;
   topographySpeed: number;
-  // Interference-specific
-  interferenceFrequency: number;
-  interferenceTwist: number;
-  interferenceDrift: number;
-  // Voronoi Stained Glass-specific
-  voronoiCells: number;
-  voronoiGlow: number;
-  voronoiShatter: number;
-  // Blobs-specific
-  blobsViscosity: number;
-  blobsDrift: number;
-  blobsGlow: number;
-  // Gray-Scott-specific
-  grayscottFeed: number;
-  grayscottKill: number;
-  grayscottSpeed: number;
   // Growth-specific
   growthSpeed: number;
   growthTension: number;
@@ -134,10 +98,6 @@ export interface Config {
   echoesDepth: number;
   echoesTwist: number;
   echoesScale: number;
-  // Physarum-specific
-  physarumAgents: number;
-  physarumEvaporation: number;
-  physarumSensor: number;
   // Geodesic-specific
   geodesicShells: number;
   geodesicSpin: number;

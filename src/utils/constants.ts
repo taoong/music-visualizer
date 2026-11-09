@@ -195,30 +195,10 @@ export const DEFAULT_CONFIG = {
   waterfallScrollSpeed: 0.4,
   waterfallGain: 0.125,
   waterfallHue: 0.7,
-  // Weave-specific
-  weaveThreads: 12,
-  weaveGlow: 1.0,
-  weavePulse: 1.0,
-  // Synthwave-specific
-  synthwaveSpeed: 1.0,
-  synthwaveHorizon: 0.42,
-  synthwaveGlow: 1.5,
-  // Bloom-specific
-  bloomDensity: 0.5,
-  bloomLifespan: 0.5,
-  bloomSpread: 0.5,
-  // Hive-specific
-  hiveHexSize: 0.45,
-  hiveGlow: 0.5,
-  hiveRipple: 0.5,
   // Marbling-specific
   marblingHue: 0.0,
   marblingZoom: 0.35,
   marblingSpeed: 0.4,
-  // Flow Field-specific
-  flowfieldTurbulence: 0.4,
-  flowfieldTrail: 0.55,
-  flowfieldWidth: 0.5,
   // Truchet-specific
   truchetGrid: 0.35,
   truchetSpeed: 0.6,
@@ -227,22 +207,6 @@ export const DEFAULT_CONFIG = {
   topographyResolution: 35,
   topographyLevels: 7,
   topographySpeed: 0.5,
-  // Interference-specific
-  interferenceFrequency: 0.35,
-  interferenceTwist: 0.5,
-  interferenceDrift: 0.35,
-  // Voronoi Stained Glass-specific
-  voronoiCells: 35,
-  voronoiGlow: 1.0,
-  voronoiShatter: 0.5,
-  // Blobs-specific
-  blobsViscosity: 0.4,
-  blobsDrift: 0.4,
-  blobsGlow: 0.5,
-  // Gray-Scott-specific
-  grayscottFeed: 0.45,
-  grayscottKill: 0.60,
-  grayscottSpeed: 0.33,
   // Growth-specific
   growthSpeed: 0.5,
   growthTension: 0.5,
@@ -255,10 +219,6 @@ export const DEFAULT_CONFIG = {
   echoesDepth: 60,
   echoesTwist: 0.2,
   echoesScale: 0.6,
-  // Physarum-specific
-  physarumAgents: 1500,
-  physarumEvaporation: 0.65,
-  physarumSensor: 30,
   // Geodesic-specific
   geodesicShells: 3,
   geodesicSpin: 1.0,

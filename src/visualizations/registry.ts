@@ -20,22 +20,12 @@ import { drawAttractor, resetAttractor } from './attractor';
 import { drawStringart, resetStringart } from './stringart';
 import { drawConstellation, resetConstellation } from './constellation';
 import { drawWaterfall, resetWaterfall } from './waterfall';
-import { drawWeave, resetWeave } from './weave';
-import { drawSynthwave, resetSynthwave } from './synthwave';
-import { drawBloom, resetBloom } from './bloom';
-import { drawHive, resetHive } from './hive';
 import { drawMarbling, resetMarbling } from './marbling';
-import { drawFlowField, resetFlowField } from './flowfield';
 import { drawTruchet, resetTruchet } from './truchet';
 import { drawTopography, resetTopography } from './topography';
-import { drawInterference, resetInterference } from './interference';
-import { drawVoronoi, resetVoronoi } from './voronoi';
-import { drawBlobs, resetBlobs } from './blobs';
-import { drawGrayscott, resetGrayscott } from './grayscott';
 import { drawGrowth, resetGrowth } from './growth';
 import { drawPixelsort, resetPixelsort } from './pixelsort';
 import { drawEchoes, resetEchoes } from './echoes';
-import { drawPhysarum, resetPhysarum, interactPhysarum } from './physarum';
 import { drawGeodesic, resetGeodesic } from './geodesic';
 import { drawRibbons, resetRibbons } from './ribbons';
 import { drawInfinityNet, resetInfinityNet } from './infinitynet';
@@ -106,18 +96,11 @@ import { drawAggregation, resetAggregation } from './aggregation';
 import { drawHopf, resetHopf } from './hopf';
 import { drawReticulae, resetReticulae } from './reticulae';
 import { drawGridwarp, resetGridwarp } from './gridwarp';
-import { interactBlobs } from './blobs';
-import { interactGrayscott } from './grayscott';
 import { interactRippleTank } from './rippletank';
 import { interactConstellation } from './constellation';
 import { interactMarbling } from './marbling';
-import { interactBloom } from './bloom';
-import { interactHive } from './hive';
-import { interactVoronoi } from './voronoi';
 import { interactTetris } from './balls';
-import { interactFlowField } from './flowfield';
 import { interactLasers } from './lasers';
-import { interactSynthwave } from './synthwave';
 import { interactText } from './text';
 import { interactHighway } from './highway';
 
@@ -169,9 +152,7 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   lasers:        { draw: drawLasers,         reset: resetLasers,        key: '5',  label: 'Lasers',       interact: (e) => interactLasers(e, window.p5Instance) },
   text:          { draw: drawText,           reset: resetText,          key: '6',  label: 'Text',         interact: interactText },
   highway:       { draw: drawHighway,        reset: resetHighway,       key: '7',  label: 'Highway',      interact: interactHighway },
-  liquidmetal:   lazyViz(async () => { const { drawLiquidMetal: draw, resetLiquidMetal: reset, disposeLiquidMetal: dispose } = await import('./liquidmetal'); return { draw, reset, dispose }; }, '8', 'Liquid Metal'),
   neon:          lazyViz(async () => { const { drawNeon: draw, resetNeon: reset, disposeNeon: dispose } = await import('./neon'); return { draw, reset, dispose }; }, 'n', 'Neon Grid'),
-  imagegrid:     lazyViz(async () => { const { drawImageGrid: draw, resetImageGrid: reset, disposeImageGrid: dispose } = await import('./imagegrid'); return { draw, reset, dispose }; }, 'g', 'Image Grid'),
   sculpture:     lazyViz(async () => { const { drawSculpture: draw, resetSculpture: reset, disposeSculpture: dispose } = await import('./sculpture'); return { draw, reset, dispose }; }, 'u', 'Sculpture'),
   binary:        { draw: drawBinary,         reset: resetBinary,        key: 'b',  label: 'Binary' },
   rippletank:    { draw: drawRippleTank,     reset: resetRippleTank,    key: 'w',  label: 'Ripple Tank',  interact: interactRippleTank },
@@ -180,22 +161,12 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   stringart:     { draw: drawStringart,      reset: resetStringart,     key: 'v',  label: 'String Art' },
   constellation: { draw: drawConstellation,  reset: resetConstellation, key: 'o',  label: 'Constellation', interact: (e) => interactConstellation(e, window.p5Instance) },
   waterfall:     { draw: drawWaterfall,      reset: resetWaterfall,     key: 'e',  label: 'Waterfall' },
-  weave:         { draw: drawWeave,          reset: resetWeave,         key: 'z',  label: 'Weave' },
-  synthwave:     { draw: drawSynthwave,      reset: resetSynthwave,     key: "'",  label: 'Synthwave',    interact: interactSynthwave },
-  bloom:         { draw: drawBloom,          reset: resetBloom,         key: '0',  label: 'Bloom',        interact: (e) => interactBloom(e, window.p5Instance) },
-  hive:          { draw: drawHive,           reset: resetHive,          key: '9',  label: 'Hive',         interact: (e) => interactHive(e, window.p5Instance) },
   marbling:      { draw: drawMarbling,       reset: resetMarbling,      key: ';',  label: 'Marbling',     interact: interactMarbling },
-  flowfield:     { draw: drawFlowField,      reset: resetFlowField,     key: '[',  label: 'Flow Field',   interact: (e) => interactFlowField(e, window.p5Instance) },
   truchet:       { draw: drawTruchet,        reset: resetTruchet,       key: '\\', label: 'Truchet' },
   topography:    { draw: drawTopography,     reset: resetTopography,    key: '-',  label: 'Topography' },
-  interference:  { draw: drawInterference,   reset: resetInterference,  key: '=',  label: 'Interference' },
-  voronoi:       { draw: drawVoronoi,        reset: resetVoronoi,       key: '.',  label: 'Stained Glass', interact: interactVoronoi },
-  blobs:         { draw: drawBlobs,          reset: resetBlobs,         key: ',',  label: 'Blobs',        interact: interactBlobs },
-  grayscott:     { draw: drawGrayscott,      reset: resetGrayscott,     key: '/',  label: 'Gray-Scott',   interact: interactGrayscott },
   growth:        { draw: drawGrowth,         reset: resetGrowth,        key: '~',  label: 'Growth' },
   pixelsort:     { draw: drawPixelsort,      reset: resetPixelsort,     key: '@',  label: 'Pixel Sort' },
   echoes:        { draw: drawEchoes,         reset: resetEchoes,        key: '#',  label: 'Echoes' },
-  physarum:      { draw: drawPhysarum,       reset: resetPhysarum,      key: '$',  label: 'Physarum',     interact: interactPhysarum },
   geodesic:      { draw: drawGeodesic,       reset: resetGeodesic,      key: '^',  label: 'Geodesic' },
   ribbons:       { draw: drawRibbons,        reset: resetRibbons,       key: '&',  label: 'Ribbons' },
   infinitynet:   { draw: drawInfinityNet,    reset: resetInfinityNet,   key: '*',  label: 'Infinity Net' },

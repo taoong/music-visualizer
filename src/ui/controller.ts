@@ -225,12 +225,10 @@ const ALL_CONTROL_IDS = [
   'attractor-controls-group',
   'stringart-controls-group', 'constellation-controls-group',
   'waterfall-controls-group',
-  'weave-controls-group', 'synthwave-controls-group', 'bloom-controls-group',
-  'hive-controls-group', 'marbling-controls-group', 'flowfield-controls-group',
+  'marbling-controls-group',
   'truchet-controls-group', 'topography-controls-group',
-  'interference-controls-group', 'voronoi-controls-group',
-  'blobs-controls-group', 'grayscott-controls-group', 'growth-controls-group',
-  'pixelsort-controls-group', 'echoes-controls-group', 'physarum-controls-group',
+  'growth-controls-group',
+  'pixelsort-controls-group', 'echoes-controls-group',
   'geodesic-controls-group', 'ribbons-controls-group',
   'infinitynet-controls-group',
   'arabesque-controls-group',
@@ -369,9 +367,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   lasers:        { show: ['intensity-group', 'beat-division-group'] },
   text:          { show: ['intensity-group', 'beat-division-group', 'text-input-group'] },
   highway:       { show: ['intensity-group', 'highway-controls-group'],                           labels: { intensity: 'Speed' } },
-  liquidmetal:   { show: ['rotation-speed-group', 'intensity-group'],                             labels: { intensity: 'Spin Chaos' } },
   neon:          { show: ['rotation-speed-group', 'intensity-group', 'decay-rate-group'],          labels: { rotation: 'Camera Rotation', intensity: 'Intensity', decayRate: 'Camera Height' } },
-  imagegrid:     { show: ['rotation-speed-group', 'intensity-group'],                             labels: { intensity: 'Bloom Strength' } },
   sculpture:     { show: ['rotation-speed-group', 'intensity-group', 'sculpture-controls-group'], labels: { intensity: 'Bloom Strength' } },
   binary:        { show: ['scale-group', 'decay-rate-group'] },
   rippletank:    { show: ['scale-group', 'rippletank-controls-group'] },
@@ -380,22 +376,12 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   stringart:     { show: ['stringart-controls-group'] },
   constellation: { show: ['constellation-controls-group'] },
   waterfall:     { show: ['waterfall-controls-group'] },
-  weave:         { show: ['weave-controls-group'] },
-  synthwave:     { show: ['synthwave-controls-group'] },
-  bloom:         { show: ['bloom-controls-group'] },
-  hive:          { show: ['hive-controls-group'] },
   marbling:      { show: ['marbling-controls-group'] },
-  flowfield:     { show: ['flowfield-controls-group'] },
   truchet:       { show: ['truchet-controls-group'] },
   topography:    { show: ['topography-controls-group'] },
-  interference:  { show: ['interference-controls-group'] },
-  voronoi:       { show: ['voronoi-controls-group'] },
-  blobs:         { show: ['blobs-controls-group'] },
-  grayscott:     { show: ['grayscott-controls-group'] },
   growth:        { show: ['growth-controls-group'] },
   pixelsort:     { show: ['pixelsort-controls-group'] },
   echoes:        { show: ['echoes-controls-group'] },
-  physarum:      { show: ['physarum-controls-group'] },
   geodesic:      { show: ['geodesic-controls-group'] },
   ribbons:       { show: ['ribbons-controls-group'] },
   infinitynet:   { show: ['infinitynet-controls-group'] },
@@ -550,7 +536,7 @@ function bindVizSelector(): () => void {
   }
 
   // Visualizations that require beat/BPM tracking and don't work well with mic input
-  const micHiddenVizModes = ['liquidmetal', 'sculpture'];
+  const micHiddenVizModes = ['sculpture'];
 
   function updateMicVizVisibility(): void {
     const isMic = store.isMicMode;

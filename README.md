@@ -6,11 +6,11 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Liquid Metal, Neon Grid, Blobs, Gray-Scott, Physarum, Murmuration, Riemann Sphere, Glyphs, Prism, Tapestry, Veil, Suminagashi, Isometric City, Pursuit, Arboreal, Etching, Kintsugi, Klimt, Rosette, Feedback, Kandinsky, Cobweb, Frost, Boogie Woogie, Patchwork, Risograph, Lens Flare, Radiolaria, Stitch, Magnetosphere, Substrate, Ferrofluid, Tidal, Specter, Flux, Oscillograph, Strata, Sonambient, and many more (92 total)
+- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Neon Grid, Murmuration, Riemann Sphere, Glyphs, Prism, Tapestry, Veil, Suminagashi, Isometric City, Pursuit, Arboreal, Etching, Kintsugi, Klimt, Rosette, Feedback, Kandinsky, Cobweb, Frost, Boogie Woogie, Patchwork, Risograph, Lens Flare, Radiolaria, Stitch, Magnetosphere, Substrate, Ferrofluid, Tidal, Specter, Flux, Oscillograph, Strata, Sonambient, and many more
 - **Three analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Microphone** — Live audio input from your mic for real-time visualization
-  - **Interactive** — Audio plays as background, but the visualization is driven entirely by touch/drag/keyboard input. Input is synthesized into band amplitudes + transients that every viz already knows how to respond to, so every visualization reacts. Additional bespoke handlers (spawning, shattering, rippling from tap position, etc.) live on Blobs, Gray-Scott, Physarum, Ripple Tank, Constellation, Marbling, Bloom, Hive, Stained Glass, Tetris, Flow Field, Lasers, Synthwave, Text, and Highway.
+  - **Interactive** — Audio plays as background, but the visualization is driven entirely by touch/drag/keyboard input. Input is synthesized into band amplitudes + transients that every viz already knows how to respond to, so every visualization reacts. Additional bespoke handlers (spawning, shattering, rippling from tap position, etc.) live on Ripple Tank, Constellation, Marbling, Tetris, Lasers, Text, and Highway.
 - **Beat synchronization** — BPM detection with beat-reactive animations; BPM input, TAP tempo, and BEAT phase sync in the playback bar
 - **Real-time audio processing** — Transient detection, auto-gain normalization, spectral centroid tracking
 - **Full keyboard controls** — Switch visualizations, seek, volume, fullscreen, and more
@@ -46,9 +46,7 @@ A "friendly Hydra" visual instrument lives at `/instrument.html` (run `npm run d
 | `5` | Lasers | Concert laser light show with beat-synced beams |
 | `6` | Text | Beat-synced text in 7 cycling visual patterns |
 | `7` | Highway | Audio-reactive highway drive; perspective road with beat-synced lane markings and headlight flares; freq bands drive scenery and road color; Three.js WebGL overlay |
-| `8` | Liquid Metal | Molten chrome icosphere; Three.js PBR with IBL environment; amplitude deforms mesh vertices; GlitchPass fires on transients |
 | `N` | Neon Grid | Three.js synthwave terrain with audio-driven height displacement and bloom |
-| `G` | Image Grid | 16×16 mosaic of 3D tiles viewed from above; column height driven by frequency band; beat → radiating lift-wave; upload an image to see it sliced across the tiles |
 | `U` | Sculpture | 8 flat panels in a circle showing image strips; beat-synced camera orbit with audio-reactive tilt, glow, and spacing |
 | `B` | Binary | Matrix-style cascading binary/ASCII characters; columns mapped to frequency bands with beat-synced wave ripple |
 | `W` | Ripple Tank | Physics-inspired wave interference; 7 freq-band point-sources emit circular waves with beat-triggered shockwaves |
@@ -56,13 +54,9 @@ A "friendly Hydra" visual instrument lives at `/instrument.html` (run `npm run d
 | `J` | Strange Attractor | Lorenz attractor chaos theory; particles trace butterfly-shaped 3D paths; audio warps system parameters; beats jolt the attractor |
 | `E` | Waterfall | 3D scrolling spectrogram: stacked ribbons of recent spectra receding into the distance; newest snapshot in front, older ones fade back with perspective and haze |
 | `Z` | Monolith | Tall faceted crystal obelisk; cinematic camera choreography (orbit, crash-zoom, Hitchcock dolly, snap-cut, top-down / worm's-eye, barrel rolls) all locked to the beat |
-| `.` | Stained Glass | Voronoi tessellation lit as a jewel-tone stained glass window; cells glow amethyst→ruby across 7 frequency bands; lead lines between panes; beat fires a warm flash and optionally shatters the mosaic |
-| `,` | Blobs | Audio-reactive metaball field; 7 biomorphic orbs (one per freq band) drift via Perlin noise and fuse organically when amplitudes rise; beat bursts them outward |
-| `/` | Gray-Scott | Gray-Scott reaction-diffusion chemical simulation; Turing patterns (spots, stripes, mazes) driven by feed/kill parameters; sub-bass seeds activator, beats inject central pulse and rotate hue palette |
 | `~` | Growth | Differential growth simulation; 7 closed curves grow by node insertion, fold like coral and brain sulci via spatial-hash repulsion; amplitude drives glow and growth speed |
 | `@` | Pixel Sort | Glitch-art column pixel sorting inspired by Kim Asendorf's "Mountain Tour"; synthetic plasma field (7 freq-band hue zones) sorted by luminance; bass lowers sort threshold; beats inject a sort surge |
 | `#` | Echoes | Polar slit-scan temporal mandala; each audio frame stored as an annular ring; rings radiate outward (newest innermost, oldest outermost); Twist morphs from concentric mandala to tight spiral; beat shifts 7-band hue palette |
-| `$` | Physarum | Slime-mold agent-network simulation (Jeff Jones algorithm, Zach Lieberman 2025); agents sense pheromone trails and steer toward highest concentration; emergent self-organising mycelial web; beat scatters agents + hue jump; bass drives deposit rate; dominant band colours hue |
 | `%` | Op-Art | Audio-reactive Op-Art grid inspired by Victor Vasarely's "Vega-Nor" series (1969); NxN circles modulated by 7 per-band sinusoidal standing waves at increasing spatial frequencies plus a central Vasarely dome illusion; beat fires an expanding radial shockwave; Color slider morphs from black/white monochrome to full chromatic HSB |
 | `^` | Geodesic | Up to 5 nested icosahedral wireframe shells rotating independently (each driven by a different audio frequency band); overlapping neon wireframes create iridescent crystalline interference patterns; 3-pass glow per edge; vertex node dots; beat fires angular impulses; inspired by teamLab's "Bubble Universe" (2024) |
 | `&` | Ribbons | N sinuous silk-ribbon strands float horizontally across the canvas, each driven by a frequency band; amplitude scales oscillation height; iridescent canvas-gradient glow (3 passes: outer halo, mid body, bright core) shimmers along each strand; beat fires a traveling snap wave; inspired by teamLab "Light Sculpture – Flow" (2024) |
