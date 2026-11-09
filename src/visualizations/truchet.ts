@@ -20,9 +20,10 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
-// Hues per band: sub=violet, bass=cyan, lowMid=teal-green, mid=lime,
-//               upperMid=gold, presence=orange-red, brilliance=magenta
-const BAND_HUES = [290, 210, 165, 100, 48, 22, 340];
+// Cohesive ink-on-paper palette — a narrow blue-to-teal range instead of
+// one hue per band spread across the full wheel, so the tile maze reads as
+// one coherent colour instead of a column-by-column spectrum chart.
+const BAND_HUES = [196, 202, 208, 214, 220, 226, 232];
 
 const MIN_TILE = isMobile ? 36 : 24;
 const MAX_TILE = 110;
@@ -34,6 +35,7 @@ let tileCount = 0;
 let lastTileSize = -1;
 let huePalette = 0;
 let lastBeatIndex = -1;
+let beatCount = 0;
 
 export function resetTruchet(): void {
   tileAngle = null;
@@ -43,6 +45,7 @@ export function resetTruchet(): void {
   lastTileSize = -1;
   huePalette = 0;
   lastBeatIndex = -1;
+  beatCount = 0;
 }
 
 export function drawTruchet(p: P5Instance, dt: number): void {
@@ -90,9 +93,13 @@ export function drawTruchet(p: P5Instance, dt: number): void {
   const brilliance = amps[6];
   const presence = amps[5];
 
-  // Beat → shuffle tile targets + shift global hue palette
+  // Beat → shuffle tile targets + wobble the palette
   if (onBeat) {
-    huePalette = (huePalette + 22 + Math.random() * 38) % 360;
+    beatCount++;
+    // Small bounded wobble around the ink-blue palette rather than a random
+    // walk around the full hue wheel — stays reactive without drifting
+    // into "rainbow" territory over time.
+    huePalette = Math.sin(beatCount * 0.4) * 16;
     const flipProb = 0.25 + sub * 0.55;
     for (let i = 0; i < tileCount; i++) {
       if (Math.random() < flipProb) {

@@ -23,6 +23,18 @@ let snapshotHead = 0;   // index of oldest entry
 let snapshotCount = 0;
 let captureAccum = 0;
 
+// Perf: each ribbon's stroke gradient only actually needs rebuilding when
+// a new snapshot is captured (shifts every ribbon's depth-position) or the
+// canvas resizes or the hue slider moves — not on every single render
+// frame. Building ~26 CanvasGradients (7 addColorStop calls each) every
+// frame regardless was the main cost behind this viz feeling laggy, since
+// captures only happen every few frames at typical scroll speeds while
+// rendering still runs at 60fps in between.
+let gradCache: (CanvasGradient | null)[] = [];
+let gradCacheDirty = true;
+let lastCanvasW = -1;
+let lastCanvasH = -1;
+
 let lastBeatIndex = -1;
 let beatFlash = 0;
 
@@ -84,6 +96,7 @@ function pushSnapshot(snap: Float32Array): void {
     snapshots[snapshotHead] = snap;
     snapshotHead = (snapshotHead + 1) % MAX_SNAPSHOTS;
   }
+  gradCacheDirty = true;
 }
 
 // ── Draw ─────────────────────────────────────────────────────────────────────
@@ -92,7 +105,8 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
   const w = p.width;
   const h = p.height;
 
-  if (currentHueShift !== config.waterfallHue) buildLUT(config.waterfallHue);
+  if (currentHueShift !== config.waterfallHue) { buildLUT(config.waterfallHue); gradCacheDirty = true; }
+  if (w !== lastCanvasW || h !== lastCanvasH) { lastCanvasW = w; lastCanvasH = h; gradCacheDirty = true; }
 
   if (state.detectedBPM > 0 && state.isPlaying) {
     const pos = audioEngine.getPlaybackPosition();
@@ -184,16 +198,23 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
     ctx.fill();
 
     // Ridge stroke with a sparse horizontal gradient — front ribbons get
-    // coloring, back ribbons stay subtle.
-    const strokeAlpha = 0.35 + foreground * 0.6;
-    const grad = ctx.createLinearGradient(xStart, 0, xStart + plotWidth, 0);
-    for (let k = 0; k <= GRAD_STOPS; k++) {
-      const t = k / GRAD_STOPS;
-      const idx = Math.min(RIBBON_POINTS - 1, Math.round(t * span));
-      const amp = snap[idx] * gain;
-      const a = amp < 0 ? 0 : amp > 1 ? 1 : amp;
-      const o = ((a * 255) | 0) * 3;
-      grad.addColorStop(t, `rgba(${COLOR_LUT[o]},${COLOR_LUT[o + 1]},${COLOR_LUT[o + 2]},${strokeAlpha})`);
+    // coloring, back ribbons stay subtle. Depth-position (and therefore
+    // every value feeding the gradient) is identical every frame until the
+    // next capture, so the gradient itself is cached per depth-slot and
+    // only rebuilt when something that could change it actually did.
+    let grad = gradCache[s];
+    if (gradCacheDirty || !grad) {
+      const strokeAlpha = 0.35 + foreground * 0.6;
+      grad = ctx.createLinearGradient(xStart, 0, xStart + plotWidth, 0);
+      for (let k = 0; k <= GRAD_STOPS; k++) {
+        const t = k / GRAD_STOPS;
+        const idx = Math.min(RIBBON_POINTS - 1, Math.round(t * span));
+        const amp = snap[idx] * gain;
+        const a = amp < 0 ? 0 : amp > 1 ? 1 : amp;
+        const o = ((a * 255) | 0) * 3;
+        grad.addColorStop(t, `rgba(${COLOR_LUT[o]},${COLOR_LUT[o + 1]},${COLOR_LUT[o + 2]},${strokeAlpha})`);
+      }
+      gradCache[s] = grad;
     }
 
     ctx.beginPath();
@@ -203,6 +224,7 @@ export function drawWaterfall(p: P5Instance, dt: number): void {
     ctx.strokeStyle = grad;
     ctx.stroke();
   }
+  gradCacheDirty = false;
 
   if (beatFlash > 0.1) {
     ctx.fillStyle = `rgba(255,255,255,${beatFlash * 0.12})`;
@@ -217,4 +239,8 @@ export function resetWaterfall(): void {
   captureAccum = 0;
   lastBeatIndex = -1;
   beatFlash = 0;
+  gradCache = [];
+  gradCacheDirty = true;
+  lastCanvasW = -1;
+  lastCanvasH = -1;
 }

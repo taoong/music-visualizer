@@ -89,7 +89,12 @@ function hsvPacked(h: number, s: number, v: number): number {
 
 export function drawPixelsort(p: P5Instance, dt: number): void {
   const { state, config } = store;
-  const { amps } = getBandAverages(BAND_COUNT);
+  const { amps, transients } = getBandAverages(BAND_COUNT);
+  // Any band's transient crossing, not just bass or the BPM-grid beat — so
+  // a spike in the mids/highs sorts just as dramatically as a kick, and it
+  // still reacts when there's no detected BPM (mic input, erratic rhythm).
+  const maxAmp = Math.max(...amps);
+  const maxTransient = Math.max(0, Math.max(...transients) - 1);
 
   // Resize / first-run
   const needW = Math.max(1, Math.floor(p.width  / PIXEL_SCALE));
@@ -108,6 +113,10 @@ export function drawPixelsort(p: P5Instance, dt: number): void {
       sortSurge   = 1.0;
     }
   }
+  // Also surge on any raw amplitude spike, independent of the BPM grid —
+  // this is what actually makes a spike read as a spike, rather than only
+  // the detected-beat metronome mattering.
+  sortSurge = Math.max(sortSurge, Math.min(1, maxTransient * 1.6));
   sortSurge *= Math.pow(0.82, dt);
 
   time += 0.006 * dt;
@@ -119,10 +128,11 @@ export function drawPixelsort(p: P5Instance, dt: number): void {
 
   for (let px = 0; px < rW; px++) {
     // Map column to freq band
-    const bandIdx = Math.min(BAND_COUNT - 1, Math.floor((px / rW) * BAND_COUNT));
-    const amp     = amps[bandIdx];
-    const baseHue = BAND_HUES[bandIdx] + hueBase;
-    const sat     = Math.min(1.0, 0.58 + amp * 0.42);
+    const bandIdx  = Math.min(BAND_COUNT - 1, Math.floor((px / rW) * BAND_COUNT));
+    const amp      = amps[bandIdx];
+    const transPop = Math.max(0, transients[bandIdx] - 1); // this band's own spike punch
+    const baseHue  = BAND_HUES[bandIdx] + hueBase;
+    const sat      = Math.min(1.0, 0.58 + amp * 0.42);
 
     for (let py = 0; py < rH; py++) {
       const ny = py / rH;
@@ -133,7 +143,7 @@ export function drawPixelsort(p: P5Instance, dt: number): void {
         + 0.28 * Math.sin(ny * 7.0  + time * 0.65 + bandIdx * 0.70)
         + 0.20 * Math.sin(ny * 3.0  + time * 1.15)
         + 0.12 * Math.sin(ny * 15.0 + time * 2.30 + bandIdx * 1.40)
-        + amp * 0.38
+        + amp * 0.38 + transPop * 0.5
       ));
 
       const hue    = (baseHue + time * 12 + py * 0.4) % 360;
@@ -150,13 +160,17 @@ export function drawPixelsort(p: P5Instance, dt: number): void {
   // Clamp to >=2 AFTER the min() — at very small canvas heights (e.g. during
   // an aggressive window resize) rH-1 can be 0, which would leave the inner
   // "collect run" loop unable to advance py and spin the outer while forever.
-  const maxSpan = Math.max(2, Math.min(rH - 1, Math.floor(10 + config.pixelsortSpan * 390)));
+  // A spike also sweeps longer runs, not just a lower threshold — makes the
+  // sort visibly surge across more of the column instead of only thickening
+  // the existing bands a little.
+  const maxSpan = Math.max(2, Math.min(rH - 1, Math.floor(10 + config.pixelsortSpan * 390 + sortSurge * (rH - 1) * 0.5)));
   if (rH < 2) return; // Nothing to sort in a 1-pixel-tall buffer
 
-  // Effective threshold: base value lowered by bass energy and beat surge
-  const bassAmp       = amps[1];
+  // Effective threshold: base value lowered by overall loudness (not just
+  // bass) and the spike surge, so any band spiking visibly sorts more of
+  // the image, not only a kick.
   const dynamicThresh = Math.max(0.03,
-    config.pixelsortThreshold - bassAmp * 0.38 - sortSurge * 0.44
+    config.pixelsortThreshold - maxAmp * 0.42 - sortSurge * 0.5
   );
   const threshLuma = (dynamicThresh * 255) | 0;
 

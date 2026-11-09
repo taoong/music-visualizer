@@ -5,7 +5,6 @@
  * Characters cascade downward, cycling rapidly when their band spikes.
  */
 import { store } from '../state/store';
-import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT } from '../utils/constants';
 
@@ -20,9 +19,21 @@ let grid: string[] = [];          // flat array [row * cols + col]
 let brightness: Float32Array = new Float32Array(0);
 let cascadeOffset: Float32Array = new Float32Array(0); // per-column vertical offset
 let flashTimer: Float32Array = new Float32Array(0);    // per-cell white flash countdown
-let lastBeatIndex = -1;
-let beatWaveOrigin = -1;  // column where beat wave starts
-let beatWaveTime = 0;     // seconds since last beat wave
+// Ripples: fired per amplitude spike (any band's transient), not just on
+// the beat grid — each gets its own random epicenter and expands outward
+// as a circular brightness wavefront across the whole grid, independent
+// of the column that band happens to live in.
+interface Ripple {
+  ox: number;        // origin column
+  oy: number;        // origin row
+  age: number;        // seconds since spawn
+  maxRadius: number; // cells, beyond which the ripple is removed
+}
+let ripples: Ripple[] = [];
+const spikeCooldown: Float32Array = new Float32Array(BAND_COUNT); // seconds remaining before that band can fire another ripple
+const RIPPLE_SPEED = 26;       // cells/sec
+const RIPPLE_BAND_WIDTH = 2.2; // cells — thickness of the bright wavefront
+const MAX_RIPPLES = 14;
 
 function initGrid(w: number, h: number): void {
   cols = Math.max(1, Math.floor(w / CELL_SIZE));
@@ -49,7 +60,7 @@ function columnToBand(col: number): number {
 }
 
 export function drawBinary(p: P5Instance, dt: number): void {
-  const { state, config } = store;
+  const { config } = store;
   const bandCount = BAND_COUNT;
 
   // Reinit grid if canvas size changed
@@ -67,18 +78,27 @@ export function drawBinary(p: P5Instance, dt: number): void {
   for (let b = 0; b < bandCount; b++) totalEnergy += amps[b];
   const avgEnergy = totalEnergy / bandCount;
 
-  // Beat detection for wave effect
-  if (state.detectedBPM > 0 && state.isPlaying) {
-    const pos = audioEngine.getPlaybackPosition();
-    const adjusted = pos - state.beatOffset;
-    const currentBeatIndex = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
-    if (currentBeatIndex >= 0 && currentBeatIndex !== lastBeatIndex) {
-      lastBeatIndex = currentBeatIndex;
-      beatWaveOrigin = Math.floor(Math.random() * cols);
-      beatWaveTime = 0;
+  const dtSec = (dt * 16.667) / 1000;
+
+  // Fire a ripple from a random epicenter whenever a band spikes — not tied
+  // to the beat grid, so quiet tracks with no detected BPM still ripple on
+  // every transient, and loud passages can have several ripples overlapping.
+  for (let b = 0; b < bandCount; b++) {
+    spikeCooldown[b] = Math.max(0, spikeCooldown[b] - dtSec);
+    if (transients[b] > 1.5 && spikeCooldown[b] <= 0) {
+      spikeCooldown[b] = 0.12;
+      if (ripples.length < MAX_RIPPLES) {
+        ripples.push({
+          ox: Math.random() * cols,
+          oy: Math.random() * rows,
+          age: 0,
+          maxRadius: Math.sqrt(cols * cols + rows * rows) * 0.75,
+        });
+      }
     }
   }
-  beatWaveTime += (dt * 16.667) / 1000; // convert dt frames back to seconds
+  for (const r of ripples) r.age += dtSec;
+  ripples = ripples.filter(r => r.age * RIPPLE_SPEED < r.maxRadius);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pAny = p as any;
@@ -129,14 +149,16 @@ export function drawBinary(p: P5Instance, dt: number): void {
       }
       flashTimer[idx] = Math.max(0, flashTimer[idx] - (dt * 16.667) / 1000);
 
-      // Beat wave: brief brightness spike rippling outward from origin
+      // Sum the brightness contribution from every active ripple whose
+      // expanding circular wavefront currently passes near this cell.
       let waveBrightBoost = 0;
-      if (beatWaveOrigin >= 0) {
-        const dist = Math.abs(c - beatWaveOrigin);
-        const wavePos = beatWaveTime * cols * 1.5; // wave speed
-        const distFromWave = Math.abs(dist - wavePos);
-        if (distFromWave < 3) {
-          waveBrightBoost = (1 - distFromWave / 3) * 30;
+      for (const rp of ripples) {
+        const cellDist = Math.sqrt((c - rp.ox) ** 2 + (r - rp.oy) ** 2);
+        const waveRadius = rp.age * RIPPLE_SPEED;
+        const distFromWave = Math.abs(cellDist - waveRadius);
+        if (distFromWave < RIPPLE_BAND_WIDTH) {
+          const fade = 1 - rp.age * RIPPLE_SPEED / rp.maxRadius; // dims as it expands
+          waveBrightBoost += (1 - distFromWave / RIPPLE_BAND_WIDTH) * 55 * fade;
         }
       }
 
@@ -180,7 +202,6 @@ export function resetBinary(): void {
   brightness = new Float32Array(0);
   cascadeOffset = new Float32Array(0);
   flashTimer = new Float32Array(0);
-  lastBeatIndex = -1;
-  beatWaveOrigin = -1;
-  beatWaveTime = 0;
+  ripples = [];
+  spikeCooldown.fill(0);
 }

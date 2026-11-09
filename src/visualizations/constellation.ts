@@ -67,14 +67,23 @@ function initStars(w: number, h: number, count: number): void {
 
 export function drawConstellation(p: P5Instance, dt: number): void {
   const { state, config } = store;
-  const { amps } = getBandAverages(BAND_COUNT);
+  const { amps, transients } = getBandAverages(BAND_COUNT);
 
   const w = p.width;
   const h = p.height;
 
+  // Dominant-band drivers instead of a flat band average — a single loud
+  // hit (one band spiking while the rest sit quiet) used to get diluted
+  // into a barely-moving 7-band average, which is why big moments in the
+  // music didn't read as big moments on screen. Peak-driven instead.
+  const maxAmp = Math.max(...amps);
+  const maxTransient = Math.max(0, Math.max(...transients) - 1); // 0 when nothing's spiking
+
   // Derive star count from slider (0–1 → MIN_STARS–MAX_STARS)
   const targetCount = Math.round(MIN_STARS + config.constellationStarCount * (MAX_STARS - MIN_STARS));
-  const connRange = 60 + config.constellationConnRange * 240; // 60–300 px
+  // Connection range itself breathes with loudness so the network visibly
+  // expands/contracts, not just the stars sitting inside it.
+  const connRange = (60 + config.constellationConnRange * 240) * (1 + maxAmp * 0.35); // up to +35%
   const driftSpeed = 0.1 + config.constellationDriftSpeed * 2.0; // 0.1–2.1
 
   // Init or resize
@@ -109,7 +118,7 @@ export function drawConstellation(p: P5Instance, dt: number): void {
       lastBeatIndex = currentBeatIndex;
       beatPulse = 1.0;
       // Light up a random subset of stars with a brief gold flash
-      const flashCount = Math.max(3, Math.floor(starCount * 0.18));
+      const flashCount = Math.max(3, Math.floor(starCount * 0.32));
       for (let k = 0; k < flashCount; k++) {
         flashGold[Math.floor(Math.random() * starCount)] = 1.0;
       }
@@ -139,14 +148,17 @@ export function drawConstellation(p: P5Instance, dt: number): void {
       const dx = x[i] - cx;
       const dy = y[i] - cy;
       const dist = Math.sqrt(dx * dx + dy * dy) + 1;
-      const pushStrength = 3.0 + bandAmp * 4.0;
+      const pushStrength = 6.0 + bandAmp * 10.0;
       vx[i] += (dx / dist) * pushStrength;
       vy[i] += (dy / dist) * pushStrength;
     }
 
-    // Amplitude-driven jitter: stars vibrate with their band's energy
-    vx[i] += (Math.random() - 0.5) * bandAmp * 1.2 * dt;
-    vy[i] += (Math.random() - 0.5) * bandAmp * 1.2 * dt;
+    // Amplitude-driven jitter: stars vibrate with their band's energy, with
+    // an extra kick on transients so a sudden hit reads as a sudden jolt
+    // rather than blending into the ambient drift.
+    const jitterAmp = bandAmp * 2.5 + maxTransient * 3.5;
+    vx[i] += (Math.random() - 0.5) * jitterAmp * dt;
+    vy[i] += (Math.random() - 0.5) * jitterAmp * dt;
 
     // Gentle pull toward center to keep stars on screen
     const dx = x[i] - cx;
@@ -160,7 +172,7 @@ export function drawConstellation(p: P5Instance, dt: number): void {
     vy[i] -= (dy / dist) * (basePull + edgePull) * dt;
 
     // Apply drift — amplitude boosts movement speed
-    const ampBoost = 1.0 + bandAmp * 2.0 + beatPulse * 1.5;
+    const ampBoost = 1.0 + bandAmp * 4.5 + beatPulse * 3.0 + maxTransient * 3.0;
     x[i] += vx[i] * driftSpeed * ampBoost * dt;
     y[i] += vy[i] * driftSpeed * ampBoost * dt;
 
@@ -182,7 +194,7 @@ export function drawConstellation(p: P5Instance, dt: number): void {
 
     // Audio-reactive size only — hue stays in the cool-blue family,
     // beats blend in a brief gold flash (decayed per-frame below).
-    size[i] = 1.5 + bandAmp * 8 + beatPulse * 4;
+    size[i] = 1.5 + bandAmp * 16 + beatPulse * 9 + maxTransient * 10;
 
     // Decay each star's gold flash. Fast decay keeps the accent brief.
     flashGold[i] *= Math.pow(0.82, dt);
@@ -202,11 +214,11 @@ export function drawConstellation(p: P5Instance, dt: number): void {
 
       if (distSq < connRangeSq) {
         const dist = Math.sqrt(distSq);
-        const alpha = (1 - dist / connRange) * (20 + energy * 40 + beatPulse * 20);
+        const alpha = (1 - dist / connRange) * (15 + maxAmp * 70 + beatPulse * 30 + maxTransient * 35);
         // Connections stay icy-blue with low sat — never tinted gold.
         const lineHue = (hue[i] + hue[j]) / 2;
-        (p as any).stroke(lineHue, 25, 88 + energy * 12, alpha);
-        p.strokeWeight(0.5 + energy * 1.5 + beatPulse);
+        (p as any).stroke(lineHue, 25, 88 + maxAmp * 12, alpha);
+        p.strokeWeight(0.5 + maxAmp * 3.5 + beatPulse * 1.5 + maxTransient * 2);
         p.line(x[i], y[i], x[j], y[j]);
       }
     }
@@ -216,8 +228,8 @@ export function drawConstellation(p: P5Instance, dt: number): void {
   (p as any).noStroke();
   for (let i = 0; i < starCount; i++) {
     const s = size[i];
-    const bright = 50 + energy * 40 + beatPulse * 10;
-    const alpha = 60 + energy * 35;
+    const bright = 45 + maxAmp * 55 + beatPulse * 15 + maxTransient * 20;
+    const alpha = 50 + maxAmp * 50 + maxTransient * 25;
 
     // Blend each star's resting cool-blue toward gold on flash. Hue lerp
     // is short-path (210°→45° goes through 360/0), so subtract 360 from
