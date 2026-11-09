@@ -21,6 +21,7 @@ Real-time audio-reactive visualizer built with TypeScript, p5.js, and Tone.js. S
 src/
 ├── main.ts                    # p5 sketch entry point, render loop, audio pipeline orchestration
 ├── state/store.ts             # Singleton EventEmitter store (AppState, Config, AudioProcessingState)
+├── state/adminReview.ts       # Admin review mode storage: per-viz staged-for-deletion flag + freeform note, localStorage-backed, exported as plain text
 ├── audio/
 │   ├── engine.ts              # Tone.js player management (freq mode + mic mode)
 │   ├── fft.ts                 # FFT analysis: log-band amplitudes, octave amplitudes, spectral centroid
@@ -221,7 +222,8 @@ src/
 │   ├── playback.ts            # Pause/play, scrubber, time display, track switching, image controls, BPM trigger
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, 7-band frequency sensitivity, display sliders
-│   └── keyboard.ts            # Keyboard shortcuts: arrows cycle vizzes (via viz-selector option order), space play/pause, ↑↓ volume, m/f/s/r/i/?/h/Esc utility. Viz hotkeys were removed — the `key` field on registry entries is currently unused, but kept for potential future reintroduction
+│   ├── keyboard.ts            # Keyboard shortcuts: arrows cycle vizzes (via viz-selector option order), space play/pause, ↑↓ volume, m/f/s/r/i/?/h/Esc utility. Viz hotkeys were removed — the `key` field on registry entries is currently unused, but kept for potential future reintroduction
+│   └── admin.ts               # Admin review mode UI: `#admin-mode-btn` (sidebar) toggles `#admin-bar` showing the current viz's name, a "stage for deletion" toggle, and a freeform note textarea — both persist per-viz via src/state/adminReview.ts and refresh automatically on viz change. "Review All" opens a modal listing every staged/noted viz as plain text, with Copy to Clipboard and Clear All
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

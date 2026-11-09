@@ -13,6 +13,7 @@ import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, u
 import { initMidiUI } from '../midi/ui';
 import { bindBPMControls } from './bpm';
 import { triggerPad } from '../audio/performancePads';
+import { bindAdminMode } from './admin';
 
 export { updateScrubberUI };
 
@@ -67,6 +68,9 @@ export function initUI(): () => void {
 
   // MIDI mapping UI
   initMidiUI();
+
+  // Admin review mode
+  cleanupFns.push(bindAdminMode());
 
   // Return combined cleanup function
   return () => cleanupFns.forEach(fn => fn());

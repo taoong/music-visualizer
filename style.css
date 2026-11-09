@@ -1218,6 +1218,162 @@ body {
   box-shadow: 0 0 18px var(--focus-ring);
 }
 
+/* ── Admin review mode ────────────────────────────────────── */
+/* A lightweight way to flag visualizations for deletion / leave notes
+   while browsing, so there's a clean exportable list instead of a
+   separately hand-written one. Toggled from the sidebar (#admin-mode-btn);
+   only #admin-bar's presence changes, nothing else about the app's normal
+   behavior. Sits below the sidebar/pads toggle buttons, not behind them. */
+#admin-bar {
+  position: fixed;
+  top: calc(60px + env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  z-index: 550;
+  margin: 0 12px;
+  padding: 0.6rem 0.75rem;
+  background: rgba(40, 16, 16, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 90, 90, 0.4);
+  border-radius: 8px;
+}
+
+#admin-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#admin-viz-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#admin-bar button {
+  flex-shrink: 0;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+#admin-bar button:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--text-primary);
+}
+
+#admin-stage-btn.active {
+  background: #c0392b;
+  border-color: #c0392b;
+  color: #fff;
+}
+
+#admin-exit-btn {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.5rem;
+}
+
+#admin-note {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.78rem;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+#admin-review-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1.5rem;
+}
+
+#admin-review-content {
+  width: 100%;
+  max-width: 560px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(16, 16, 18, 0.98);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+#admin-review-content h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dimmer);
+  margin-bottom: 0.75rem;
+}
+
+#admin-review-text {
+  flex: 1;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+#admin-review-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+#admin-review-actions button {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#admin-review-actions button:hover {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+#admin-copy-btn {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-color: var(--accent);
+}
+
 /* ── Viz name tag ─────────────────────────────────────────── */
 /* Lives in the playback bar instead of floating over the canvas — the
    bar already has its own solid backdrop, so this can't get lost behind

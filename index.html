@@ -5609,6 +5609,9 @@
         <button id="midi-btn" type="button" class="secondary-btn" aria-label="Open MIDI mapping">
           MIDI
         </button>
+        <button id="admin-mode-btn" type="button" class="secondary-btn" aria-pressed="false" aria-label="Toggle admin review mode">
+          Admin Mode
+        </button>
       </section>
     </aside>
 
@@ -5646,6 +5649,37 @@
     >
       &#9889;
     </button>
+
+    <!-- Admin review bar: shown only while admin mode is on (toggled from
+         the sidebar). Lets the app owner stage the currently-showing viz
+         for deletion and/or leave a note, without breaking the flow of
+         just browsing through visualizations one after another. -->
+    <div id="admin-bar" class="hidden" role="region" aria-label="Admin review">
+      <div id="admin-bar-row">
+        <span id="admin-viz-label"></span>
+        <button id="admin-stage-btn" type="button" aria-pressed="false">Stage for deletion</button>
+        <button id="admin-review-btn" type="button">Review All</button>
+        <button id="admin-exit-btn" type="button" aria-label="Exit admin mode">&times;</button>
+      </div>
+      <textarea
+        id="admin-note"
+        rows="2"
+        placeholder="Feedback / changes for this visualization…"
+        aria-label="Feedback for the current visualization"
+      ></textarea>
+    </div>
+
+    <div id="admin-review-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Admin review export">
+      <div id="admin-review-content">
+        <h2>Review Export</h2>
+        <pre id="admin-review-text"></pre>
+        <div id="admin-review-actions">
+          <button id="admin-copy-btn" type="button">Copy to Clipboard</button>
+          <button id="admin-clear-btn" type="button">Clear All</button>
+          <button id="admin-review-close-btn" type="button">Close</button>
+        </div>
+      </div>
+    </div>
 
     <!-- p5.js canvas goes here -->
     <main id="canvas-container" role="main" aria-label="Music visualization canvas" tabindex="-1">
