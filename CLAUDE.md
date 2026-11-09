@@ -223,7 +223,7 @@ src/
 │   ├── bpm.ts                 # BPM controls: number input (auto-populated), TAP tempo, BEAT phase sync
 │   ├── sliders.ts             # Volume, 7-band frequency sensitivity, display sliders
 │   ├── keyboard.ts            # Keyboard shortcuts: arrows cycle vizzes (via viz-selector option order), space play/pause, ↑↓ volume, m/f/s/r/i/?/h/Esc utility. Viz hotkeys were removed — the `key` field on registry entries is currently unused, but kept for potential future reintroduction
-│   └── admin.ts               # Admin review mode UI: `#admin-mode-btn` (sidebar) toggles `#admin-bar` showing the current viz's name, a "stage for deletion" toggle, and a freeform note textarea — both persist per-viz via src/state/adminReview.ts and refresh automatically on viz change. "Review All" opens a modal listing every staged/noted viz as plain text, with Copy to Clipboard and Clear All
+│   └── admin.ts               # Admin review mode UI: `#admin-mode-btn` (sidebar) toggles `#admin-bar`, a single compact row living inside `#playback-bar` (so it opens from the bottom rather than floating) showing the current viz's name, a "stage for deletion" toggle, and a Note button that expands a freeform textarea — collapsed by default, auto-expands if the viz already has a note. Both persist per-viz via src/state/adminReview.ts and refresh on viz change. "Review All" opens a modal listing every staged/noted viz as plain text, with Copy to Clipboard and Clear All
 ├── types/
 │   ├── index.ts               # Core interfaces: AppState, Config, VizMode, WormholeEvent, ActiveObject, AudioProcessingState, MidiMapping, etc.
 │   └── globals.d.ts           # Global type stubs for p5.js and Tone.js (loaded from CDN)

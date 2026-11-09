@@ -21,6 +21,7 @@ export function bindAdminMode(): () => void {
   const vizLabel = document.getElementById('admin-viz-label');
   const stageBtn = document.getElementById('admin-stage-btn');
   const note = document.getElementById('admin-note') as HTMLTextAreaElement | null;
+  const noteToggle = document.getElementById('admin-note-toggle');
   const reviewBtn = document.getElementById('admin-review-btn');
   const modal = document.getElementById('admin-review-modal');
   const reviewText = document.getElementById('admin-review-text');
@@ -28,11 +29,20 @@ export function bindAdminMode(): () => void {
   const clearBtn = document.getElementById('admin-clear-btn');
   const closeBtn = document.getElementById('admin-review-close-btn');
 
-  if (!modeBtn || !bar || !vizLabel || !stageBtn || !note || !reviewBtn || !modal || !reviewText) {
+  if (!modeBtn || !bar || !vizLabel || !stageBtn || !note || !noteToggle || !reviewBtn || !modal || !reviewText) {
     return () => {};
   }
 
   const currentViz = (): VizMode => store.state.vizMode;
+
+  // The note field is collapsed by default — admin mode's whole point here
+  // is to stay out of the way of the visualization itself — but auto-opens
+  // when the viz already has a note, so existing feedback isn't hidden
+  // behind an extra tap. Still independently toggleable either way.
+  const setNoteExpanded = (expanded: boolean): void => {
+    note.classList.toggle('hidden', !expanded);
+    noteToggle.setAttribute('aria-expanded', String(expanded));
+  };
 
   const refreshForCurrentViz = (): void => {
     const viz = currentViz();
@@ -40,7 +50,7 @@ export function bindAdminMode(): () => void {
     const review = getReview(viz);
     stageBtn.setAttribute('aria-pressed', String(review.staged));
     stageBtn.classList.toggle('active', review.staged);
-    stageBtn.textContent = review.staged ? '✓ Staged for deletion' : 'Stage for deletion';
+    stageBtn.textContent = review.staged ? '✓ Staged' : '🗑 Stage';
     // Always overwrite — every keystroke already persists via the input
     // handler below, so there's no unsaved text to lose, and the viz can
     // only change via a separate action (swipe, dropdown, arrow keys —
@@ -48,6 +58,7 @@ export function bindAdminMode(): () => void {
     // can't happen mid-keystroke. Leaving the previous viz's note on
     // screen after switching would be actively misleading.
     note.value = review.note;
+    setNoteExpanded(review.note.trim().length > 0);
   };
 
   const applyModeVisibility = (on: boolean): void => {
@@ -87,6 +98,12 @@ export function bindAdminMode(): () => void {
     setNote(currentViz(), note.value);
   };
   note.addEventListener('input', noteHandler);
+
+  const noteToggleHandler = () => {
+    setNoteExpanded(note.classList.contains('hidden'));
+    if (!note.classList.contains('hidden')) note.focus();
+  };
+  noteToggle.addEventListener('click', noteToggleHandler);
 
   const openReview = () => {
     reviewText.textContent = exportReviewText();
@@ -130,6 +147,7 @@ export function bindAdminMode(): () => void {
     modeBtn.removeEventListener('click', modeHandler);
     stageBtn.removeEventListener('click', stageHandler);
     note.removeEventListener('input', noteHandler);
+    noteToggle.removeEventListener('click', noteToggleHandler);
     reviewBtn.removeEventListener('click', openReview);
     copyBtn?.removeEventListener('click', copyHandler);
     clearBtn?.removeEventListener('click', clearHandler);

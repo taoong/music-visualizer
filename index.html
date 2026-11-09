@@ -5650,25 +5650,6 @@
       &#9889;
     </button>
 
-    <!-- Admin review bar: shown only while admin mode is on (toggled from
-         the sidebar). Lets the app owner stage the currently-showing viz
-         for deletion and/or leave a note, without breaking the flow of
-         just browsing through visualizations one after another. -->
-    <div id="admin-bar" class="hidden" role="region" aria-label="Admin review">
-      <div id="admin-bar-row">
-        <span id="admin-viz-label"></span>
-        <button id="admin-stage-btn" type="button" aria-pressed="false">Stage for deletion</button>
-        <button id="admin-review-btn" type="button">Review All</button>
-        <button id="admin-exit-btn" type="button" aria-label="Exit admin mode">&times;</button>
-      </div>
-      <textarea
-        id="admin-note"
-        rows="2"
-        placeholder="Feedback / changes for this visualization…"
-        aria-label="Feedback for the current visualization"
-      ></textarea>
-    </div>
-
     <div id="admin-review-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Admin review export">
       <div id="admin-review-content">
         <h2>Review Export</h2>
@@ -5687,6 +5668,28 @@
     </main>
 
     <footer id="playback-bar" role="contentinfo" aria-label="Playback controls">
+      <!-- Admin review row: shown only while admin mode is on (toggled from
+           the sidebar). Lives inside the playback bar itself — a fixed
+           bottom-anchored container that grows upward with its content —
+           so it opens from the bottom rather than floating over the
+           visualization, and the note field stays collapsed by default so
+           the single compact row doesn't cover much of the canvas. -->
+      <div id="admin-bar" class="hidden" role="region" aria-label="Admin review">
+        <div id="admin-bar-row">
+          <span id="admin-viz-label"></span>
+          <button id="admin-stage-btn" type="button" aria-pressed="false">🗑 Stage</button>
+          <button id="admin-note-toggle" type="button" aria-expanded="false" aria-controls="admin-note">📝 Note</button>
+          <button id="admin-review-btn" type="button">Review</button>
+          <button id="admin-exit-btn" type="button" aria-label="Exit admin mode">&times;</button>
+        </div>
+        <textarea
+          id="admin-note"
+          class="hidden"
+          rows="2"
+          placeholder="Feedback / changes for this visualization…"
+          aria-label="Feedback for the current visualization"
+        ></textarea>
+      </div>
       <span id="viz-name-tag" aria-live="polite"></span>
       <div id="scrubber-row">
         <span id="time-display" aria-live="polite" aria-atomic="true">0:00 / 0:00</span>
