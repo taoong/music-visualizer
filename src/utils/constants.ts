@@ -762,6 +762,10 @@ export const DEFAULT_CONFIG = {
   shimmerDepth:  0.40, // 0–1 → caustic focus depth (structural)
   shimmerChop:   0.50, // 0–1 → wave amplitude sensitivity
   shimmerWarmth: 0.50, // 0–1 → caustic colour temperature
+  // Thermal
+  thermalAltitude: 0.30, // 0–1 → camera altitude (structural: 0=raking, 1=overhead)
+  thermalContour:  0.50, // 0–1 → isotherm contour line density
+  thermalGain:     0.50, // 0–1 → audio amplitude sensitivity
 };
 
 // FFT and decay constants

@@ -520,6 +520,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'shimmer-depth',        key: 'shimmerDepth'       },
     { id: 'shimmer-chop',         key: 'shimmerChop'        },
     { id: 'shimmer-warmth',       key: 'shimmerWarmth'      },
+    { id: 'thermal-altitude',     key: 'thermalAltitude'    },
+    { id: 'thermal-contour',      key: 'thermalContour'     },
+    { id: 'thermal-gain',         key: 'thermalGain'        },
   ] as const;
 
   for (const { id, key } of configs) {

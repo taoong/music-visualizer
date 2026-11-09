@@ -305,6 +305,7 @@ const ALL_CONTROL_IDS = [
   'folio-controls-group',
   'worm-controls-group',
   'shimmer-controls-group',
+  'thermal-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -470,6 +471,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   folio:            { show: ['folio-controls-group'] },
   worm:             { show: ['worm-controls-group'] },
   shimmer:          { show: ['shimmer-controls-group'] },
+  thermal:          { show: ['thermal-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

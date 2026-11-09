@@ -479,6 +479,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   shimmerDepth:  'shimmer-depth',
   shimmerChop:   'shimmer-chop',
   shimmerWarmth: 'shimmer-warmth',
+  thermalAltitude: 'thermal-altitude',
+  thermalContour:  'thermal-contour',
+  thermalGain:     'thermal-gain',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
