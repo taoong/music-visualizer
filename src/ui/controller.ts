@@ -12,6 +12,7 @@ import { bindVolumeControl, bindSensitivitySliders, bindDisplaySliders, setSlide
 import { bindPauseButton, bindScrubber, bindTrackSwitching, bindImageControls, updateScrubberUI } from './playback';
 import { initMidiUI } from '../midi/ui';
 import { bindBPMControls } from './bpm';
+import { triggerPad } from '../audio/performancePads';
 
 export { updateScrubberUI };
 
@@ -32,6 +33,7 @@ export function initUI(): () => void {
 
   // Sidebar toggle
   cleanupFns.push(bindSidebarToggle());
+  cleanupFns.push(bindPerformancePads());
 
   // Splash screen controls
   cleanupFns.push(bindFileUpload());
@@ -157,13 +159,57 @@ function applyMobileLayout(): void {
 function bindSidebarToggle(): () => void {
   const sidebar = document.getElementById('sidebar');
   const toggleBtn = document.getElementById('sidebar-toggle');
+  const pads = document.getElementById('performance-pads');
 
   if (!sidebar || !toggleBtn) return () => {};
 
-  const handler = () => sidebar.classList.toggle('open');
+  // The two drawers open from opposite edges but, on a narrow phone, both
+  // open at once would overlap and cover nearly the whole screen — so
+  // opening one closes the other instead of letting them stack.
+  const handler = () => {
+    const opening = !sidebar.classList.contains('open');
+    sidebar.classList.toggle('open', opening);
+    if (opening) pads?.classList.remove('open');
+  };
   toggleBtn.addEventListener('click', handler);
 
   return () => toggleBtn.removeEventListener('click', handler);
+}
+
+function bindPerformancePads(): () => void {
+  const pads = document.getElementById('performance-pads');
+  const toggleBtn = document.getElementById('pads-toggle');
+  const sidebar = document.getElementById('sidebar');
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.pad-btn'));
+
+  if (!pads || !toggleBtn) return () => {};
+
+  const toggleHandler = () => {
+    const opening = !pads.classList.contains('open');
+    pads.classList.toggle('open', opening);
+    if (opening) sidebar?.classList.remove('open');
+  };
+  toggleBtn.addEventListener('click', toggleHandler);
+
+  const padHandlers: Array<() => void> = [];
+  for (const btn of buttons) {
+    const padIndex = Number(btn.dataset.pad);
+    const fire = () => {
+      triggerPad(padIndex);
+      // The CSS :active state alone would disappear the instant a quick tap
+      // releases — too fast to register as "this did something." Holding a
+      // flash class briefly makes the press visibly land even on a tap.
+      btn.classList.add('firing');
+      window.setTimeout(() => btn.classList.remove('firing'), 180);
+    };
+    btn.addEventListener('click', fire);
+    padHandlers.push(() => btn.removeEventListener('click', fire));
+  }
+
+  return () => {
+    toggleBtn.removeEventListener('click', toggleHandler);
+    padHandlers.forEach(fn => fn());
+  };
 }
 
 // All toggleable sidebar control group IDs

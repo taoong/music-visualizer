@@ -19,6 +19,7 @@ import {
 } from './audio/fft';
 import { updateTransient, computeDelta, applyAutoGain } from './audio/processing';
 import { processInteractiveAudio } from './audio/interactiveSynth';
+import { applyPadBoosts } from './audio/performancePads';
 import {
   computeDecayFactor,
   processOctaveData,
@@ -128,6 +129,10 @@ const sketch = (p: P5Instance) => {
       // uses for real audio.
       processInteractiveAudio(dt);
     }
+
+    // Layered on top of whichever mode just ran, so a performance-pad press
+    // reads as a manual hit on top of the music rather than replacing it.
+    applyPadBoosts(dt);
 
     // Update UI
     updateScrubberUI();

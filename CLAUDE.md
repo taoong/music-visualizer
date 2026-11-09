@@ -26,7 +26,8 @@ src/
 │   ├── fft.ts                 # FFT analysis: log-band amplitudes, octave amplitudes, spectral centroid
 │   ├── processing.ts          # Auto-gain normalization, transient detection, delta (rate of change)
 │   ├── pipeline.ts            # Decay, octave processing, band smoothing with attack/release
-│   └── bpm.ts                 # BPM detection: client-side onset/autocorrelation
+│   ├── bpm.ts                 # BPM detection: client-side onset/autocorrelation
+│   └── performancePads.ts     # Performance pads: manual, additive per-band "hit" triggers layered on top of whatever audioState the real pipeline computes each frame (any mode) — not a replacement like interactive mode, a boost on top of it
 ├── __tests__/
 │   ├── setup.ts               # Global test setup: browser global stubs for Node environment
 │   ├── mocks/
@@ -250,6 +251,7 @@ src/
 `store` is a singleton `StateStore` with three state objects:
 - **`state: AppState`** — mode (`freq`/`mic`/`interactive`), vizMode, isPlaying, BPM data
   - `interactive` mode: audio plays as background but FFT/BPM are skipped. Instead, `src/audio/interactiveSynth.ts` turns each pointer/key event into the same `audioState` (smoothedBands, transientValues, smoothedCentroid, smoothedOctaves) the vizzes already read for real audio — so every viz responds automatically. Tap fires a Gaussian transient centered on band at X position, drag X selects dominant band + Y modulates amplitude, hold pads mid bands, key pulses a band selected by char code. On top of the synth, bespoke per-viz `interact(event)` handlers on `VizEntry` add richer behavior for: blobs, grayscott, physarum, rippletank, constellation, marbling, bloom, hive, voronoi, tetris, flowfield, lasers, synthwave, text, highway.
+  - Performance pads (`src/audio/performancePads.ts`, `#performance-pads` drawer, works in any mode): 4 buttons — LOW (sub+bass), LOW-MID (lowMid+mid), HIGH-MID (upperMid+presence), HIGH (brilliance) — each inject a decaying additive boost directly into `smoothedBands`/`transientValues` for their band group, applied once per frame in `main.ts` right after whichever mode's own processing ran. Additive, not a replacement like interactive mode's synth — a manual hit layers on top of real audio rather than overriding it. Drawer opens from the right edge (`#pads-toggle`, top-right next to `#sidebar-toggle`), mutually exclusive with the sliders sidebar so the two never overlap on a narrow screen.
 - **`config: Config`** — 7-band freq sensitivities, spikeScale, decayRate, rotationSpeed, masterVolume
 - **`audioState: AudioProcessingState`** — smoothedBands, transientValues, deltaValues, spectral centroid, octave data
 

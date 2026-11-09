@@ -5623,6 +5623,30 @@
       &#9776;
     </button>
 
+    <!-- Performance pads: manual per-band hit triggers, separate from the
+         slider controls — a grid of big buttons for live play rather than
+         fine-tuning. Opens from the opposite edge so the two drawers never
+         fight for the same space. -->
+    <aside id="performance-pads" role="complementary" aria-label="Performance pads">
+      <h2>Performance</h2>
+      <div id="pad-grid" role="group" aria-label="Frequency hit triggers">
+        <button class="pad-btn" type="button" data-pad="0">LOW</button>
+        <button class="pad-btn" type="button" data-pad="1">LOW-MID</button>
+        <button class="pad-btn" type="button" data-pad="2">HIGH-MID</button>
+        <button class="pad-btn" type="button" data-pad="3">HIGH</button>
+      </div>
+    </aside>
+
+    <button
+      id="pads-toggle"
+      type="button"
+      aria-label="Toggle performance pads"
+      aria-expanded="false"
+      aria-controls="performance-pads"
+    >
+      &#9889;
+    </button>
+
     <!-- p5.js canvas goes here -->
     <main id="canvas-container" role="main" aria-label="Music visualization canvas" tabindex="-1">
       <span id="main-content" tabindex="-1"></span>

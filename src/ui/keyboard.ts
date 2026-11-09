@@ -311,11 +311,12 @@ export function initSwipeGestures(): () => void {
 
   const onTouchStart = (e: TouchEvent) => {
     // Ignore touches starting on an interactive control (sliders, buttons,
-    // the scrubber) or inside the sidebar/playback bar/splash screen —
-    // otherwise dragging a slider thumb more than 50px reads as a canvas
-    // swipe and switches the visualization out from under it.
+    // the scrubber) or inside the sidebar/playback bar/performance pads/
+    // splash screen — otherwise dragging a slider thumb (or tapping a pad)
+    // more than 50px reads as a canvas swipe and switches the visualization
+    // out from under it.
     const target = e.target as HTMLElement | null;
-    if (target?.closest('input, button, select, textarea, label, #sidebar, #playback-bar')) return;
+    if (target?.closest('input, button, select, textarea, label, #sidebar, #playback-bar, #performance-pads')) return;
     const splash = document.getElementById('splash');
     if (splash && !splash.classList.contains('hidden')) return;
 
