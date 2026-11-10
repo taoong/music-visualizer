@@ -24,19 +24,11 @@ import { BAND_COUNT, isMobile } from '../utils/constants';
 type P5Instance = any;
 
 const MAX_NODES = isMobile ? 70 : 130;
-// Coral-reef palette: a narrow warm band (magenta-pink -> coral -> orange,
-// the short way round the wheel) instead of one hue per band spread across
-// the full rainbow — sub/bass skew pink, brilliance skews orange, but it
-// reads as one cohesive organism, not a spectrum chart.
-const BAND_HUES: readonly number[] = [328, 338, 348, 358, 8, 18, 28];
-// Size (node count) a curve must reach before it's considered "grown" and
-// starts collapsing back toward its centroid; how few nodes it must shrink
-// back down to before a fresh growth cycle begins.
-const SHRINK_AT = Math.floor(MAX_NODES * 0.68);
-const REGROW_AT = 9;
+// Hue per band: sub=violet, bass=blue, lowMid=teal, mid=green, upperMid=yellow, presence=orange, brilliance=red
+const BAND_HUES: readonly number[] = [280, 220, 170, 120, 60, 30, 0];
 
 interface GNode { x: number; y: number; }
-interface GCurve { nodes: GNode[]; band: number; phase: 'growing' | 'shrinking'; }
+interface GCurve { nodes: GNode[]; band: number; }
 
 let curves: GCurve[] = [];
 let lastBeatIndex = -1;
@@ -57,7 +49,7 @@ function makeSeed(cx: number, cy: number, r: number, band: number): GCurve {
     const a = (i / N) * Math.PI * 2;
     nodes.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
   }
-  return { nodes, band, phase: 'growing' };
+  return { nodes, band };
 }
 
 function physicsStep(
@@ -151,34 +143,10 @@ function physicsStep(
     }
   }
 
-  // Growth / shrink — each curve grows by inserting midpoint nodes while
-  // loud, same as before, but once it reaches a significant size it flips
-  // into a shrink phase: pulled toward its own centroid and thinned back
-  // down, faster when the music is louder, until it's small again and a
-  // fresh growth cycle begins. A breathing bloom-collapse-rebloom loop
-  // instead of growing once and sitting there.
+  // Growth — insert a midpoint node on every edge that exceeds the length threshold
   for (const c of curves) {
-    const amp = amps[c.band];
-
-    if (c.phase === 'shrinking') {
-      let cx = 0, cy = 0;
-      for (const n of c.nodes) { cx += n.x; cy += n.y; }
-      cx /= c.nodes.length; cy /= c.nodes.length;
-      const pull = Math.min(1, (0.05 + amp * 0.3) * Math.min(dt, 2.0));
-      for (const n of c.nodes) {
-        n.x += (cx - n.x) * pull;
-        n.y += (cy - n.y) * pull;
-      }
-      // Thin nodes as it collapses — louder music sheds nodes faster.
-      if (c.nodes.length > REGROW_AT && Math.random() < 0.25 + amp * 0.45) {
-        c.nodes.splice(Math.floor(Math.random() * c.nodes.length), 1);
-      }
-      if (c.nodes.length <= REGROW_AT) c.phase = 'growing';
-      continue;
-    }
-
-    if (c.nodes.length >= SHRINK_AT) { c.phase = 'shrinking'; continue; }
     if (c.nodes.length >= MAX_NODES) continue;
+    const amp = amps[c.band];
     // Amplitude lowers threshold → more splits → faster growth when loud
     const threshold = Math.max(springRest + 1, maxEdge * (1.0 - amp * speed * 0.55));
     const next: GNode[] = [];
@@ -247,10 +215,7 @@ export function drawGrowth(p: P5Instance, dt: number): void {
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       lastBeatIndex = beatIdx;
       beatCount++;
-      // Small bounded wobble around the coral palette rather than a
-      // cumulative rotation through the full hue wheel — stays reactive to
-      // the beat without ever drifting into "rainbow" territory.
-      hueShift = Math.sin(beatCount * 0.35) * 14;
+      hueShift = (hueShift + 18) % 360;
       // Every other beat: sprout a new organism near the center
       if (beatCount % 2 === 0 && curves.length < 14) {
         const loudest = amps.indexOf(Math.max(...amps));
