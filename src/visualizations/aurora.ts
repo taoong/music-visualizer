@@ -18,11 +18,14 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
-const BAND_HUES: readonly number[] = [270, 220, 180, 160, 300, 330, 200];
+// Real aurora borealis is green-dominant with occasional violet/pink fringe
+// — not a full rainbow spread across all 7 curtains.
+const BAND_HUES: readonly number[] = [148, 155, 140, 162, 135, 168, 150];
 
 let phase = 0;
 let globalHueShift = 0;
 let lastBeatIndex = -1;
+let beatCount = 0;
 let beatFlash = 0;
 let trailBuffer: InstanceType<typeof OffscreenCanvas> | null = null;
 let trailCtx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D | null = null;
@@ -100,18 +103,17 @@ export function drawAurora(p: P5Instance, dt: number): void {
     const beatIdx = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       lastBeatIndex = beatIdx;
+      beatCount++;
       beatFlash = 1.0;
-      globalHueShift = (globalHueShift + 25) % 360;
+      // Bounded wobble, not a cumulative rotation through the full wheel —
+      // real aurora stays green-dominant rather than sweeping hues.
+      globalHueShift = Math.sin(beatCount * 0.4) * 12;
     }
   }
 
   phase += flowSpeed * dt;
   beatFlash *= Math.pow(0.92, dt);
   if (beatFlash < 0.005) beatFlash = 0;
-
-  if (state.isPlaying) {
-    globalHueShift = (globalHueShift + 0.03 * dt) % 360;
-  }
 
   ensureTrailBuffer(w, h);
   if (!trailCtx) return;
@@ -218,6 +220,7 @@ export function resetAurora(): void {
   phase = 0;
   globalHueShift = 0;
   lastBeatIndex = -1;
+  beatCount = 0;
   beatFlash = 0;
   trailBuffer = null;
   trailCtx = null;

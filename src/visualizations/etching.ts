@@ -23,8 +23,9 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
-// Hue per frequency band: violet → blue → teal → green → yellow → orange → magenta
-const BAND_HUES = [270, 230, 185, 130, 70, 28, 300] as const;
+// Sepia/copper-plate ink tones — real Dürer engravings are monochrome
+// brown-black ink on paper, not a rainbow sweep across the plate.
+const BAND_HUES = [24, 28, 32, 36, 40, 44, 48] as const;
 
 let animTime = 0;
 let lastBeatIdx = -1;

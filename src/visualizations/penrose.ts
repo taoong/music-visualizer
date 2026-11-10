@@ -38,8 +38,8 @@ const TWO_PI = Math.PI * 2;
 const MIN_DEPTH = 3;
 const MAX_DEPTH = isMobile ? 6 : 7;
 
-// Hue per radial zone: sub-bass (core) → brilliance (rim)
-const BAND_HUES: readonly number[] = [262, 302, 344, 22, 52, 102, 188];
+// Cohesive amber/orange palette for the radial zones instead of a full sweep.
+const BAND_HUES: readonly number[] = [26, 32, 38, 44, 20, 14, 8];
 
 interface RawTriangle {
   type: 0 | 1; // 0 = acute "thin" golden triangle (red), 1 = obtuse "thick" (blue)
@@ -64,6 +64,7 @@ let generatedDepth = -1;
 let rotationAngle = 0;
 let lastBeatIndex = -1;
 let hueShift = 0;
+let beatCount = 0;
 let flashBrightness = 0;
 let rippleRadius = 0;
 let rippleStrength = 0;
@@ -154,6 +155,7 @@ export function resetPenrose(): void {
   rotationAngle = 0;
   lastBeatIndex = -1;
   hueShift = 0;
+  beatCount = 0;
   flashBrightness = 0;
   rippleRadius = 0;
   rippleStrength = 0;
@@ -181,9 +183,11 @@ export function drawPenrose(p: P5Instance, dt: number): void {
     const beatIdx = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       lastBeatIndex = beatIdx;
+      beatCount++;
       rippleRadius = 0;
       rippleStrength = 1.0;
-      hueShift = (hueShift + 33) % 360;
+      // Bounded wobble, not a cumulative rotation through the full wheel.
+      hueShift = Math.sin(beatCount * 0.4) * 10;
       flashBrightness = 1.0;
     }
   }

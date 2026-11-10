@@ -33,8 +33,9 @@ const MIN_COLS = 6;
 const MAX_COLS = isMobile ? 16 : 24;
 const MAX_ROWS = isMobile ? 24 : 32;
 
-// Hue per columnar zone: sub-bass (left) → brilliance (right), foil-like jewel tones
-const BAND_HUES: readonly number[] = [275, 235, 195, 150, 95, 40, 350];
+// Cohesive warm cream/ivory palette across the columnar zones — matching the
+// folded-paper material itself rather than a jewel-tone rainbow sweep.
+const BAND_HUES: readonly number[] = [30, 34, 38, 42, 46, 50, 54];
 
 // Unit-ish light direction used for per-facet shading
 const LIGHT_X = -0.45;
@@ -126,7 +127,9 @@ export function drawOrigami(p: P5Instance, dt: number): void {
 
   // ── render: 2 shaded facets per cell ──────────────────────────────────────
   p.strokeWeight(1);
-  const driftHue = (_time * 6) % 360;
+  // Small bounded wobble instead of a continuous ramp that cycles through
+  // the full hue wheel every ~100s — stays within the cream/ivory family.
+  const driftHue = Math.sin(_time * 0.6) * 8;
 
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {

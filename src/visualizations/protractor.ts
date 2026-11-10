@@ -22,7 +22,9 @@ import { BAND_COUNT, isMobile } from '../utils/constants';
 import { store } from '../state/store';
 import { getBandAverages } from './helpers';
 
-const BAND_HUES: readonly number[] = [280, 240, 180, 120, 60, 30, 0];
+// Cohesive violet-blue palette instead of one hue per ring across the
+// full spectral wheel.
+const BAND_HUES: readonly number[] = [248, 254, 260, 266, 272, 278, 284];
 
 const MAX_FANS_MOBILE = 5;
 const MAX_RINGS_MOBILE = 14;
@@ -31,6 +33,7 @@ let rotation = 0;
 let beatImpulse = 0;
 let hueShift = 0;
 let lastBeatIndex = -1;
+let beatCount = 0;
 
 export function drawProtractor(p: P5Instance, dt: number): void {
   const { amps, transients } = getBandAverages(BAND_COUNT);
@@ -59,8 +62,10 @@ export function drawProtractor(p: P5Instance, dt: number): void {
     const beatIdx = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       if (lastBeatIndex >= 0) {
+        beatCount++;
         beatImpulse = 1.0;
-        hueShift = (hueShift + 47) % 360;
+        // Bounded wobble, not a cumulative rotation through the full wheel.
+        hueShift = Math.sin(beatCount * 0.4) * 14;
       }
       lastBeatIndex = beatIdx;
     }
@@ -131,4 +136,5 @@ export function resetProtractor(): void {
   beatImpulse = 0;
   hueShift = 0;
   lastBeatIndex = -1;
+  beatCount = 0;
 }

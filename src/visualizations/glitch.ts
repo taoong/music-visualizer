@@ -28,10 +28,14 @@ import { BAND_COUNT, isMobile } from '../utils/constants';
 
 const PIXEL_SCALE = isMobile ? 5 : 3;
 
-const BAND_HUES: readonly number[] = [310, 350, 25, 55, 175, 225, 275];
+// Channel-split duotone — alternating magenta/cyan instead of one hue per
+// band across the full wheel, matching real VHS/analog glitch art's RGB
+// channel-separation look rather than a rainbow bar chart.
+const BAND_HUES: readonly number[] = [320, 190, 320, 190, 320, 190, 320];
 
 let lastBeatIndex = -1;
 let hueShift = 0;
+let beatCount = 0;
 let time = 0;
 let buf: P5Graphics | null = null;
 let bufW = 0;
@@ -57,6 +61,7 @@ let baseB: Uint8Array | null = null;
 export function resetGlitch(): void {
   lastBeatIndex = -1;
   hueShift = 0;
+  beatCount = 0;
   time = 0;
   trackBarY = -1;
   trackBarStr = 0;
@@ -116,7 +121,10 @@ export function drawGlitch(p: P5Instance, dt: number): void {
       adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       lastBeatIndex = beatIdx;
-      hueShift = (hueShift + 25) % 360;
+      beatCount++;
+      // Small bounded wobble instead of a cumulative rotation through the
+      // full hue wheel, so the duotone stays a duotone over time.
+      hueShift = Math.sin(beatCount * 0.4) * 14;
       trackBarY = Math.random();
       trackBarStr = 1.0;
       const numBlocks = 1 + Math.floor(Math.random() * 3 * distort);

@@ -22,8 +22,8 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
-// Hue per freq band: violet→blue→teal→green→yellow→orange→magenta
-const BAND_HUES = [270, 220, 175, 130, 60, 30, 310] as const;
+// Cohesive steel-blue/teal wire-mesh palette instead of a full-wheel sweep.
+const BAND_HUES = [192, 199, 206, 213, 220, 227, 234] as const;
 
 interface MNode {
   x: number;   // current x
@@ -50,6 +50,7 @@ let t = 0;
 let lastBeatIndex = -1;
 let beatFlash = 0;
 let hueShift = 0;
+let beatCount = 0;
 
 function buildMesh(cols: number, rows: number, w: number, h: number): void {
   nodes = [];
@@ -129,8 +130,10 @@ export function drawReticulae(p: P5Instance, dt: number): void {
       const idx = Math.floor(adj / state.beatIntervalSec);
       if (idx !== lastBeatIndex) {
         lastBeatIndex = idx;
+        beatCount++;
         beatFlash = 1.0;
-        hueShift = (hueShift + 43) % 360;
+        // Bounded wobble, not a cumulative rotation through the full wheel.
+        hueShift = Math.sin(beatCount * 0.4) * 14;
         // Radial pulse outward from canvas centre
         const cx = p.width  * 0.5;
         const cy = p.height * 0.5;
@@ -245,4 +248,5 @@ export function resetReticulae(): void {
   lastBeatIndex = -1;
   beatFlash    = 0;
   hueShift     = 0;
+  beatCount    = 0;
 }

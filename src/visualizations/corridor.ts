@@ -27,9 +27,9 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
-// Hue per band: sub=violet, bass=blue, lowMid=teal, mid=green,
-//               upperMid=yellow, presence=orange, brilliance=magenta
-const BAND_HUES: readonly number[] = [275, 230, 180, 120, 60, 25, 300];
+// Cohesive cyan/blue data-tunnel palette instead of one hue per band
+// across the full wheel.
+const BAND_HUES: readonly number[] = [185, 192, 198, 204, 210, 216, 222];
 
 // Character pool: DNA bases + binary (Ikeda aesthetic)
 const CHARS = 'ATCGATCG01010101CATGCATGATCG10100101';
@@ -48,6 +48,7 @@ let lastBeatIndex = -1;
 let zoomPush = 0;
 let hueShift = 0;
 let beatFlash = 0;
+let beatCount = 0;
 
 export function resetCorridor(): void {
   scrollTopOffsets = new Float64Array(MAX_RINGS);
@@ -56,6 +57,7 @@ export function resetCorridor(): void {
   zoomPush = 0;
   hueShift = 0;
   beatFlash = 0;
+  beatCount = 0;
 }
 
 // ── Colour helpers ──────────────────────────────────────────────────────────
@@ -103,9 +105,11 @@ export function drawCorridor(p: P5Instance, dt: number): void {
     const beatIdx = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       lastBeatIndex = beatIdx;
+      beatCount++;
       zoomPush = 0.14;
       beatFlash = 1.0;
-      hueShift = (hueShift + 47) % 360;
+      // Bounded wobble, not a cumulative rotation through the full wheel.
+      hueShift = Math.sin(beatCount * 0.4) * 14;
     }
   }
   zoomPush *= Math.pow(0.87, dt);

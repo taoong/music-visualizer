@@ -9,7 +9,8 @@ const SPAWN_Z_MIN = 0.5;
 const SPAWN_Z_MAX = 8.0;
 const NEAR_CLIP = 0.01;
 
-const BAND_HUES: readonly number[] = [270, 220, 180, 140, 50, 25, 340];
+// Cohesive hyperspace cyan/blue palette instead of a rainbow confetti sweep.
+const BAND_HUES: readonly number[] = [198, 205, 212, 219, 226, 233, 240];
 
 let sx: Float32Array;
 let sy: Float32Array;
@@ -22,6 +23,7 @@ let lastBeatIndex = -1;
 let beatPulse = 0;
 let hueShift = 0;
 let warpBoost = 0;
+let beatCount = 0;
 let initialized = false;
 let prevWidth = 0;
 let prevHeight = 0;
@@ -108,9 +110,11 @@ export function drawWarp(p: P5Instance, dt: number): void {
     const beatIdx = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       lastBeatIndex = beatIdx;
+      beatCount++;
       beatPulse = 1.0;
       warpBoost = 1.0;
-      hueShift = (hueShift + 25) % 360;
+      // Bounded wobble, not a cumulative rotation through the full wheel.
+      hueShift = Math.sin(beatCount * 0.4) * 14;
     }
   }
 
@@ -189,6 +193,7 @@ export function resetWarp(): void {
   beatPulse = 0;
   hueShift = 0;
   warpBoost = 0;
+  beatCount = 0;
   starCount = 0;
   prevWidth = 0;
   prevHeight = 0;

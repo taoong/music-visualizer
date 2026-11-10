@@ -28,8 +28,8 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
-// Hue per band: sub-bass=violet → brilliance=red/magenta
-const BAND_HUES: readonly number[] = [280, 230, 175, 120, 55, 25, 330];
+// Cohesive teal/cyan CRT-feedback palette instead of a full-wheel sweep.
+const BAND_HUES: readonly number[] = [165, 172, 178, 184, 190, 196, 202];
 
 // ── Module state ──────────────────────────────────────────────────────────────
 
@@ -43,6 +43,7 @@ let fbH = 0;
 let hueShift = 0;
 let lastBeatIndex = -1;
 let beatFlash = 0;
+let beatCount = 0;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -126,6 +127,7 @@ export function resetFeedbackLoop(): void {
   hueShift = 0;
   lastBeatIndex = -1;
   beatFlash = 0;
+  beatCount = 0;
 }
 
 export function drawFeedbackLoop(p: P5Instance, dt: number): void {
@@ -147,8 +149,10 @@ export function drawFeedbackLoop(p: P5Instance, dt: number): void {
     const bi = Math.floor((pos - state.beatOffset) / state.beatIntervalSec);
     if (bi !== lastBeatIndex) {
       lastBeatIndex = bi;
+      beatCount++;
       beatFlash = 1.0;
-      hueShift = (hueShift + 37 + Math.random() * 18) % 360;
+      // Bounded wobble, not a randomised rotation through the full wheel.
+      hueShift = Math.sin(beatCount * 0.4) * 14;
     }
   }
   beatFlash = Math.max(0, beatFlash - dt * 0.05);

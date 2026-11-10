@@ -30,8 +30,9 @@ import { BAND_COUNT, isMobile } from '../utils/constants';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-// Per-band hue (HSL): violet → blue → cyan → green → yellow → orange → red
-const BAND_HUES = [275, 240, 195, 130, 60, 25, 0] as const;
+// Warm amber lens-flare palette — real anamorphic flares read as one warm
+// (or cool) family, not a literal rainbow of light sources.
+const BAND_HUES = [32, 38, 44, 50, 56, 40, 46] as const;
 
 // Four diffraction spike angles (each also has a 180° counterpart)
 const SPIKE_ANGLES = [0, Math.PI / 4, Math.PI / 2, (3 * Math.PI) / 4] as const;
@@ -49,6 +50,7 @@ let sources: Source[] = [];
 let lastBeatIndex = -1;
 let beatFlash = 0;
 let hueShift = 0;
+let beatCount = 0;
 let time = 0;
 
 // Pre-allocated RGB cache (avoid per-frame object alloc)
@@ -100,6 +102,7 @@ export function resetLensflare(): void {
   lastBeatIndex = -1;
   beatFlash = 0;
   hueShift = 0;
+  beatCount = 0;
   time = 0;
 }
 
@@ -127,8 +130,10 @@ export function drawLensflare(p: P5Instance, dt: number): void {
     const bi = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (bi >= 0 && bi !== lastBeatIndex) {
       lastBeatIndex = bi;
+      beatCount++;
       beatFlash = 1.0;
-      hueShift = (hueShift + 51) % 360;
+      // Bounded wobble, not a cumulative rotation through the full wheel.
+      hueShift = Math.sin(beatCount * 0.4) * 10;
     }
   }
   beatFlash *= Math.pow(0.88, dt);

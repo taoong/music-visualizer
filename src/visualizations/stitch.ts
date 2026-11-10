@@ -21,8 +21,8 @@ import { audioEngine } from '../audio/engine';
 import { getBandAverages } from './helpers';
 import { BAND_COUNT, isMobile } from '../utils/constants';
 
-// Per-band embroidery thread hues (HSB): violet→blue→teal→green→yellow→orange→magenta
-const BAND_HUES: readonly number[] = [270, 220, 175, 120, 55, 25, 300];
+// Cohesive indigo-thread palette instead of a full-wheel sweep across columns.
+const BAND_HUES: readonly number[] = [214, 220, 226, 232, 238, 244, 250];
 
 // ── Module state ────────────────────────────────────────────────────────────
 let _cols = 0;

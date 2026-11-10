@@ -38,9 +38,9 @@ const COLAT_RADS: readonly number[] = [
   90, 103, 116, 129, 142, 155, 168,
 ].map(d => d * Math.PI / 180);
 
-// Hue per band: sub=violet, bass=blue, lowMid=teal, mid=green, upperMid=yellow,
-// presence=orange, brilliance=red
-const BAND_HUES: readonly number[] = [280, 220, 175, 130, 68, 30, 0];
+// Cohesive indigo/violet palette for the concentric latitude rings instead
+// of a full-wheel sweep.
+const BAND_HUES: readonly number[] = [236, 243, 250, 257, 264, 271, 278];
 
 const NUM_MERIDIANS = isMobile ? 6 : 10;
 const SEGMENTS = isMobile ? 80 : 120;          // points sampled per circle
@@ -53,6 +53,7 @@ let hueShift = 0;      // beat-driven hue offset (degrees)
 let rotVel = 0;        // beat rotation impulse (decays each frame)
 let flashBright = 0;   // beat brightness flash (decays)
 let lastBeatIndex = -1;
+let beatCount = 0;
 
 export function resetRiemann(): void {
   rotation = 0;
@@ -61,6 +62,7 @@ export function resetRiemann(): void {
   rotVel = 0;
   flashBright = 0;
   lastBeatIndex = -1;
+  beatCount = 0;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -107,7 +109,9 @@ export function drawRiemann(p: P5Instance, dt: number): void {
     const beatIdx = adj >= 0 ? Math.floor(adj / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       if (lastBeatIndex >= 0) {
-        hueShift   = (hueShift + 47) % 360;
+        beatCount++;
+        // Bounded wobble, not a cumulative rotation through the full wheel.
+        hueShift   = Math.sin(beatCount * 0.4) * 14;
         rotVel    += 1.5 + amps[0] * 2.5;    // sub-bass amplifies the kick
         flashBright = 0.6 + amps[0] * 0.4;
       }

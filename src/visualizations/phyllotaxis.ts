@@ -27,7 +27,9 @@ import { getBandAverages } from './helpers';
 // Golden angle in radians
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5)); // ≈ 2.39996 rad
 
-const BAND_HUES: readonly number[] = [280, 240, 180, 120, 60, 30, 0];
+// Sunflower-seed gold/amber palette — the real Fibonacci lattice this is
+// modeled on (sunflower heads, pinecones) is brown/gold, not rainbow.
+const BAND_HUES: readonly number[] = [28, 34, 40, 46, 52, 58, 64];
 
 // Per-seed scatter state
 const MAX_SEEDS = isMobile ? 450 : 900;
@@ -37,6 +39,7 @@ let baseRotation = 0;
 let lastBeatIndex = -1;
 let beatFlash = 0;
 let hueShift = 0;
+let beatCount = 0;
 let scatterDecay = 0; // 1 → 0 after a beat burst
 
 export function resetPhyllotaxis(): void {
@@ -44,6 +47,7 @@ export function resetPhyllotaxis(): void {
   lastBeatIndex = -1;
   beatFlash = 0;
   hueShift = 0;
+  beatCount = 0;
   scatterDecay = 0;
   scatterVel.fill(0);
 }
@@ -73,8 +77,10 @@ export function drawPhyllotaxis(p: P5Instance, dt: number): void {
     const beatIdx = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeatIndex) {
       if (lastBeatIndex >= 0) {
+        beatCount++;
         beatFlash = 1.0;
-        hueShift = (hueShift + 51) % 360;
+        // Bounded wobble, not a cumulative rotation through the full wheel.
+        hueShift = Math.sin(beatCount * 0.4) * 10;
         scatterDecay = 1.0;
         // Give each seed an outward kick proportional to its index
         for (let i = 0; i < seedCount; i++) {

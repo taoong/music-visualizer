@@ -34,8 +34,8 @@ import { BAND_COUNT, isMobile } from '../utils/constants';
 const MIN_N = isMobile ? 60  : 100;
 const MAX_N = isMobile ? 400 : 1200;
 
-// Hue per band: violet → blue → teal → green → lime → orange → magenta
-const BAND_HUES = [280, 220, 178, 128, 72, 28, 308] as const;
+// Cohesive violet/magenta light-sculpture palette instead of a full sweep.
+const BAND_HUES = [285, 292, 299, 306, 313, 320, 327] as const;
 
 // Alternating rotation sign per vortex: CW / CCW
 const VORTEX_SIGN = [1, -1, 1, -1, 1, -1, 1] as const;
@@ -64,6 +64,7 @@ let phase    = 0;
 let hueShift = 0;
 let lastBeat = -1;
 let beatFlash = 0;
+let beatCount = 0;
 let canvasW  = 0;
 let canvasH  = 0;
 
@@ -166,8 +167,10 @@ export function drawVeil(p: P5Instance, dt: number): void {
     const beatIdx  = adjusted >= 0 ? Math.floor(adjusted / state.beatIntervalSec) : -1;
     if (beatIdx >= 0 && beatIdx !== lastBeat) {
       lastBeat  = beatIdx;
+      beatCount++;
       beatFlash = 1.0;
-      hueShift  = (hueShift + 25 + Math.floor(Math.random() * 20)) % 360;
+      // Bounded wobble, not a randomised rotation through the full wheel.
+      hueShift  = Math.sin(beatCount * 0.4) * 14;
     }
   }
 
@@ -328,6 +331,7 @@ export function resetVeil(): void {
   hueShift  = 0;
   lastBeat  = -1;
   beatFlash = 0;
+  beatCount = 0;
   canvasW   = 0;
   canvasH   = 0;
   trail     = null;
