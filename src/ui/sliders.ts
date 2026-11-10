@@ -499,6 +499,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'thermal-altitude',     key: 'thermalAltitude'    },
     { id: 'thermal-contour',      key: 'thermalContour'     },
     { id: 'thermal-gain',         key: 'thermalGain'        },
+    { id: 'chrome-count',         key: 'chromeCount'        },
+    { id: 'chrome-roughness',     key: 'chromeRoughness'    },
+    { id: 'chrome-lift',          key: 'chromeLift'         },
   ] as const;
 
   for (const { id, key } of configs) {

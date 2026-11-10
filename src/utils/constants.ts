@@ -726,6 +726,10 @@ export const DEFAULT_CONFIG = {
   thermalAltitude: 0.30, // 0–1 → camera altitude (structural: 0=raking, 1=overhead)
   thermalContour:  0.50, // 0–1 → isotherm contour line density
   thermalGain:     0.50, // 0–1 → audio amplitude sensitivity
+  // Chrome
+  chromeCount:     0.45, // 0–1 → ~6 spheres (structural)
+  chromeRoughness: 0.05, // 0–1 → mirror chrome → brushed satin (structural)
+  chromeLift:      0.50, // 0–1 → audio scale/rise sensitivity
 };
 
 // FFT and decay constants

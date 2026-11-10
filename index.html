@@ -378,6 +378,7 @@
           <option value="worm">Worm</option>
           <option value="shimmer">Shimmer</option>
           <option value="thermal">Thermal</option>
+          <option value="chrome">Chrome</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5190,6 +5191,45 @@
               step="0.01"
               value="0.5"
               aria-label="Gain — audio amplitude sensitivity: 0=subtle, 1=dramatic peaks"
+            />
+          </div>
+        </div>
+
+        <div id="chrome-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="chrome-count">Spheres</label>
+            <input
+              type="range"
+              id="chrome-count"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Spheres — number of chrome balls (structural): 0=1 sphere, 1=max"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="chrome-roughness">Roughness</label>
+            <input
+              type="range"
+              id="chrome-roughness"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.05"
+              aria-label="Roughness — material finish (structural): 0=mirror chrome, 1=brushed satin"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="chrome-lift">Lift</label>
+            <input
+              type="range"
+              id="chrome-lift"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Lift — audio scale/rise sensitivity: 0=subtle, 1=dramatic"
             />
           </div>
         </div>

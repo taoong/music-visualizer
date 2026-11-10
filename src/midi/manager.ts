@@ -452,6 +452,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   thermalAltitude: 'thermal-altitude',
   thermalContour:  'thermal-contour',
   thermalGain:     'thermal-gain',
+  chromeCount:     'chrome-count',
+  chromeRoughness: 'chrome-roughness',
+  chromeLift:      'chrome-lift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
