@@ -455,6 +455,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   chromeCount:     'chrome-count',
   chromeRoughness: 'chrome-roughness',
   chromeLift:      'chrome-lift',
+  incisionBlades:  'incision-blades',
+  incisionWarmth:  'incision-warmth',
+  incisionGlow:    'incision-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

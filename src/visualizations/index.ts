@@ -132,3 +132,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // shimmer is lazy-only (registry imports direct from './shimmer'); no barrel export here
 // thermal is lazy-only (registry imports direct from './thermal'); no barrel export here
 // chrome is lazy-only (registry imports direct from './chrome'); no barrel export here
+// incision is lazy-only (registry imports direct from './incision'); no barrel export here

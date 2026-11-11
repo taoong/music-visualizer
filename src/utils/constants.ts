@@ -730,6 +730,10 @@ export const DEFAULT_CONFIG = {
   chromeCount:     0.45, // 0–1 → ~6 spheres (structural)
   chromeRoughness: 0.05, // 0–1 → mirror chrome → brushed satin (structural)
   chromeLift:      0.50, // 0–1 → audio scale/rise sensitivity
+  // Incision
+  incisionBlades:  0.86, // 0–1 → 7 blades (structural, ~0.86 = all 7)
+  incisionWarmth:  0.65, // 0–1 → glow color: amber (default warm)
+  incisionGlow:    0.55, // 0–1 → inner emission brightness
 };
 
 // FFT and decay constants

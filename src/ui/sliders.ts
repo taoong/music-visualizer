@@ -502,6 +502,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'chrome-count',         key: 'chromeCount'        },
     { id: 'chrome-roughness',     key: 'chromeRoughness'    },
     { id: 'chrome-lift',          key: 'chromeLift'         },
+    { id: 'incision-blades',      key: 'incisionBlades'     },
+    { id: 'incision-warmth',      key: 'incisionWarmth'     },
+    { id: 'incision-glow',        key: 'incisionGlow'       },
   ] as const;
 
   for (const { id, key } of configs) {

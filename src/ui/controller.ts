@@ -355,6 +355,7 @@ const ALL_CONTROL_IDS = [
   'shimmer-controls-group',
   'thermal-controls-group',
   'chrome-controls-group',
+  'incision-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -510,6 +511,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   shimmer:          { show: ['shimmer-controls-group'] },
   thermal:          { show: ['thermal-controls-group'] },
   chrome:           { show: ['chrome-controls-group'] },
+  incision:         { show: ['incision-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {
