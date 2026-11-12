@@ -295,4 +295,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   thermal:          lazyViz(async () => { const { drawThermal: draw, resetThermal: reset, disposeThermal: dispose } = await import('./thermal'); return { draw, reset, dispose }; }, 'F61', 'Thermal'),
   chrome:           lazyViz(async () => { const { drawChrome: draw, resetChrome: reset, disposeChrome: dispose } = await import('./chrome'); return { draw, reset, dispose }; }, 'F62', 'Chrome'),
   incision:         lazyViz(async () => { const { drawIncision: draw, resetIncision: reset, disposeIncision: dispose } = await import('./incision'); return { draw, reset, dispose }; }, 'F63', 'Incision'),
+  harmonic:         lazyViz(async () => { const { drawHarmonic: draw, resetHarmonic: reset, disposeHarmonic: dispose } = await import('./harmonic'); return { draw, reset, dispose }; }, 'F64', 'Harmonic'),
 };

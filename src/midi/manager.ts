@@ -458,6 +458,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   incisionBlades:  'incision-blades',
   incisionWarmth:  'incision-warmth',
   incisionGlow:    'incision-glow',
+  harmonicRatio:  'harmonic-ratio',
+  harmonicGlow:   'harmonic-glow',
+  harmonicSpeed:  'harmonic-speed',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -505,6 +505,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'incision-blades',      key: 'incisionBlades'     },
     { id: 'incision-warmth',      key: 'incisionWarmth'     },
     { id: 'incision-glow',        key: 'incisionGlow'       },
+    { id: 'harmonic-ratio',       key: 'harmonicRatio'      },
+    { id: 'harmonic-glow',        key: 'harmonicGlow'       },
+    { id: 'harmonic-speed',       key: 'harmonicSpeed'      },
   ] as const;
 
   for (const { id, key } of configs) {

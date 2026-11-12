@@ -734,6 +734,10 @@ export const DEFAULT_CONFIG = {
   incisionBlades:  0.86, // 0–1 → 7 blades (structural, ~0.86 = all 7)
   incisionWarmth:  0.65, // 0–1 → glow color: amber (default warm)
   incisionGlow:    0.55, // 0–1 → inner emission brightness
+  // Harmonic
+  harmonicRatio:  0.0,  // 0–1 → frequency ratios (structural)
+  harmonicGlow:   0.55, // 0–1 → particle size + bloom brightness
+  harmonicSpeed:  0.35, // 0–1 → camera orbit + phase drift speed
 };
 
 // FFT and decay constants

@@ -356,6 +356,7 @@ const ALL_CONTROL_IDS = [
   'thermal-controls-group',
   'chrome-controls-group',
   'incision-controls-group',
+  'harmonic-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -512,6 +513,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   thermal:          { show: ['thermal-controls-group'] },
   chrome:           { show: ['chrome-controls-group'] },
   incision:         { show: ['incision-controls-group'] },
+  harmonic:         { show: ['harmonic-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {
