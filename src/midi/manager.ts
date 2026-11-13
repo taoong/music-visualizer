@@ -461,6 +461,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   harmonicRatio:  'harmonic-ratio',
   harmonicGlow:   'harmonic-glow',
   harmonicSpeed:  'harmonic-speed',
+  stacksCount:    'stacks-count',
+  stacksDepth:    'stacks-depth',
+  stacksPatina:   'stacks-patina',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -738,6 +738,11 @@ export const DEFAULT_CONFIG = {
   harmonicRatio:  0.0,  // 0–1 → frequency ratios (structural)
   harmonicGlow:   0.55, // 0–1 → particle size + bloom brightness
   harmonicSpeed:  0.35, // 0–1 → camera orbit + phase drift speed
+
+  // stacks
+  stacksCount:  0.3,  // → 7 boxes
+  stacksDepth:  0.5,  // moderate extrusion amplitude
+  stacksPatina: 0.2,  // smooth plaster
 };
 
 // FFT and decay constants

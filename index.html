@@ -381,6 +381,7 @@
           <option value="chrome">Chrome</option>
           <option value="incision">Incision</option>
           <option value="harmonic">Harmonic</option>
+          <option value="stacks">Stacks</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5310,6 +5311,45 @@
               step="0.01"
               value="0.35"
               aria-label="Speed — camera orbit and phase drift rate: 0=nearly static, 1=fast orbit"
+            />
+          </div>
+        </div>
+
+        <div id="stacks-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="stacks-count">Boxes</label>
+            <input
+              type="range"
+              id="stacks-count"
+              min="0"
+              max="1"
+              step="0.1"
+              value="0.3"
+              aria-label="Boxes — number of relief boxes 4–14 (structural): 0=4 wide bands, 1=14 fine bands"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="stacks-depth">Depth</label>
+            <input
+              type="range"
+              id="stacks-depth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="Depth — audio extrusion amplitude: 0=shallow relief, 1=deep dramatic protrusion"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="stacks-patina">Patina</label>
+            <input
+              type="range"
+              id="stacks-patina"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.2"
+              aria-label="Patina — surface material: 0=smooth warm plaster, 1=rough cool concrete"
             />
           </div>
         </div>

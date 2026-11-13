@@ -134,3 +134,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // chrome is lazy-only (registry imports direct from './chrome'); no barrel export here
 // incision is lazy-only (registry imports direct from './incision'); no barrel export here
 // harmonic is lazy-only (registry imports direct from './harmonic'); no barrel export here
+// stacks is lazy-only (registry imports direct from './stacks'); no barrel export here

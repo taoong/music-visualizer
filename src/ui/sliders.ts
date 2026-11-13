@@ -508,6 +508,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'harmonic-ratio',       key: 'harmonicRatio'      },
     { id: 'harmonic-glow',        key: 'harmonicGlow'       },
     { id: 'harmonic-speed',       key: 'harmonicSpeed'      },
+    { id: 'stacks-count',         key: 'stacksCount'        },
+    { id: 'stacks-depth',         key: 'stacksDepth'        },
+    { id: 'stacks-patina',        key: 'stacksPatina'       },
   ] as const;
 
   for (const { id, key } of configs) {
