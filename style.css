@@ -1153,49 +1153,40 @@ body {
   background: rgba(26, 26, 30, 0.9);
 }
 
+/* Lives inside #playback-bar (a fixed bottom-anchored flex column that
+   grows upward with its content) instead of a full-height side panel, so
+   it rises from the bottom and collapses to zero height when closed
+   rather than permanently covering a strip of the canvas. */
 #performance-pads {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 260px;
-  height: 100%;
-  z-index: 500;
-  background: rgba(12, 12, 14, 0.92);
-  backdrop-filter: blur(12px);
-  border-left: 1px solid var(--border-subtle);
-  padding: 4rem 1rem 2rem;
-  overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.28s ease, opacity 0.2s ease;
 }
 
 #performance-pads.open {
-  transform: translateX(0);
-}
-
-#performance-pads h2 {
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  margin-bottom: 1rem;
-  color: var(--text-dimmer);
-  text-transform: uppercase;
+  max-height: 150px;
+  opacity: 1;
+  margin-bottom: 0.5rem;
 }
 
 #pad-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  padding-top: 0.3rem;
 }
 
 .pad-btn {
-  aspect-ratio: 1;
+  /* Fixed compact height instead of aspect-ratio:1 — square buttons at
+     full playback-bar width would have made each one ~170px tall. */
+  height: 56px;
   border: 1px solid var(--border-default);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--bg-surface);
   color: var(--text-primary);
   font-family: inherit;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   cursor: pointer;

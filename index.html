@@ -5388,20 +5388,6 @@
       &#9776;
     </button>
 
-    <!-- Performance pads: manual per-band hit triggers, separate from the
-         slider controls — a grid of big buttons for live play rather than
-         fine-tuning. Opens from the opposite edge so the two drawers never
-         fight for the same space. -->
-    <aside id="performance-pads" role="complementary" aria-label="Performance pads">
-      <h2>Performance</h2>
-      <div id="pad-grid" role="group" aria-label="Frequency hit triggers">
-        <button class="pad-btn" type="button" data-pad="0">LOW</button>
-        <button class="pad-btn" type="button" data-pad="1">LOW-MID</button>
-        <button class="pad-btn" type="button" data-pad="2">HIGH-MID</button>
-        <button class="pad-btn" type="button" data-pad="3">HIGH</button>
-      </div>
-    </aside>
-
     <button
       id="pads-toggle"
       type="button"
@@ -5453,6 +5439,20 @@
         ></textarea>
       </div>
       <span id="viz-name-tag" aria-live="polite"></span>
+      <!-- Performance pads: manual per-band hit triggers, separate from the
+           slider controls. Lives inside the playback bar (a fixed
+           bottom-anchored container that grows upward with its content) so
+           it rises from the bottom instead of covering a side of the
+           canvas, and collapses to zero height when closed so it doesn't
+           take any space until toggled on via #pads-toggle. -->
+      <div id="performance-pads" role="region" aria-label="Performance pads">
+        <div id="pad-grid" role="group" aria-label="Frequency hit triggers">
+          <button class="pad-btn" type="button" data-pad="0">LOW</button>
+          <button class="pad-btn" type="button" data-pad="1">LOW-MID</button>
+          <button class="pad-btn" type="button" data-pad="2">HIGH-MID</button>
+          <button class="pad-btn" type="button" data-pad="3">HIGH</button>
+        </div>
+      </div>
       <div id="scrubber-row">
         <span id="time-display" aria-live="polite" aria-atomic="true">0:00 / 0:00</span>
         <div id="scrubber-group">

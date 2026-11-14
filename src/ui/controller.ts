@@ -163,18 +163,10 @@ function applyMobileLayout(): void {
 function bindSidebarToggle(): () => void {
   const sidebar = document.getElementById('sidebar');
   const toggleBtn = document.getElementById('sidebar-toggle');
-  const pads = document.getElementById('performance-pads');
 
   if (!sidebar || !toggleBtn) return () => {};
 
-  // The two drawers open from opposite edges but, on a narrow phone, both
-  // open at once would overlap and cover nearly the whole screen — so
-  // opening one closes the other instead of letting them stack.
-  const handler = () => {
-    const opening = !sidebar.classList.contains('open');
-    sidebar.classList.toggle('open', opening);
-    if (opening) pads?.classList.remove('open');
-  };
+  const handler = () => sidebar.classList.toggle('open');
   toggleBtn.addEventListener('click', handler);
 
   return () => toggleBtn.removeEventListener('click', handler);
@@ -183,15 +175,17 @@ function bindSidebarToggle(): () => void {
 function bindPerformancePads(): () => void {
   const pads = document.getElementById('performance-pads');
   const toggleBtn = document.getElementById('pads-toggle');
-  const sidebar = document.getElementById('sidebar');
   const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.pad-btn'));
 
   if (!pads || !toggleBtn) return () => {};
 
+  // No longer needs to close the sidebar on open — the pads panel lives in
+  // the bottom playback bar now (collapsed to zero height when closed)
+  // instead of a full-height side panel, so the two no longer compete for
+  // screen space.
   const toggleHandler = () => {
-    const opening = !pads.classList.contains('open');
-    pads.classList.toggle('open', opening);
-    if (opening) sidebar?.classList.remove('open');
+    pads.classList.toggle('open');
+    toggleBtn.setAttribute('aria-expanded', String(pads.classList.contains('open')));
   };
   toggleBtn.addEventListener('click', toggleHandler);
 
