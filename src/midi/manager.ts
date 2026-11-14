@@ -464,6 +464,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   stacksCount:    'stacks-count',
   stacksDepth:    'stacks-depth',
   stacksPatina:   'stacks-patina',
+  plexusStrands:  'plexus-strands',
+  plexusSag:      'plexus-sag',
+  plexusGlow:     'plexus-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

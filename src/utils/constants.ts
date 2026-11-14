@@ -743,6 +743,9 @@ export const DEFAULT_CONFIG = {
   stacksCount:  0.3,  // → 7 boxes
   stacksDepth:  0.5,  // moderate extrusion amplitude
   stacksPatina: 0.2,  // smooth plaster
+  plexusStrands: 0.5,  // → ~9 threads per band
+  plexusSag:     0.4,  // moderate curvature
+  plexusGlow:    0.55, // medium brightness
 };
 
 // FFT and decay constants

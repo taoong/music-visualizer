@@ -511,6 +511,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'stacks-count',         key: 'stacksCount'        },
     { id: 'stacks-depth',         key: 'stacksDepth'        },
     { id: 'stacks-patina',        key: 'stacksPatina'       },
+    { id: 'plexus-strands',       key: 'plexusStrands'      },
+    { id: 'plexus-sag',           key: 'plexusSag'          },
+    { id: 'plexus-glow',          key: 'plexusGlow'         },
   ] as const;
 
   for (const { id, key } of configs) {

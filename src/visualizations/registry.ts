@@ -297,4 +297,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   incision:         lazyViz(async () => { const { drawIncision: draw, resetIncision: reset, disposeIncision: dispose } = await import('./incision'); return { draw, reset, dispose }; }, 'F63', 'Incision'),
   harmonic:         lazyViz(async () => { const { drawHarmonic: draw, resetHarmonic: reset, disposeHarmonic: dispose } = await import('./harmonic'); return { draw, reset, dispose }; }, 'F64', 'Harmonic'),
   stacks:           lazyViz(async () => { const { drawStacks: draw, resetStacks: reset, disposeStacks: dispose } = await import('./stacks'); return { draw, reset, dispose }; }, 'F65', 'Stacks'),
+  plexus:           lazyViz(async () => { const { drawPlexus: draw, resetPlexus: reset, disposePlexus: dispose } = await import('./plexus'); return { draw, reset, dispose }; }, 'F66', 'Plexus'),
 };
