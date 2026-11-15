@@ -514,6 +514,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'plexus-strands',       key: 'plexusStrands'      },
     { id: 'plexus-sag',           key: 'plexusSag'          },
     { id: 'plexus-glow',          key: 'plexusGlow'         },
+    { id: 'loop-form',            key: 'loopForm'           },
+    { id: 'loop-glow',            key: 'loopGlow'           },
+    { id: 'loop-drift',           key: 'loopDrift'          },
   ] as const;
 
   for (const { id, key } of configs) {

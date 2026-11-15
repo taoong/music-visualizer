@@ -467,6 +467,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   plexusStrands:  'plexus-strands',
   plexusSag:      'plexus-sag',
   plexusGlow:     'plexus-glow',
+  loopForm:       'loop-form',
+  loopGlow:       'loop-glow',
+  loopDrift:      'loop-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

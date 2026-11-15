@@ -353,6 +353,7 @@ const ALL_CONTROL_IDS = [
   'harmonic-controls-group',
   'stacks-controls-group',
   'plexus-controls-group',
+  'loop-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -512,6 +513,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   harmonic:         { show: ['harmonic-controls-group'] },
   stacks:           { show: ['stacks-controls-group'] },
   plexus:           { show: ['plexus-controls-group'] },
+  loop:             { show: ['loop-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

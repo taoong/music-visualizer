@@ -746,6 +746,11 @@ export const DEFAULT_CONFIG = {
   plexusStrands: 0.5,  // → ~9 threads per band
   plexusSag:     0.4,  // moderate curvature
   plexusGlow:    0.55, // medium brightness
+
+  // loop
+  loopForm:  0.33, // tier 0 (simple loops) by default
+  loopGlow:  0.50, // medium bloom
+  loopDrift: 0.40, // gentle drift
 };
 
 // FFT and decay constants
