@@ -517,6 +517,10 @@ export function bindDisplaySliders(): () => void {
     { id: 'loop-form',            key: 'loopForm'           },
     { id: 'loop-glow',            key: 'loopGlow'           },
     { id: 'loop-drift',           key: 'loopDrift'          },
+    { id: 'infinitum-loops',      key: 'infinitumLoops'     },
+    { id: 'infinitum-wave',       key: 'infinitumWave'      },
+    { id: 'infinitum-orbit',      key: 'infinitumOrbit'     },
+    { id: 'infinitum-warmth',     key: 'infinitumWarmth'    },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -751,6 +751,12 @@ export const DEFAULT_CONFIG = {
   loopForm:  0.33, // tier 0 (simple loops) by default
   loopGlow:  0.50, // medium bloom
   loopDrift: 0.40, // gentle drift
+
+  // infinitum
+  infinitumLoops  : 0.43, // ~4 strips at default
+  infinitumWave   : 0.55, // moderate wave amplitude
+  infinitumOrbit  : 0.35, // gentle camera orbit
+  infinitumWarmth : 0.45, // slightly warm steel
 };
 
 // FFT and decay constants

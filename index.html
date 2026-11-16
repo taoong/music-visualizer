@@ -384,6 +384,7 @@
           <option value="stacks">Stacks</option>
           <option value="plexus">Plexus</option>
           <option value="loop">Loop</option>
+          <option value="infinitum">Infinitum</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5430,6 +5431,57 @@
               step="0.01"
               value="0.4"
               aria-label="Drift — camera and key-light orbit speed: 0=still, 1=fast sweep"
+            />
+          </div>
+        </div>
+
+        <div id="infinitum-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="infinitum-loops">Loops</label>
+            <input
+              type="range"
+              id="infinitum-loops"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.43"
+              aria-label="Loops — number of nested Möbius strips 1–7 (structural)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="infinitum-wave">Wave</label>
+            <input
+              type="range"
+              id="infinitum-wave"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Wave — audio displacement amplitude: 0=flat ribbon, 1=dramatic surface waves"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="infinitum-orbit">Orbit</label>
+            <input
+              type="range"
+              id="infinitum-orbit"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Orbit — camera orbit speed: 0=near-static, 1=fast sweep"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="infinitum-warmth">Warmth</label>
+            <input
+              type="range"
+              id="infinitum-warmth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Warmth — light temperature: 0=cool moonlit steel, 1=warm amber studio"
             />
           </div>
         </div>

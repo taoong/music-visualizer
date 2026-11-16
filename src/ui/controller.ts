@@ -354,6 +354,7 @@ const ALL_CONTROL_IDS = [
   'stacks-controls-group',
   'plexus-controls-group',
   'loop-controls-group',
+  'infinitum-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -514,6 +515,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   stacks:           { show: ['stacks-controls-group'] },
   plexus:           { show: ['plexus-controls-group'] },
   loop:             { show: ['loop-controls-group'] },
+  infinitum:        { show: ['infinitum-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

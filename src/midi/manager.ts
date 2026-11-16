@@ -470,6 +470,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   loopForm:       'loop-form',
   loopGlow:       'loop-glow',
   loopDrift:      'loop-drift',
+  infinitumLoops  : 'infinitum-loops',
+  infinitumWave   : 'infinitum-wave',
+  infinitumOrbit  : 'infinitum-orbit',
+  infinitumWarmth : 'infinitum-warmth',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
