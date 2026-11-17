@@ -385,6 +385,7 @@
           <option value="plexus">Plexus</option>
           <option value="loop">Loop</option>
           <option value="infinitum">Infinitum</option>
+          <option value="pelagic">Pelagic</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5482,6 +5483,45 @@
               step="0.01"
               value="0.45"
               aria-label="Warmth — light temperature: 0=cool moonlit steel, 1=warm amber studio"
+            />
+          </div>
+        </div>
+
+        <div id="pelagic-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="pelagic-depth">Depth</label>
+            <input
+              type="range"
+              id="pelagic-depth"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.3"
+              aria-label="Depth — camera depth below the water surface: 0=just beneath (close Snell's window), 1=deep (small distant window)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="pelagic-chop">Chop</label>
+            <input
+              type="range"
+              id="pelagic-chop"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Chop — wave amplitude and surface turbulence: 0=glassy calm, 1=stormy choppy"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="pelagic-clarity">Clarity</label>
+            <input
+              type="range"
+              id="pelagic-clarity"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.65"
+              aria-label="Clarity — water turbidity: 0=murky dark water, 1=crystal clear with vivid caustic floor patterns"
             />
           </div>
         </div>

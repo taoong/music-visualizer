@@ -474,6 +474,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   infinitumWave   : 'infinitum-wave',
   infinitumOrbit  : 'infinitum-orbit',
   infinitumWarmth : 'infinitum-warmth',
+  pelagicDepth    : 'pelagic-depth',
+  pelagicChop     : 'pelagic-chop',
+  pelagicClarity  : 'pelagic-clarity',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

@@ -355,6 +355,7 @@ const ALL_CONTROL_IDS = [
   'plexus-controls-group',
   'loop-controls-group',
   'infinitum-controls-group',
+  'pelagic-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -516,6 +517,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   plexus:           { show: ['plexus-controls-group'] },
   loop:             { show: ['loop-controls-group'] },
   infinitum:        { show: ['infinitum-controls-group'] },
+  pelagic:          { show: ['pelagic-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

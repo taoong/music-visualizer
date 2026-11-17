@@ -300,4 +300,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   plexus:           lazyViz(async () => { const { drawPlexus: draw, resetPlexus: reset, disposePlexus: dispose } = await import('./plexus'); return { draw, reset, dispose }; }, 'F66', 'Plexus'),
   loop:             lazyViz(async () => { const { drawLoop: draw, resetLoop: reset, disposeLoop: dispose } = await import('./loop'); return { draw, reset, dispose }; }, '9', 'Loop'),
   infinitum:        lazyViz(async () => { const { drawInfinitum: draw, resetInfinitum: reset, disposeInfinitum: dispose } = await import('./infinitum'); return { draw, reset, dispose }; }, 'F67', 'Infinitum'),
+  pelagic:          lazyViz(async () => { const { drawPelagic: draw, resetPelagic: reset, disposePelagic: dispose } = await import('./pelagic'); return { draw, reset, dispose }; }, 'F68', 'Pelagic'),
 };

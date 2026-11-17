@@ -757,6 +757,11 @@ export const DEFAULT_CONFIG = {
   infinitumWave   : 0.55, // moderate wave amplitude
   infinitumOrbit  : 0.35, // gentle camera orbit
   infinitumWarmth : 0.45, // slightly warm steel
+
+  // pelagic
+  pelagicDepth   : 0.3,  // moderate depth — close enough to surface to see Snell's window clearly
+  pelagicChop    : 0.45, // slightly active surface
+  pelagicClarity : 0.65, // good visibility, see the floor caustics
 };
 
 // FFT and decay constants

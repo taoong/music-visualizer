@@ -521,6 +521,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'infinitum-wave',       key: 'infinitumWave'      },
     { id: 'infinitum-orbit',      key: 'infinitumOrbit'     },
     { id: 'infinitum-warmth',     key: 'infinitumWarmth'    },
+    { id: 'pelagic-depth',        key: 'pelagicDepth'       },
+    { id: 'pelagic-chop',         key: 'pelagicChop'        },
+    { id: 'pelagic-clarity',      key: 'pelagicClarity'     },
   ] as const;
 
   for (const { id, key } of configs) {
