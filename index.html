@@ -386,6 +386,7 @@
           <option value="loop">Loop</option>
           <option value="infinitum">Infinitum</option>
           <option value="pelagic">Pelagic</option>
+          <option value="chime">Chime</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5522,6 +5523,45 @@
               step="0.01"
               value="0.65"
               aria-label="Clarity — water turbidity: 0=murky dark water, 1=crystal clear with vivid caustic floor patterns"
+            />
+          </div>
+        </div>
+
+        <div id="chime-controls-group" class="controls-group hidden">
+          <div class="slider-row">
+            <label for="chime-count">Prisms</label>
+            <input
+              type="range"
+              id="chime-count"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.44"
+              aria-label="Prisms — hanging crystal count: 0=3 prisms, 1=12 prisms (structural)"
+            />
+          </div>
+          <div class="slider-row">
+            <label for="chime-shimmer">Shimmer</label>
+            <input
+              type="range"
+              id="chime-shimmer"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="Shimmer — glass iridescence and bloom intensity: 0=clear, 1=vivid rainbow shimmer"
+            />
+          </div>
+          <div class="slider-row">
+            <label for="chime-swing">Swing</label>
+            <input
+              type="range"
+              id="chime-swing"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Swing — pendulum amplitude sensitivity: 0=barely moves, 1=wide arc swings"
             />
           </div>
         </div>

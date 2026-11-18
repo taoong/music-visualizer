@@ -762,6 +762,11 @@ export const DEFAULT_CONFIG = {
   pelagicDepth   : 0.3,  // moderate depth — close enough to surface to see Snell's window clearly
   pelagicChop    : 0.45, // slightly active surface
   pelagicClarity : 0.65, // good visibility, see the floor caustics
+
+  // chime
+  chimeCount   : 0.44, // ≈ 7 prisms (3 + 0.44*9 ≈ 7)
+  chimeShimmer : 0.55, // moderate iridescence
+  chimeSwing   : 0.50, // medium swing sensitivity
 };
 
 // FFT and decay constants

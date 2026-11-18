@@ -477,6 +477,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   pelagicDepth    : 'pelagic-depth',
   pelagicChop     : 'pelagic-chop',
   pelagicClarity  : 'pelagic-clarity',
+  chimeCount   : 'chime-count',
+  chimeShimmer : 'chime-shimmer',
+  chimeSwing   : 'chime-swing',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

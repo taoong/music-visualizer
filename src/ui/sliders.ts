@@ -524,6 +524,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'pelagic-depth',        key: 'pelagicDepth'       },
     { id: 'pelagic-chop',         key: 'pelagicChop'        },
     { id: 'pelagic-clarity',      key: 'pelagicClarity'     },
+    { id: 'chime-count',          key: 'chimeCount'         },
+    { id: 'chime-shimmer',        key: 'chimeShimmer'       },
+    { id: 'chime-swing',          key: 'chimeSwing'         },
   ] as const;
 
   for (const { id, key } of configs) {
