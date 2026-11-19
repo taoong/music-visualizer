@@ -140,3 +140,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // infinitum is lazy-only (registry imports direct from './infinitum'); no barrel export here
 // pelagic is lazy-only (registry imports direct from './pelagic'); no barrel export here
 // chime is lazy-only (registry imports direct from './chime'); no barrel export here
+// bismuth is lazy-only (registry imports direct from './bismuth'); no barrel export here

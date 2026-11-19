@@ -767,6 +767,11 @@ export const DEFAULT_CONFIG = {
   chimeCount   : 0.44, // ≈ 7 prisms (3 + 0.44*9 ≈ 7)
   chimeShimmer : 0.55, // moderate iridescence
   chimeSwing   : 0.50, // medium swing sensitivity
+
+  // bismuth
+  bismuthScale      : 0.50, // mid-range ring frequency
+  bismuthOxidation  : 0.60, // moderate iridescence
+  bismuthRelief     : 0.60, // moderate height sensitivity
 };
 
 // FFT and decay constants

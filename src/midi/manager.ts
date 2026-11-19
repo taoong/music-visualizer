@@ -480,6 +480,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   chimeCount   : 'chime-count',
   chimeShimmer : 'chime-shimmer',
   chimeSwing   : 'chime-swing',
+  bismuthScale      : 'bismuth-scale',
+  bismuthOxidation  : 'bismuth-oxidation',
+  bismuthRelief     : 'bismuth-relief',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

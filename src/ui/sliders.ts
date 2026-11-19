@@ -527,6 +527,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'chime-count',          key: 'chimeCount'         },
     { id: 'chime-shimmer',        key: 'chimeShimmer'       },
     { id: 'chime-swing',          key: 'chimeSwing'         },
+    { id: 'bismuth-scale',        key: 'bismuthScale'       },
+    { id: 'bismuth-oxidation',    key: 'bismuthOxidation'   },
+    { id: 'bismuth-relief',       key: 'bismuthRelief'      },
   ] as const;
 
   for (const { id, key } of configs) {

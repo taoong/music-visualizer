@@ -6,7 +6,7 @@ Created by Tao Ong with Claude Code.
 
 ## Features
 
-- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Neon Grid, Murmuration, Riemann Sphere, Glyphs, Prism, Tapestry, Veil, Suminagashi, Isometric City, Pursuit, Arboreal, Etching, Kintsugi, Klimt, Rosette, Feedback, Kandinsky, Cobweb, Frost, Boogie Woogie, Patchwork, Risograph, Lens Flare, Radiolaria, Stitch, Magnetosphere, Substrate, Ferrofluid, Tidal, Specter, Flux, Oscillograph, Strata, Sonambient, and many more
+- **Visualization modes** — Circle, Spectrum, Tunnel, Lasers, Text, Highway, Neon Grid, Murmuration, Riemann Sphere, Glyphs, Prism, Tapestry, Veil, Suminagashi, Isometric City, Pursuit, Arboreal, Etching, Kintsugi, Klimt, Rosette, Feedback, Kandinsky, Cobweb, Frost, Boogie Woogie, Patchwork, Risograph, Lens Flare, Radiolaria, Stitch, Magnetosphere, Substrate, Ferrofluid, Tidal, Specter, Flux, Oscillograph, Strata, Sonambient, Bismuth, and many more
 - **Three analysis modes:**
   - **Frequency Bands** — Analyzes audio across 7 logarithmic frequency bands
   - **Microphone** — Live audio input from your mic for real-time visualization

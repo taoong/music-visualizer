@@ -357,6 +357,7 @@ const ALL_CONTROL_IDS = [
   'infinitum-controls-group',
   'pelagic-controls-group',
   'chime-controls-group',
+  'bismuth-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -520,6 +521,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   infinitum:        { show: ['infinitum-controls-group'] },
   pelagic:          { show: ['pelagic-controls-group'] },
   chime:            { show: ['chime-controls-group'] },
+  bismuth:          { show: ['bismuth-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {
