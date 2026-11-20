@@ -530,6 +530,9 @@ export function bindDisplaySliders(): () => void {
     { id: 'bismuth-scale',        key: 'bismuthScale'       },
     { id: 'bismuth-oxidation',    key: 'bismuthOxidation'   },
     { id: 'bismuth-relief',       key: 'bismuthRelief'      },
+  { id: 'scales-density',       key: 'scalesDensity'      },
+  { id: 'scales-tilt',          key: 'scalesTilt'         },
+  { id: 'scales-polish',        key: 'scalesPolish'       },
   ] as const;
 
   for (const { id, key } of configs) {

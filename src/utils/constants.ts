@@ -772,6 +772,11 @@ export const DEFAULT_CONFIG = {
   bismuthScale      : 0.50, // mid-range ring frequency
   bismuthOxidation  : 0.60, // moderate iridescence
   bismuthRelief     : 0.60, // moderate height sensitivity
+
+  // scales
+  scalesDensity : 0.55, // moderate scale density
+  scalesTilt    : 0.60, // moderate tilt sensitivity
+  scalesPolish  : 0.55, // moderate metallic polish
 };
 
 // FFT and decay constants

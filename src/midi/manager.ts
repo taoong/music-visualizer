@@ -483,6 +483,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   bismuthScale      : 'bismuth-scale',
   bismuthOxidation  : 'bismuth-oxidation',
   bismuthRelief     : 'bismuth-relief',
+  scalesDensity : 'scales-density',
+  scalesTilt    : 'scales-tilt',
+  scalesPolish  : 'scales-polish',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';
