@@ -533,6 +533,9 @@ export function bindDisplaySliders(): () => void {
   { id: 'scales-density',       key: 'scalesDensity'      },
   { id: 'scales-tilt',          key: 'scalesTilt'         },
   { id: 'scales-polish',        key: 'scalesPolish'       },
+  { id: 'tesserae-grid',        key: 'tesseraeGrid'       },
+  { id: 'tesserae-height',      key: 'tesseraeHeight'     },
+  { id: 'tesserae-shimmer',     key: 'tesseraeShimmer'    },
   ] as const;
 
   for (const { id, key } of configs) {

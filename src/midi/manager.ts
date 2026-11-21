@@ -486,6 +486,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   scalesDensity : 'scales-density',
   scalesTilt    : 'scales-tilt',
   scalesPolish  : 'scales-polish',
+  tesseraeGrid    : 'tesserae-grid',
+  tesseraeHeight  : 'tesserae-height',
+  tesseraeShimmer : 'tesserae-shimmer',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

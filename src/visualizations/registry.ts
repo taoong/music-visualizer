@@ -304,4 +304,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   chime:            lazyViz(async () => { const { drawChime: draw, resetChime: reset, disposeChime: dispose } = await import('./chime'); return { draw, reset, dispose }; }, 'F69', 'Chime'),
   bismuth:          lazyViz(async () => { const { drawBismuth: draw, resetBismuth: reset, disposeBismuth: dispose } = await import('./bismuth'); return { draw, reset, dispose }; }, 'F70', 'Bismuth'),
   scales:           lazyViz(async () => { const { drawScales: draw, resetScales: reset, disposeScales: dispose } = await import('./scales'); return { draw, reset, dispose }; }, 'F71', 'Scales'),
+  tesserae:         lazyViz(async () => { const { drawTesserae: draw, resetTesserae: reset, disposeTesserae: dispose } = await import('./tesserae'); return { draw, reset, dispose }; }, 'F72', 'Tesserae'),
 };

@@ -777,6 +777,11 @@ export const DEFAULT_CONFIG = {
   scalesDensity : 0.55, // moderate scale density
   scalesTilt    : 0.60, // moderate tilt sensitivity
   scalesPolish  : 0.55, // moderate metallic polish
+
+  // tesserae
+  tesseraeGrid    : 0.0,  // eye-level view by default
+  tesseraeHeight  : 0.55, // moderate amplitude sensitivity
+  tesseraeShimmer : 0.60, // moderately crystal-clear glass
 };
 
 // FFT and decay constants
