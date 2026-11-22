@@ -782,6 +782,11 @@ export const DEFAULT_CONFIG = {
   tesseraeGrid    : 0.0,  // eye-level view by default
   tesseraeHeight  : 0.55, // moderate amplitude sensitivity
   tesseraeShimmer : 0.60, // moderately crystal-clear glass
+
+  // impasto
+  impastoBundle : 0.80, // spread arrangement by default
+  impastoSwell  : 0.65, // moderate glow sensitivity
+  impastoDrift  : 0.50, // medium camera drift
 };
 
 // FFT and decay constants

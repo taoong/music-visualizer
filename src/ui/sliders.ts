@@ -536,6 +536,9 @@ export function bindDisplaySliders(): () => void {
   { id: 'tesserae-grid',        key: 'tesseraeGrid'       },
   { id: 'tesserae-height',      key: 'tesseraeHeight'     },
   { id: 'tesserae-shimmer',     key: 'tesseraeShimmer'    },
+  { id: 'impasto-bundle',       key: 'impastoBundle'      },
+  { id: 'impasto-swell',        key: 'impastoSwell'       },
+  { id: 'impasto-drift',        key: 'impastoDrift'       },
   ] as const;
 
   for (const { id, key } of configs) {

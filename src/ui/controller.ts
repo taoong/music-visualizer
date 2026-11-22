@@ -360,6 +360,7 @@ const ALL_CONTROL_IDS = [
   'bismuth-controls-group',
   'scales-controls-group',
   'tesserae-controls-group',
+  'impasto-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -526,6 +527,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   bismuth:          { show: ['bismuth-controls-group'] },
   scales:           { show: ['scales-controls-group'] },
   tesserae:         { show: ['tesserae-controls-group'] },
+  impasto:          { show: ['impasto-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

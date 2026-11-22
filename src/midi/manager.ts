@@ -489,6 +489,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   tesseraeGrid    : 'tesserae-grid',
   tesseraeHeight  : 'tesserae-height',
   tesseraeShimmer : 'tesserae-shimmer',
+  impastoBundle   : 'impasto-bundle',
+  impastoSwell    : 'impasto-swell',
+  impastoDrift    : 'impasto-drift',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

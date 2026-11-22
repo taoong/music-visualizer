@@ -143,3 +143,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // bismuth is lazy-only (registry imports direct from './bismuth'); no barrel export here
 // scales is lazy-only (registry imports direct from './scales'); no barrel export here
 // tesserae is lazy-only (registry imports direct from './tesserae'); no barrel export here
+// impasto is lazy-only (registry imports direct from './impasto'); no barrel export here
