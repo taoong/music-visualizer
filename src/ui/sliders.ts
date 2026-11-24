@@ -539,6 +539,9 @@ export function bindDisplaySliders(): () => void {
   { id: 'impasto-bundle',       key: 'impastoBundle'      },
   { id: 'impasto-swell',        key: 'impastoSwell'       },
   { id: 'impasto-drift',        key: 'impastoDrift'       },
+  { id: 'anamorphic-depth',     key: 'anamorphicDepth'    },
+  { id: 'anamorphic-flow',      key: 'anamorphicFlow'     },
+  { id: 'anamorphic-glow',      key: 'anamorphicGlow'     },
   ] as const;
 
   for (const { id, key } of configs) {

@@ -492,6 +492,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   impastoBundle   : 'impasto-bundle',
   impastoSwell    : 'impasto-swell',
   impastoDrift    : 'impasto-drift',
+  anamorphicDepth : 'anamorphic-depth',
+  anamorphicFlow  : 'anamorphic-flow',
+  anamorphicGlow  : 'anamorphic-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

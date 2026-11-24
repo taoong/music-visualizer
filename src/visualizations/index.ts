@@ -112,6 +112,7 @@ export { drawChronicle, resetChronicle, disposeChronicle } from './chronicle';
 export { drawFilaments, resetFilaments, disposeFilaments } from './filaments';
 export { drawDispersion, resetDispersion, disposeDispersion } from './dispersion';
 export { drawFoam, resetFoam, disposeFoam } from './foam';
+// anamorphic is lazy-only (registry imports direct from './anamorphic'); no barrel export here
 // dune is lazy-only (registry imports direct from './dune'); no barrel export here
 // spire is lazy-only (registry imports direct from './spire'); no barrel export here
 // membrane is lazy-only (registry imports direct from './membrane'); no barrel export here

@@ -787,6 +787,11 @@ export const DEFAULT_CONFIG = {
   impastoBundle : 0.80, // spread arrangement by default
   impastoSwell  : 0.65, // moderate glow sensitivity
   impastoDrift  : 0.50, // medium camera drift
+
+  // anamorphic
+  anamorphicDepth: 0.7,  // deep 3D spread by default
+  anamorphicFlow:  0.4,  // gentle orbit
+  anamorphicGlow:  0.6,  // moderate emissive bloom
 };
 
 // FFT and decay constants
