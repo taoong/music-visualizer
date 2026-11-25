@@ -495,6 +495,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   anamorphicDepth : 'anamorphic-depth',
   anamorphicFlow  : 'anamorphic-flow',
   anamorphicGlow  : 'anamorphic-glow',
+  zoetropeSpiral  : 'zoetrope-spiral',
+  zoetropeStrobe  : 'zoetrope-strobe',
+  zoetropeSpin    : 'zoetrope-spin',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

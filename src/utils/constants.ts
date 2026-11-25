@@ -792,6 +792,11 @@ export const DEFAULT_CONFIG = {
   anamorphicDepth: 0.7,  // deep 3D spread by default
   anamorphicFlow:  0.4,  // gentle orbit
   anamorphicGlow:  0.6,  // moderate emissive bloom
+
+  // zoetrope
+  zoetropeSpiral : 0.20, // slight dome curve by default — not fully flat
+  zoetropeStrobe : 0.65, // fairly strong strobe to demonstrate the effect
+  zoetropeSpin   : 0.40, // moderate spin — near the golden-angle sweet-spot at BPM ~140
 };
 
 // FFT and decay constants

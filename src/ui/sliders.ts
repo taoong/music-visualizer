@@ -542,6 +542,9 @@ export function bindDisplaySliders(): () => void {
   { id: 'anamorphic-depth',     key: 'anamorphicDepth'    },
   { id: 'anamorphic-flow',      key: 'anamorphicFlow'     },
   { id: 'anamorphic-glow',      key: 'anamorphicGlow'     },
+  { id: 'zoetrope-spiral',      key: 'zoetropeSpiral'     },
+  { id: 'zoetrope-strobe',      key: 'zoetropeStrobe'     },
+  { id: 'zoetrope-spin',        key: 'zoetropeSpin'       },
   ] as const;
 
   for (const { id, key } of configs) {

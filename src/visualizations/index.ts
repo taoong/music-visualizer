@@ -145,3 +145,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // scales is lazy-only (registry imports direct from './scales'); no barrel export here
 // tesserae is lazy-only (registry imports direct from './tesserae'); no barrel export here
 // impasto is lazy-only (registry imports direct from './impasto'); no barrel export here
+// zoetrope is lazy-only (registry imports direct from './zoetrope'); no barrel export here
