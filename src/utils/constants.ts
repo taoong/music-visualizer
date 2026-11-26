@@ -797,6 +797,10 @@ export const DEFAULT_CONFIG = {
   zoetropeSpiral : 0.20, // slight dome curve by default — not fully flat
   zoetropeStrobe : 0.65, // fairly strong strobe to demonstrate the effect
   zoetropeSpin   : 0.40, // moderate spin — near the golden-angle sweet-spot at BPM ~140
+  // turing
+  turingFeed    : 0.35, // mid-range: labyrinthine stripes by default
+  turingSpeed   : 0.45, // moderate speed
+  turingPalette : 0.35, // slightly cool — silver-blue tending toward neutral
 };
 
 // FFT and decay constants

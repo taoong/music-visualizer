@@ -498,6 +498,10 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   zoetropeSpiral  : 'zoetrope-spiral',
   zoetropeStrobe  : 'zoetrope-strobe',
   zoetropeSpin    : 'zoetrope-spin',
+  // turing
+  turingFeed      : 'turing-feed',
+  turingSpeed     : 'turing-speed',
+  turingPalette   : 'turing-palette',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

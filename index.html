@@ -393,6 +393,7 @@
           <option value="impasto">Impasto</option>
           <option value="anamorphic">Anamorphic</option>
           <option value="zoetrope">Zoetrope</option>
+          <option value="turing">Turing</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5802,6 +5803,45 @@
               step="0.01"
               value="0.40"
               aria-label="Spin — base rotation speed: tune to BPM for Fibonacci spiral standing-wave illusion"
+            />
+          </div>
+        </div>
+
+        <div id="turing-controls-group" class="controls-group hidden">
+          <div class="slider-row">
+            <label for="turing-feed">Feed</label>
+            <input
+              type="range"
+              id="turing-feed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Feed — Gray-Scott feed rate (structural): 0=coral spots, 0.5=labyrinthine stripes, 1=worm holes"
+            />
+          </div>
+          <div class="slider-row">
+            <label for="turing-speed">Speed</label>
+            <input
+              type="range"
+              id="turing-speed"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.45"
+              aria-label="Speed — simulation steps per frame: 0=slow drifting patterns, 1=fast agitated evolution"
+            />
+          </div>
+          <div class="slider-row">
+            <label for="turing-palette">Palette</label>
+            <input
+              type="range"
+              id="turing-palette"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.35"
+              aria-label="Palette — colour temperature: 0=cool silver-blue, 1=warm amber-gold"
             />
           </div>
         </div>

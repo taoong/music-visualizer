@@ -545,6 +545,9 @@ export function bindDisplaySliders(): () => void {
   { id: 'zoetrope-spiral',      key: 'zoetropeSpiral'     },
   { id: 'zoetrope-strobe',      key: 'zoetropeStrobe'     },
   { id: 'zoetrope-spin',        key: 'zoetropeSpin'       },
+  { id: 'turing-feed',          key: 'turingFeed'         },
+  { id: 'turing-speed',         key: 'turingSpeed'        },
+  { id: 'turing-palette',       key: 'turingPalette'      },
   ] as const;
 
   for (const { id, key } of configs) {

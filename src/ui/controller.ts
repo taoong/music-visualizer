@@ -363,6 +363,7 @@ const ALL_CONTROL_IDS = [
   'impasto-controls-group',
   'anamorphic-controls-group',
   'zoetrope-controls-group',
+  'turing-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -532,6 +533,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   impasto:          { show: ['impasto-controls-group'] },
   anamorphic:       { show: ['anamorphic-controls-group'] },
   zoetrope:         { show: ['zoetrope-controls-group'] },
+  turing:           { show: ['turing-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {
