@@ -548,6 +548,9 @@ export function bindDisplaySliders(): () => void {
   { id: 'turing-feed',          key: 'turingFeed'         },
   { id: 'turing-speed',         key: 'turingSpeed'        },
   { id: 'turing-palette',       key: 'turingPalette'      },
+  { id: 'mirrorcube-bounces',   key: 'mirrorcubeBounces'  },
+  { id: 'mirrorcube-spread',    key: 'mirrorcubeSpread'   },
+  { id: 'mirrorcube-glow',      key: 'mirrorcubeGlow'     },
   ] as const;
 
   for (const { id, key } of configs) {

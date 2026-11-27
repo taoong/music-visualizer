@@ -309,4 +309,5 @@ export const VIZ_REGISTRY: Record<VizMode, VizEntry> = {
   anamorphic:       lazyViz(async () => { const { drawAnamorphic: draw, resetAnamorphic: reset, disposeAnamorphic: dispose } = await import('./anamorphic'); return { draw, reset, dispose }; }, '0', 'Anamorphic'),
   zoetrope:         lazyViz(async () => { const { drawZoetrope: draw, resetZoetrope: reset, disposeZoetrope: dispose } = await import('./zoetrope'); return { draw, reset, dispose }; }, 'F74', 'Zoetrope'),
   turing:           lazyViz(async () => { const { drawTuring: draw, resetTuring: reset, disposeTuring: dispose } = await import('./turing'); return { draw, reset, dispose }; }, 'F75', 'Turing'),
+  mirrorcube:       lazyViz(async () => { const { drawMirrorCube: draw, resetMirrorCube: reset, disposeMirrorCube: dispose } = await import('./mirrorcube'); return { draw, reset, dispose }; }, 'F76', 'Mirror Room'),
 };

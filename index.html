@@ -394,6 +394,7 @@
           <option value="anamorphic">Anamorphic</option>
           <option value="zoetrope">Zoetrope</option>
           <option value="turing">Turing</option>
+          <option value="mirrorcube">Mirror Room</option>
         </select>
         <div class="slider-group hidden" id="text-input-group">
           <label for="viz-text-input">Display Text</label>
@@ -5842,6 +5843,45 @@
               step="0.01"
               value="0.35"
               aria-label="Palette — colour temperature: 0=cool silver-blue, 1=warm amber-gold"
+            />
+          </div>
+        </div>
+
+        <div id="mirrorcube-controls-group" class="controls-group hidden">
+          <div class="slider-group">
+            <label for="mirrorcube-bounces">Reflections</label>
+            <input
+              type="range"
+              id="mirrorcube-bounces"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Reflections — depth of mirror recursion (0=2 bounces, 1=14 bounces); more = deeper infinite regression"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="mirrorcube-spread">Spread</label>
+            <input
+              type="range"
+              id="mirrorcube-spread"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.60"
+              aria-label="Spread — orb positions (0=clustered at centre, 1=spread to walls)"
+            />
+          </div>
+          <div class="slider-group">
+            <label for="mirrorcube-glow">Glow</label>
+            <input
+              type="range"
+              id="mirrorcube-glow"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.50"
+              aria-label="Glow — orb brightness and bloom intensity"
             />
           </div>
         </div>

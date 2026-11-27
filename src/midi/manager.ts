@@ -502,6 +502,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   turingFeed      : 'turing-feed',
   turingSpeed     : 'turing-speed',
   turingPalette   : 'turing-palette',
+  mirrorcubeBounces : 'mirrorcube-bounces',
+  mirrorcubeSpread  : 'mirrorcube-spread',
+  mirrorcubeGlow    : 'mirrorcube-glow',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

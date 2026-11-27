@@ -801,6 +801,9 @@ export const DEFAULT_CONFIG = {
   turingFeed    : 0.35, // mid-range: labyrinthine stripes by default
   turingSpeed   : 0.45, // moderate speed
   turingPalette : 0.35, // slightly cool — silver-blue tending toward neutral
+  mirrorcubeBounces : 0.50, // 8 reflections by default
+  mirrorcubeSpread  : 0.60, // orbs spread out toward walls
+  mirrorcubeGlow    : 0.50, // medium brightness
 };
 
 // FFT and decay constants

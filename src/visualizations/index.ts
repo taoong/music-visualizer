@@ -147,3 +147,4 @@ export { drawFoam, resetFoam, disposeFoam } from './foam';
 // impasto is lazy-only (registry imports direct from './impasto'); no barrel export here
 // zoetrope is lazy-only (registry imports direct from './zoetrope'); no barrel export here
 // turing is lazy-only (registry imports direct from './turing'); no barrel export here
+// mirrorcube is lazy-only (registry imports direct from './mirrorcube'); no barrel export here
