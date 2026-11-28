@@ -804,6 +804,10 @@ export const DEFAULT_CONFIG = {
   mirrorcubeBounces : 0.50, // 8 reflections by default
   mirrorcubeSpread  : 0.60, // orbs spread out toward walls
   mirrorcubeGlow    : 0.50, // medium brightness
+
+  morpheSensitivity : 0.60, // mid amplitude sensitivity
+  morpheFlow        : 0.45, // moderate orbit/lerp speed
+  morphePolish      : 0.60, // slightly polished metal
 };
 
 // FFT and decay constants

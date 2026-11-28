@@ -505,6 +505,9 @@ const CONFIG_TO_SLIDER: Record<keyof Config, string> = {
   mirrorcubeBounces : 'mirrorcube-bounces',
   mirrorcubeSpread  : 'mirrorcube-spread',
   mirrorcubeGlow    : 'mirrorcube-glow',
+  morpheSensitivity : 'morphe-sensitivity',
+  morpheFlow        : 'morphe-flow',
+  morphePolish      : 'morphe-polish',
 };
 
 type MidiStatus = 'unsupported' | 'denied' | 'no-devices' | 'connected';

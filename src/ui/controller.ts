@@ -365,6 +365,7 @@ const ALL_CONTROL_IDS = [
   'zoetrope-controls-group',
   'turing-controls-group',
   'mirrorcube-controls-group',
+  'morphe-controls-group',
 ] as const;
 
 type LabelOverrides = { intensity?: string; rotation?: string; decayRate?: string };
@@ -536,6 +537,7 @@ const VIZ_CONTROLS: Record<VizMode, VizControlsConfig> = {
   zoetrope:         { show: ['zoetrope-controls-group'] },
   turing:           { show: ['turing-controls-group'] },
   mirrorcube:       { show: ['mirrorcube-controls-group'] },
+  morphe:           { show: ['morphe-controls-group'] },
 };
 
 function bindVizNameTag(): () => void {

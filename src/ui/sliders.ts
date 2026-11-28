@@ -551,6 +551,9 @@ export function bindDisplaySliders(): () => void {
   { id: 'mirrorcube-bounces',   key: 'mirrorcubeBounces'  },
   { id: 'mirrorcube-spread',    key: 'mirrorcubeSpread'   },
   { id: 'mirrorcube-glow',      key: 'mirrorcubeGlow'     },
+  { id: 'morphe-sensitivity',   key: 'morpheSensitivity'  },
+  { id: 'morphe-flow',          key: 'morpheFlow'         },
+  { id: 'morphe-polish',        key: 'morphePolish'       },
   ] as const;
 
   for (const { id, key } of configs) {
